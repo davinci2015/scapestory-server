@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/main.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -12,5 +15,16 @@
   },
   "author": "",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/scapestory/scapestory#readme"
+  "homepage": "https://bitbucket.org/scapestory/scapestory#readme",
+  "devDependencies": {
+    "@types/node": "^11.11.4",
+    "nodemon": "^1.18.10",
+    "ts-node": "^8.0.3",
+    "tsconfig-paths": "^3.8.0",
+    "typescript": "^3.3.4000"
+  },
+  "dependencies": {
+    "@graphql-modules/core": "^0.6.6",
+    "graphql": "^14.1.1"
+  }
 }
