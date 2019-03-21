@@ -27,5 +27,8 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "paths": {
+    "graphql/*": ["./src/graphql/*"]
+  }
 }
