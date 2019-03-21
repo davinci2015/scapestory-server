@@ -1,7 +1,6 @@
-import 'graphql-import-node'
 import 'reflect-metadata'
 
 import {startup} from './server'
-import {AppModule} from './modules/App'
+import {AppModule} from './graphql/modules/App'
 
 startup(AppModule)

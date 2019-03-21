@@ -1,12 +1,11 @@
 import {GraphQLModule} from '@graphql-modules/core'
-import * as userDef from './typeDefs/user.graphql'
-import resolver from './resolvers'
-import {UsersProvider} from './providers/UsersProvider'
+import {UsersProvider} from './UsersProvider'
+import {userDef, userResolvers} from './User'
 
 const UserModule = new GraphQLModule({
     providers: [UsersProvider],
     typeDefs: userDef,
-    resolvers: resolver,
+    resolvers: userResolvers
 })
 
 export {UserModule}
