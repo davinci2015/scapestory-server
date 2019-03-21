@@ -1,36 +1,8 @@
-import gql from 'graphql-tag'
-import {GraphQLModule, ModuleContext} from '@graphql-modules/core'
+import {GraphQLModule} from '@graphql-modules/core'
+import {UsersProvider} from 'graphql/modules/User/UsersProvider'
+import {userResolvers} from 'graphql/modules/User/resolvers'
 import {tokens} from 'graphql/di/tokens'
-import {UsersProvider, UsersProviderInterface} from 'graphql/modules/User/UsersProvider'
-
-const userDefs = gql`
-    type Query {
-        me(id: String!): User
-        users: [User]
-    }
-
-    type User {
-        id: String
-        username: String
-    }
-`
-
-const userResolvers = {
-    Query: {
-        me: (root, {id}, {injector}: ModuleContext) => {
-            const provider: UsersProviderInterface = injector.get(tokens.USERS_PROVIDER)
-            return provider.getUser(id)
-        },
-        users: (root, args, {injector}: ModuleContext) => {
-            const provider: UsersProviderInterface = injector.get(tokens.USERS_PROVIDER)
-            return provider.allUsers()
-        }
-    },
-    User: {
-        id: user => user._id,
-        username: user => user.username
-    }
-}
+import * as userDefs from 'graphql/modules/User/schema.graphql'
 
 export const UserModule = new GraphQLModule({
     providers: [{
