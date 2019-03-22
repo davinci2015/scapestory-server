@@ -1,5 +1,5 @@
 import {GraphQLModule} from '@graphql-modules/core'
-import {UsersProvider} from 'graphql/modules/User/UsersProvider'
+import {UsersProvider} from 'graphql/modules/User/providers/UsersProvider'
 import {userResolvers} from 'graphql/modules/User/resolvers'
 import {tokens} from 'graphql/di/tokens'
 import * as userDefs from 'graphql/modules/User/schema.graphql'
