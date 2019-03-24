@@ -12,12 +12,12 @@ const connectToDatabase = () => {
         host: process.env.DB_HOST,
         username: process.env.DB_USER,
         password: process.env.DB_PASS,
-        dbname: process.env.DB_NAME
+        database: process.env.DB_NAME
     })
 
     database.testConnection()
         .then(() => console.log(`🚀 Connected to ${process.env.DB_NAME} database`))
-        .catch(() => console.log('Failed to connect to the database!'))
+        .catch(() => console.log('⚠️ Failed to connect to the database!'))
 }
 
 export const startup = (AppModule: ModuleContext) => {

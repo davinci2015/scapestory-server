@@ -1,5 +1,7 @@
-import {Sequelize} from 'sequelize'
 import * as Bluebird from 'bluebird'
+import * as path from 'path'
+import {Sequelize} from 'sequelize-typescript'
+import {AppHelper} from 'utils/AppHelper'
 import {DatabaseConnectionParams} from 'db/Database'
 
 export interface DatabaseAdapter {
@@ -13,9 +15,19 @@ export class SequelizeAdapter implements DatabaseAdapter {
 
     connect(params: DatabaseConnectionParams) {
         this.instance = new Sequelize({
-            ...params,
-            dialect: 'postgres'
+            host: params.host,
+            database: params.database,
+            username: params.username,
+            password: params.password,
+            dialect: 'postgres',
+            modelPaths: [path.join(__dirname, '../models')]
         })
+
+        if (AppHelper.isDevelopment()) {
+            this.instance.sync({ force: true })
+                .then(() => console.log('Database synced'))
+                .catch((e) => console.log('Failed to sync database', e))
+        }
     }
 
     testConnection() {

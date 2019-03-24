@@ -2,7 +2,7 @@ import * as Bluebird from 'bluebird'
 import {DatabaseAdapter} from 'db/adapters/SequelizeAdapter'
 
 export type DatabaseConnectionParams = {
-    dbname: string,
+    database: string,
     username: string,
     password: string,
     host: string
