@@ -1,5 +1,6 @@
 import {ModuleContext} from '@graphql-modules/core'
-import {User} from 'db/models/User'
+import {tokens} from 'graphql/di/tokens'
+import {AuthProviderInterface} from 'graphql/modules/Auth/providers/AuthProvider'
 
 type LoginArgsType = {
     email: string,
@@ -8,13 +9,9 @@ type LoginArgsType = {
 
 export const authResolvers = {
     Mutation: {
-        login: (root, args: LoginArgsType, {injector}: ModuleContext) => {
-            User.create({
-                username: 'test',
-                email: 'testovski@gmail.com'
-            })
-                .then(() => {})
-                .catch((e) => {})
+        async login(root, args: LoginArgsType, {injector}: ModuleContext) {
+            const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
+            return await provider.login(args.email, args.password)
         }
     }
 }

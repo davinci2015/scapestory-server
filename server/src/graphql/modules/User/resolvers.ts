@@ -12,9 +12,5 @@ export const userResolvers = {
             const provider: UsersProviderInterface = injector.get(tokens.USERS_PROVIDER)
             return provider.allUsers()
         }
-    },
-    User: {
-        id: user => user._id,
-        username: user => user.username
     }
 }
