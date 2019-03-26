@@ -1,5 +1,5 @@
 import {ModuleContext} from '@graphql-modules/core'
-import {tokens} from 'graphql/di/tokens'
+import {tokens} from 'di/tokens'
 import {AuthProviderInterface} from 'graphql/modules/Auth/providers/AuthProvider'
 
 type LoginArgsType = {

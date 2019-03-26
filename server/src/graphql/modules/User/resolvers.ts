@@ -1,6 +1,6 @@
 import {ModuleContext} from '@graphql-modules/core'
 import {UsersProviderInterface} from 'graphql/modules/User/providers/UsersProvider'
-import {tokens} from 'graphql/di/tokens'
+import {tokens} from 'di/tokens'
 
 export const userResolvers = {
     Query: {
