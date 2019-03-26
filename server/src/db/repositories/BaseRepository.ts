@@ -18,7 +18,7 @@ type ModelType<T> = Constructor<T> & StaticMembers
 export interface BaseRepositoryInterface<T> {
     create(values: object, options?: CreateOptions & { returning: false }): Bluebird<T>,
 
-    findOne(options: NonNullFindOptions): Bluebird<T | null>,
+    findOne(options: FindOptions): Bluebird<T | null>,
 
     findAll(options?: FindOptions): Promise<T[]>,
 
@@ -41,7 +41,7 @@ export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterfa
         return this.relation.create<T>(values, options)
     }
 
-    findOne(options: NonNullFindOptions): Bluebird<T | null> {
+    findOne(options: FindOptions): Bluebird<T | null> {
         return this.relation.findOne(options)
     }
 

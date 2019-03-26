@@ -7,4 +7,7 @@ export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
 
 @Injectable()
 export class UserRepository extends BaseRepository<User> {
+    constructor() {
+        super(User)
+    }
 }

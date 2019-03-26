@@ -1,7 +1,9 @@
 import {Injectable, Inject} from '@graphql-modules/di'
+import {AuthenticationError} from 'apollo-server'
 import {User} from 'db/models/User'
 import {UserRepositoryInterface} from 'db/repositories/UserRepository'
 import {tokens} from 'di/tokens'
+import {AuthHelper} from 'utils/AuthHelper'
 
 export type AuthPayload = {
     token: String
@@ -18,11 +20,16 @@ export class AuthProvider implements AuthProviderInterface {
     }
 
     async login(email: string, password: string) {
-        const user = await this.userRepository.create({email, password})
+        const user = await this.userRepository.findOne({where: {email}, raw: true})
 
-        return {
-            token: 'random',
-            user
+        if (!user) {
+            throw new AuthenticationError('Unauthorized')
         }
+
+        if (!AuthHelper.checkPassword(password, user.password)) {
+            throw new AuthenticationError('Unauthorized')
+        }
+
+        return {token: AuthHelper.createJWTToken(user), user}
     }
 }
