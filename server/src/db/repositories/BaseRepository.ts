@@ -2,7 +2,7 @@ import {Model} from 'sequelize-typescript'
 import {NonAbstract} from 'sequelize-typescript/dist/model'
 import * as Bluebird from 'bluebird'
 import {
-    BulkCreateOptions,
+    BulkCreateOptions, CountOptions,
     CreateOptions,
     DestroyOptions, FindAndCountOptions,
     FindOptions, FindOrCreateOptions,
@@ -30,7 +30,9 @@ export interface BaseRepositoryInterface<T> {
 
     findAndCountAll(options?: FindAndCountOptions): Promise<{ rows: T[]; count: number }>,
 
-    findOrCreate(options: FindOrCreateOptions): Promise<[T, boolean]>
+    findOrCreate(options: FindOrCreateOptions): Promise<[T, boolean]>,
+
+    count(options?: CountOptions): Promise<number>
 }
 
 export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterface<T> {
@@ -67,5 +69,9 @@ export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterfa
 
     findOrCreate(options: FindOrCreateOptions): Promise<[T, boolean]> {
         return this.relation.findOrCreate(options)
+    }
+
+    count(options?: CountOptions): Promise<number> {
+        return this.relation.count(options)
     }
 }

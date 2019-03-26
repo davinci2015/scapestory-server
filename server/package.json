@@ -17,6 +17,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/scapestory/scapestory#readme",
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/bluebird": "^3.5.26",
     "@types/graphql": "^14.0.7",
     "@types/node": "^11.11.4",
@@ -28,10 +29,12 @@
   "dependencies": {
     "@graphql-modules/core": "^0.6.6",
     "apollo-server": "^2.4.8",
+    "bcrypt": "^3.0.5",
     "dotenv": "^7.0.0",
     "graphql": "^14.1.1",
     "graphql-import-node": "0.0.1",
     "graphql-tag": "^2.10.1",
+    "jwt-simple": "^0.5.5",
     "pg": "^7.9.0",
     "pg-hstore": "^2.3.2",
     "reflect-metadata": "^0.1.13",

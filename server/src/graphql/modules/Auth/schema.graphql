@@ -5,7 +5,11 @@ type AuthPayload {
     user: User
 }
 
+type Query {
+    usernameExists(username: String!): Boolean
+}
+
 type Mutation {
     login(email: String!, password: String!): AuthPayload
-    register(email: String!, password: String!): AuthPayload
+    register(email: String!, username: String!, password: String!): AuthPayload
 }

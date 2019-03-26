@@ -9,19 +9,31 @@ type LoginArgsType = {
 
 type RegisterArgsType = {
     email: string,
+    username: string,
+    password: string
+}
+
+type UsernameExistsArgsType = {
+    email: string,
+    username: string,
     password: string
 }
 
 export const authResolvers = {
+    Query: {
+        async usernameExists(root, args: UsernameExistsArgsType, {injector}: ModuleContext) {
+            const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
+            return await provider.usernameExists(args.username)
+        }
+    },
     Mutation: {
         async login(root, args: LoginArgsType, {injector}: ModuleContext) {
             const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
             return await provider.login(args.email, args.password)
         },
-
         async register(root, args: RegisterArgsType, {injector}: ModuleContext) {
             const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
-            return await provider.register(args.email, args.password)
+            return await provider.register(args.email, args.username, args.password)
         }
     }
 }

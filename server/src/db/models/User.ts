@@ -7,4 +7,13 @@ export class User extends Model<User> {
 
     @Column
     password: string
+
+    @Column
+    username: string
+
+    @Column
+    name: string
+
+    @Column
+    country: string
 }
