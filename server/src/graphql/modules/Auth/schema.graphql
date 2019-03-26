@@ -7,4 +7,5 @@ type AuthPayload {
 
 type Mutation {
     login(email: String!, password: String!): AuthPayload
+    register(email: String!, password: String!): AuthPayload
 }

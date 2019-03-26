@@ -11,7 +11,8 @@ export type AuthPayload = {
 }
 
 export interface AuthProviderInterface {
-    login: (email: string, password: string) => Promise<AuthPayload>
+    login: (email: string, password: string) => Promise<AuthPayload>,
+    register: (email: string, password: string) => Promise<AuthPayload>
 }
 
 @Injectable()
@@ -29,6 +30,13 @@ export class AuthProvider implements AuthProviderInterface {
         if (!AuthHelper.checkPassword(password, user.password)) {
             throw new AuthenticationError('Unauthorized')
         }
+
+        return {token: AuthHelper.createJWTToken(user), user}
+    }
+
+    async register(email: string, password: string) {
+        const hashedPassword = AuthHelper.cryptPassword(password)
+        const user = await this.userRepository.create({email, password: hashedPassword})
 
         return {token: AuthHelper.createJWTToken(user), user}
     }
