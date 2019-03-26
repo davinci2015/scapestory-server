@@ -1,7 +1,15 @@
 import {Model} from 'sequelize-typescript'
-import {CreateOptions, NonNullFindOptions} from 'sequelize'
 import {NonAbstract} from 'sequelize-typescript/dist/model'
 import * as Bluebird from 'bluebird'
+import {
+    BulkCreateOptions,
+    CreateOptions,
+    DestroyOptions, FindAndCountOptions,
+    FindOptions, FindOrCreateOptions,
+    NonNullFindOptions,
+    Promise,
+    UpdateOptions
+} from 'sequelize'
 
 type StaticMembers = NonAbstract<typeof Model>
 type Constructor<T> = (new () => T)
@@ -10,7 +18,19 @@ type ModelType<T> = Constructor<T> & StaticMembers
 export interface BaseRepositoryInterface<T> {
     create(values: object, options?: CreateOptions & { returning: false }): Bluebird<T>,
 
-    findOne(options: NonNullFindOptions): Bluebird<T | null>;
+    findOne(options: NonNullFindOptions): Bluebird<T | null>,
+
+    findAll(options?: FindOptions): Promise<T[]>,
+
+    update(values: object, options: UpdateOptions): Promise<[number, T[]]>,
+
+    destroy(options?: DestroyOptions): Promise<number>,
+
+    bulkCreate(records: object[], options?: BulkCreateOptions): Promise<T[]>,
+
+    findAndCountAll(options?: FindAndCountOptions): Promise<{ rows: T[]; count: number }>,
+
+    findOrCreate(options: FindOrCreateOptions): Promise<[T, boolean]>
 }
 
 export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterface<T> {
@@ -23,5 +43,29 @@ export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterfa
 
     findOne(options: NonNullFindOptions): Bluebird<T | null> {
         return this.relation.findOne(options)
+    }
+
+    findAll(options?: FindOptions): Promise<T[]> {
+        return this.relation.findAll(options)
+    }
+
+    findAndCountAll(options?: FindAndCountOptions): Promise<{ rows: T[]; count: number }> {
+        return this.relation.findAndCountAll(options)
+    }
+
+    update(values: object, options: UpdateOptions): Promise<[number, T[]]> {
+        return this.relation.update(values, options)
+    }
+
+    destroy(options?: DestroyOptions): Promise<number> {
+        return this.relation.destroy(options)
+    }
+
+    bulkCreate(records: object[], options?: BulkCreateOptions): Promise<T[]> {
+        return this.relation.bulkCreate(records, options)
+    }
+
+    findOrCreate(options: FindOrCreateOptions): Promise<[T, boolean]> {
+        return this.relation.findOrCreate(options)
     }
 }
