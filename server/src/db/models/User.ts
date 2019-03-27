@@ -1,4 +1,6 @@
-import {Table, Column, Model} from 'sequelize-typescript'
+import {Table, Column, Model, Unique, HasMany, BelongsToMany} from 'sequelize-typescript'
+import {Aquascape} from 'db/models/Aquascape'
+import {FavoriteUserAquascape} from 'db/models/manyToMany/FavoriteUserAquascape'
 
 @Table
 export class User extends Model<User> {
@@ -8,6 +10,7 @@ export class User extends Model<User> {
     @Column
     password: string
 
+    @Unique
     @Column
     username: string
 
@@ -25,4 +28,16 @@ export class User extends Model<User> {
 
     @Column
     instagramLink: string
+
+    @HasMany(() => Aquascape)
+    aquascapes: Aquascape[]
+
+    @HasMany(() => User)
+    followers: User[]
+
+    @HasMany(() => User)
+    following: User[]
+
+    @BelongsToMany(() => Aquascape, () => FavoriteUserAquascape)
+    favoriteAquascapes: Aquascape[]
 }
