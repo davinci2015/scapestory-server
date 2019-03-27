@@ -16,7 +16,7 @@ export class Aquascape extends Model<Aquascape> {
     title: string
 
     @Column
-    volume: number
+    volume: number // Default in litres
 
     @Column
     startedAt: Date
@@ -60,6 +60,9 @@ export class Aquascape extends Model<Aquascape> {
 
     @HasMany(() => Comment)
     comments: Comment[]
+
+    @HasMany(() => Comment)
+    tags: Comment[]
 
     @BelongsToMany(() => User, () => FavoriteUserAquascape)
     favoritedByUsers: User[]

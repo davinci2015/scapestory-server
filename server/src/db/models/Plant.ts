@@ -20,10 +20,10 @@ export class Plant extends Model<Plant> {
     origin: string
 
     @Column
-    minHeight: number
+    minHeight: number // Default in centimetres
 
     @Column
-    maxHeight: number
+    maxHeight: number // Default in centimetres
 
     @Column
     position: string
