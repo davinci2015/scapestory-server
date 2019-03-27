@@ -1,22 +1,23 @@
-import {Injectable} from '@graphql-modules/di'
-
-const users = [{
-    _id: 0,
-    username: 'Sample User'
-}]
+import {Injectable, Inject} from '@graphql-modules/di'
+import {tokens} from 'di/tokens'
+import {UserRepositoryInterface} from 'db/repositories/UserRepository'
+import {User} from 'db/models/User'
 
 export interface UsersProviderInterface {
-    getUser: (id: number) => Object,
-    allUsers: () => Array<Object>
+    getUser: (id: number) => Promise<User | null>,
+    allUsers: () => Promise<Array<User>>
 }
 
 @Injectable()
 export class UsersProvider implements UsersProviderInterface {
-    getUser(id: number) {
-        return users.find(({_id}) => _id === id)
+    constructor(@Inject(tokens.USER_REPOSITORY) private userRepository: UserRepositoryInterface) {
     }
 
-    allUsers() {
-        return users
+    async getUser(id: number) {
+        return await this.userRepository.findOne({where: {id}})
+    }
+
+    async allUsers() {
+        return await this.userRepository.findAll()
     }
 }

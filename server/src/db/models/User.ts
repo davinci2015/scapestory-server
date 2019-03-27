@@ -12,10 +12,10 @@ export class User extends Model<User> {
     username: string
 
     @Column
-    firstName: string
+    name: string
 
     @Column
-    lastName: string
+    profileImage: string
 
     @Column
     country: string

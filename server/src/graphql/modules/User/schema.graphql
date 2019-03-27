@@ -1,10 +1,16 @@
 type Query {
-    me(id: String!): User
+    me: User
+    user(id: Int!): User
     users: [User]
 }
 
 type User {
-    email: String
+    id: Int!
+    email: String!
+    username: String!
+    name: String
+    profileImage: String
+    country: String
     createdAt: String!
     updatedAt: String!
 }
