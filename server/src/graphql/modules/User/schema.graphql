@@ -1,7 +1,7 @@
 type Query {
     me: User
     user(id: Int!): User
-    users: [User]
+    users: [User]!
 }
 
 type User {
@@ -11,6 +11,8 @@ type User {
     name: String
     profileImage: String
     country: String
+    youtubeLink: String
+    instagramLink: String
     createdAt: String!
     updatedAt: String!
 }

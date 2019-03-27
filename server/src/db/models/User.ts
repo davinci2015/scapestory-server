@@ -19,4 +19,10 @@ export class User extends Model<User> {
 
     @Column
     country: string
+
+    @Column
+    youtubeLink: string
+
+    @Column
+    instagramLink: string
 }

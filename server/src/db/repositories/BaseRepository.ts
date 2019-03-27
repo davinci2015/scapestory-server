@@ -6,7 +6,6 @@ import {
     CreateOptions,
     DestroyOptions, FindAndCountOptions,
     FindOptions, FindOrCreateOptions,
-    NonNullFindOptions,
     Promise,
     UpdateOptions
 } from 'sequelize'
