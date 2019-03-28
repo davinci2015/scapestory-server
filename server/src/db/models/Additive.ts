@@ -1,9 +1,9 @@
 import {Table, Column, Model, BelongsToMany} from 'sequelize-typescript'
 import {Aquascape} from 'db/models/Aquascape'
-import {AquascapeSubstrate} from 'db/models/AquascapeSubstrate'
+import {AquascapeAdditive} from 'db/models/AquascapeAdditive'
 
 @Table
-export class Substrate extends Model<Substrate> {
+export class Additive extends Model<Additive> {
     @Column
     predefined: boolean
 
@@ -13,6 +13,6 @@ export class Substrate extends Model<Substrate> {
     @Column
     description: string
 
-    @BelongsToMany(() => Aquascape, () => AquascapeSubstrate)
+    @BelongsToMany(() => Aquascape, () => AquascapeAdditive)
     usedInAquascapes: Aquascape[]
 }

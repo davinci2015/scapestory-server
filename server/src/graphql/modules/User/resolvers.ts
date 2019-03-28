@@ -1,5 +1,6 @@
 import {ModuleContext} from '@graphql-modules/core'
 import {UsersProviderInterface} from 'graphql/modules/User/providers/UsersProvider'
+import {authenticated} from 'graphql/middlewares/AuthenticationGuard'
 import {tokens} from 'di/tokens'
 
 type UserArgsType = {
@@ -21,4 +22,8 @@ export const userResolvers = {
             return await provider.allUsers()
         }
     }
+}
+
+export const userResolversComposition = {
+    'Query.me': [authenticated]
 }

@@ -19,5 +19,5 @@ export class CO2 extends Model<CO2> {
     bps: number
 
     @HasMany(() => Aquascape)
-    usedInAquascapes: Aquascape[];
+    usedInAquascapes: Aquascape[]
 }

@@ -1,5 +1,5 @@
 import {Table, Column, Model, BelongsToMany} from 'sequelize-typescript'
-import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant'
+import {AquascapePlant} from 'db/models/AquascapePlant'
 import {Aquascape} from 'db/models/Aquascape'
 
 @Table

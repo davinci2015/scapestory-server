@@ -16,4 +16,8 @@ export class AuthHelper {
         const payload = {user, iat: moment().unix()}
         return jwt.encode(payload, process.env.SECURITY_TOKEN_SECRET)
     }
+
+    static decodeJWTToken(token: string): User | null {
+        return jwt.decode(token, process.env.SECURITY_TOKEN_SECRET)
+    }
 }
