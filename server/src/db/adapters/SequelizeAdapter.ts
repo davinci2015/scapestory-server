@@ -27,7 +27,7 @@ export class SequelizeAdapter implements DatabaseAdapter {
         })
 
         if (AppHelper.isDevelopment()) {
-            this.instance.sync({ force: true })
+            this.instance.sync({force: true})
                 .then(() => console.log('Database synced'))
                 .catch((e) => console.log('Failed to sync database', e))
         }

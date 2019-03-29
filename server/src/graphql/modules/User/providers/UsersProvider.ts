@@ -5,7 +5,7 @@ import {User} from 'db/models/User'
 
 export interface UsersProviderInterface {
     getUser: (id: number) => Promise<User | null>,
-    allUsers: () => Promise<Array<User>>
+    allUsers: () => Promise<User[]>
 }
 
 @Injectable()

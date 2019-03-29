@@ -13,7 +13,10 @@ export const contextBuilder = {
         let user = null
 
         const authToken = session.req.headers[appConstants.HEADER_AUTH_TOKEN]
-        if (!authToken || typeof authToken !== 'string') return
+
+        if (!authToken || typeof authToken !== 'string') {
+            return
+        }
 
         try {
             jwtPayload = AuthHelper.decodeJWTToken(authToken)

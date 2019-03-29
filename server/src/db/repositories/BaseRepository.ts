@@ -38,7 +38,7 @@ export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterfa
     constructor(private relation: ModelType<T>) {
     }
 
-    create(values: any, options?: CreateOptions & { returning: boolean }): Bluebird<T> {
+    create(values: object, options?: CreateOptions & { returning: boolean }): Bluebird<T> {
         return this.relation.create<T>(values, options)
     }
 
