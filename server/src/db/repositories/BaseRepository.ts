@@ -15,7 +15,7 @@ type Constructor<T> = (new () => T)
 type ModelType<T> = Constructor<T> & StaticMembers
 
 export interface BaseRepositoryInterface<T> {
-    create(values: object, options?: CreateOptions & { returning: false }): Bluebird<T>,
+    create(values: object, options?: CreateOptions & { returning: boolean }): Bluebird<T>,
 
     findOne(options: FindOptions): Bluebird<T | null>,
 
@@ -38,7 +38,7 @@ export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterfa
     constructor(private relation: ModelType<T>) {
     }
 
-    create(values: any, options?: CreateOptions & { returning: false }): Bluebird<T> {
+    create(values: any, options?: CreateOptions & { returning: boolean }): Bluebird<T> {
         return this.relation.create<T>(values, options)
     }
 
