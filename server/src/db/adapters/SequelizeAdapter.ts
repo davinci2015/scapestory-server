@@ -22,8 +22,8 @@ export class SequelizeAdapter implements DatabaseAdapter {
             dialect: 'postgres',
             modelPaths: [
                 path.join(__dirname, '../models'),
-                path.join(__dirname, '../models/manyToMany')
-            ]
+                path.join(__dirname, '../models/manyToMany'),
+            ],
         })
 
         if (AppHelper.isDevelopment()) {
