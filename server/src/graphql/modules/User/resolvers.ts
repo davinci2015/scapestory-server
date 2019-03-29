@@ -1,6 +1,6 @@
 import {ModuleContext} from '@graphql-modules/core'
 import {UsersProviderInterface} from 'graphql/modules/User/providers/UsersProvider'
-import {authenticated} from 'graphql/middlewares/AuthenticationGuard'
+import {isAuthenticated} from 'graphql/guards/authentication'
 import {AuthenticationContext} from 'graphql/context'
 import {tokens} from 'di/tokens'
 
@@ -25,5 +25,5 @@ export const userResolvers = {
 }
 
 export const userResolversComposition = {
-    'Query.me': [authenticated]
+    'Query.me': [isAuthenticated]
 }
