@@ -20,7 +20,10 @@ export class SequelizeAdapter implements DatabaseAdapter {
             username: params.username,
             password: params.password,
             dialect: 'postgres',
-            modelPaths: [path.join(__dirname, '../models')]
+            modelPaths: [
+                path.join(__dirname, '../models'),
+                path.join(__dirname, '../models/manyToMany')
+            ]
         })
 
         if (AppHelper.isDevelopment()) {

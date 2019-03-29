@@ -1,6 +1,6 @@
 import {Table, Column, Model, BelongsToMany} from 'sequelize-typescript'
 import {Aquascape} from 'db/models/Aquascape'
-import {AquascapeAdditive} from 'db/models/AquascapeAdditive'
+import {AquascapeAdditive} from 'db/models/manyToMany/AquascapeAdditive'
 
 @Table
 export class Additive extends Model<Additive> {

@@ -1,6 +1,6 @@
 import {Table, Column, Model, BelongsToMany} from 'sequelize-typescript'
 import {Aquascape} from 'db/models/Aquascape'
-import {AquascapeSubstrate} from 'db/models/AquascapeSubstrate'
+import {AquascapeSubstrate} from 'db/models/manyToMany/AquascapeSubstrate'
 
 @Table
 export class Substrate extends Model<Substrate> {

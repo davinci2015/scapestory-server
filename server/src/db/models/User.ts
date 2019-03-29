@@ -1,6 +1,6 @@
 import {Table, Column, Model, Unique, HasMany, BelongsToMany} from 'sequelize-typescript'
 import {Aquascape} from 'db/models/Aquascape'
-import {FavoriteUserAquascape} from 'db/models/FavoriteUserAquascape'
+import {FavoriteUserAquascape} from 'db/models/manyToMany/FavoriteUserAquascape'
 import {Follow} from 'db/models/Follow'
 
 @Table
