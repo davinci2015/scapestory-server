@@ -1,5 +1,5 @@
 export const appConstants = {
-	ENV_DEVELOP: 'develop',
+    ENV_DEVELOP: 'develop',
 
-	HEADER_AUTH_TOKEN: 'auth'
+    HEADER_AUTH_TOKEN: 'auth'
 }
