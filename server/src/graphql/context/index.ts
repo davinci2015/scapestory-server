@@ -4,7 +4,7 @@ import {User} from 'db/models/User'
 import {SessionInterface} from 'interfaces'
 
 export type AuthenticationContext = {
-    currentUser: User
+    currentUser: User,
 }
 
 export const contextBuilder = {
@@ -26,5 +26,5 @@ export const contextBuilder = {
         }
 
         return {currentUser: user}
-    }
+    },
 }

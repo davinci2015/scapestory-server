@@ -20,10 +20,10 @@ export const userResolvers = {
         async users(root, args, {injector}: ModuleContext) {
             const provider: UsersProviderInterface = injector.get(tokens.USERS_PROVIDER)
             return await provider.allUsers()
-        }
-    }
+        },
+    },
 }
 
 export const userResolversComposition = {
-    'Query.me': [isAuthenticated]
+    'Query.me': [isAuthenticated],
 }

@@ -6,7 +6,7 @@ type AuthPayload {
 }
 
 type Query {
-    usernameExists(username: String!): Boolean
+    usernameExists(username: String!): boolean
 }
 
 type Mutation {

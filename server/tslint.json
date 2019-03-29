@@ -15,7 +15,17 @@
         "quotemark": [true, "single"],
         "eofline": false,
         "member-access": [true, "no-public"],
-        "trailing-comma": false,
+        "trailing-comma": [
+            true,
+            {
+                "multiline": {
+                    "objects": "always",
+                    "arrays": "always",
+                    "functions": "never",
+                    "typeLiterals": "ignore"
+                }
+            }
+        ],
         "ordered-imports": false,
         "interface-name": [true, "never-prefix"],
         "object-literal-sort-keys": false,

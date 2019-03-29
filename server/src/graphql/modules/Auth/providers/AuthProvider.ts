@@ -6,14 +6,14 @@ import {tokens} from 'di/tokens'
 import {AuthHelper} from 'utils/AuthHelper'
 
 export type AuthPayload = {
-    token: String
+    token: string,
     user: User
 }
 
 export interface AuthProviderInterface {
     login: (email: string, password: string) => Promise<AuthPayload>,
     register: (email: string, name: string, password: string) => Promise<AuthPayload>,
-    usernameExists: (username: string) => Promise<Boolean>
+    usernameExists: (username: string) => Promise<boolean>
 }
 
 @Injectable()
@@ -47,7 +47,7 @@ export class AuthProvider implements AuthProviderInterface {
         const hashedPassword = AuthHelper.cryptPassword(password)
         const user = await this.userRepository.create({
             email, username,
-            password: hashedPassword
+            password: hashedPassword,
         })
 
         return {token: AuthHelper.createJWTToken(user), user}

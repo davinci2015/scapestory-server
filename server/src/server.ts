@@ -12,7 +12,7 @@ const connectToDatabase = () => {
         host: process.env.DB_HOST,
         username: process.env.DB_USER,
         password: process.env.DB_PASS,
-        database: process.env.DB_NAME
+        database: process.env.DB_NAME,
     })
 
     database.testConnection()
@@ -28,7 +28,7 @@ export const startup = (AppModule: ModuleContext) => {
 
     const server = new ApolloServer({
         schema: AppModule.schema,
-        context: AppModule.context
+        context: AppModule.context,
     })
 
     server.listen(port).then(({url}) => {
