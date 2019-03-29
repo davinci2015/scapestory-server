@@ -7,8 +7,13 @@ export type AuthenticationContext = {
     currentUser: User,
 }
 
-export const contextBuilder = {
-    authentication(session: SessionInterface) {
+export const composeContext = (contexts: Array<(session: SessionInterface) => object>) =>
+    (session: SessionInterface) =>
+        contexts.reduce((acc: object, ctx: (session: SessionInterface) => object) =>
+            ({...acc, ...ctx(session)}), {})
+
+export const context = {
+    attachCurrentUser(session: SessionInterface): object {
         let jwtPayload = null
         let user = null
 
