@@ -15,4 +15,6 @@ type User {
     instagramLink: String
     createdAt: String!
     updatedAt: String!
+    following: [Int]
+    followers: [Int]
 }
