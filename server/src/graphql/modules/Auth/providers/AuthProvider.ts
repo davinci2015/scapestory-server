@@ -2,8 +2,8 @@ import {Injectable, Inject} from '@graphql-modules/di'
 import {AuthenticationError, UserInputError} from 'apollo-server'
 import {User} from 'db/models/User'
 import {UserRepositoryInterface} from 'db/repositories/UserRepository'
-import {tokens} from 'di/tokens'
 import {AuthHelper} from 'utils/AuthHelper'
+import {tokens} from 'di/tokens'
 
 export type AuthPayload = {
     token: string,
@@ -25,6 +25,10 @@ export class AuthProvider implements AuthProviderInterface {
         return Boolean(await this.userRepository.findOne({where: {username}}))
     }
 
+    async emailExists(email: string) {
+        return Boolean(await this.userRepository.findOne({where: {email}}))
+    }
+
     async login(email: string, password: string) {
         const user = await this.userRepository.findOne({where: {email}, raw: true})
 
@@ -40,8 +44,8 @@ export class AuthProvider implements AuthProviderInterface {
     }
 
     async register(email: string, username: string, password: string) {
-        if (await this.usernameExists(username)) {
-            throw new UserInputError('Unique username required')
+        if (await this.usernameExists(username) || await this.emailExists(email)) {
+            throw new UserInputError('User with provided email or username already exists')
         }
 
         const hashedPassword = AuthHelper.cryptPassword(password)
