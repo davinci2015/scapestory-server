@@ -1,3 +1,4 @@
+import {ModuleContext} from '@graphql-modules/core'
 import {appConstants} from 'constants/appConstants'
 import {AuthHelper} from 'utils/AuthHelper'
 import {User} from 'db/models/User'
@@ -7,10 +8,24 @@ export type AuthenticationContext = {
     currentUser: User,
 }
 
-export const composeContext = (contexts: Array<(session: SessionInterface) => object>) =>
-    (session: SessionInterface) =>
-        contexts.reduce((acc: object, ctx: (session: SessionInterface) => object) =>
-            ({...acc, ...ctx(session)}), {})
+export const composeContext = (contexts: Array<(
+    session: SessionInterface,
+    currentContext: ModuleContext,
+    moduleSessionInfo: SessionInterface
+) => Promise<object> | object>) => {
+    return (session: SessionInterface,
+            currentContext: ModuleContext,
+            moduleSessionInfo: SessionInterface
+    ) => {
+        return contexts.reduce((acc: ModuleContext, ctx: (
+            session: SessionInterface,
+            currentContext: ModuleContext,
+            moduleSessionInfo: SessionInterface
+        ) => ModuleContext) => {
+            return ({...acc, ...ctx(session, currentContext, moduleSessionInfo)})
+        }, {})
+    }
+}
 
 export const context = {
     attachCurrentUser(session: SessionInterface): object {

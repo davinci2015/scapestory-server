@@ -14,6 +14,7 @@ export const UserModule = new GraphQLModule({
     typeDefs: userDefs,
     resolvers: userResolvers,
     resolversComposition: userResolversComposition,
+    // @ts-ignore
     context: composeContext([
         context.attachCurrentUser,
     ]),

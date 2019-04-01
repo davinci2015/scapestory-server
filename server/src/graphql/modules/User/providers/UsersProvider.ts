@@ -5,7 +5,7 @@ import {User} from 'db/models/User'
 
 export interface UsersProviderInterface {
     getUser: (id: number) => Promise<User | null>,
-    allUsers: () => Promise<User[]>
+    getAllUsers: () => Promise<User[]>
 }
 
 @Injectable()
@@ -17,7 +17,7 @@ export class UsersProvider implements UsersProviderInterface {
         return await this.userRepository.findOne({where: {id}})
     }
 
-    async allUsers() {
+    async getAllUsers() {
         return await this.userRepository.findAll()
     }
 }

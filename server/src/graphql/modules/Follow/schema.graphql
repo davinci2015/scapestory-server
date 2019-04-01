@@ -1,0 +1,6 @@
+# import User from '../User/schema.graphql'
+
+type Mutation {
+    followUser(userId: Int!): User
+    unfollowUser(userId: Int!): User
+}
