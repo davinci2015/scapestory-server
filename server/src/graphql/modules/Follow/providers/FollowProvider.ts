@@ -45,7 +45,7 @@ export class FollowProvider implements FollowProviderInterface {
     private async findUsers(followerId: number, followedId: number) {
         return await Promise.all([
             this.userRepository.findOne({where: {id: followerId}}),
-            this.userRepository.findOne({where: {id: followedId}}),
+            this.userRepository.findOne({where: {id: followedId}})
         ])
     }
 }

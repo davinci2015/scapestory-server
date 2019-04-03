@@ -11,13 +11,13 @@ export const FollowModule = new GraphQLModule({
     providers: [
         {provide: tokens.FOLLOW_PROVIDER, useClass: FollowProvider},
         {provide: tokens.FOLLOW_REPOSITORY, useClass: FollowRepository},
-        {provide: tokens.USER_REPOSITORY, useClass: UserRepository},
+        {provide: tokens.USER_REPOSITORY, useClass: UserRepository}
     ],
     typeDefs: followDefs,
     resolvers: followResolvers,
     resolversComposition: followResolversComposition,
     // @ts-ignore
     context: composeContext([
-        context.attachCurrentUser,
-    ]),
+        context.attachCurrentUser
+    ])
 })

@@ -1,4 +1,4 @@
-import {Table, Column, Model, ForeignKey} from 'sequelize-typescript'
+import {Table, Column, Model, ForeignKey, BelongsTo} from 'sequelize-typescript'
 import {User} from 'db/models/User'
 
 @Table
@@ -7,8 +7,13 @@ export class Follow extends Model<Follow> {
     @Column
     followedUserId: number
 
+    @BelongsTo(() => User, 'followedUserId')
+    followed: User
+
     @ForeignKey(() => User)
     @Column
-    @Column
     followerUserId: number
+
+    @BelongsTo(() => User, 'followerUserId')
+    follower: User
 }

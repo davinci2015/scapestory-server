@@ -51,7 +51,7 @@ export class AuthProvider implements AuthProviderInterface {
         const hashedPassword = AuthHelper.cryptPassword(password)
         const user = await this.userRepository.create({
             email, username,
-            password: hashedPassword,
+            password: hashedPassword
         })
 
         return {token: AuthHelper.createJWTToken(user), user}

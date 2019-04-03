@@ -5,7 +5,7 @@ import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/BaseRepos
 
 export interface FollowRepositoryInterface extends BaseRepositoryInterface<Follow> {
     followUser: (followerUserId: number, followedUserId: number) => Bluebird<Follow | null>,
-    unfollowUser: (followerUserId: number, followedUserId: number) => Bluebird<Follow | null>,
+    unfollowUser: (followerUserId: number, followedUserId: number) => Bluebird<Follow | null>
 }
 
 @Injectable()

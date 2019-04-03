@@ -16,11 +16,11 @@ export const followResolvers = {
         async unfollowUser(root, args: FollowUserArgsType, context: ModuleContext) {
             const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
             return await provider.unfollowUser(args.userId, context.currentUser.id)
-        },
-    },
+        }
+    }
 }
 
 export const followResolversComposition = {
     'Mutation.followUser': [authenticate],
-    'Mutation.unfollowUser': [authenticate],
+    'Mutation.unfollowUser': [authenticate]
 }
