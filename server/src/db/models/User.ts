@@ -34,10 +34,10 @@ export class User extends Model<User> {
     aquascapes: Aquascape[]
 
     @HasMany(() => Follow, 'followerUserId')
-    following: User[]
+    following: Follow[]
 
     @HasMany(() => Follow, 'followedUserId')
-    followers: User[]
+    followers: Follow[]
 
     @BelongsToMany(() => Aquascape, () => FavoriteUserAquascape)
     favoriteAquascapes: Aquascape[]

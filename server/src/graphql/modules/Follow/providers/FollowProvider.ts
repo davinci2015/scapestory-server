@@ -1,4 +1,5 @@
 import {Injectable, Inject} from '@graphql-modules/di'
+import {Follow} from 'db/models/Follow'
 import {FollowRepositoryInterface} from 'db/repositories/FollowRepository'
 import {UserRepositoryInterface} from 'db/repositories/UserRepository'
 import {User} from 'db/models/User'
@@ -7,7 +8,8 @@ import {UserInputError} from 'apollo-server'
 
 export interface FollowProviderInterface {
     followUser: (followerId: number, followedId: number) => Promise<User>,
-    unfollowUser: (followerId: number, followedId: number) => Promise<User>
+    unfollowUser: (followerId: number, followedId: number) => Promise<User>,
+    getFollows: (userId: number) => Promise<{ followers: Follow[], following: Follow[] }>
 }
 
 @Injectable()
@@ -40,6 +42,10 @@ export class FollowProvider implements FollowProviderInterface {
         await this.followRepository.unfollowUser(followerId, followedId)
 
         return followed
+    }
+
+    async getFollows(userId: number) {
+        return await this.followRepository.getFollows(userId)
     }
 
     private async findUsers(followerId: number, followedId: number) {

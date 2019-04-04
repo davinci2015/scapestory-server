@@ -7,7 +7,17 @@ type FollowUserArgsType = {
     userId: number
 }
 
+type GetFollowsArgsType = {
+    userId: number
+}
+
 export const followResolvers = {
+    Query: {
+        async follows(root, args: GetFollowsArgsType, context: ModuleContext) {
+            const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
+            return await provider.getFollows(args.userId)
+        }
+    },
     Mutation: {
         async followUser(root, args: FollowUserArgsType, context: ModuleContext) {
             const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)

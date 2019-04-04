@@ -1,5 +1,24 @@
 # import User from '../User/schema.graphql'
 
+type Follow {
+    id: Int!
+    followedUserId: Int!
+    followerUserId: Int!
+    followed: User!
+    follower: User!
+    updatedAt: String!
+    craetedAt: String!
+}
+
+type Follows {
+    following: [Follow]
+    followers: [Follow]
+}
+
+type Query {
+    follows(userId: Int!): Follows
+}
+
 type Mutation {
     followUser(userId: Int!): User
     unfollowUser(userId: Int!): User
