@@ -1,4 +1,5 @@
 import {Injectable, Inject} from '@graphql-modules/di'
+import {Follow} from 'db/models/Follow'
 import {tokens} from 'di/tokens'
 import {UserRepositoryInterface} from 'db/repositories/UserRepository'
 import {User} from 'db/models/User'
@@ -14,7 +15,13 @@ export class UsersProvider implements UsersProviderInterface {
     }
 
     async getUser(id: number) {
-        return await this.userRepository.findOne({where: {id}})
+        return await this.userRepository.findOne({
+            where: {id},
+            include: [
+                {model: Follow, as: 'followers'},
+                {model: Follow, as: 'following'}
+            ]
+        })
     }
 
     async getAllUsers() {

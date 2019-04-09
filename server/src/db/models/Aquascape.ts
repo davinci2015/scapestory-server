@@ -1,4 +1,14 @@
-import {Table, Column, Model, ForeignKey, BelongsTo, HasMany, BelongsToMany} from 'sequelize-typescript'
+import {
+    Table,
+    Column,
+    Model,
+    ForeignKey,
+    BelongsTo,
+    HasMany,
+    BelongsToMany,
+    Default,
+    DefaultScope
+} from 'sequelize-typescript'
 import {User} from 'db/models/User'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {FavoriteUserAquascape} from 'db/models/manyToMany/FavoriteUserAquascape'
@@ -16,6 +26,14 @@ import {Comment} from 'db/models/Comment'
 import {Tag} from 'db/models/Tag'
 import {Hardscape} from 'db/models/Hardscape'
 
+@DefaultScope({
+    include: [
+        {
+            as: 'user',
+            model: () => User
+        }
+    ]
+})
 @Table
 export class Aquascape extends Model<Aquascape> {
     @Column
@@ -27,20 +45,20 @@ export class Aquascape extends Model<Aquascape> {
     @Column
     startedAt: Date
 
+    @Default(0)
     @Column
     likes: number
 
+    @Default(0)
     @Column
     votes: number
 
+    @Default(false)
     @Column
     inContest: boolean
 
     @Column
     description: string
-
-    @Column
-    mainImage: string
 
     @HasMany(() => AquascapeImage)
     images: AquascapeImage[]

@@ -1,0 +1,21 @@
+# import User from '../User/schema.graphql'
+
+type Aquascape {
+    id: Int!
+    title: String!
+    volume: Int
+    startedAt: String
+    likes: Int!
+    votes: Int!
+    inContest: Boolean!
+    description: String
+    user: User
+}
+
+type Query {
+    aquascapes: [Aquascape]
+}
+
+type Mutation {
+    createAquascape(title: String!): Aquascape
+}

@@ -5,11 +5,11 @@ import {User} from 'db/models/User'
     include: [
         {
             as: 'followed',
-            model: () => User,
+            model: () => User
         },
         {
             as: 'follower',
-            model: () => User,
+            model: () => User
         }
     ]
 })

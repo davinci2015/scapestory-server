@@ -8,7 +8,7 @@ type UserArgsType = {
     id: number
 }
 
-export const userResolvers = {
+export const resolvers = {
     Query: {
         me(root, args, context: ModuleContext & AuthenticationContext) {
             return context.currentUser
@@ -24,6 +24,6 @@ export const userResolvers = {
     }
 }
 
-export const userResolversComposition = {
+export const resolversComposition = {
     'Query.me': [authenticate]
 }
