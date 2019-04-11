@@ -1,9 +1,10 @@
-import {Table, Column, Model, BelongsToMany} from 'sequelize-typescript'
+import {Table, Column, Model, BelongsToMany, Default} from 'sequelize-typescript'
 import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant'
 import {Aquascape} from 'db/models/Aquascape'
 
 @Table
 export class Plant extends Model<Plant> {
+    @Default(false)
     @Column
     predefined: boolean
 

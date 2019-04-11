@@ -1,8 +1,9 @@
-import {Table, Column, Model, HasMany} from 'sequelize-typescript'
+import {Table, Column, Model, HasMany, Default} from 'sequelize-typescript'
 import {Aquascape} from 'db/models/Aquascape'
 
 @Table
 export class CO2 extends Model<CO2> {
+    @Default(false)
     @Column
     predefined: boolean
 

@@ -2,10 +2,13 @@ import {Model} from 'sequelize-typescript'
 import {NonAbstract} from 'sequelize-typescript/dist/model'
 import * as Bluebird from 'bluebird'
 import {
-    BulkCreateOptions, CountOptions,
+    BulkCreateOptions,
+    CountOptions,
     CreateOptions,
-    DestroyOptions, FindAndCountOptions,
-    FindOptions, FindOrCreateOptions,
+    DestroyOptions,
+    FindAndCountOptions,
+    FindOptions,
+    FindOrCreateOptions,
     Promise,
     UpdateOptions
 } from 'sequelize'
@@ -31,7 +34,7 @@ export interface BaseRepositoryInterface<T> {
 
     findOrCreate(options: FindOrCreateOptions): Promise<[T, boolean]>,
 
-    count(options?: CountOptions): Promise<number>
+    count(options?: CountOptions): Promise<number>,
 }
 
 export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterface<T> {

@@ -10,6 +10,7 @@ import {
     DefaultScope
 } from 'sequelize-typescript'
 import {User} from 'db/models/User'
+import {AquascapeLight} from 'db/models/manyToMany/AquascapeLight'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {FavoriteUserAquascape} from 'db/models/manyToMany/FavoriteUserAquascape'
 import {AquascapeHardscape} from 'db/models/manyToMany/AquascapeHardscape'
@@ -70,19 +71,15 @@ export class Aquascape extends Model<Aquascape> {
     @BelongsTo(() => User)
     user: User
 
-    @ForeignKey(() => Light)
-    @Column
-    lightId: number
-
-    @BelongsTo(() => Light)
-    light: Light
-
     @ForeignKey(() => CO2)
     @Column
     co2Id: number
 
     @BelongsTo(() => CO2)
     co2: CO2
+
+    @BelongsToMany(() => Light, () => AquascapeLight)
+    lights: Light[]
 
     @BelongsToMany(() => Substrate, () => AquascapeSubstrate)
     substrates: Substrate[]
