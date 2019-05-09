@@ -17,12 +17,6 @@ export class Light extends Model<Light> {
     @Column
     image: string
 
-    @Column
-    turnedOnAt: string
-
-    @Column
-    turnedOffAt: string
-
     @BelongsToMany(() => Aquascape, () => AquascapeLight)
     usedInAquascapes: Aquascape[]
 }

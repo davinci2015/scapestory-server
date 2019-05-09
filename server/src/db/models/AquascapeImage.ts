@@ -19,6 +19,9 @@ export class AquascapeImage extends Model<AquascapeImage> {
     @Column
     gridPosition: number
 
+    @Column
+    url: string
+
     @HasMany(() => Comment)
     comments: Comment[]
 

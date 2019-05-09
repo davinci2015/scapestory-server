@@ -20,7 +20,6 @@ import {AquascapeAdditive} from 'db/models/manyToMany/AquascapeAdditive'
 import {AquascapeTag} from 'db/models/manyToMany/AquascapeTag'
 import {Plant} from 'db/models/Plant'
 import {Light} from 'db/models/Light'
-import {CO2} from 'db/models/CO2'
 import {Substrate} from 'db/models/Substrate'
 import {Additive} from 'db/models/Additive'
 import {Comment} from 'db/models/Comment'
@@ -61,6 +60,9 @@ export class Aquascape extends Model<Aquascape> {
     @Column
     description: string
 
+    @BelongsTo(() => AquascapeImage)
+    mainImage: AquascapeImage
+
     @HasMany(() => AquascapeImage)
     images: AquascapeImage[]
 
@@ -71,12 +73,15 @@ export class Aquascape extends Model<Aquascape> {
     @BelongsTo(() => User)
     user: User
 
-    @ForeignKey(() => CO2)
     @Column
-    co2Id: number
+    CO2: string
 
-    @BelongsTo(() => CO2)
-    co2: CO2
+    @Column
+    CO2BPS: string
+
+    @Default(8)
+    @Column
+    photoperiod: number
 
     @BelongsToMany(() => Light, () => AquascapeLight)
     lights: Light[]
