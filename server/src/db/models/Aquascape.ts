@@ -60,9 +60,6 @@ export class Aquascape extends Model<Aquascape> {
     @Column
     description: string
 
-    @BelongsTo(() => AquascapeImage)
-    mainImage: AquascapeImage
-
     @HasMany(() => AquascapeImage)
     images: AquascapeImage[]
 
