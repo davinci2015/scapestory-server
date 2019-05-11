@@ -7,7 +7,7 @@ import Navigation from '../components/Navigation'
 const Index = () => (
     <Layout>
         <Navigation/>
-        <h1>Home page</h1>
+        <h1>News page</h1>
         <Link href={routes.signUp}>
             <a>Sign Up</a>
         </Link>

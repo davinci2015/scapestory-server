@@ -1,15 +1,13 @@
 import * as React from 'react'
-import Link from 'next/link'
-import routes from '../routes'
 import withData from '../lib/apollo'
-import Users from '../components/Users'
+import Layout from '../components/Layout'
+import LoginForm from '../components/LoginForm'
 
 const Login = () => (
-    <React.Fragment>
+    <Layout>
         <h1>Login page</h1>
-        <Users/>
-        <Link href={routes.index}>Home</Link>
-    </React.Fragment>
+        <LoginForm/>
+    </Layout>
 )
 
 export default withData(Login)

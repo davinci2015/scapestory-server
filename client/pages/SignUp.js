@@ -1,11 +1,12 @@
 import * as React from 'react'
 import withData from '../lib/apollo'
-import SignUpForm from '../components/SignUpForm/SignUpForm'
-import Layout from '../components/Layout/Layout'
+import RegistrationForm from '../components/RegistrationForm'
+import Layout from '../components/Layout'
 
 const Login = () => (
     <Layout>
-        <SignUpForm/>
+        <h1>Sign up</h1>
+        <RegistrationForm/>
     </Layout>
 )
 

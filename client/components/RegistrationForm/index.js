@@ -14,7 +14,7 @@ const SIGN_UP = gql`
     }
 `
 
-const SignUpForm = () => {
+const RegistrationForm = () => {
     const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -48,4 +48,4 @@ const SignUpForm = () => {
     )
 }
 
-export default SignUpForm
+export default RegistrationForm
