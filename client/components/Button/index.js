@@ -1,6 +1,37 @@
 import React from 'react'
 import cx from 'classnames'
+import css from 'styled-jsx/css'
 import typography from '../../styles/typography'
+import colors from '../../styles/colors'
+import borderRadius from '../../styles/borderRadius'
+
+const styles = css`
+    button {
+        background-color: ${colors.PRIMARY};
+        border-radius: ${borderRadius.SECONDARY};
+        padding: 16px 32px; 
+        font-size: 16px;
+        cursor: pointer;
+        outline: 0;
+        color: ${colors.SECONDARY_DARK};
+        font-family: ${typography.PRIMARY_FONT};
+        transition: background-color 120ms ease-in-out;
+    }
+    
+    button:hover {
+        background-color: ${colors.PRIMARY_DARK};
+    }
+    
+    .primary {
+        background-color: ${colors.PRIMARY};
+        color: ${colors.TERTIARY}
+    }
+    
+    .secondary {
+        background-color: ${colors.SECONDARY};
+        color: ${colors.TERTIARY}
+    }
+`
 
 export const buttonOptions = {
     color: {
@@ -10,29 +41,14 @@ export const buttonOptions = {
 }
 
 const Button = ({children, color, ...rest}) => (
-    <button className={cx({
-        primary: color === buttonOptions.color.PRIMARY,
-        secondary: color === buttonOptions.color.SECONDARY
-    })} {...rest}>
+    <button
+        type="button"
+        className={cx({
+            primary: color === buttonOptions.color.PRIMARY,
+            secondary: color === buttonOptions.color.SECONDARY
+        })} {...rest}>
         {children}
-        <style jsx>{`
-            button {
-                background-color: green;
-                border: 1px solid grey;
-                border-radius: 8px;
-                padding: 16px 20px;  
-                cursor: pointer;
-                outline: 0;
-                color: white;
-                font-family: ${typography.PRIMARY_FONT}
-            }
-            .primary {
-                background-color: red;
-            }
-            .secondary {
-                background-color: yellow;
-            }
-          `}</style>
+        <style jsx>{styles}</style>
     </button>
 )
 
