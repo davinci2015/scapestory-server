@@ -13,11 +13,16 @@
   "license": "ISC",
   "dependencies": {
     "apollo-link-http": "^1.5.14",
+    "classnames": "^2.2.6",
     "graphql": "^14.2.1",
+    "graphql-tag": "^2.10.1",
+    "install": "^0.12.2",
     "next": "^8.0.4",
     "next-apollo": "^2.1.0",
+    "npm": "^6.9.0",
     "react": "^16.8.6",
     "react-apollo": "^2.5.4",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "styled-jsx": "^3.2.1"
   }
 }
