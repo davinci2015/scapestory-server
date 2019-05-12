@@ -6,6 +6,7 @@ import Button, {buttonOptions} from '../Button'
 import Input from '../Form/Input'
 import routes from '../../routes'
 import PasswordInput from '../Form/PasswordInput'
+import services from '../../services'
 
 const SIGN_UP = gql`
     mutation SignUp($email: String!, $username: String!, $password: String!) {
@@ -21,7 +22,7 @@ const RegistrationForm = () => {
     const [password, setPassword] = useState('')
 
     const onCompleted = (data) => {
-        console.log(data.register.token)
+        services.auth.setToken(data.register.token)
         Router.push(routes.index)
     }
 
