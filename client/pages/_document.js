@@ -15,10 +15,8 @@ class MyDocument extends Document {
                         rel='stylesheet'
                         href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'
                     />
-                    <link
-                        rel="stylesheet"
-                        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
-                    />
+                    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet"/>
+                    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet"/>
                 </Head>
                 <body>
                 <Main/>

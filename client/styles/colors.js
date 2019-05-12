@@ -1,11 +1,11 @@
 export default {
-    PRIMARY: '#2BA84A',
-    PRIMARY_DARK: '#248232',
-    SECONDARY: '#2D3A3A',
-    SECONDARY_DARK: '#040F0F',
-    TERTIARY: '#FCFFFC',
+    PRIMARY: '#19BF67',
+    PRIMARY_DARK: '#0F5D18',
+    SECONDARY: '#132730',
+    SECONDARY_DARK: '#0C1C23',
+    TERTIARY: '#A8C7B2',
 
-    BG: '#FCFFFC',
+    BG: '#F4F4F4',
     WHITE: '#FFF',
     BLACK: '#000'
 }

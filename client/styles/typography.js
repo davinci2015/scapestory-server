@@ -1,3 +1,4 @@
 export default {
-    PRIMARY_FONT: '"Roboto", sans-serif'
+    PRIMARY_FONT: '"Poppins", sans-serif',
+    SECONDARY_FONT: '"Playfair Display", serif'
 }

@@ -13,7 +13,7 @@ const styles = css`
         font-size: 16px;
         cursor: pointer;
         outline: 0;
-        color: ${colors.SECONDARY_DARK};
+        color: ${colors.WHITE};
         font-family: ${typography.PRIMARY_FONT};
         transition: background-color 120ms ease-in-out;
     }
@@ -24,12 +24,10 @@ const styles = css`
     
     .primary {
         background-color: ${colors.PRIMARY};
-        color: ${colors.TERTIARY}
     }
     
     .secondary {
         background-color: ${colors.SECONDARY};
-        color: ${colors.TERTIARY}
     }
 `
 
