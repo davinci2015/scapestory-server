@@ -5,6 +5,7 @@ import Router from 'next/router'
 import Button, {buttonOptions} from '../Button'
 import Input from '../Form/Input'
 import routes from '../../routes'
+import PasswordInput from '../Form/PasswordInput'
 
 const SIGN_UP = gql`
     mutation SignUp($email: String!, $username: String!, $password: String!) {
@@ -32,7 +33,7 @@ const RegistrationForm = () => {
                 <form>
                     <Input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}/>
                     <Input placeholder="Username" value={username} onChange={e => setUsername(e.target.value)}/>
-                    <Input placeholder="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+                    <PasswordInput placeholder="Password" value={password} onChange={e => setPassword(e.target.value)}/>
                     <Button
                         onClick={() => {
                             register({

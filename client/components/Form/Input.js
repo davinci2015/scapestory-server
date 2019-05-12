@@ -1,8 +1,8 @@
 import React from 'react'
 import css from 'styled-jsx/css'
-import typography from '../../../styles/typography'
-import colors from '../../../styles/colors'
-import borderRadius from '../../../styles/borderRadius'
+import typography from '../../styles/typography'
+import colors from '../../styles/colors'
+import borderRadius from '../../styles/borderRadius'
 
 const styles = css`
     input {
@@ -20,11 +20,11 @@ const styles = css`
     }
 `
 
-const Index = (props) => (
+const Input = (props) => (
     <React.Fragment>
         <input {...props}/>
         <style jsx>{styles}</style>
     </React.Fragment>
 )
 
-export default Index
+export default Input

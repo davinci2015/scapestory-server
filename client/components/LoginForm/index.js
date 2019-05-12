@@ -6,6 +6,7 @@ import Router from 'next/router'
 import Button, {buttonOptions} from '../Button'
 import Input from '../Form/Input'
 import routes from '../../routes'
+import PasswordInput from '../Form/PasswordInput'
 
 const LOGIN = gql`
     mutation Login($email: String!, $password: String!) {
@@ -31,8 +32,18 @@ const LoginForm = () => {
                 mutation={LOGIN}>
                 {(register, {data, error}) => (
                     <form>
-                        <Input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}/>
-                        <Input placeholder="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+                        <Input
+                            placeholder="Email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+
+                        <PasswordInput
+                            placeholder="Password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+
                         <Button
                             onClick={() => {
                                 register({
