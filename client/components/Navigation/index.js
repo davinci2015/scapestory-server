@@ -34,7 +34,7 @@ const Navigation = () => (
                 </Link>
             </div>
             <div>
-                <Link href={routes.login}>
+                <Link href={routes.profile}>
                     <a>Profile</a>
                 </Link>
             </div>

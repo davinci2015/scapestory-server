@@ -1,7 +1,14 @@
 import React from 'react'
 import initApollo from './apollo'
 import Head from 'next/head'
+import Cookies from 'universal-cookie'
 import {getDataFromTree} from 'react-apollo'
+import appConstants from '../appConstants'
+
+const getToken = (req) => {
+    const cookies = new Cookies(req && req.headers && req.headers.cookie)
+    return cookies.get(appConstants.COOKIE_AUTH)
+}
 
 export default App => {
     return class Apollo extends React.Component {
@@ -17,7 +24,10 @@ export default App => {
 
             // Run all GraphQL queries in the component tree
             // and extract the resulting data
-            const apollo = initApollo()
+            const apollo = initApollo({}, {
+                getToken: () => getToken(ctx.ctx.req)
+            })
+
             if (!process.browser) {
                 try {
                     // Run all GraphQL queries
@@ -52,7 +62,9 @@ export default App => {
 
         constructor(props) {
             super(props)
-            this.apolloClient = initApollo(props.apolloState)
+            this.apolloClient = initApollo(props.apolloState, {
+                getToken
+            })
         }
 
         render() {

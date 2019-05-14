@@ -4,5 +4,6 @@ export default {
 	signUp: '/signup',
 	signUpEmail: '/signup/email',
 	about: '/about',
-	news: '/news'
+	news: '/news',
+	profile: '/profile'
 }
