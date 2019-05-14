@@ -3,7 +3,7 @@ import withData from '../../lib/apollo'
 import RegistrationForm from '../../components/RegistrationForm'
 import Layout from '../../components/Layout'
 
-const SignUp = () => (
+const SignUp = (props) => console.log(props) || (
     <Layout>
         <h1>Sign up</h1>
         <RegistrationForm/>

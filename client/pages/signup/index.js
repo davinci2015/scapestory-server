@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Link from 'next/link'
 import routes from '../../routes'
-import withData from '../../lib/apollo'
 import Layout from '../../components/Layout'
 
 const SignUp = () => (
@@ -19,4 +18,4 @@ const SignUp = () => (
     </Layout>
 )
 
-export default withData(SignUp)
+export default SignUp
