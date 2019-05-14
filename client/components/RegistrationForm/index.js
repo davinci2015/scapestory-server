@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import gql from 'graphql-tag'
 import {Mutation} from 'react-apollo'
 import Router from 'next/router'
-import Button, {buttonOptions} from '../Button'
+import Button from '../Button'
 import Input from '../Form/Input'
 import routes from '../../routes'
 import PasswordInput from '../Form/PasswordInput'
@@ -32,16 +32,33 @@ const RegistrationForm = () => {
             mutation={SIGN_UP}>
             {(register, {data, error}) => (
                 <form>
-                    <Input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}/>
-                    <Input placeholder="Username" value={username} onChange={e => setUsername(e.target.value)}/>
-                    <PasswordInput placeholder="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+                    <Input
+                        variant="outlined"
+                        placeholder="Email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                    />
+                    <Input
+                        variant="outlined"
+                        placeholder="Username"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
+                    />
+                    <PasswordInput
+                        variant="outlined"
+                        placeholder="Password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
+
                     <Button
+                        variant="outlined"
+                        color="primary"
                         onClick={() => {
                             register({
                                 variables: {email, username, password}
                             })
-                        }}
-                        color={buttonOptions.color.PRIMARY}>
+                        }}>
                         Sign Up
                     </Button>
                 </form>
