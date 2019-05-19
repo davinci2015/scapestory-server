@@ -1,6 +1,6 @@
 import * as React from 'react'
-import RegistrationForm from '../../components/RegistrationForm'
-import Layout from '../../components/Layout'
+import RegistrationForm from '../../components/molecules/RegistrationForm'
+import Layout from '../../components/molecules/Layout'
 
 const SignUp = (props) => (
     <Layout>

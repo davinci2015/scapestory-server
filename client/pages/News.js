@@ -1,8 +1,8 @@
 import * as React from 'react'
 import Link from 'next/link'
 import routes from '../routes'
-import Layout from '../components/Layout'
-import Navigation from '../components/Navigation'
+import Layout from '../components/molecules/Layout'
+import Navigation from '../components/molecules/Navigation'
 
 const Index = () => (
     <Layout>

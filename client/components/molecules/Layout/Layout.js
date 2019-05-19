@@ -1,6 +1,6 @@
 import React from 'react'
-import typography from '../../styles/typography'
-import colors from '../../styles/colors'
+import typography from '../../../styles/typography'
+import colors from '../../../styles/colors'
 
 const Layout = ({children}) => (
     <React.Fragment>

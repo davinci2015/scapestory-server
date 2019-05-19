@@ -1,14 +1,14 @@
 import React, {useState} from 'react'
 import gql from 'graphql-tag'
 import Link from 'next/link'
-import {Mutation} from 'react-apollo'
+import {Mutation} from 'react-apollo/index'
 import Router from 'next/router'
 import Cookies from 'universal-cookie'
-import Button from '../Button'
-import Input from '../Form/Input'
-import routes from '../../routes'
-import PasswordInput from '../Form/PasswordInput'
-import appConstants from '../../appConstants'
+import Button from '../../atoms/Button'
+import Input from '../../atoms/Input/Input'
+import routes from '../../../routes'
+import appConstants from '../../../appConstants'
+import PasswordInput from '../../atoms/PasswordInput'
 
 const LOGIN = gql`
     mutation Login($email: String!, $password: String!) {

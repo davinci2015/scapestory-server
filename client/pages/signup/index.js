@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import routes from '../../routes'
-import Layout from '../../components/Layout'
+import Layout from '../../components/molecules/Layout'
 
 const SignUp = () => (
     <Layout>

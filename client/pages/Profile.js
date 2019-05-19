@@ -1,8 +1,8 @@
 import * as React from 'react'
-import Layout from '../components/Layout'
-import Navigation from '../components/Navigation'
 import {Query} from 'react-apollo'
 import gql from 'graphql-tag'
+import Layout from '../components/molecules/Layout'
+import Navigation from '../components/molecules/Navigation'
 
 const MY_PROFILE = gql`
     query {
