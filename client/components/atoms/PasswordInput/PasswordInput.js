@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Input from '../atoms/Input/Input'
+import Input from 'components/atoms/Input'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import Visibility from '@material-ui/icons/Visibility'

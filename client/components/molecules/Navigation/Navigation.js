@@ -1,8 +1,8 @@
 import React from 'react'
 import css from 'styled-jsx/css'
 import Link from 'next/link'
-import routes from '../../../routes'
-import colors from '../../../styles/colors'
+import routes from 'routes'
+import colors from 'styles/colors'
 
 const styles = css`
     nav {

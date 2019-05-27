@@ -1,5 +1,6 @@
 import {Table, Column, Model, Unique, HasMany, BelongsToMany} from 'sequelize-typescript'
 import {Aquascape} from 'db/models/Aquascape'
+import {SocialLogin} from 'db/models/SocialLogin'
 import {FavoriteUserAquascape} from 'db/models/manyToMany/FavoriteUserAquascape'
 import {Follow} from 'db/models/Follow'
 
@@ -29,6 +30,9 @@ export class User extends Model<User> {
 
     @Column
     instagramLink: string
+
+    @HasMany(() => SocialLogin)
+    social: SocialLogin[]
 
     @HasMany(() => Aquascape)
     aquascapes: Aquascape[]

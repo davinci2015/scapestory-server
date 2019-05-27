@@ -3,7 +3,7 @@ import {FollowRepository} from 'db/repositories/FollowRepository'
 import {UserRepository} from 'db/repositories/UserRepository'
 import {FollowProvider} from 'graphql/modules/Follow/providers/FollowProvider'
 import {followResolvers, followResolversComposition} from 'graphql/modules/Follow/resolvers'
-import {composeContext, context} from 'graphql/context'
+import {composeContext, attachCurrentUser} from 'graphql/context'
 import {tokens} from 'di/tokens'
 import * as followDefs from 'graphql/modules/Follow/schema.graphql'
 
@@ -18,6 +18,6 @@ export const FollowModule = new GraphQLModule({
     resolversComposition: followResolversComposition,
     // @ts-ignore
     context: composeContext([
-        context.attachCurrentUser
+        attachCurrentUser
     ])
 })

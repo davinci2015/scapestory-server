@@ -26,8 +26,11 @@
     "react": "^16.8.6",
     "react-apollo": "^2.5.4",
     "react-dom": "^16.8.6",
+    "react-facebook-login": "^4.1.1",
     "styled-jsx": "^3.2.1",
     "universal-cookie": "^4.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-plugin-module-resolver": "^3.2.0"
+  }
 }

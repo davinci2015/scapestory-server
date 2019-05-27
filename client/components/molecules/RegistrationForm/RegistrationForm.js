@@ -2,11 +2,10 @@ import React, {useState} from 'react'
 import gql from 'graphql-tag'
 import {Mutation} from 'react-apollo/index'
 import Router from 'next/router'
-import Button from '../../atoms/Button'
-import Input from '../../atoms/Input/Input'
-import routes from '../../../routes'
-import PasswordInput from '../Form/PasswordInput'
-import services from '../../services'
+import Button from 'components/atoms/Button'
+import Input from 'components/atoms/Input/Input'
+import routes from 'routes'
+import PasswordInput from 'components/atoms/PasswordInput'
 
 const SIGN_UP = gql`
     mutation SignUp($email: String!, $username: String!, $password: String!) {

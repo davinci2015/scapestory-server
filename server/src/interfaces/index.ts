@@ -1,6 +1,6 @@
-import * as express from 'express'
+import {Request, Response} from 'express'
 
 export interface SessionInterface {
-    req: express.Request
-    res: express.Response
+    req: Request
+    res: Response
 }

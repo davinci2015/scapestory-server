@@ -12,4 +12,5 @@ type Query {
 type Mutation {
     login(email: String!, password: String!): AuthPayload
     register(email: String!, username: String!, password: String!): AuthPayload
+    fbRegister(token: String!): AuthPayload
 }

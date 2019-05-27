@@ -1,7 +1,11 @@
 import {Injectable, Inject} from '@graphql-modules/di'
 import {AuthenticationError, UserInputError} from 'apollo-server'
+import {appConstants} from 'constants/appConstants'
+import {SocialLogin} from 'db/models/SocialLogin'
 import {User} from 'db/models/User'
 import {UserRepositoryInterface} from 'db/repositories/UserRepository'
+import {Request, Response} from 'express'
+import {authenticateFacebook} from 'graphql/modules/Auth/passport'
 import {AuthHelper} from 'utils/AuthHelper'
 import {tokens} from 'di/tokens'
 
@@ -11,8 +15,9 @@ export type AuthPayload = {
 }
 
 export interface AuthProviderInterface {
-    login: (email: string, password: string) => Promise<AuthPayload>,
-    register: (email: string, name: string, password: string) => Promise<AuthPayload>,
+    login: (email: string, password: string) => Promise<AuthPayload>
+    register: (email: string, name: string, password: string) => Promise<AuthPayload>
+    facebookRegister: (token: string, req: Request, res: Response) => Promise<AuthPayload>
     usernameExists: (username: string) => Promise<boolean>
 }
 
@@ -55,5 +60,30 @@ export class AuthProvider implements AuthProviderInterface {
         })
 
         return {token: AuthHelper.createJWTToken(user), user}
+    }
+
+    async facebookRegister(token: string, req: Request, res: Response) {
+        let user
+
+        req.body = {...req.body, access_token: token}
+        const {data} = await authenticateFacebook(req, res)
+
+        if (data.profile) {
+            user = await this.userRepository.findOne({
+                where: {
+                    email: data.profile.emails[0].value
+                }
+            })
+        }
+
+        if (!user) {
+            user = await this.userRepository.create({
+                email: data.profile.emails[0].value,
+                username: data.profile.displayName,
+                profileImage: data.profile.photos[0].value
+            })
+        }
+
+        return {user, token: AuthHelper.createJWTToken(user)}
     }
 }

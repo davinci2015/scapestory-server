@@ -1,11 +1,15 @@
 import * as React from 'react'
 import Link from 'next/link'
-import routes from '../../routes'
-import Layout from '../../components/molecules/Layout'
+import routes from 'routes'
+import Layout from 'components/molecules/Layout'
+import Button from 'components/atoms/Button'
+import FacebookLogin from 'components/molecules/FacebookLogin'
 
 const SignUp = () => (
     <Layout>
-        <h3>Sign up with Facebook</h3>
+        <FacebookLogin>
+            {(renderProps => <Button onClick={renderProps.onClick}>This is my custom FB button</Button>)}
+        </FacebookLogin>
         <h3>Sign up with Google</h3>
         <Link href={routes.signUpEmail}>
             <a>

@@ -4,11 +4,11 @@ import Link from 'next/link'
 import {Mutation} from 'react-apollo/index'
 import Router from 'next/router'
 import Cookies from 'universal-cookie'
-import Button from '../../atoms/Button'
-import Input from '../../atoms/Input/Input'
-import routes from '../../../routes'
-import appConstants from '../../../appConstants'
-import PasswordInput from '../../atoms/PasswordInput'
+import Button from 'components/atoms/Button'
+import Input from 'components/atoms/Input/Input'
+import PasswordInput from 'components/atoms/PasswordInput'
+import appConstants from 'appConstants'
+import routes from 'routes'
 
 const LOGIN = gql`
     mutation Login($email: String!, $password: String!) {

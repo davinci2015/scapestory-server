@@ -1,5 +1,5 @@
 import React from 'react'
-import Input from '@material-ui/core/Input/index'
+import Input from '@material-ui/core/Input'
 
 const MyInput = (props) => (
     <Input {...props} />

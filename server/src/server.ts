@@ -1,8 +1,8 @@
-import * as dotenv from 'dotenv'
 import {ApolloServer} from 'apollo-server'
 import {ModuleContext} from '@graphql-modules/core'
 import {SequelizeAdapter} from 'db/adapters/SequelizeAdapter'
 import {Database} from 'db/Database'
+import {initPassport} from 'graphql/modules/Auth/passport'
 
 const connectToDatabase = () => {
     const adapter = new SequelizeAdapter()
@@ -22,9 +22,8 @@ const connectToDatabase = () => {
 
 export const startup = (AppModule: ModuleContext) => {
     const port = process.env.PORT || 8080
-
-    dotenv.config()
     connectToDatabase()
+    initPassport()
 
     const server = new ApolloServer({
         schema: AppModule.schema,
