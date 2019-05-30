@@ -1,1 +1,1 @@
-export {default} from './FacebookLogin'
+export {default} from './FacebookLoginContainer'

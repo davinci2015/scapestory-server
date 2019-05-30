@@ -1,10 +1,10 @@
+import * as React from 'react'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import appConfig from 'appConfig'
-import * as React from 'react'
 
-const Login = ({ children }) => {
+const Login = ({ children, login }) => {
     const responseFacebook = (response) => {
-        console.log(response);
+        login({variables: {token: response.accessToken}})
     }
 
     return (

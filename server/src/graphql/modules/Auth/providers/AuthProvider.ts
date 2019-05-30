@@ -66,6 +66,7 @@ export class AuthProvider implements AuthProviderInterface {
         let user
 
         req.body = {...req.body, access_token: token}
+
         const {data} = await authenticateFacebook(req, res)
 
         if (data.profile) {
