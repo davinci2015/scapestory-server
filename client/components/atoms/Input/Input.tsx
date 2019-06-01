@@ -1,10 +1,14 @@
-import React from 'react'
-import Input from '@material-ui/core/Input'
+import React, {ChangeEvent} from 'react'
 
-type Props = {}
+export interface InputProps {
+    type?: string
+    placeholder?: string
+    value?: string | number
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void
+}
 
-const MyInput = (props: Props) => (
-    <Input {...props} />
+const Input = (props: InputProps) => (
+    <input {...props} />
 )
 
-export default MyInput
+export default Input

@@ -1,16 +1,16 @@
 import React from 'react'
-import {Button} from '@material-ui/core'
 
 type Props = {
-    children: React.ReactNode
+    children: React.ReactNode,
+    onClick: (...args: any[]) => void
 }
 
-const MyButton = ({children, ...rest}: Props) => (
-    <Button
+const Button = ({children, ...rest}: Props) => (
+    <button
         type="button"
         {...rest}>
         {children}
-    </Button>
+    </button>
 )
 
-export default MyButton
+export default Button

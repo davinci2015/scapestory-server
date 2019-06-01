@@ -18,11 +18,22 @@ const LOGIN = gql`
     }
 `
 
+interface Data {
+    login: {
+        token: string
+    }
+}
+
+interface Variables {
+    email: string,
+    password: string
+}
+
 const LoginForm = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const onCompleted = (data) => {
+    const onCompleted = (data: Data) => {
         const cookies = new Cookies()
         cookies.set(appConstants.COOKIE_AUTH, data.login.token)
         Router.push(routes.index)
@@ -30,30 +41,26 @@ const LoginForm = () => {
 
     return (
         <>
-            <Mutation
+            <Mutation<Data, Variables>
                 onCompleted={onCompleted}
                 mutation={LOGIN}>
-                {(register, {data, error}) => (
+                {(login) => (
                     <form>
                         <Input
-                            variant="outlined"
                             placeholder="Email"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                         />
 
                         <PasswordInput
-                            variant="outlined"
                             placeholder="Password"
                             value={password}
                             onChange={e => setPassword(e.target.value)}
                         />
 
                         <Button
-                            variant="contained"
-                            color="secondary"
                             onClick={() => {
-                                register({
+                                login({
                                     variables: {email, password}
                                 })
                             }}>
