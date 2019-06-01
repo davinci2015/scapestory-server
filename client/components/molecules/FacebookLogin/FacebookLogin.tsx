@@ -19,24 +19,25 @@ export interface FacebookProps {
     onClick?(event: React.MouseEvent<HTMLDivElement>): void
 }
 
-type Login = (props: {variables: {token: string}}) => void
+interface Variables {
+    token: string
+}
 
-type Props = {
+interface Props {
     children: React.ReactNode
 }
 
 const Login = ({children}: Props) => {
-    const responseFacebook = (login: Login) => (response: ReactFacebookLoginInfo) => {
-        login({variables: {token: response.accessToken}})
-    }
+    const responseFacebook = (login: (props: { variables: Variables }) => void) =>
+        (response: ReactFacebookLoginInfo) =>
+            login({variables: {token: response.accessToken}})
 
-    const onFailure = (response: ReactFacebookFailureResponse) => {
+    const onFailure = (response: ReactFacebookFailureResponse) =>
         logger.warn(`Failed to login with FB with status ${response.status}`)
-    }
 
     return (
-        <Mutation mutation={LOGIN}>
-            {(login: Login) => (
+        <Mutation<{}, Variables> mutation={LOGIN}>
+            {(login) => (
                 <FacebookLogin
                     appId={config.FACEBOOK_APP_ID}
                     autoLoad
