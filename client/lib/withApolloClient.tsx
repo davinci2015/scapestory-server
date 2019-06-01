@@ -1,12 +1,15 @@
+import {Request} from 'node-fetch'
 import React from 'react'
 import initApollo from './apollo'
 import Head from 'next/head'
 import Cookies from 'universal-cookie'
-import {getDataFromTree} from 'react-apollo'
-import appConstants from '../appConstants'
+import {Context, getDataFromTree} from 'react-apollo'
+import appConstants from 'appConstants'
+import {NormalizedCacheObject, ApolloClient} from 'apollo-boost'
 
-const getToken = (req) => {
-    const cookies = new Cookies(req && req.headers && req.headers.cookie)
+const getToken = (req?: Request) => {
+    const cookieHeader = req ? req.headers.get('cookie') : undefined
+    const cookies = new Cookies(cookieHeader)
     return cookies.get(appConstants.COOKIE_AUTH)
 }
 
@@ -14,7 +17,9 @@ export default App => {
     return class Apollo extends React.Component {
         static displayName = 'withApollo(App)'
 
-        static async getInitialProps(ctx) {
+        apolloClient: ApolloClient<NormalizedCacheObject>
+
+        static async getInitialProps(ctx: Context) {
             const {Component, router} = ctx
 
             let appProps = {}
@@ -60,7 +65,7 @@ export default App => {
             }
         }
 
-        constructor(props) {
+        constructor(props: any) {
             super(props)
             this.apolloClient = initApollo(props.apolloState, {
                 getToken

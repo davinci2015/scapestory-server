@@ -29,7 +29,7 @@ const LoginForm = () => {
     }
 
     return (
-        <React.Fragment>
+        <>
             <Mutation
                 onCompleted={onCompleted}
                 mutation={LOGIN}>
@@ -65,7 +65,7 @@ const LoginForm = () => {
             <Link href={routes.signUp}>
                 <a>Not a member? Sign up here</a>
             </Link>
-        </React.Fragment>
+        </>
     )
 }
 

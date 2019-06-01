@@ -1,7 +1,11 @@
 import React from 'react'
 import {Button} from '@material-ui/core'
 
-const MyButton = ({children, ...rest}) => (
+type Props = {
+    children: React.ReactNode
+}
+
+const MyButton = ({children, ...rest}: Props) => (
     <Button
         type="button"
         {...rest}>

@@ -1,25 +1,30 @@
-import {ApolloClient, HttpLink, InMemoryCache, ApolloLink, concat} from 'apollo-boost'
+import {ApolloClient, HttpLink, InMemoryCache, ApolloLink, concat, NormalizedCacheObject} from 'apollo-boost'
 import fetch from 'isomorphic-unfetch'
-import appConstants from '../appConstants'
+import appConstants from 'appConstants'
 
-let apolloClient = null
+let apolloClient: ApolloClient<NormalizedCacheObject> | null = null
 
-function create(initialState, {getToken}) {
+export interface InitApolloOptions {
+    getToken: (req?: Request) => string | void
+}
+
+function create(initialState: {[key: string]: any}, options: InitApolloOptions) {
     const authMiddleware = new ApolloLink((operation, forward) => {
         operation.setContext({
             headers: {
-                [appConstants.HEADER_AUTH_TOKEN]: getToken() || ''
+                [appConstants.HEADER_AUTH_TOKEN]: options.getToken() || ''
             }
         })
 
-        return forward(operation)
+        if (forward) return forward(operation)
+
+        return null
     })
 
     const httpLink = new HttpLink({
         uri: 'http://localhost:8080', // Server URL (must be absolute)
         credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
-        // Use fetch() polyfill on the server
-        fetch: !process.browser && fetch
+        fetch: !process.browser ? fetch : undefined
     })
 
     return new ApolloClient({
@@ -30,7 +35,7 @@ function create(initialState, {getToken}) {
     })
 }
 
-export default function initApollo(initialState, options) {
+export default function initApollo(initialState: {[key: string]: any}, options: InitApolloOptions) {
     // Make sure to create a new client for every server-side request so that data
     // isn't shared between connections (which would be bad)
     if (!process.browser) {

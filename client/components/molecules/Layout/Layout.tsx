@@ -2,7 +2,11 @@ import React from 'react'
 import typography from 'styles/typography'
 import colors from 'styles/colors'
 
-const Layout = ({children}) => (
+type Props = {
+    children: React.ReactNode
+}
+
+const Layout = ({children}: Props) => (
     <React.Fragment>
         {children}
         <style jsx global>{`

@@ -1,7 +1,9 @@
 import React from 'react'
 import Input from '@material-ui/core/Input'
 
-const MyInput = (props) => (
+type Props = {}
+
+const MyInput = (props: Props) => (
     <Input {...props} />
 )
 

@@ -26,7 +26,7 @@ const Profile = () => (
         <Navigation/>
         <h1>Profile page</h1>
         <Query query={MY_PROFILE}>
-            {(data) => {
+            {() => {
                 return null
             }}
         </Query>

@@ -5,7 +5,9 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
-const PasswordInput = (props) => {
+type Props = {}
+
+const PasswordInput = (props: Props) => {
     const [passwordVisible, setPasswordVisibility] = useState(false)
 
     return (

@@ -1,9 +1,14 @@
 import React from 'react'
+import {ApolloClient, NormalizedCacheObject} from 'apollo-boost'
 import App, {Container} from 'next/app'
 import {ApolloProvider} from 'react-apollo'
 import withApolloClient from 'lib/withApolloClient'
 
-class MyApp extends App {
+interface Props {
+    apolloClient: ApolloClient<NormalizedCacheObject>
+}
+
+class MyApp extends App<Props>  {
     render() {
         const {Component, pageProps, apolloClient} = this.props
 
