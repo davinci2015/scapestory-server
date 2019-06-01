@@ -2,13 +2,13 @@ import React from 'react'
 import css from 'styled-jsx/css'
 import Link from 'next/link'
 import routes from 'routes'
-import colors from 'styles/colors'
+import * as styles from 'styles'
 
-const styles = css`
+const style = css`
     nav {
         width: 100%;
         height: 64px;
-        background-color: ${colors.TERTIARY};
+        background-color: ${styles.colors.TERTIARY};
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
     }
     
@@ -39,7 +39,7 @@ const Navigation = () => (
                 </Link>
             </div>
         </div>
-        <style jsx>{styles}</style>
+        <style jsx>{style}</style>
     </nav>
 )
 

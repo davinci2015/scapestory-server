@@ -1,9 +1,3 @@
-import colors from './colors'
-import typography from './typography'
-import borderRadius from './borderRadius'
-
-export default {
-    colors,
-    typography,
-    borderRadius
-}
+export {default as colors} from './colors'
+export {default as typography} from './typography'
+export {default as borderRadius} from './borderRadius'

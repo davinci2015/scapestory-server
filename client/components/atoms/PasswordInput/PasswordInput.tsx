@@ -1,6 +1,5 @@
-import {InputProps} from 'components/atoms/Input/Input'
 import React, {useState} from 'react'
-import Input from 'components/atoms/Input'
+import Input, {InputProps} from 'components/atoms/Input'
 
 type Props = InputProps & {}
 
