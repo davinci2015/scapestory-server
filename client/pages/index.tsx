@@ -1,15 +1,13 @@
 import * as React from 'react'
 import Link from 'next/link'
-import routes from '../routes'
-import Layout from '../components/molecules/Layout'
-import Navigation from '../components/molecules/Navigation'
-import Users from '../components/Users'
+import routes from 'routes'
+import Layout from 'components/molecules/Layout'
+import Navigation from 'components/molecules/Navigation'
 
 const Index = () => (
     <Layout>
         <Navigation/>
         <h1>Home page</h1>
-        <Users/>
         <Link href={routes.signUp}>
             <a>Sign Up</a>
         </Link>

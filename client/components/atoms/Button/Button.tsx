@@ -2,7 +2,7 @@ import React from 'react'
 
 type Props = {
     children: React.ReactNode,
-    onClick: (...args: any[]) => void
+    onClick: (...args: any[]) => any
 }
 
 const Button = ({children, ...rest}: Props) => (

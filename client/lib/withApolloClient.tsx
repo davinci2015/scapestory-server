@@ -6,6 +6,7 @@ import Cookies from 'universal-cookie'
 import {Context, getDataFromTree} from 'react-apollo'
 import appConstants from 'appConstants'
 import {NormalizedCacheObject, ApolloClient} from 'apollo-boost'
+import {NextFunctionComponent, NextContext} from 'next';
 
 const getToken = (req?: Request) => {
     const cookieHeader = req ? req.headers.get('cookie') : undefined
@@ -13,17 +14,17 @@ const getToken = (req?: Request) => {
     return cookies.get(appConstants.COOKIE_AUTH)
 }
 
-export default App => {
+const withApolloClient = (App: NextFunctionComponent) => {
     return class Apollo extends React.Component {
         static displayName = 'withApollo(App)'
 
         apolloClient: ApolloClient<NormalizedCacheObject>
 
-        static async getInitialProps(ctx: Context) {
+        static async getInitialProps(ctx: NextContext & Context) {
             const {Component, router} = ctx
 
             let appProps = {}
-            if (App.getInitialProps) {
+            if (App && App.getInitialProps) {
                 appProps = await App.getInitialProps(ctx)
             }
 
@@ -37,6 +38,7 @@ export default App => {
                 try {
                     // Run all GraphQL queries
                     await getDataFromTree(
+                        // @ts-ignore
                         <App
                             {...appProps}
                             Component={Component}
@@ -67,13 +69,14 @@ export default App => {
 
         constructor(props: any) {
             super(props)
-            this.apolloClient = initApollo(props.apolloState, {
-                getToken
-            })
+            this.apolloClient = initApollo(props.apolloState, {getToken})
         }
 
         render() {
-            return <App {...this.props} apolloClient={this.apolloClient}/>
+            // @ts-ignore
+            return <App {...this.props} apolloClient={this.apolloClient} />
         }
     }
 }
+
+export default withApolloClient

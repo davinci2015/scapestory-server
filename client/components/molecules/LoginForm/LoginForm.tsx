@@ -3,12 +3,11 @@ import gql from 'graphql-tag'
 import Link from 'next/link'
 import {Mutation} from 'react-apollo/index'
 import Router from 'next/router'
-import Cookies from 'universal-cookie'
 import Button from 'components/atoms/Button'
 import Input from 'components/atoms/Input/Input'
 import PasswordInput from 'components/atoms/PasswordInput'
-import appConstants from 'appConstants'
 import routes from 'routes'
+import auth from 'utils/auth'
 
 const LOGIN = gql`
     mutation Login($email: String!, $password: String!) {
@@ -34,8 +33,7 @@ const LoginForm = () => {
     const [password, setPassword] = useState('')
 
     const onCompleted = (data: Data) => {
-        const cookies = new Cookies()
-        cookies.set(appConstants.COOKIE_AUTH, data.login.token)
+        auth.persistToken(data.login.token)
         Router.push(routes.index)
     }
 

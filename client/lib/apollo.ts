@@ -1,6 +1,7 @@
 import {ApolloClient, HttpLink, InMemoryCache, ApolloLink, concat, NormalizedCacheObject} from 'apollo-boost'
 import fetch from 'isomorphic-unfetch'
 import appConstants from 'appConstants'
+import {Request} from 'node-fetch'
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null
 
