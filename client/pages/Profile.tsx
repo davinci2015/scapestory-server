@@ -3,6 +3,7 @@ import {Query} from 'react-apollo'
 import gql from 'graphql-tag'
 import Layout from 'components/molecules/Layout'
 import Navigation from 'components/molecules/Navigation'
+import {withRouter, SingletonRouter} from 'next/router'
 
 const MY_PROFILE = gql`
     query {
@@ -20,11 +21,14 @@ const MY_PROFILE = gql`
     }
 `
 
+interface Props {
+    router: SingletonRouter
+}
 
-const Profile = () => (
+const Profile = (props: Props) => (
     <Layout>
-        <Navigation/>
-        <h1>Profile page</h1>
+        <Navigation />
+        <h1>Profile page {props.router.query && props.router.query.username}</h1>
         <Query query={MY_PROFILE}>
             {() => {
                 return null
@@ -33,4 +37,4 @@ const Profile = () => (
     </Layout>
 )
 
-export default Profile
+export default withRouter(Profile)

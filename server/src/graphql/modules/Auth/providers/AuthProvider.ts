@@ -1,7 +1,5 @@
 import {Injectable, Inject} from '@graphql-modules/di'
 import {AuthenticationError, UserInputError} from 'apollo-server'
-import {appConstants} from 'constants/appConstants'
-import {SocialLogin} from 'db/models/SocialLogin'
 import {User} from 'db/models/User'
 import {UserRepositoryInterface} from 'db/repositories/UserRepository'
 import {Request, Response} from 'express'
@@ -63,7 +61,7 @@ export class AuthProvider implements AuthProviderInterface {
     }
 
     async facebookRegister(token: string, req: Request, res: Response) {
-        let user
+        let user: User
 
         req.body = {...req.body, access_token: token}
 

@@ -3,6 +3,8 @@ import * as moment from 'moment'
 import * as jwt from 'jwt-simple'
 import {User} from 'db/models/User'
 
+export type JWTUser = Pick<User, 'id' | 'name' | 'username'> 
+
 export type JWTTokenPayload = {
     user: User,
     iat: number
@@ -17,7 +19,7 @@ export class AuthHelper {
         return bcrypt.hashSync(rawPassword, rounds)
     }
 
-    static createJWTToken(user: User): string {
+    static createJWTToken(user: JWTUser): string {
         const payload = {user, iat: moment().unix()}
         return jwt.encode(payload, process.env.SECURITY_TOKEN_SECRET)
     }

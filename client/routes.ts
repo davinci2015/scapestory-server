@@ -4,6 +4,12 @@ export default {
 	signUp: '/signup',
 	signUpEmail: '/signup/email',
 	about: '/about',
-	news: '/news',
-	profile: '/profile'
+	news: '/news'
+}
+
+export const routeMapping = {
+	profile: {
+		as: (username: string) => `/profile/${username}`,
+		href: (username: string) => `/profile?username=${username}`
+	}
 }

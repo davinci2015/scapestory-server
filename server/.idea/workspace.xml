@@ -1,7 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e46c2a0e-2957-4bf4-ab17-fba98ecf3440" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../client/definitions/global.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/next.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/utils/logger.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/.babelrc" beforeDir="false" afterPath="$PROJECT_DIR$/../client/.babelrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/appConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/appConstants.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/appConstants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/Users.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/atoms/Button/Button.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/atoms/Button/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/atoms/Icon/Icon.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/atoms/Icon/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/atoms/Input/Input.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/atoms/Input/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/atoms/PasswordInput/PasswordInput.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/atoms/PasswordInput/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/molecules/FacebookLogin/FacebookLogin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/molecules/FacebookLogin/FacebookLoginContainer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/molecules/FacebookLogin/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/molecules/Layout/Layout.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/molecules/Layout/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/molecules/LoginForm/LoginForm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/molecules/LoginForm/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/molecules/Navigation/Navigation.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/molecules/Navigation/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/molecules/RegistrationForm/RegistrationForm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/components/molecules/RegistrationForm/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/lib/apollo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/lib/withApolloClient.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/pages/Login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/pages/News.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/pages/Profile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/pages/_app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/pages/_document.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/pages/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/pages/signup/Email.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/pages/signup/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/styles/borderRadius.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/styles/borderRadius.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/styles/colors.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/styles/colors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/styles/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/styles/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/styles/typography.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/styles/typography.ts" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.env">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="21">
+              <caret line="1" column="13" lean-forward="true" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="1680" />
+    <option name="height" value="1027" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+    </panes>
+  </component>
   <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e46c2a0e-2957-4bf4-ab17-fba98ecf3440" name="Default Changelist" comment="" />
+      <created>1559284097564</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1559284097564</updated>
+      <workItem from="1559284103615" duration="14000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="456000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18625678" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="GraphQL" order="9" />
+      <window_info anchor="bottom" id="TypeScript" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="12" visible="true" weight="0.47769314" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="1" column="13" lean-forward="true" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>

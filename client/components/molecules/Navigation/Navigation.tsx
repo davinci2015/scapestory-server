@@ -1,7 +1,7 @@
 import React from 'react'
 import css from 'styled-jsx/css'
 import Link from 'next/link'
-import routes from 'routes'
+import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
 
 const style = css`
@@ -34,7 +34,7 @@ const Navigation = () => (
                 </Link>
             </div>
             <div>
-                <Link href={routes.profile}>
+                <Link as={routeMapping.profile.as('test')} href={routeMapping.profile.href('test')}>
                     <a>Profile</a>
                 </Link>
             </div>
