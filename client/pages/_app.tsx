@@ -22,4 +22,5 @@ class MyApp extends App<Props>  {
     }
 }
 
+// @ts-ignore
 export default withApolloClient(MyApp)

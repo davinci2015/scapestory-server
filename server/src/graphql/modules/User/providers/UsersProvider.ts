@@ -1,7 +1,7 @@
 import {Injectable, Inject} from '@graphql-modules/di'
 import {Follow} from 'db/models/Follow'
 import {tokens} from 'di/tokens'
-import {UserRepositoryInterface} from 'db/repositories/UserRepository'
+import {UserRepositoryInterface} from 'db/repositories/User'
 import {User} from 'db/models/User'
 
 export interface UsersProviderInterface {

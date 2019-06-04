@@ -1,7 +1,7 @@
 import {GraphQLModule} from '@graphql-modules/core'
 import {UsersProvider} from 'graphql/modules/User/providers/UsersProvider'
 import {resolvers, resolversComposition} from 'graphql/modules/User/resolvers'
-import {UserRepository} from 'db/repositories/UserRepository'
+import {UserRepository} from 'db/repositories/User'
 import {composeContext, attachCurrentUser} from 'graphql/context'
 import {tokens} from 'di/tokens'
 import * as typeDefs from 'graphql/modules/User/schema.graphql'

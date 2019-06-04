@@ -1,6 +1,6 @@
 import {Injectable, Inject} from '@graphql-modules/di'
 import {Aquascape} from 'db/models/Aquascape'
-import {AquascapeRepositoryInterface} from 'db/repositories/AquascapeRepository'
+import {AquascapeRepositoryInterface} from 'db/repositories/Aquascape'
 import {CreateAquascapeArgs} from 'graphql/modules/Aquascape/resolvers'
 import {tokens} from 'di/tokens'
 

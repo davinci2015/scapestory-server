@@ -1,7 +1,7 @@
 import {Injectable} from '@graphql-modules/di'
 import * as Bluebird from 'bluebird'
 import {Follow} from 'db/models/Follow'
-import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/BaseRepository'
+import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 
 export interface FollowRepositoryInterface extends BaseRepositoryInterface<Follow> {
     followUser: (followerUserId: number, followedUserId: number) => Bluebird<Follow | null>,

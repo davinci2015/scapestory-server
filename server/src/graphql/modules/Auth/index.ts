@@ -3,13 +3,15 @@ import {tokens} from 'di/tokens'
 import {attachSession, composeContext} from 'graphql/context'
 import {AuthProvider} from 'graphql/modules/Auth/providers/AuthProvider'
 import {resolvers} from 'graphql/modules/Auth/resolvers'
-import {UserRepository} from 'db/repositories/UserRepository'
+import {UserRepository} from 'db/repositories/User'
+import {SocialLoginRepository} from 'db/repositories/SocialLogin'
 import * as typeDefs from 'graphql/modules/Auth/schema.graphql'
 
 export const AuthModule = new GraphQLModule({
     providers: [
         {provide: tokens.AUTH_PROVIDER, useClass: AuthProvider},
-        {provide: tokens.USER_REPOSITORY, useClass: UserRepository}
+        {provide: tokens.USER_REPOSITORY, useClass: UserRepository},
+        {provide: tokens.SOCIAL_LOGIN_REPOSITORY, useClass: SocialLoginRepository},
     ],
     typeDefs,
     resolvers,

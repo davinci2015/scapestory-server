@@ -85,3 +85,4 @@ server/.env
 
 # DynamoDB Local files
 .dynamodb/
+.vscode

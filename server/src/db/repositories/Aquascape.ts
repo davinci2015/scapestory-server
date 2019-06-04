@@ -1,6 +1,6 @@
 import {Injectable} from '@graphql-modules/di'
 import {Aquascape} from 'db/models/Aquascape'
-import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/BaseRepository'
+import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 
 export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aquascape> {
 }

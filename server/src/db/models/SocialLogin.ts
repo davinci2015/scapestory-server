@@ -11,9 +11,6 @@ export class SocialLogin extends Model<SocialLogin> {
     @Column
     socialId: string
 
-    @Column(DataType.ENUM(appConstants.SOCIAL_PROVIDER_FACEBOOK, appConstants.SOCIAL_PROVIDER_GOOGLE))
+    @Column(DataType.ENUM(appConstants.socialLoginProviders.FACEBOOK, appConstants.socialLoginProviders.GOOGLE))
     provider: string
-
-    @Column
-    accessToken: string
 }

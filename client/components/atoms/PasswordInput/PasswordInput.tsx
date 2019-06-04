@@ -4,7 +4,7 @@ import Input, {InputProps} from 'components/atoms/Input'
 type Props = InputProps & {}
 
 const PasswordInput = (props: Props) => {
-    const [passwordVisible, setPasswordVisibility] = useState(false)
+    const [passwordVisible] = useState(false)
 
     return (
         <Input

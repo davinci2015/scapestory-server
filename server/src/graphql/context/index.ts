@@ -34,7 +34,7 @@ export const attachCurrentUser = (session: SessionInterface): { currentUser: Use
     let jwtPayload = null
     let user = null
 
-    const authToken = session.req.headers[appConstants.HEADER_AUTH_TOKEN]
+    const authToken = session.req.headers[appConstants.headers.AUTH_TOKEN]
 
     if (!authToken || typeof authToken !== 'string') {
         return

@@ -1,6 +1,12 @@
 export const appConstants = {
-    ENV_DEVELOP: 'develop',
-    HEADER_AUTH_TOKEN: 'auth',
-    SOCIAL_PROVIDER_FACEBOOK: 'FACEBOOK',
-    SOCIAL_PROVIDER_GOOGLE: 'GOOGLE'
+    environments: {
+        DEVELOP: 'develop'
+    },
+    headers: {
+        AUTH_TOKEN: 'auth'
+    },
+    socialLoginProviders: {
+        FACEBOOK: 'Facebook',
+        GOOGLE: 'Google'
+    }
 }

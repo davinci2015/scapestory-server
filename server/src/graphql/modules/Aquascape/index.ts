@@ -1,5 +1,5 @@
 import {GraphQLModule} from '@graphql-modules/core'
-import {AquascapeRepository} from 'db/repositories/AquascapeRepository'
+import {AquascapeRepository} from 'db/repositories/Aquascape'
 import {composeContext, attachCurrentUser} from 'graphql/context'
 import {AquascapeProvider} from 'graphql/modules/Aquascape/providers/AquascapeProvider'
 import {resolvers, resolversComposition} from 'graphql/modules/Aquascape/resolvers'

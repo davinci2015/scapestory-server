@@ -6,7 +6,8 @@ import Cookies from 'universal-cookie'
 import {Context, getDataFromTree} from 'react-apollo'
 import appConstants from 'appConstants'
 import {NormalizedCacheObject, ApolloClient} from 'apollo-boost'
-import {NextFunctionComponent, NextContext} from 'next';
+import {NextContext} from 'next';
+import {AppComponentType} from 'next/app'
 
 const getToken = (req?: Request) => {
     const cookieHeader = req ? req.headers.get('cookie') : undefined
@@ -14,7 +15,7 @@ const getToken = (req?: Request) => {
     return cookies.get(appConstants.COOKIE_AUTH)
 }
 
-const withApolloClient = (App: NextFunctionComponent) => {
+const withApolloClient = (App: AppComponentType) => {
     return class Apollo extends React.Component {
         static displayName = 'withApollo(App)'
 
