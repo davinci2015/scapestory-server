@@ -3,6 +3,7 @@ import css from 'styled-jsx/css'
 import Link from 'next/link'
 import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
+import AuthorizationGuard from 'components/atoms/AuthorizationGuard'
 
 const style = css`
     nav {
@@ -37,6 +38,7 @@ const Navigation = () => (
                 <Link as={routeMapping.profile.as('test')} href={routeMapping.profile.href('test')}>
                     <a>Profile</a>
                 </Link>
+                <AuthorizationGuard>Guard</AuthorizationGuard>
             </div>
         </div>
         <style jsx>{style}</style>

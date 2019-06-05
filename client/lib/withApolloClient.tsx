@@ -1,19 +1,11 @@
-import {Request} from 'node-fetch'
 import React from 'react'
 import initApollo from './apollo'
 import Head from 'next/head'
-import Cookies from 'universal-cookie'
 import {Context, getDataFromTree} from 'react-apollo'
-import appConstants from 'appConstants'
 import {NormalizedCacheObject, ApolloClient} from 'apollo-boost'
 import {NextContext} from 'next';
 import {AppComponentType} from 'next/app'
-
-const getToken = (req?: Request) => {
-    const cookieHeader = req ? req.headers.get('cookie') : undefined
-    const cookies = new Cookies(cookieHeader)
-    return cookies.get(appConstants.COOKIE_AUTH)
-}
+import auth from "utils/auth";
 
 const withApolloClient = (App: AppComponentType) => {
     return class Apollo extends React.Component {
@@ -26,13 +18,14 @@ const withApolloClient = (App: AppComponentType) => {
 
             let appProps = {}
             if (App && App.getInitialProps) {
+                // @ts-ignore
                 appProps = await App.getInitialProps(ctx)
             }
 
             // Run all GraphQL queries in the component tree
             // and extract the resulting data
             const apollo = initApollo({}, {
-                getToken: () => getToken(ctx.ctx.req)
+                getToken: () => auth.getToken(ctx.ctx.req)
             })
 
             if (!process.browser) {
@@ -70,7 +63,7 @@ const withApolloClient = (App: AppComponentType) => {
 
         constructor(props: any) {
             super(props)
-            this.apolloClient = initApollo(props.apolloState, {getToken})
+            this.apolloClient = initApollo(props.apolloState, {getToken: auth.getToken})
         }
 
         render() {

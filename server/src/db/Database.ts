@@ -1,10 +1,10 @@
 import * as Bluebird from 'bluebird'
 import {DatabaseAdapter} from 'db/adapters/SequelizeAdapter'
 
-export type DatabaseConnectionParams = {
-    database: string,
-    username: string,
-    password: string,
+export interface DatabaseConnectionParams {
+    database: string
+    username: string
+    password: string
     host: string
 }
 

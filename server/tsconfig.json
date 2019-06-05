@@ -10,6 +10,8 @@
       "es2015",
       "dom"
     ],
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
@@ -19,7 +21,7 @@
     "rootDir": "./src"
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*"
   ],
   "files": [
     "src/main.ts"

@@ -18,7 +18,7 @@ export type AuthPayload = {
 export interface AuthProviderInterface {
     login: (email: string, password: string) => Promise<AuthPayload>
     register: (email: string, name: string, password: string) => Promise<AuthPayload>
-    facebookRegister: (token: string, req: Request, res: Response) => Promise<AuthPayload>
+    facebookRegister: (token: string, req: Request, res: Response) => Promise<AuthPayload | undefined>
     usernameExists: (username: string) => Promise<boolean>
 }
 
@@ -67,42 +67,45 @@ export class AuthProvider implements AuthProviderInterface {
     }
 
     async facebookRegister(token: string, req: Request, res: Response) {
-        let social: SocialLogin
-        let user: User
+        let social: SocialLogin | null
+        let user: User | null
 
         req.body = {...req.body, access_token: token}
 
         const {data} = await authenticateFacebook(req, res)
 
-        if (data.profile) {
-            social = await this.socialLoginRepository.findOne({
-                where: {
-                    socialId: data.profile.id,
-                    provider: appConstants.socialLoginProviders.FACEBOOK
-                }
-            })
-
-            if (social) {
-                user = await this.userRepository.findOne({where: {id: social.userId}})
-
-                if (user) {
-                    return {user, token: AuthHelper.createJWTToken(user.id)}
-                }
-            }
-
-            user = await this.userRepository.create({
+        if (data && data.profile) {
+            const userToCreate = {
                 email: data.profile.emails[0].value,
                 username: data.profile.displayName,
                 profileImage: data.profile.photos[0].value
-            })
+            }
 
-            await this.socialLoginRepository.create({
-                userId: user.id,
-                socialId: data.profile.id,
-                provider: appConstants.socialLoginProviders.FACEBOOK
-            })
+            social = await this.socialLoginRepository.findFacebookLogin(data.profile.id)
+
+            if (social) {
+                user = await this.userRepository.findUserById(social.userId)
+
+                if (!user) {
+                    user = await this.userRepository.create(userToCreate)
+                }
+
+                return {user, token: AuthHelper.createJWTToken(user.id)}
+            } else {
+                user = await this.userRepository.findUserByEmail(data.profile.emails[0].value)
+
+                if (!user) {
+                    user = await this.userRepository.create(userToCreate)
+                }
+
+                await this.socialLoginRepository.create({
+                    userId: user.id,
+                    socialId: data.profile.id,
+                    provider: appConstants.socialLoginProviders.FACEBOOK
+                })
+
+                return {user, token: AuthHelper.createJWTToken(user.id)}
+            }
         }
-
-        return {user, token: AuthHelper.createJWTToken(user.id)}
     }
 }

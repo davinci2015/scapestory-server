@@ -2,10 +2,11 @@ import {GraphQLModule} from '@graphql-modules/core'
 import {UsersProvider} from 'graphql/modules/User/providers/UsersProvider'
 import {resolvers, resolversComposition} from 'graphql/modules/User/resolvers'
 import {UserRepository} from 'db/repositories/User'
-import {composeContext, attachCurrentUser} from 'graphql/context'
+import {composeContext, attachCurrentUserId} from 'graphql/context'
 import {tokens} from 'di/tokens'
 import * as typeDefs from 'graphql/modules/User/schema.graphql'
 
+// @ts-ignore
 export const UserModule = new GraphQLModule({
     providers: [
         {provide: tokens.USERS_PROVIDER, useClass: UsersProvider},
@@ -14,8 +15,7 @@ export const UserModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    // @ts-ignore
     context: composeContext([
-        attachCurrentUser
+        attachCurrentUserId
     ])
 })
