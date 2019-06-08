@@ -21,17 +21,17 @@ const Paragraph = ({
             <style jsx>{`
                 .body {
                     font-size: ${typography.fontSize.M};
-                    line-height: ${typography.lineHeight.S}
+                    line-height: ${typography.lineHeight.S};
                 }
 
                 .s {
                     font-size: ${typography.fontSize.S};
-                    line-height: ${typography.lineHeight.S}
+                    line-height: ${typography.lineHeight.S};
                 }
 
                 .xs {
                     font-size: ${typography.fontSize.XS};
-                    line-height: ${typography.lineHeight.XS}
+                    line-height: ${typography.lineHeight.XS};
                 }
             `}</style>
         </Component>

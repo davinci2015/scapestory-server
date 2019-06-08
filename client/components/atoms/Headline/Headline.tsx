@@ -23,27 +23,27 @@ const Headline = ({
             <style jsx>{`
                 .h1 {
                     font-size: ${typography.fontSize.XXXXL};
-                    line-height: ${typography.lineHeight.XXL}
+                    line-height: ${typography.lineHeight.XXL};
                 }
 
                 .h2 {
                     font-size: ${typography.fontSize.XXXL};
-                    line-height: ${typography.lineHeight.XL}
+                    line-height: ${typography.lineHeight.XL};
                 }
 
                 .h3 {
                     font-size: ${typography.fontSize.XXL};
-                    line-height: ${typography.lineHeight.XL}
+                    line-height: ${typography.lineHeight.XL};
                 }
 
                 .h4 {
                     font-size: ${typography.fontSize.XL};
-                    line-height: ${typography.lineHeight.L}
+                    line-height: ${typography.lineHeight.L};
                 }
 
                 .h5 {
                     font-size: ${typography.fontSize.L};
-                    line-height: ${typography.lineHeight.M}
+                    line-height: ${typography.lineHeight.M};
                 }
             `}</style>
         </Component>
