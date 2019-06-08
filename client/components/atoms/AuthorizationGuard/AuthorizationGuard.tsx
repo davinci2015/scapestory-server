@@ -12,8 +12,8 @@ const AuthorizationGuard: NextFunctionComponent<PropsWithChildren<Props>> = (pro
 }
 
 AuthorizationGuard.getInitialProps = async ({req}: NextContext) => {
-    // @ts-ignore
     console.log('heere i am')
+    // @ts-ignore
     const token = auth.getToken(req)
     const isAuthorized = !!token
 

@@ -5,7 +5,7 @@ import {appConstants} from 'constants/appConstants'
 
 export interface SocialLoginRepositoryInterface extends BaseRepositoryInterface<SocialLogin> {
     addFacebookLogin(userId: number, socialId: string): Promise<SocialLogin>
-    findFacebookLogin(socialId: string): Promise<SocialLogin | null>
+    findSocialLogin(socialId: string): Promise<SocialLogin | null>
 }
 
 @Injectable()
@@ -14,12 +14,9 @@ export class SocialLoginRepository extends BaseRepository<SocialLogin> implement
         super(SocialLogin)
     }
 
-    async findFacebookLogin(socialId: string): Promise<SocialLogin | null> {
+    async findSocialLogin(socialId: string): Promise<SocialLogin | null> {
         return await this.findOne({
-            where: {
-                socialId,
-                provider: appConstants.socialLoginProviders.FACEBOOK
-            }
+            where: {socialId}
         })
     }
 

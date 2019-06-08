@@ -27,6 +27,7 @@
     "react-apollo": "^2.5.4",
     "react-dom": "^16.8.6",
     "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.0.4",
     "styled-jsx": "^3.2.1",
     "universal-cookie": "^4.0.0"
   },

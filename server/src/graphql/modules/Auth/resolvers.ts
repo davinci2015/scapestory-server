@@ -18,6 +18,10 @@ type FBRegisterArgsType = {
     token: string
 }
 
+type GoogleRegisterArgsType = {
+    token: string
+}
+
 type UsernameExistsArgsType = {
     email: string,
     username: string,
@@ -44,6 +48,10 @@ export const resolvers = {
         async fbRegister(root, args: FBRegisterArgsType, {injector, req, res}: ModuleContext & SessionContext) {
             const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
             return await provider.facebookRegister(args.token, req, res)
+        },
+        async googleRegister(root, args: GoogleRegisterArgsType, {injector, req, res}: ModuleContext & SessionContext) {
+            const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
+            return await provider.googleRegister(args.token, req, res)
         }
     }
 }

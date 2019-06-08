@@ -19,7 +19,7 @@ const LOGIN = gql`
 `
 
 export interface FacebookProps {
-    onClick(event: React.MouseEvent<HTMLDivElement>): void
+    onClick(): void
 }
 
 interface Variables {
@@ -27,7 +27,7 @@ interface Variables {
 }
 
 interface Props {
-    children: React.ReactNode
+    children: (props: FacebookProps) => React.ReactElement
 }
 
 interface Data {
@@ -55,7 +55,6 @@ const Login = ({children}: Props) => {
             {(login) => (
                 <FacebookLogin
                     appId={config.FACEBOOK_APP_ID}
-                    autoLoad
                     callback={responseFacebook(login)}
                     onFailure={onFailure}
                     render={children}
