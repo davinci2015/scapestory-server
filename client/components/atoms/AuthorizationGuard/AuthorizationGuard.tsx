@@ -1,5 +1,4 @@
-import auth from 'utils/auth'
-import {NextFunctionComponent, NextContext} from 'next'
+import {NextFunctionComponent} from 'next'
 import {PropsWithChildren} from 'react'
 
 interface Props {
@@ -7,18 +6,11 @@ interface Props {
 }
 
 const AuthorizationGuard: NextFunctionComponent<PropsWithChildren<Props>> = (props) => {
-    console.log(props.isAuthorized)
     return <h1>{props.isAuthorized} {props.children}</h1>
 }
 
-AuthorizationGuard.getInitialProps = async ({req}: NextContext) => {
-    console.log('heere i am')
-    // @ts-ignore
-    const token = auth.getToken(req)
-    const isAuthorized = !!token
-
-    console.log('token',token)
-    return {isAuthorized}
+AuthorizationGuard.getInitialProps = async () => {
+    return {isAuthorized: true}
 }
 
 export default AuthorizationGuard

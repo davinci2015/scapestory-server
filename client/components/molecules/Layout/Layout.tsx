@@ -11,8 +11,8 @@ const Layout = ({children}: Props) => (
         {children}
         <style jsx global>{`
             body {
-                font-family: ${typography.PRIMARY_FONT};
-                font-size: 16px;
+                font-family: ${typography.fontFamily.PRIMARY};
+                font-size: ${typography.fontSize.M};
                 background-color: ${colors.BG}
             }
         `}</style>

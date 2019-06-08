@@ -5,7 +5,7 @@ export default {
     SECONDARY_DARK: '#0C1C23',
     TERTIARY: '#A8C7B2',
 
-    BG: '#F4F4F4',
+    BG: '#FFF',
     WHITE: '#FFF',
     BLACK: '#000'
 }
