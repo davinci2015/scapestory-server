@@ -2,7 +2,6 @@ import React from 'react'
 import Link from 'next/link'
 import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
-import AuthorizationGuard from 'components/atoms/AuthorizationGuard'
 
 const Navigation = () => (
     <nav>
@@ -19,7 +18,6 @@ const Navigation = () => (
                 <Link as={routeMapping.profile.as('test')} href={routeMapping.profile.href('test')}>
                     <a>Profile</a>
                 </Link>
-                <AuthorizationGuard>Guard</AuthorizationGuard>
             </div>
         </div>
 
@@ -27,7 +25,7 @@ const Navigation = () => (
             nav {
                 width: 100%;
                 height: 64px;
-                background-color: ${styles.colors.TERTIARY};
+                background-color: ${styles.colors.PRIMARY};
                 box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
             }
             

@@ -1,12 +1,4 @@
 import * as React from 'react'
-import Layout from 'components/molecules/Layout'
-import LoginForm from 'components/molecules/LoginForm'
+import Login from 'screens/Login'
 
-const Login = () => (
-    <Layout>
-        <h1>Login page</h1>
-        <LoginForm/>
-    </Layout>
-)
-
-export default Login
+export default () => <Login/>

@@ -3,6 +3,11 @@ export default {
         PRIMARY: '"Nunito Sans", sans-serif'
     },
 
+    fontWeight: {
+        regular: 500,
+        bold: 900
+    },
+
     fontSize: {
         XS: '12px',
         S: '14px',

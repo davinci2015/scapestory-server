@@ -10,6 +10,10 @@ const Layout = ({children}: Props) => (
     <React.Fragment>
         {children}
         <style jsx global>{`
+            * {
+                box-sizing: border-box;
+            }
+
             body {
                 font-family: ${typography.fontFamily.PRIMARY};
                 font-size: ${typography.fontSize.M};

@@ -8,6 +8,7 @@ import Input from 'components/atoms/Input/Input'
 import PasswordInput from 'components/atoms/PasswordInput'
 import routes from 'routes'
 import auth from 'utils/auth'
+import Paragraph from 'components/atoms/Paragraph';
 
 const LOGIN = gql`
     mutation Login($email: String!, $password: String!) {
@@ -43,7 +44,7 @@ const LoginForm = () => {
                 onCompleted={onCompleted}
                 mutation={LOGIN}>
                 {(login) => (
-                    <form>
+                    <form className="form">
                         <Input
                             placeholder="Email"
                             value={email}
@@ -56,20 +57,44 @@ const LoginForm = () => {
                             onChange={e => setPassword(e.target.value)}
                         />
 
-                        <Button
-                            onClick={() => {
-                                login({
-                                    variables: {email, password}
-                                })
-                            }}>
-                            Sign Up
-                        </Button>
+                        <div className="buttons">
+                            <Button
+                                onClick={() => {
+                                    login({
+                                        variables: {email, password}
+                                    })
+                                }}>
+                                <Paragraph as="span">Login</Paragraph>
+                            </Button>
+                            <Link href={routes.signUp}>
+                                <Button variant="outlined">
+                                    <Paragraph as="span">Sign Up</Paragraph>
+                                </Button>
+                            </Link>
+                        </div>
                     </form>
                 )}
             </Mutation>
-            <Link href={routes.signUp}>
-                <a>Not a member? Sign up here</a>
-            </Link>
+            <style jsx>{`
+                .form :global(input) {
+                    display: block;
+                    width: 100%;
+                    margin-top: 28px;
+                    margin-bottom: 28px;
+                } 
+
+                .form :global(button) {
+                    width: 100%;
+                    margin-left: 12px;
+                }
+
+                .buttons {
+                    display: flex;
+                    margin-left: -12px;
+                    margin-top: 38px;
+                    margin-bottom: 48px;
+                }
+            `}</style>
         </>
     )
 }
