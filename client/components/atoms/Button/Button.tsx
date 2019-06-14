@@ -23,12 +23,12 @@ const Button = ({
                 secondary: color === 'secondary'
             })}
             {...rest}>
-            
+
             {children}
 
             <style jsx>{`
                 button {
-                    border-radius: ${borderRadius.PRIMARY};
+                    border-radius: ${borderRadius.SECONDARY};
                     outline: 0;
                     border: 0;
                     cursor: pointer;

@@ -85,11 +85,11 @@ const LoginForm = () => {
                                         variables: {email, password}
                                     })
                                 }}>
-                                <Paragraph as="span">Login</Paragraph>
+                                <Paragraph as="span" weight="bold" color="light">Login</Paragraph>
                             </Button>
                             <Link href={routes.signUp}>
                                 <Button variant="outlined">
-                                    <Paragraph as="span">Sign Up</Paragraph>
+                                    <Paragraph as="span" weight="bold" color="primary">Sign Up</Paragraph>
                                 </Button>
                             </Link>
                         </div>
@@ -107,13 +107,13 @@ const LoginForm = () => {
 
                 .form :global(button) {
                     width: 100%;
-                    margin-left: 12px;
+                    margin-left: 24px;
                 }
 
                 .buttons {
                     display: flex;
-                    margin-left: -12px;
-                    margin-top: 38px;
+                    margin-left: -24px;
+                    margin-top: 44px;
                     margin-bottom: 48px;
                 }
             `}</style>

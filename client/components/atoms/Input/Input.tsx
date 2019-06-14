@@ -37,7 +37,7 @@ const Input = ({
                 outline: 0;
                 
                 border: 1px solid ${error ? colors.ERROR : colors.PRIMARY};
-                border-radius: ${borderRadius.PRIMARY};
+                border-radius: ${borderRadius.SECONDARY};
             }
 
             input:focus ~ .highlighter {
@@ -60,8 +60,8 @@ const Input = ({
                 top: 50%;
                 background-color: ${error ? colors.ERROR : colors.PRIMARY};
 
-                border-top-left-radius: ${borderRadius.PRIMARY};
-                border-bottom-left-radius: ${borderRadius.PRIMARY};
+                border-top-left-radius: ${borderRadius.SECONDARY};
+                border-bottom-left-radius: ${borderRadius.SECONDARY};
 
                 transition: all 230ms ease-in-out; 
             }

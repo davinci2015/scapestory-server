@@ -5,9 +5,9 @@ import cx from 'classnames'
 interface Props {
     as?: 'p' | 'span',
     size?: 'xs' | 's' | 'body',
-    color?: 'primary' | 'secondary',
+    color?: 'primary' | 'secondary' | 'light' | 'dark',
     children: React.ReactNode | string
-    weight?: 'regular' | 'bold'
+    weight?: 'regular' | 'bold' | 'semibold'
 }
 
 const Paragraph = ({
@@ -32,15 +32,27 @@ const Paragraph = ({
                 }
 
                 .color-primary {
-                    color: ${colors.BLACK};
+                    color: ${colors.PRIMARY};
                 }
 
                 .color-secondary {
                     color: ${colors.DARK_GRAY};
                 }
 
+                .color-light {
+                    color: ${colors.WHITE};
+                }
+
+                .color-dark {
+                    color: ${colors.BLACK};
+                }
+
                 .regular {
                     font-weight: ${typography.fontWeight.regular}; 
+                }
+
+                .semibold {
+                    font-weight: ${typography.fontWeight.semibold};
                 }
 
                 .bold {

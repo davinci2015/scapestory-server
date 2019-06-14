@@ -33,9 +33,11 @@ const Login = () => {
 
                 .form {
                     margin-top: 44px;
+                    margin-bottom: 44px;
                 }
 
                 .left-container {
+                    margin-right: 140px;
                     max-width: 430px;
                 }
 
@@ -43,14 +45,14 @@ const Login = () => {
                     width: 50%;
                     display: flex;
                     flex-direction: column;
-                    align-items: center;
+                    align-items: flex-end;
                     justify-content: center;
                 }
 
                 .right {
                     width: 50%;
                     border-left: 6px solid ${colors.PRIMARY};
-                    ${backgroundImage('https://cdn.pixabay.com/photo/2016/12/31/21/22/discus-fish-1943755_1280.jpg')}
+                    ${backgroundImage('https://images.unsplash.com/photo-1516970739312-08b075784b71?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2255&q=80')}
                 }
             `}</style>
         </Layout>
