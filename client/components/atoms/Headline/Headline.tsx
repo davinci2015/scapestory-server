@@ -21,6 +21,10 @@ const Headline = ({
         <Component className={variant ? variant : as} {...props}> 
             {children}
             <style jsx>{`
+                .h1, .h2, .h3, .h4, .h5 {
+                    font-weight: ${typography.fontWeight.extraBold};
+                }
+
                 .h1 {
                     font-size: ${typography.fontSize.XXXXL};
                     line-height: ${typography.lineHeight.XXL};
@@ -33,17 +37,17 @@ const Headline = ({
 
                 .h3 {
                     font-size: ${typography.fontSize.XXL};
-                    line-height: ${typography.lineHeight.XL};
+                    line-height: ${typography.lineHeight.L};
                 }
 
                 .h4 {
                     font-size: ${typography.fontSize.XL};
-                    line-height: ${typography.lineHeight.L};
+                    line-height: ${typography.lineHeight.M};
                 }
 
                 .h5 {
                     font-size: ${typography.fontSize.L};
-                    line-height: ${typography.lineHeight.M};
+                    line-height: ${typography.lineHeight.S};
                 }
             `}</style>
         </Component>

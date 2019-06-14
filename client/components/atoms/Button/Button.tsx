@@ -10,47 +10,49 @@ type Props = {
 }
 
 const Button = ({
-    children, 
-    variant = 'default', 
-    color = 'primary', 
+    children,
+    variant = 'default',
+    color = 'primary',
     ...rest
 }: Props) => (
-    <button
-        type="button"
-        className={cx({
-            outlined: variant === 'outlined',
-            primary: color === 'primary',
-            secondary: color === 'secondary'
-        })}
-        {...rest}>
-        {children}
-        <style>{`
-            button {
-                border-radius: ${borderRadius.PRIMARY};
-                outline: 0;
-                border: 0;
-                cursor: pointer;
-                padding-top: 12px; 
-                padding-bottom: 12px;
-            }
+        <button
+            type="button"
+            className={cx({
+                outlined: variant === 'outlined',
+                primary: color === 'primary',
+                secondary: color === 'secondary'
+            })}
+            {...rest}>
+            
+            {children}
 
-            .primary {
-                color: ${colors.WHITE};
-                background-color: ${colors.PRIMARY};
-            }
+            <style jsx>{`
+                button {
+                    border-radius: ${borderRadius.PRIMARY};
+                    outline: 0;
+                    border: 0;
+                    cursor: pointer;
+                    padding-top: 16px; 
+                    padding-bottom: 16px;
+                }
 
-            .secondary {
+                .primary {
+                    color: ${colors.WHITE};
+                    background-color: ${colors.PRIMARY};
+                }
 
-            }
+                .secondary {
 
-            .outlined {
-                background-color: transparent;
-                border: 1px solid ${colors.PRIMARY};
-                color: ${colors.PRIMARY};
-            }
-        
-        `}</style>
-    </button>
-)
+                }
+
+                .outlined {
+                    background-color: transparent;
+                    border: 1px solid ${colors.PRIMARY};
+                    color: ${colors.PRIMARY};
+                }
+            
+            `}</style>
+        </button>
+    )
 
 export default Button

@@ -9,14 +9,16 @@ const Login = () => {
         <Layout>
             <div className="container">
                 <div className="left">
-                    <div className="form">
-                        <Headline as="h1" variant="h4">
+                    <div className="left-container">
+                        <Headline as="h1" variant="h3">
                             Don't be shy! Show of your aquascapes.
                         </Headline>
-                        <Paragraph as="p" size="s">
-                            Join now and become a part of the aquascape community
+                        <Paragraph as="p" color="secondary">
+                            Join now to start your own scapestory.
                         </Paragraph>
-                        <LoginForm />
+                        <div className="form">
+                            <LoginForm />
+                        </div>
                     </div>
                 </div>
                 <div className="right"></div>
@@ -30,7 +32,11 @@ const Login = () => {
                 }
 
                 .form {
-                    max-width: 300px;
+                    margin-top: 44px;
+                }
+
+                .left-container {
+                    max-width: 430px;
                 }
 
                 .left {

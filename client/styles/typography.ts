@@ -5,7 +5,9 @@ export default {
 
     fontWeight: {
         regular: 500,
-        bold: 900
+        semibold: 600,
+        bold: 800,
+        extraBold: 900
     },
 
     fontSize: {
@@ -20,10 +22,11 @@ export default {
     },
 
     lineHeight: {
-        XS: '18px',
-        S: '24px',
-        M: '30px',
-        L: '36px',
+        XXS: '18px',
+        XS: '24px',
+        S: '30px',
+        M: '36px',
+        L: '48px',
         XL: '66px',
         XXL: '86px'
     }

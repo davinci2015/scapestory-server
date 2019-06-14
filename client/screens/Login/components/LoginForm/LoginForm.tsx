@@ -29,13 +29,27 @@ interface Variables {
     password: string
 }
 
+const inputKeys = {
+    email: 'email',
+    password: 'password'
+}
+
 const LoginForm = () => {
+    const [errors, setError] = useState({
+        [inputKeys.email]: true,
+        [inputKeys.password]: true
+    })
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const onCompleted = (data: Data) => {
         auth.persistToken(data.login.token)
         Router.push(routes.index)
+    }
+
+    const validateEmail = (email?: string) => {
+        if (email === '') setError({...errors, [inputKeys.email]: false}) 
     }
 
     return (
@@ -47,14 +61,21 @@ const LoginForm = () => {
                     <form className="form">
                         <Input
                             placeholder="Email"
+                            label="Email"
                             value={email}
-                            onChange={e => setEmail(e.target.value)}
+                            error={errors[inputKeys.email]}
+                            errorMessage={errors[inputKeys.email]}
+                            onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validateEmail(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                         />
 
                         <PasswordInput
                             placeholder="Password"
+                            label="Password"
                             value={password}
-                            onChange={e => setPassword(e.target.value)}
+                            error={errors[inputKeys.password]}
+                            errorMessage={errors[inputKeys.password]}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                         />
 
                         <div className="buttons">
@@ -75,6 +96,7 @@ const LoginForm = () => {
                     </form>
                 )}
             </Mutation>
+
             <style jsx>{`
                 .form :global(input) {
                     display: block;

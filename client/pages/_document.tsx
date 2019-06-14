@@ -15,7 +15,7 @@ class MyDocument extends Document {
                         rel='stylesheet'
                         href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'
                     />
-                    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,900&display=swap&subset=latin-ext" rel="stylesheet"/>
+                    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,800,900&display=swap&subset=latin-ext" rel="stylesheet"/>
                 </Head>
                 <body>
                 <Main/>
