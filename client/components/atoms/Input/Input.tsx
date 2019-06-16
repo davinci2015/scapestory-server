@@ -22,12 +22,7 @@ const Input = ({
 }: InputProps) => {
     const inputRef = React.createRef<HTMLInputElement>()
 
-    const setFocus = () => {
-        console.log('ahaa')
-        console.log(inputRef.current)
-
-        inputRef && inputRef.current && inputRef.current.focus()
-    }
+    const setFocus = () => inputRef && inputRef.current && inputRef.current.focus()
 
     return (
         <div className="input-container">

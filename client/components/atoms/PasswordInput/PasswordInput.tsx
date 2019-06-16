@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {InputProps} from 'components/atoms/Input'
 import {Input, Icon, InputAdornment, IconButton} from 'components/atoms'
-import {colors, typography, zIndex} from 'styles'
+import {colors, typography} from 'styles'
 
 type Props = InputProps & {}
 
@@ -32,7 +32,7 @@ const PasswordInput = (props: Props) => {
                 .adornment {
                     display: flex;
                     align-items: center; 
-                    z-index: ${zIndex.LOW};
+                    margin-right: 18px;
                 }
 
                 .adornment :global(button) {

@@ -1,14 +1,17 @@
 import {LoginForm} from 'screens/Login/components'
 import {Layout} from 'components/molecules'
 import {backgroundImage} from 'styles/mixins'
-import {colors} from 'styles';
+import {colors, zIndex} from 'styles';
 import {Headline, Paragraph} from 'components/atoms'
+import Bubble from 'components/atoms/Bubble';
 
 const Login = () => {
     return (
         <Layout>
             <div className="container">
                 <div className="left">
+                    <div className="bubble-top"><Bubble size="411px"/></div>
+                    <div className="bubble-bottom"><Bubble size="684px" /></div>
                     <div className="left-container">
                         <Headline as="h1" variant="h3">
                             Don't be shy! Show of your aquascapes.
@@ -42,6 +45,7 @@ const Login = () => {
                 }
 
                 .left {
+                    position: relative;
                     width: 50%;
                     display: flex;
                     flex-direction: column;
@@ -51,8 +55,21 @@ const Login = () => {
 
                 .right {
                     width: 50%;
+                    z-index: ${zIndex.MEDIUM};
                     border-left: 6px solid ${colors.PRIMARY};
                     ${backgroundImage('https://images.unsplash.com/photo-1516970739312-08b075784b71?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2255&q=80')}
+                }
+
+                .bubble-top > :global(.bubble) {
+                    position: absolute;
+                    top: -260px;
+                    right: -200px;
+                }
+
+                .bubble-bottom > :global(.bubble) {
+                    position: absolute;
+                    left: -520px;
+                    bottom: 10px;
                 }
             `}</style>
         </Layout>
