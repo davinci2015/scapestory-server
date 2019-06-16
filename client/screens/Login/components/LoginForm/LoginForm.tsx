@@ -98,14 +98,14 @@ const LoginForm = () => {
             </Mutation>
 
             <style jsx>{`
-                .form :global(input) {
+                .form :global(.input-container) {
                     display: block;
                     width: 100%;
                     margin-top: 28px;
                     margin-bottom: 28px;
                 } 
 
-                .form :global(button) {
+                .buttons :global(button) {
                     width: 100%;
                     margin-left: 24px;
                 }

@@ -6,27 +6,48 @@ import {Paragraph} from 'components/atoms'
 export interface InputProps extends React.HTMLProps<HTMLInputElement> {
     type?: string
     placeholder?: string
-    value?: string | number,
-    error?: boolean,
+    value?: string | number
+    error?: boolean
     label?: string | undefined
     errorMessage?: string | React.ReactNode
+    endAdornment?: React.ReactNode
 }
 
 const Input = ({
     errorMessage,
     error,
     label,
+    endAdornment,
     ...props
-}: InputProps) => (
-        <div className="container">
-            
-            <input {...props} />
+}: InputProps) => {
+    const inputRef = React.createRef<HTMLInputElement>()
 
-            <label>{label}</label>
+    const setFocus = () => {
+        console.log('ahaa')
+        console.log(inputRef.current)
 
-            <div className="highlighter"></div>
+        inputRef && inputRef.current && inputRef.current.focus()
+    }
 
-            {error && <Paragraph as="span" size="s">{errorMessage}</Paragraph>}
+    return (
+        <div className="input-container">
+            <div className="base">
+                <div className="root">
+                    <input ref={inputRef} {...props} />
+                    <label>{label}</label>
+                    <fieldset onClick={setFocus} className="outline"></fieldset>
+                    <div className="highlighter"></div>
+                </div>
+
+                {endAdornment}
+            </div>
+
+            {
+                error &&
+                <div className="error-message">
+                    <Paragraph as="span" size="s">{errorMessage}</Paragraph>
+                </div>
+            }
 
             <style jsx>{`
             input {
@@ -35,9 +56,8 @@ const Input = ({
 
                 padding: 36px 12px 18px 30px;
                 outline: 0;
-                
-                border: 1px solid ${error ? colors.ERROR : colors.PRIMARY};
-                border-radius: ${borderRadius.SECONDARY};
+                border: 0;
+                width: 100%;
             }
 
             input:focus ~ .highlighter {
@@ -50,20 +70,51 @@ const Input = ({
                 color: ${error ? colors.ERROR : colors.PRIMARY};
             }
 
+            input:focus ~ .outline {
+                border-color: ${colors.MID_GRAY};
+            }
+
             .highlighter {
                 opacity: 0;
                 position: absolute;
-                
                 width: 6px;
                 height: 0;
                 left: 0;
                 top: 50%;
-                background-color: ${error ? colors.ERROR : colors.PRIMARY};
-
+                
+                background-color: ${colors.PRIMARY};
                 border-top-left-radius: ${borderRadius.SECONDARY};
                 border-bottom-left-radius: ${borderRadius.SECONDARY};
-
                 transition: all 230ms ease-in-out; 
+
+                ${error && `
+                    background-color: ${colors.ERROR}
+                `}
+            }
+
+            .outline {
+                cursor: pointer;
+                position: absolute;
+                margin: 0;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                border-width: 1px;
+                border-style: solid;
+                border-color: ${colors.LIGHT_GRAY};
+                border-radius: ${borderRadius.SECONDARY};
+            }
+
+            .base {
+                display: inline-flex;
+                width: 100%;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .root {
+                width: 100%;
             }
 
             input::placeholder {
@@ -90,11 +141,12 @@ const Input = ({
                 transition: color 120ms linear;
             }
 
-            .container {
+            .input-container {
                 position: relative;
+                width: 100%;
             }
 
-            .container :global(span) {
+            .error-message {
                 font-size: ${typography.fontSize.XS};
                 color: ${colors.ERROR};
 
@@ -105,5 +157,6 @@ const Input = ({
         `}</style>
         </div>
     )
+}
 
 export default Input
