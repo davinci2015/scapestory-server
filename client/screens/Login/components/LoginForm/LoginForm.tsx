@@ -40,6 +40,11 @@ const LoginForm = () => {
         [inputKeys.password]: true
     })
 
+    const [dirty, setDirty] = useState({
+        [inputKeys.email]: false,
+        [inputKeys.password]: false
+    })
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -49,7 +54,8 @@ const LoginForm = () => {
     }
 
     const validateEmail = (email?: string) => {
-        if (email === '') setError({...errors, [inputKeys.email]: false}) 
+        setDirty({...dirty, [inputKeys.email]: true})
+        if (email === '') setError({...errors, [inputKeys.email]: true}) 
     }
 
     return (
@@ -60,20 +66,22 @@ const LoginForm = () => {
                 {(login) => (
                     <form className="form">
                         <Input
+                            id={inputKeys.email}
                             placeholder="Email"
                             label="Email"
                             value={email}
-                            error={errors[inputKeys.email]}
+                            error={dirty[inputKeys.email] && errors[inputKeys.email]}
                             errorMessage={errors[inputKeys.email]}
                             onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validateEmail(e.target.value)}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                        />
+                            />
 
                         <PasswordInput
+                            id={inputKeys.password}
                             placeholder="Password"
                             label="Password"
                             value={password}
-                            error={errors[inputKeys.password]}
+                            error={dirty[inputKeys.password] && errors[inputKeys.password]}
                             errorMessage={errors[inputKeys.password]}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                         />

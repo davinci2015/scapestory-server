@@ -20,7 +20,7 @@ const PasswordInput = (props: Props) => {
                                 <span className="text">
                                     {passwordVisible ? 'Hide' : 'Show'}
                                 </span>
-                                <Icon d={passwordVisible ? Icon.EYE_SHOW : Icon.EYE_HIDE} color={colors.MID_GRAY} />
+                                <Icon d={passwordVisible ? Icon.EYE_HIDE : Icon.EYE_SHOW} color={colors.MID_GRAY} />
                             </IconButton>
                         </div>
                     </InputAdornment>

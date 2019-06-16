@@ -5,7 +5,7 @@ import cx from 'classnames'
 interface Props {
     as?: 'p' | 'span',
     size?: 'xs' | 's' | 'body',
-    color?: 'primary' | 'secondary' | 'light' | 'dark',
+    color?: string,
     children: React.ReactNode | string
     weight?: 'regular' | 'bold' | 'semibold'
 }
@@ -15,13 +15,13 @@ const Paragraph = ({
     children,
     size = 'body',
     weight = 'regular',
-    color = 'primary',
+    color = colors.BLACK,
     ...props
 }: Props) => {
     const Component = as
 
     return (
-        <Component className={cx(size, weight, `color-${color}`)} {...props}> 
+        <Component className={cx('paragraph', size, weight)} {...props}> 
 
             {children}
             
@@ -30,21 +30,9 @@ const Paragraph = ({
                     font-size: ${typography.fontSize.M};
                     line-height: ${typography.lineHeight.S};
                 }
-
-                .color-primary {
-                    color: ${colors.PRIMARY};
-                }
-
-                .color-secondary {
-                    color: ${colors.DARK_GRAY};
-                }
-
-                .color-light {
-                    color: ${colors.WHITE};
-                }
-
-                .color-dark {
-                    color: ${colors.BLACK};
+                
+                .paragraph {
+                    color: ${color};
                 }
 
                 .regular {

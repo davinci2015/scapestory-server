@@ -9,5 +9,8 @@ export default {
     MID_GRAY: '#c5c7cb',
     DARK_GRAY: '#91929c',
 
-    ERROR: '#e06979'
+    ERROR: '#e06979',
+
+    GOOGLE: '#db4437',
+    FACEBOOK: '#2174f2'
 }

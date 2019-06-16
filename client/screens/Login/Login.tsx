@@ -22,6 +22,16 @@ const Login = () => {
                         <div className="form">
                             <LoginForm />
                         </div>
+                        <div className="social">
+                            <div>
+                                <Paragraph as="span" color={colors.DARK_GRAY}>Or continue with</Paragraph>
+                            </div>
+                            <div>
+                                <Paragraph weight="bold" as="span" color={colors.GOOGLE}>Google</Paragraph>
+                                <Paragraph as="span" color={colors.DARK_GRAY}>&nbsp;|&nbsp;</Paragraph>
+                                <Paragraph weight="bold" as="span" color={colors.FACEBOOK}>Facebook</Paragraph>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="right"></div>
@@ -58,6 +68,11 @@ const Login = () => {
                     z-index: ${zIndex.MEDIUM};
                     border-left: 6px solid ${colors.PRIMARY};
                     ${backgroundImage('https://images.unsplash.com/photo-1516970739312-08b075784b71?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2255&q=80')}
+                }
+
+                .left .social {
+                    display: flex;
+                    justify-content: space-between;
                 }
 
                 .bubble-top > :global(.bubble) {
