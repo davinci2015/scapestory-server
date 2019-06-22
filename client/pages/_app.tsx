@@ -3,6 +3,7 @@ import {ApolloClient, NormalizedCacheObject} from 'apollo-boost'
 import App, {Container} from 'next/app'
 import {ApolloProvider} from 'react-apollo'
 import withApolloClient from 'lib/withApolloClient'
+import {IntlProvider} from 'react-intl';
 
 interface Props {
     apolloClient: ApolloClient<NormalizedCacheObject>
@@ -14,9 +15,11 @@ class MyApp extends App<Props>  {
 
         return (
             <Container>
-                <ApolloProvider client={apolloClient}>
-                    <Component {...pageProps} />
-                </ApolloProvider>
+                <IntlProvider>
+                    <ApolloProvider client={apolloClient}>
+                        <Component {...pageProps} />
+                    </ApolloProvider>
+                </IntlProvider>
             </Container>
         )
     }

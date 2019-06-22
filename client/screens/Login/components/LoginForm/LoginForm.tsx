@@ -8,7 +8,8 @@ import Input from 'components/atoms/Input/Input'
 import PasswordInput from 'components/atoms/PasswordInput'
 import routes from 'routes'
 import auth from 'utils/auth'
-import Paragraph from 'components/atoms/Paragraph';
+import Paragraph from 'components/atoms/Paragraph'
+import {FormattedMessage, injectIntl, InjectedIntlProps} from 'react-intl'
 
 const LOGIN = gql`
     mutation Login($email: String!, $password: String!) {
@@ -34,7 +35,11 @@ const inputKeys = {
     password: 'password'
 }
 
-const LoginForm = () => {
+interface Props extends InjectedIntlProps {}
+
+const LoginForm = ({
+    intl
+}: Props) => {
     const [errors, setError] = useState({
         [inputKeys.email]: true,
         [inputKeys.password]: true
@@ -55,8 +60,11 @@ const LoginForm = () => {
 
     const validateEmail = (email?: string) => {
         setDirty({...dirty, [inputKeys.email]: true})
-        if (email === '') setError({...errors, [inputKeys.email]: true}) 
+        if (email === '') setError({...errors, [inputKeys.email]: true})
     }
+
+    const emailLabel = intl.formatMessage({id: 'login_input_label_email', defaultMessage: 'Email'})
+    const passwordLabel = intl.formatMessage({id: 'login_input_label_password', defaultMessage: 'Password'})
 
     return (
         <>
@@ -67,19 +75,19 @@ const LoginForm = () => {
                     <form className="form">
                         <Input
                             id={inputKeys.email}
-                            placeholder="Email"
-                            label="Email"
+                            placeholder={emailLabel}
+                            label={emailLabel}
                             value={email}
                             error={dirty[inputKeys.email] && errors[inputKeys.email]}
                             errorMessage={errors[inputKeys.email]}
                             onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validateEmail(e.target.value)}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                            />
+                        />
 
                         <PasswordInput
                             id={inputKeys.password}
-                            placeholder="Password"
-                            label="Password"
+                            placeholder={passwordLabel}
+                            label={passwordLabel}
                             value={password}
                             error={dirty[inputKeys.password] && errors[inputKeys.password]}
                             errorMessage={errors[inputKeys.password]}
@@ -93,11 +101,15 @@ const LoginForm = () => {
                                         variables: {email, password}
                                     })
                                 }}>
-                                <Paragraph as="span" weight="bold" color="light">Login</Paragraph>
+                                <FormattedMessage id="login_submit_button" defaultMessage="Login">
+                                    {text => <Paragraph as="span" weight="bold" color="light">{text}</Paragraph>}
+                                </FormattedMessage>
                             </Button>
                             <Link href={routes.signUp}>
                                 <Button variant="outlined">
-                                    <Paragraph as="span" weight="bold" color="primary">Sign Up</Paragraph>
+                                    <FormattedMessage id="login_submit_button" defaultMessage="Sign Up">
+                                        {text => <Paragraph as="span" weight="bold" color="primary">{text}</Paragraph>}
+                                    </FormattedMessage>
                                 </Button>
                             </Link>
                         </div>
@@ -129,4 +141,4 @@ const LoginForm = () => {
     )
 }
 
-export default LoginForm
+export default injectIntl(LoginForm)
