@@ -40,7 +40,9 @@ const Input = ({
             {
                 error &&
                 <div className="error-message">
-                    <Paragraph as="span" size="s">{errorMessage}</Paragraph>
+                    <Paragraph as="span" size="xs" color={colors.ERROR}>
+                        {errorMessage}
+                    </Paragraph>
                 </div>
             }
 
@@ -83,7 +85,10 @@ const Input = ({
                 transition: all 230ms ease-in-out; 
 
                 ${error && `
-                    background-color: ${colors.ERROR}
+                    background-color: ${colors.ERROR};
+                    opacity: 1;
+                    height: 100%;
+                    top: 0;
                 `}
             }
 
@@ -142,9 +147,6 @@ const Input = ({
             }
 
             .error-message {
-                font-size: ${typography.fontSize.XS};
-                color: ${colors.ERROR};
-
                 position: absolute;
                 bottom: -24px;
                 left: 30px

@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie'
 import appConstants from 'appConstants'
-import {Request} from "node-fetch"
+import {Request} from 'node-fetch'
 
 export default {
     persistToken(token: string) {

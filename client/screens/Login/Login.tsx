@@ -29,7 +29,9 @@ const Login = () => {
                             </div>
                             <div>
                                 <Paragraph weight="bold" as="span" color={colors.GOOGLE}>Google</Paragraph>
-                                <Paragraph as="span" color={colors.DARK_GRAY}>&nbsp;|&nbsp;</Paragraph>
+                                <span className="separator">
+                                    <Paragraph as="span" color={colors.DARK_GRAY}>|</Paragraph>
+                                </span>
                                 <Paragraph weight="bold" as="span" color={colors.FACEBOOK}>Facebook</Paragraph>
                             </div>
                         </div>
@@ -51,7 +53,7 @@ const Login = () => {
                 }
 
                 .left-container {
-                    margin-right: 140px;
+                    margin: 40px 140px 40px 0;
                     max-width: 430px;
                 }
 
@@ -86,6 +88,10 @@ const Login = () => {
                     position: absolute;
                     left: -520px;
                     bottom: 10px;
+                }
+
+                .separator {
+                    margin: 0 8px;
                 }
             `}</style>
         </Layout>

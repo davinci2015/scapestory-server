@@ -1,15 +1,15 @@
 import React, {useState} from 'react'
+import Router from 'next/router'
 import gql from 'graphql-tag'
 import Link from 'next/link'
-import {Mutation} from 'react-apollo/index'
-import Router from 'next/router'
-import Button from 'components/atoms/Button'
-import Input from 'components/atoms/Input/Input'
-import PasswordInput from 'components/atoms/PasswordInput'
+import {Mutation} from 'react-apollo'
+import {injectIntl, InjectedIntlProps} from 'react-intl'
+
 import routes from 'routes'
 import auth from 'utils/auth'
-import Paragraph from 'components/atoms/Paragraph'
-import {FormattedMessage, injectIntl, InjectedIntlProps} from 'react-intl'
+import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
+import validator from 'utils/validator'
+import {MessageDescriptor} from 'components/atoms/FormattedMessage'
 
 const LOGIN = gql`
     mutation Login($email: String!, $password: String!) {
@@ -45,6 +45,11 @@ const LoginForm = ({
         [inputKeys.password]: true
     })
 
+    const [errorMessages, setErrorMessage] = useState<{[key: string]: MessageDescriptor | null}>({
+        [inputKeys.email]: null,
+        [inputKeys.password]: null
+    })
+
     const [dirty, setDirty] = useState({
         [inputKeys.email]: false,
         [inputKeys.password]: false
@@ -58,9 +63,53 @@ const LoginForm = ({
         Router.push(routes.index)
     }
 
-    const validateEmail = (email?: string) => {
+    const validateEmail = (email: string) => {
         setDirty({...dirty, [inputKeys.email]: true})
-        if (email === '') setError({...errors, [inputKeys.email]: true})
+
+        if (validator.isEmpty(email)) {
+            setErrorMessage({
+                ...errorMessages, [inputKeys.email]: {
+                    id: 'login_input_error_empty_email',
+                    defaultMessage: 'Please enter your email'
+                }
+            })
+
+            return setError({...errors, [inputKeys.email]: true})
+        }
+
+        if (!validator.isEmailValid(email)) {
+            setErrorMessage({
+                ...errorMessages, [inputKeys.email]: {
+                    id: 'login_input_error_invalid_email',
+                    defaultMessage: 'Please enter valid email'
+                }
+            })
+
+            return setError({...errors, [inputKeys.email]: true})
+        }
+
+        setError({...errors, [inputKeys.email]: false})
+    }
+
+    const validatePassword = (password: string) => {
+        setDirty({...dirty, [inputKeys.password]: true})
+
+        if (validator.isEmpty(password)) {
+            setErrorMessage({
+                ...errorMessages, [inputKeys.password]: {
+                    id: 'login_input_error_empty_password',
+                    defaultMessage: 'Please enter your password'
+                }
+            })
+            return setError({...errors, [inputKeys.password]: true})
+        }
+
+        setError({...errors, [inputKeys.password]: false})
+    }
+
+    const getErrorMessage = (inputKey: string) => {
+        const message = errorMessages[inputKey]
+        return message ? <FormattedMessage {...message} /> : null
     }
 
     const emailLabel = intl.formatMessage({id: 'login_input_label_email', defaultMessage: 'Email'})
@@ -79,7 +128,7 @@ const LoginForm = ({
                             label={emailLabel}
                             value={email}
                             error={dirty[inputKeys.email] && errors[inputKeys.email]}
-                            errorMessage={errors[inputKeys.email]}
+                            errorMessage={getErrorMessage(inputKeys.email)}
                             onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validateEmail(e.target.value)}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                         />
@@ -90,7 +139,8 @@ const LoginForm = ({
                             label={passwordLabel}
                             value={password}
                             error={dirty[inputKeys.password] && errors[inputKeys.password]}
-                            errorMessage={errors[inputKeys.password]}
+                            errorMessage={getErrorMessage(inputKeys.password)}
+                            onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validatePassword(e.target.value)}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                         />
 
@@ -101,15 +151,15 @@ const LoginForm = ({
                                         variables: {email, password}
                                     })
                                 }}>
-                                <FormattedMessage id="login_submit_button" defaultMessage="Login">
-                                    {text => <Paragraph as="span" weight="bold" color="light">{text}</Paragraph>}
-                                </FormattedMessage>
+                                <Paragraph as="span" weight="bold" color="light">
+                                    <FormattedMessage id="login_submit_button" defaultMessage="Login" />
+                                </Paragraph>
                             </Button>
                             <Link href={routes.signUp}>
                                 <Button variant="outlined">
-                                    <FormattedMessage id="login_submit_button" defaultMessage="Sign Up">
-                                        {text => <Paragraph as="span" weight="bold" color="primary">{text}</Paragraph>}
-                                    </FormattedMessage>
+                                    <Paragraph as="span" weight="bold" color="primary">
+                                        <FormattedMessage id="login_submit_button" defaultMessage="Sign Up" />
+                                    </Paragraph>
                                 </Button>
                             </Link>
                         </div>

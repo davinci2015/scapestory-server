@@ -49,17 +49,17 @@ const RegistrationForm = () => {
                     <Input
                         placeholder="Email"
                         value={email}
-                        onChange={e => setEmail(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                     />
                     <Input
                         placeholder="Username"
                         value={username}
-                        onChange={e => setUsername(e.target.value)}
-                    />
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+                        />
                     <PasswordInput
                         placeholder="Password"
                         value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                     />
 
                     <Button

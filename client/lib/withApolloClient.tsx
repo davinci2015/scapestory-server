@@ -1,11 +1,12 @@
 import React from 'react'
-import initApollo from './apollo'
 import Head from 'next/head'
 import {Context, getDataFromTree} from 'react-apollo'
 import {NormalizedCacheObject, ApolloClient} from 'apollo-boost'
-import {NextContext} from 'next';
+import {NextContext} from 'next'
 import {AppComponentType} from 'next/app'
-import auth from "utils/auth";
+
+import initApollo from './apollo'
+import auth from 'utils/auth'
 
 const withApolloClient = (App: AppComponentType) => {
     return class Apollo extends React.Component {
