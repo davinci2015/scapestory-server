@@ -1,8 +1,10 @@
 import {LoginForm} from 'screens/Login/components'
-import {Layout} from 'components/molecules'
+import {Layout, FacebookLogin, GoogleLogin} from 'components/molecules'
 import {backgroundImage} from 'styles/mixins'
 import {colors, zIndex} from 'styles'
 import {Headline, Paragraph, FormattedMessage, Bubble} from 'components/atoms'
+import {FacebookProps} from 'components/molecules/FacebookLogin'
+import {GoogleProps} from 'components/molecules/GoogleLogin'
 
 const Login = () => {
     return (
@@ -28,11 +30,24 @@ const Login = () => {
                                 </Paragraph>
                             </div>
                             <div>
-                                <Paragraph weight="bold" as="span" color={colors.GOOGLE}>Google</Paragraph>
+                                <GoogleLogin>
+                                    {(props: GoogleProps) => (
+                                        <a href="#" onClick={props.onClick}>
+                                             <Paragraph weight="bold" as="span" color={colors.GOOGLE}>Google</Paragraph>
+                                        </a>
+                                    )}
+                                </GoogleLogin>
+                               
                                 <span className="separator">
-                                    <Paragraph as="span" color={colors.DARK_GRAY}>|</Paragraph>
+                                    <Paragraph as="span" color={colors.MID_GRAY}>|</Paragraph>
                                 </span>
-                                <Paragraph weight="bold" as="span" color={colors.FACEBOOK}>Facebook</Paragraph>
+                                <FacebookLogin>
+                                    {(props: FacebookProps) => (
+                                        <a href="#" onClick={props.onClick}>
+                                            <Paragraph weight="bold" as="span" color={colors.FACEBOOK}>Facebook</Paragraph>
+                                        </a>
+                                    )} 
+                                </FacebookLogin>
                             </div>
                         </div>
                     </div>
@@ -78,6 +93,10 @@ const Login = () => {
                     justify-content: space-between;
                 }
 
+                .left .social a {
+                    text-decoration: none;
+                }
+
                 .bubble-top > :global(.bubble) {
                     position: absolute;
                     top: -260px;
@@ -91,7 +110,7 @@ const Login = () => {
                 }
 
                 .separator {
-                    margin: 0 8px;
+                    margin: 0 24px;
                 }
             `}</style>
         </Layout>
