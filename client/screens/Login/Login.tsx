@@ -1,11 +1,8 @@
 import {LoginForm} from 'screens/Login/components'
 import {Layout} from 'components/molecules'
-import {FormattedMessage} from 'react-intl'
-
 import {backgroundImage} from 'styles/mixins'
 import {colors, zIndex} from 'styles'
-import {Headline, Paragraph} from 'components/atoms'
-import Bubble from 'components/atoms/Bubble'
+import {Headline, Paragraph, FormattedMessage, Bubble} from 'components/atoms'
 
 const Login = () => {
     return (
@@ -15,20 +12,20 @@ const Login = () => {
                     <div className="bubble-top"><Bubble size="411px" /></div>
                     <div className="bubble-bottom"><Bubble size="684px" /></div>
                     <div className="left-container">
-                        <FormattedMessage id="login_title" defaultMessage="Don't be shy! Show of your aquascapes.">
-                            {text => <Headline as="h1" variant="h3">{text}</Headline>}
-                        </FormattedMessage>
-                        <FormattedMessage id="login_subtitle" defaultMessage="Join now to start your own scapestory.">
-                            {text => <Paragraph as="p" color={colors.DARK_GRAY}>{text}</Paragraph>}
-                        </FormattedMessage>
+                        <Headline as="h1" variant="h3">
+                            <FormattedMessage id="login_title" defaultMessage="Don't be shy! Show of your aquascapes." />
+                        </Headline>
+                        <Paragraph as="p" color={colors.DARK_GRAY}>
+                            <FormattedMessage id="login_subtitle" defaultMessage="Join now to start your own scapestory." />
+                        </Paragraph>
                         <div className="form">
                             <LoginForm />
                         </div>
                         <div className="social">
                             <div>
-                                <FormattedMessage id="login_social_login_continue" defaultMessage="Or continue with">
-                                    {text => <Paragraph as="span" color={colors.DARK_GRAY}>{text}</Paragraph>}
-                                </FormattedMessage>
+                                <Paragraph as="span" color={colors.DARK_GRAY}>
+                                    <FormattedMessage id="login_social_login_continue" defaultMessage="Or continue with" />
+                                </Paragraph>
                             </div>
                             <div>
                                 <Paragraph weight="bold" as="span" color={colors.GOOGLE}>Google</Paragraph>
