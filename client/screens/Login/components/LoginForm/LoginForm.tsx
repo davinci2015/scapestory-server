@@ -69,7 +69,7 @@ const LoginForm = ({
         if (validator.isEmpty(email)) {
             setErrorMessage({
                 ...errorMessages, [inputKeys.email]: {
-                    id: 'login_input_error_empty_email',
+                    id: 'general_error_empty_email',
                     defaultMessage: 'Please enter your email'
                 }
             })
@@ -80,7 +80,7 @@ const LoginForm = ({
         if (!validator.isEmailValid(email)) {
             setErrorMessage({
                 ...errorMessages, [inputKeys.email]: {
-                    id: 'login_input_error_invalid_email',
+                    id: 'general_error_invalid_email',
                     defaultMessage: 'Please enter valid email'
                 }
             })
@@ -97,7 +97,7 @@ const LoginForm = ({
         if (validator.isEmpty(password)) {
             setErrorMessage({
                 ...errorMessages, [inputKeys.password]: {
-                    id: 'login_input_error_empty_password',
+                    id: 'general_error_empty_password',
                     defaultMessage: 'Please enter your password'
                 }
             })
