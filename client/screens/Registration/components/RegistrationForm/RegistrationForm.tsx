@@ -1,13 +1,12 @@
-import appConstants from 'appConstants'
 import React, {useState} from 'react'
 import gql from 'graphql-tag'
-import {Mutation} from 'react-apollo/index'
+import {Mutation} from 'react-apollo'
 import Router from 'next/router'
-import Button from 'components/atoms/Button'
-import Input from 'components/atoms/Input/Input'
+import Cookies from 'universal-cookie'
+
+import {Button, Input, PasswordInput} from 'components/atoms'
+import appConstants from 'appConstants'
 import routes from 'routes'
-import PasswordInput from 'components/atoms/PasswordInput'
-import Cookies from 'universal-cookie/es6'
 
 const SIGN_UP = gql`
     mutation SignUp($email: String!, $username: String!, $password: String!) {
@@ -55,7 +54,7 @@ const RegistrationForm = () => {
                         placeholder="Username"
                         value={username}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
-                        />
+                    />
                     <PasswordInput
                         placeholder="Password"
                         value={password}
