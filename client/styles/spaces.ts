@@ -9,5 +9,6 @@ export default {
     s36: '36px',
     s42: '42px',
     s48: '48px',
-    s54: '54px'
+    s54: '54px',
+    s60: '60px'
 }

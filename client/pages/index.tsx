@@ -1,21 +1,18 @@
 import * as React from 'react'
 import Link from 'next/link'
+
 import routes from 'routes'
-import Layout from 'components/molecules/Layout'
-import Navigation from 'components/molecules/Navigation'
+import {Navigation} from 'components/molecules'
+import {App} from 'components/core'
 
 const Index = () => (
-    <Layout>
+    <App>
         <Navigation/>
         <h1>Home page</h1>
         <Link href={routes.signUp}>
             <a>Sign Up</a>
         </Link>
-        <br/>
-        <Link href={routes.login}>
-            <a>Login</a>
-        </Link>
-    </Layout>
+    </App>
 )
 
 export default Index

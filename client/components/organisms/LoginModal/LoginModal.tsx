@@ -1,17 +1,31 @@
-import {LoginForm} from 'screens/Login/components'
-import {Layout, FacebookLogin, GoogleLogin} from 'components/molecules'
-import {colors, spaces} from 'styles'
-import {Headline, Paragraph, FormattedMessage, Bubble, Button, ButtonIcon} from 'components/atoms'
+import {useContext} from 'react'
+
+import {LoginForm} from 'components/organisms'
+import {FacebookLogin, GoogleLogin, Modal} from 'components/molecules'
+import {Headline, Paragraph, FormattedMessage, Bubble, Button, ButtonIcon, Icon} from 'components/atoms'
 import {FacebookProps} from 'components/molecules/FacebookLogin'
 import {GoogleProps} from 'components/molecules/GoogleLogin'
+import {colors, spaces} from 'styles'
+import {ModalContext} from 'context/modal'
 
-const Login = () => {
+const LoginModal = () => {
+    const {isOpen, closeModal} = useContext(ModalContext)
+
+    const closeLoginModal = () => closeModal('login')
+
     return (
-        <Layout>
-            <div className="container">
-                <div className="bubble-left"><Bubble size="200px" /></div>
-                <div className="bubble-right"><Bubble size="200px" /></div>
-                <div className="">
+        <>
+            <Modal isOpen={isOpen('login')} onRequestClose={closeLoginModal}>
+                <div className="body">
+                    <div className="bubble-left">
+                        <Bubble size="369px" />
+                    </div>
+                    <div className="bubble-right">
+                        <Bubble size="334px" />
+                    </div>
+                    <a onClick={closeLoginModal} className="close-button">
+                        <Icon d={Icon.CLOSE} color={colors.DARK_GRAY} size={26}/>
+                    </a>
                     <Headline as="h1" variant="h3">
                         <FormattedMessage id="login_title" defaultMessage="Welcome back! Your scapestory is waiting." />
                     </Headline>
@@ -54,17 +68,19 @@ const Login = () => {
                             </FacebookLogin>
                         </div>
                     </div>
-                    <div className="footer">
-                        <Paragraph as="span" color={colors.SHADE_DEEP}>
-                            <FormattedMessage id="login_footer_not_member" defaultMessage="Not a member yet?"/>
-                            <FormattedMessage id="login_footer_sign_up" defaultMessage="Sign up"/>
-                        </Paragraph>
-                    </div>
                 </div>
-            </div>
+                <div className="footer">
+                    <Paragraph as="span" color={colors.SHADE_DEEP}>
+                        <FormattedMessage id="login_footer_not_member" defaultMessage="Not a member yet?" />
+                        <FormattedMessage id="login_footer_sign_up" defaultMessage="Sign up" />
+                    </Paragraph>
+                </div>
+            </Modal>
 
             <style jsx>{`
-                .container {
+                .body {
+                    padding: ${spaces.s60} 96px 0 96px;
+                    position: relative;
                 }
 
                 .form {
@@ -72,16 +88,24 @@ const Login = () => {
                     margin-bottom: ${spaces.s24};
                 }
 
+                .close-button {
+                    cursor: pointer;
+                    position: absolute;
+                    top: ${spaces.s18};
+                    right: ${spaces.s18};
+                    padding: ${spaces.s6};
+                }
+
                 .bubble-left > :global(.bubble) {
                     position: absolute;
-                    left: 0;
+                    left: -40%;
                     top: 0;
                 }
 
                 .bubble-right > :global(.bubble) {
                     position: absolute;
-                    right: 0;
-                    top: 0;
+                    right: -35%;
+                    top: 50%;
                 }
 
                 .social {
@@ -113,8 +137,8 @@ const Login = () => {
                     border-top: 1px solid ${colors.SHADE_LIGHT};
                 }
             `}</style>
-        </Layout>
+        </>
     )
 }
 
-export default Login
+export default LoginModal

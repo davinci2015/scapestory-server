@@ -1,27 +1,32 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Link from 'next/link'
 import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
+import {ModalContext} from 'context/modal';
 
-const Navigation = () => (
-    <nav>
-        <div className="container">
-            <div>
-                <Link href={routes.index}>
-                    <a>Home</a>
-                </Link>
-                <Link href={routes.news}>
-                    <a>News</a>
-                </Link>
-            </div>
-            <div>
-                <Link as={routeMapping.profile.as('test')} href={routeMapping.profile.href('test')}>
-                    <a>Profile</a>
-                </Link>
-            </div>
-        </div>
+const Navigation = () => {
+    const {openModal} = useContext(ModalContext)
 
-        <style jsx>{`
+    return (
+        <nav>
+            <div className="container">
+                <div>
+                    <Link href={routes.index}>
+                        <a>Home</a>
+                    </Link>
+                    <Link href={routes.news}>
+                        <a>News</a>
+                    </Link>
+                </div>
+                <div>
+                    <button onClick={() => openModal('login')}>Login</button>
+                    <Link as={routeMapping.profile.as('test')} href={routeMapping.profile.href('test')}>
+                        <a>Profile</a>
+                    </Link>
+                </div>
+            </div>
+
+            <style jsx>{`
             nav {
                 width: 100%;
                 height: 64px;
@@ -39,7 +44,8 @@ const Navigation = () => (
             }
         `}</style>
 
-    </nav>
-)
+        </nav>
+    )
+}
 
 export default Navigation

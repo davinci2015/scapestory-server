@@ -15,7 +15,7 @@ const Bubble = ({
                 width: ${size};
                 height: ${size};
                 border-radius: 50%;
-                border: 20px solid ${colors.PRIMARY};
+                border: 14px solid ${colors.PRIMARY};
                 opacity: ${opacity};
             }
         `}</style>

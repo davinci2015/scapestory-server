@@ -9,6 +9,7 @@ import auth from 'utils/auth'
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
 import validator from 'utils/validator'
 import {MessageDescriptor} from 'components/atoms/FormattedMessage'
+import {spaces} from 'styles';
 
 const LOGIN = gql`
     mutation Login($email: String!, $password: String!) {
@@ -144,16 +145,18 @@ const LoginForm = ({
                         />
 
 
-                        <Button
-                            onClick={() => {
-                                login({
-                                    variables: {email, password}
-                                })
-                            }}>
-                            <Paragraph as="span" weight="bold" color="light">
-                                <FormattedMessage id="login_submit_button" defaultMessage="Login" />
-                            </Paragraph>
-                        </Button>
+                        <div className="login-button">
+                            <Button
+                                onClick={() => {
+                                    login({
+                                        variables: {email, password}
+                                    })
+                                }}>
+                                <Paragraph as="span" weight="bold" color="light">
+                                    <FormattedMessage id="login_submit_button" defaultMessage="Login" />
+                                </Paragraph>
+                            </Button>
+                        </div>
                     </form>
                 )}
             </Mutation>
@@ -167,7 +170,7 @@ const LoginForm = ({
                 }
 
                 .login-button {
-                    width: 100%;
+                    margin-top: ${spaces.s48};
                 }
             `}</style>
         </>

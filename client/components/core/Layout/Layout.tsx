@@ -7,7 +7,7 @@ type Props = {
 }
 
 const Layout = ({children}: Props) => (
-    <React.Fragment>
+    <>
         {children}
         <style jsx global>{`
             * {
@@ -17,10 +17,10 @@ const Layout = ({children}: Props) => (
             body {
                 font-family: ${typography.fontFamily.PRIMARY};
                 font-size: ${typography.fontSize.M};
-                background-color: ${colors.BG}
+                background-color: ${colors.BG};
             }
         `}</style>
-    </React.Fragment>
+    </>
 )
 
 export default Layout

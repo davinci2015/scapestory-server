@@ -38,7 +38,7 @@ const Button = ({
                     cursor: pointer;
                     padding-top: ${spaces.s16}; 
                     padding-bottom: ${spaces.s16};
-                    transition: background-color 120ms ease-in-out;
+                    transition: all 120ms ease-in-out;
                 }
 
                 button:disabled {

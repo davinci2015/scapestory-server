@@ -1,11 +1,11 @@
-import Layout from 'components/molecules/Layout'
 import {RegistrationForm} from 'screens/Registration/components'
+import {App} from 'components/core'
 
 const Registration = () => {
     return (
-        <Layout>
+        <App>
             <RegistrationForm />
-        </Layout>
+        </App>
     )
 }
 
