@@ -144,25 +144,17 @@ const LoginForm = ({
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                         />
 
-                        <div className="buttons">
-                            <Button
-                                onClick={() => {
-                                    login({
-                                        variables: {email, password}
-                                    })
-                                }}>
-                                <Paragraph as="span" weight="bold" color="light">
-                                    <FormattedMessage id="login_submit_button" defaultMessage="Login" />
-                                </Paragraph>
-                            </Button>
-                            <Link href={routes.signUp}>
-                                <Button variant="outlined">
-                                    <Paragraph as="span" weight="bold" color="primary">
-                                        <FormattedMessage id="login_submit_button" defaultMessage="Sign Up" />
-                                    </Paragraph>
-                                </Button>
-                            </Link>
-                        </div>
+
+                        <Button
+                            onClick={() => {
+                                login({
+                                    variables: {email, password}
+                                })
+                            }}>
+                            <Paragraph as="span" weight="bold" color="light">
+                                <FormattedMessage id="login_submit_button" defaultMessage="Login" />
+                            </Paragraph>
+                        </Button>
                     </form>
                 )}
             </Mutation>
@@ -173,18 +165,10 @@ const LoginForm = ({
                     width: 100%;
                     margin-top: 28px;
                     margin-bottom: 28px;
-                } 
-
-                .buttons :global(button) {
-                    width: 100%;
-                    margin-left: 24px;
                 }
 
-                .buttons {
-                    display: flex;
-                    margin-left: -24px;
-                    margin-top: 44px;
-                    margin-bottom: 48px;
+                .login-button {
+                    width: 100%;
                 }
             `}</style>
         </>

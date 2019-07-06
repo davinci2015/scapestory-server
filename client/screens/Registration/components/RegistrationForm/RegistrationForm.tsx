@@ -8,12 +8,12 @@ import {InjectedIntlProps, injectIntl} from 'react-intl'
 import {Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
 import appConstants from 'appConstants'
 import routes from 'routes'
-import {MessageDescriptor} from 'components/atoms/FormattedMessage';
-import validator from 'utils/validator';
+import {MessageDescriptor} from 'components/atoms/FormattedMessage'
+import validator from 'utils/validator'
 
 const SIGN_UP = gql`
-    mutation SignUp($email: String!, $username: String!, $password: String!) {
-        register(email: $email, username: $username, password: $password) {
+    mutation SignUp($email: String!, $password: String!) {
+        register(email: $email, password: $password) {
             token
         }
     }
@@ -27,14 +27,12 @@ interface Data {
 
 interface Variables {
     email: string
-    username: string
     password: string
 }
 
 const inputKeys = {
     email: 'email',
-    password: 'password',
-    username: 'username'
+    password: 'password'
 }
 
 interface Props extends InjectedIntlProps {}
@@ -43,7 +41,6 @@ const RegistrationForm = ({
     intl
 }: Props) => {
     const [email, setEmail] = useState('')
-    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     const [errors, setError] = useState({
@@ -105,12 +102,6 @@ const RegistrationForm = ({
         setError({...errors, [inputKeys.password]: false})
     }
 
-    const validateUsername = (username: string) => {
-        setDirty({...dirty, [inputKeys.username]: true})
-
-        setError({...errors, [inputKeys.username]: false})
-    }
-
     const getErrorMessage = (inputKey: string) => {
         const message = errorMessages[inputKey]
         return message ? <FormattedMessage {...message} /> : null
@@ -124,7 +115,6 @@ const RegistrationForm = ({
 
     const emailLabel = intl.formatMessage({id: 'registration_input_label_email', defaultMessage: 'Email'})
     const passwordLabel = intl.formatMessage({id: 'registration_input_label_password', defaultMessage: 'Password'})
-    const usernameLabel = intl.formatMessage({id: 'registration_input_label_username', defaultMessage: 'Username'})
 
     return (
         <Mutation<Data, Variables>
@@ -141,12 +131,6 @@ const RegistrationForm = ({
                         onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validateEmail(e.target.value)}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                     />
-                    <Input
-                        placeholder={usernameLabel}
-                        label={usernameLabel}
-                        value={username}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
-                    />
                     <PasswordInput
                         placeholder={passwordLabel}
                         label={passwordLabel}
@@ -160,7 +144,7 @@ const RegistrationForm = ({
                     <Button
                         onClick={() => {
                             register({
-                                variables: {email, username, password}
+                                variables: {email, password}
                             })
                         }}>
                         <FormattedMessage id="registration_submit_button" defaultMessage="Sign up"/>

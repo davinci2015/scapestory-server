@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import {colors, borderRadius} from 'styles';
+import {colors, borderRadius, spaces} from 'styles'
 
 type Props = {
     children: React.ReactNode,
@@ -29,16 +29,27 @@ const Button = ({
             <style jsx>{`
                 button {
                     border-radius: ${borderRadius.SECONDARY};
+                    width: 100%;
                     outline: 0;
                     border: 0;
                     cursor: pointer;
-                    padding-top: 16px; 
-                    padding-bottom: 16px;
+                    padding-top: ${spaces.s16}; 
+                    padding-bottom: ${spaces.s16};
+                }
+
+                button:disabled {
+                    pointer-events: none;
+                    opacity: 0.4;
                 }
 
                 .primary {
                     color: ${colors.WHITE};
                     background-color: ${colors.PRIMARY};
+                    transition: color 200ms ease-in-out;
+                }
+
+                .primary:hover {
+                    background-color: ${colors.PRIMARY_DARK};
                 }
 
                 .secondary {

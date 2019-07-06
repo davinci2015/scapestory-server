@@ -1,7 +1,6 @@
 import {LoginForm} from 'screens/Login/components'
 import {Layout, FacebookLogin, GoogleLogin} from 'components/molecules'
-import {backgroundImage} from 'styles/mixins'
-import {colors, zIndex} from 'styles'
+import {colors} from 'styles'
 import {Headline, Paragraph, FormattedMessage, Bubble} from 'components/atoms'
 import {FacebookProps} from 'components/molecules/FacebookLogin'
 import {GoogleProps} from 'components/molecules/GoogleLogin'
@@ -10,91 +9,55 @@ const Login = () => {
     return (
         <Layout>
             <div className="container">
-                <div className="left">
-                    <div className="bubble-top"><Bubble size="411px" /></div>
-                    <div className="bubble-bottom"><Bubble size="684px" /></div>
-                    <div className="left-container">
-                        <Headline as="h1" variant="h3">
-                            <FormattedMessage id="login_title" defaultMessage="Don't be shy! Show of your aquascapes." />
-                        </Headline>
-                        <Paragraph as="p" color={colors.DARK_GRAY}>
-                            <FormattedMessage id="login_subtitle" defaultMessage="Join now to start your own scapestory." />
-                        </Paragraph>
-                        <div className="form">
-                            <LoginForm />
+                <div className="bubble-top"><Bubble size="411px" /></div>
+                <div className="bubble-bottom"><Bubble size="684px" /></div>
+                <div className="">
+                    <Headline as="h1" variant="h3">
+                        <FormattedMessage id="login_title" defaultMessage="Welcome back! Your scapestory is waiting." />
+                    </Headline>
+                    <Paragraph as="p" color={colors.DARK_GRAY}>
+                        <FormattedMessage id="login_subtitle" defaultMessage="Login and continue exploring aquascapes." />
+                    </Paragraph>
+                    <div className="form">
+                        <LoginForm />
+                    </div>
+                    <div className="social">
+                        <div>
+                            <Paragraph as="span" color={colors.DARK_GRAY}>
+                                <FormattedMessage id="login_social_login_continue" defaultMessage="Or continue with" />
+                            </Paragraph>
                         </div>
-                        <div className="social">
-                            <div>
-                                <Paragraph as="span" color={colors.DARK_GRAY}>
-                                    <FormattedMessage id="login_social_login_continue" defaultMessage="Or continue with" />
-                                </Paragraph>
-                            </div>
-                            <div>
-                                <GoogleLogin>
-                                    {(props: GoogleProps) => (
-                                        <a href="#" onClick={props.onClick}>
-                                             <Paragraph weight="bold" as="span" color={colors.GOOGLE}>Google</Paragraph>
-                                        </a>
-                                    )}
-                                </GoogleLogin>
-                               
-                                <span className="separator">
-                                    <Paragraph as="span" color={colors.MID_GRAY}>|</Paragraph>
-                                </span>
-                                <FacebookLogin>
-                                    {(props: FacebookProps) => (
-                                        <a href="#" onClick={props.onClick}>
-                                            <Paragraph weight="bold" as="span" color={colors.FACEBOOK}>Facebook</Paragraph>
-                                        </a>
-                                    )} 
-                                </FacebookLogin>
-                            </div>
+                        <div>
+                            <GoogleLogin>
+                                {(props: GoogleProps) => (
+                                    <a href="#" onClick={props.onClick}>
+                                        <Paragraph weight="bold" as="span" color={colors.GOOGLE}>Google</Paragraph>
+                                    </a>
+                                )}
+                            </GoogleLogin>
+
+                            <span className="separator">
+                                <Paragraph as="span" color={colors.MID_GRAY}>|</Paragraph>
+                            </span>
+                            <FacebookLogin>
+                                {(props: FacebookProps) => (
+                                    <a href="#" onClick={props.onClick}>
+                                        <Paragraph weight="bold" as="span" color={colors.FACEBOOK}>Facebook</Paragraph>
+                                    </a>
+                                )}
+                            </FacebookLogin>
                         </div>
                     </div>
                 </div>
-                <div className="right"></div>
             </div>
 
             <style jsx>{`
                 .container {
-                    display: flex;
-                    justify-content: space-between;
-                    min-height: 100vh;
                 }
 
                 .form {
-                    margin-top: 44px;
-                    margin-bottom: 114px;
-                }
-
-                .left-container {
-                    margin: 40px 140px 40px 0;
-                    max-width: 430px;
-                }
-
-                .left {
-                    position: relative;
-                    width: 50%;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-end;
-                    justify-content: center;
-                }
-
-                .right {
-                    width: 50%;
-                    z-index: ${zIndex.MEDIUM};
-                    border-left: 6px solid ${colors.PRIMARY};
-                    ${backgroundImage('https://images.unsplash.com/photo-1516970739312-08b075784b71?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2255&q=80')}
-                }
-
-                .left .social {
-                    display: flex;
-                    justify-content: space-between;
-                }
-
-                .left .social a {
-                    text-decoration: none;
+                    margin-top: 90px;
+                    margin-bottom: 24px;
                 }
 
                 .bubble-top > :global(.bubble) {
@@ -111,6 +74,10 @@ const Login = () => {
 
                 .separator {
                     margin: 0 24px;
+                }
+
+                .social {
+                    text-align: center;
                 }
             `}</style>
         </Layout>

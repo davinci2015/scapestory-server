@@ -10,7 +10,6 @@ type LoginArgsType = {
 
 type RegisterArgsType = {
     email: string,
-    username: string,
     password: string
 }
 
@@ -43,7 +42,7 @@ export const resolvers = {
         },
         async register(root, args: RegisterArgsType, {injector}: ModuleContext) {
             const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
-            return await provider.register(args.email, args.username, args.password)
+            return await provider.register(args.email, args.password)
         },
         async fbRegister(root, args: FBRegisterArgsType, {injector, req, res}: ModuleContext & SessionContext) {
             const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
