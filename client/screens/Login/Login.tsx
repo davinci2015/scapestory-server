@@ -9,8 +9,8 @@ const Login = () => {
     return (
         <Layout>
             <div className="container">
-                <div className="bubble-top"><Bubble size="411px" /></div>
-                <div className="bubble-bottom"><Bubble size="684px" /></div>
+                <div className="bubble-left"><Bubble size="200px" /></div>
+                <div className="bubble-right"><Bubble size="200px" /></div>
                 <div className="">
                     <Headline as="h1" variant="h3">
                         <FormattedMessage id="login_title" defaultMessage="Welcome back! Your scapestory is waiting." />
@@ -68,20 +68,20 @@ const Login = () => {
                 }
 
                 .form {
-                    margin-top: 90px;
-                    margin-bottom: 24px;
+                    margin-top: ${spaces.s42};
+                    margin-bottom: ${spaces.s24};
                 }
 
-                .bubble-top > :global(.bubble) {
+                .bubble-left > :global(.bubble) {
                     position: absolute;
-                    top: -260px;
-                    right: -200px;
+                    left: 0;
+                    top: 0;
                 }
 
-                .bubble-bottom > :global(.bubble) {
+                .bubble-right > :global(.bubble) {
                     position: absolute;
-                    left: -520px;
-                    bottom: 10px;
+                    right: 0;
+                    top: 0;
                 }
 
                 .social {
@@ -96,15 +96,14 @@ const Login = () => {
                 .social-buttons {
                     display: flex;
                     justify-content: space-between;
-                    margin: 0 -${spaces.s16};
                 }
 
                 .social-buttons img {
                     width: 100%;
                 }
 
-                .social-buttons > :global(.button) {
-                    margin: 0 ${spaces.s16};
+                .social-buttons > :global(.button):first-of-type {
+                    margin-right: ${spaces.s30};
                 }
                     
                 .footer {
