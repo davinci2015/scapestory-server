@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import {colors, borderRadius, spaces} from 'styles'
+import {colors, borderRadius, spaces, boxShadow} from 'styles'
 
 type Props = {
     children: React.ReactNode,
@@ -17,7 +17,7 @@ const Button = ({
 }: Props) => (
         <button
             type="button"
-            className={cx({
+            className={cx('button', {
                 outlined: variant === 'outlined',
                 primary: color === 'primary',
                 secondary: color === 'secondary'
@@ -27,7 +27,10 @@ const Button = ({
             {children}
 
             <style jsx>{`
-                button {
+                .button {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     border-radius: ${borderRadius.SECONDARY};
                     width: 100%;
                     outline: 0;
@@ -35,6 +38,7 @@ const Button = ({
                     cursor: pointer;
                     padding-top: ${spaces.s16}; 
                     padding-bottom: ${spaces.s16};
+                    transition: background-color 120ms ease-in-out;
                 }
 
                 button:disabled {
@@ -45,7 +49,6 @@ const Button = ({
                 .primary {
                     color: ${colors.WHITE};
                     background-color: ${colors.PRIMARY};
-                    transition: color 200ms ease-in-out;
                 }
 
                 .primary:hover {
@@ -53,7 +56,9 @@ const Button = ({
                 }
 
                 .secondary {
-
+                    color: ${colors.BLACK};
+                    background-color: ${colors.WHITE};
+                    border: 1px solid ${colors.LIGHT_GRAY}
                 }
 
                 .outlined {

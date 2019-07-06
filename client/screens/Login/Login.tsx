@@ -1,7 +1,7 @@
 import {LoginForm} from 'screens/Login/components'
 import {Layout, FacebookLogin, GoogleLogin} from 'components/molecules'
-import {colors} from 'styles'
-import {Headline, Paragraph, FormattedMessage, Bubble} from 'components/atoms'
+import {colors, spaces} from 'styles'
+import {Headline, Paragraph, FormattedMessage, Bubble, Button, ButtonIcon} from 'components/atoms'
 import {FacebookProps} from 'components/molecules/FacebookLogin'
 import {GoogleProps} from 'components/molecules/GoogleLogin'
 
@@ -22,28 +22,34 @@ const Login = () => {
                         <LoginForm />
                     </div>
                     <div className="social">
-                        <div>
+                        <div className="social-text">
                             <Paragraph as="span" color={colors.DARK_GRAY}>
                                 <FormattedMessage id="login_social_login_continue" defaultMessage="Or continue with" />
                             </Paragraph>
                         </div>
-                        <div>
+                        <div className="social-buttons">
                             <GoogleLogin>
                                 {(props: GoogleProps) => (
-                                    <a href="#" onClick={props.onClick}>
-                                        <Paragraph weight="bold" as="span" color={colors.GOOGLE}>Google</Paragraph>
-                                    </a>
+                                    <Button color="secondary" onClick={props.onClick}>
+                                        <ButtonIcon side="left">
+                                            <img src="/static/icons/icon-google.png" alt="Google Login" />
+                                        </ButtonIcon>
+                                        <Paragraph weight="bold" as="span">
+                                            Google
+                                        </Paragraph>
+                                    </Button>
                                 )}
                             </GoogleLogin>
-
-                            <span className="separator">
-                                <Paragraph as="span" color={colors.MID_GRAY}>|</Paragraph>
-                            </span>
                             <FacebookLogin>
                                 {(props: FacebookProps) => (
-                                    <a href="#" onClick={props.onClick}>
-                                        <Paragraph weight="bold" as="span" color={colors.FACEBOOK}>Facebook</Paragraph>
-                                    </a>
+                                    <Button color="secondary" onClick={props.onClick}>
+                                        <ButtonIcon side="left">
+                                            <img src="/static/icons/icon-facebook.png" alt="Facebook Login" />
+                                        </ButtonIcon>
+                                        <Paragraph weight="bold" as="span">
+                                            Facebook
+                                        </Paragraph>
+                                    </Button>
                                 )}
                             </FacebookLogin>
                         </div>
@@ -72,13 +78,29 @@ const Login = () => {
                     bottom: 10px;
                 }
 
-                .separator {
-                    margin: 0 24px;
-                }
-
                 .social {
                     text-align: center;
+                    margin-bottom: 54px;
                 }
+
+                .social-text {
+                    margin: ${spaces.s24} 0;
+                }
+
+                .social-buttons {
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 0 -${spaces.s16};
+                }
+
+                .social-buttons img {
+                    width: 100%;
+                }
+
+                .social-buttons > :global(.button) {
+                    margin: 0 ${spaces.s16};
+                }
+
             `}</style>
         </Layout>
     )
