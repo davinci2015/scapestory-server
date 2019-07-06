@@ -1,5 +1,6 @@
 import React from 'react'
 import {ApolloClient, NormalizedCacheObject} from 'apollo-boost'
+import {ApolloProvider as ApolloHooksProvider} from 'react-apollo-hooks'
 import App, {Container} from 'next/app'
 import {ApolloProvider} from 'react-apollo'
 import withApolloClient from 'lib/withApolloClient'
@@ -18,9 +19,11 @@ class MyApp extends App<Props>  {
             <Container>
                 <IntlProvider>
                     <ApolloProvider client={apolloClient}>
-                        <ModalProvider>
-                            <Component {...pageProps} />
-                        </ModalProvider>
+                        <ApolloHooksProvider client={apolloClient}>
+                            <ModalProvider>
+                                <Component {...pageProps} />
+                            </ModalProvider>
+                        </ApolloHooksProvider>
                     </ApolloProvider>
                 </IntlProvider>
             </Container>

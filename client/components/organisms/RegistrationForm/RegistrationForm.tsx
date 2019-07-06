@@ -1,17 +1,17 @@
 import React, {useState, useContext} from 'react'
-import gql from 'graphql-tag'
-import {Mutation} from 'react-apollo'
 import {injectIntl, InjectedIntlProps} from 'react-intl'
+import {useMutation} from 'react-apollo-hooks'
+import gql from 'graphql-tag'
 
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
 import {MessageDescriptor} from 'components/atoms/FormattedMessage'
+
 import auth from 'utils/auth'
 import validator from 'utils/validator'
-
 import {spaces} from 'styles'
 import {ModalContext} from 'context/modal'
 
-const SIGN_UP = gql`
+const SIGN_UP_MUTATION = gql`
     mutation SignUp($email: String!, $password: String!) {
         register(email: $email, password: $password) {
             token
@@ -60,7 +60,10 @@ const RegistrationForm = ({
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const onCompleted = (data: Data) => {
+    const register = useMutation<Data, Variables>(SIGN_UP_MUTATION)
+
+    const onSubmit = async () => {
+        const {data} = await register({variables: {email, password}})
         auth.persistToken(data.register.token)
         closeModal('register')
     }
@@ -119,49 +122,38 @@ const RegistrationForm = ({
 
     return (
         <>
-            <Mutation<Data, Variables>
-                onCompleted={onCompleted}
-                mutation={SIGN_UP}>
-                {(register) => (
-                    <form className="form">
-                        <Input
-                            id={inputKeys.email}
-                            placeholder={emailLabel}
-                            label={emailLabel}
-                            value={email}
-                            error={dirty[inputKeys.email] && errors[inputKeys.email]}
-                            errorMessage={getErrorMessage(inputKeys.email)}
-                            onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validateEmail(e.target.value)}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                        />
+            <form className="form">
+                <Input
+                    id={inputKeys.email}
+                    placeholder={emailLabel}
+                    label={emailLabel}
+                    value={email}
+                    error={dirty[inputKeys.email] && errors[inputKeys.email]}
+                    errorMessage={getErrorMessage(inputKeys.email)}
+                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validateEmail(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                />
 
-                        <PasswordInput
-                            id={inputKeys.password}
-                            placeholder={passwordLabel}
-                            label={passwordLabel}
-                            value={password}
-                            error={dirty[inputKeys.password] && errors[inputKeys.password]}
-                            errorMessage={getErrorMessage(inputKeys.password)}
-                            onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validatePassword(e.target.value)}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                        />
+                <PasswordInput
+                    id={inputKeys.password}
+                    placeholder={passwordLabel}
+                    label={passwordLabel}
+                    value={password}
+                    error={dirty[inputKeys.password] && errors[inputKeys.password]}
+                    errorMessage={getErrorMessage(inputKeys.password)}
+                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validatePassword(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                />
 
-
-                        <div className="submit-button">
-                            <Button
-                                onClick={() => {
-                                    register({
-                                        variables: {email, password}
-                                    })
-                                }}>
-                                <Paragraph as="span" weight="bold" color="light">
-                                    <FormattedMessage id="registration_submit_button" defaultMessage="Sign Up" />
-                                </Paragraph>
-                            </Button>
-                        </div>
-                    </form>
-                )}
-            </Mutation>
+                <div className="submit-button">
+                    <Button
+                        onClick={onSubmit}>
+                        <Paragraph as="span" weight="bold" color="light">
+                            <FormattedMessage id="registration_submit_button" defaultMessage="Sign Up" />
+                        </Paragraph>
+                    </Button>
+                </div>
+            </form>
 
             <style jsx>{`
                 .form :global(.input-container) {

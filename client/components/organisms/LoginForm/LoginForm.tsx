@@ -1,16 +1,17 @@
 import React, {useState, useContext} from 'react'
-import gql from 'graphql-tag'
-import {Mutation} from 'react-apollo'
+import {useMutation} from 'react-apollo-hooks'
 import {injectIntl, InjectedIntlProps} from 'react-intl'
+import gql from 'graphql-tag'
+
+import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
+import {MessageDescriptor} from 'components/atoms/FormattedMessage'
 
 import auth from 'utils/auth'
-import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
 import validator from 'utils/validator'
-import {MessageDescriptor} from 'components/atoms/FormattedMessage'
-import {spaces} from 'styles';
-import {ModalContext} from 'context/modal';
+import {ModalContext} from 'context/modal'
+import {spaces} from 'styles'
 
-const LOGIN = gql`
+const LOGIN_MUTATION = gql`
     mutation Login($email: String!, $password: String!) {
         login(email: $email, password: $password) {
             token
@@ -37,9 +38,10 @@ const inputKeys = {
 interface Props extends InjectedIntlProps {}
 
 const LoginForm = ({
-    intl    
+    intl
 }: Props) => {
     const {closeModal} = useContext(ModalContext)
+    const login = useMutation<Data, Variables>(LOGIN_MUTATION)
 
     const [errors, setError] = useState({
         [inputKeys.email]: true,
@@ -59,7 +61,8 @@ const LoginForm = ({
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const onCompleted = (data: Data) => {
+    const onSubmit = async () => {
+        const {data} = await login({variables: {email, password}})
         auth.persistToken(data.login.token)
         closeModal('login')
     }
@@ -118,49 +121,38 @@ const LoginForm = ({
 
     return (
         <>
-            <Mutation<Data, Variables>
-                onCompleted={onCompleted}
-                mutation={LOGIN}>
-                {(login) => (
-                    <form className="form">
-                        <Input
-                            id={inputKeys.email}
-                            placeholder={emailLabel}
-                            label={emailLabel}
-                            value={email}
-                            error={dirty[inputKeys.email] && errors[inputKeys.email]}
-                            errorMessage={getErrorMessage(inputKeys.email)}
-                            onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validateEmail(e.target.value)}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                        />
+            <form className="form">
+                <Input
+                    id={inputKeys.email}
+                    placeholder={emailLabel}
+                    label={emailLabel}
+                    value={email}
+                    error={dirty[inputKeys.email] && errors[inputKeys.email]}
+                    errorMessage={getErrorMessage(inputKeys.email)}
+                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validateEmail(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                />
 
-                        <PasswordInput
-                            id={inputKeys.password}
-                            placeholder={passwordLabel}
-                            label={passwordLabel}
-                            value={password}
-                            error={dirty[inputKeys.password] && errors[inputKeys.password]}
-                            errorMessage={getErrorMessage(inputKeys.password)}
-                            onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validatePassword(e.target.value)}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                        />
+                <PasswordInput
+                    id={inputKeys.password}
+                    placeholder={passwordLabel}
+                    label={passwordLabel}
+                    value={password}
+                    error={dirty[inputKeys.password] && errors[inputKeys.password]}
+                    errorMessage={getErrorMessage(inputKeys.password)}
+                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validatePassword(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                />
 
 
-                        <div className="login-button">
-                            <Button
-                                onClick={() => {
-                                    login({
-                                        variables: {email, password}
-                                    })
-                                }}>
-                                <Paragraph as="span" weight="bold" color="light">
-                                    <FormattedMessage id="login_submit_button" defaultMessage="Login" />
-                                </Paragraph>
-                            </Button>
-                        </div>
-                    </form>
-                )}
-            </Mutation>
+                <div className="login-button">
+                    <Button onClick={onSubmit}>
+                        <Paragraph as="span" weight="bold" color="light">
+                            <FormattedMessage id="login_submit_button" defaultMessage="Login" />
+                        </Paragraph>
+                    </Button>
+                </div>
+            </form>
 
             <style jsx>{`
                 .form :global(.input-container) {

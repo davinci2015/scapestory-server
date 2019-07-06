@@ -26,6 +26,7 @@
     "npm": "^6.9.0",
     "react": "^16.8.6",
     "react-apollo": "^2.5.4",
+    "react-apollo-hooks": "^0.4.5",
     "react-dom": "^16.8.6",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.0.4",
