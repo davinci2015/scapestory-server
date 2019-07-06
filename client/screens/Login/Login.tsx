@@ -80,7 +80,7 @@ const Login = () => {
 
                 .social {
                     text-align: center;
-                    margin-bottom: 54px;
+                    margin-bottom: ${spaces.s54};
                 }
 
                 .social-text {

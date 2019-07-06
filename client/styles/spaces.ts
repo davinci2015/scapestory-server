@@ -6,5 +6,8 @@ export default {
     s18: '18px',
     s24: '24px',
     s30: '30px',
-    s36:' 36px'
+    s36: '36px',
+    s42: '42px',
+    s48: '48px',
+    s54: '54px'
 }
