@@ -8,16 +8,16 @@ import {GoogleProps} from 'components/molecules/GoogleLogin'
 import {colors, spaces} from 'styles'
 import {ModalContext} from 'context/modal'
 
-const LoginModal = () => {
+const RegistrationModal = () => {
     const {isOpen, closeModal, openModal} = useContext(ModalContext)
 
-    const closeLoginModal = () => closeModal('login')
+    const closeRegistrationModal = () => closeModal('register')
 
-    const openRegistrationModal = () => openModal('register')
+    const openLoginModal = () => openModal('login')
 
     return (
         <>
-            <Modal isOpen={isOpen('login')} onRequestClose={closeLoginModal}>
+            <Modal isOpen={isOpen('register')} onRequestClose={closeRegistrationModal}>
                 <div className="body">
                     <div className="bubble-left">
                         <Bubble size="369px" />
@@ -25,14 +25,14 @@ const LoginModal = () => {
                     <div className="bubble-right">
                         <Bubble size="334px" />
                     </div>
-                    <a onClick={closeLoginModal} className="close-button">
-                        <Icon d={Icon.CLOSE} color={colors.DARK_GRAY} size={26} />
+                    <a onClick={closeRegistrationModal} className="close-button">
+                        <Icon d={Icon.CLOSE} color={colors.DARK_GRAY} size={26}/>
                     </a>
                     <Headline as="h1" variant="h3">
-                        <FormattedMessage id="login_title" defaultMessage="Welcome back! Your scapestory is waiting." />
+                        <FormattedMessage id="registration_title" defaultMessage="Don’t be shy! Sign up to share your scapestory." />
                     </Headline>
                     <Paragraph as="p" color={colors.DARK_GRAY}>
-                        <FormattedMessage id="login_subtitle" defaultMessage="Login and continue exploring aquascapes." />
+                        <FormattedMessage id="registration_subtitle" defaultMessage="Create account to get the full Scapestory experience." />
                     </Paragraph>
                     <div className="form">
                         <LoginForm />
@@ -40,7 +40,7 @@ const LoginModal = () => {
                     <div className="social">
                         <div className="social-text">
                             <Paragraph as="span" color={colors.DARK_GRAY}>
-                                <FormattedMessage id="login_social_login_continue" defaultMessage="Or continue with" />
+                                <FormattedMessage id="registration_social_login_continue" defaultMessage="Or continue with" />
                             </Paragraph>
                         </div>
                         <div className="social-buttons">
@@ -73,11 +73,11 @@ const LoginModal = () => {
                 </div>
                 <div className="footer">
                     <Paragraph as="span" color={colors.SHADE_DEEP}>
-                        <FormattedMessage id="login_footer_not_member" defaultMessage="Not a member yet?" />
+                        <FormattedMessage id="registration_footer_not_member" defaultMessage="Already have an account?" />
                         {' '}
-                        <a onClick={openRegistrationModal} className="">
+                        <a onClick={openLoginModal}>
                             <Paragraph as="span" color={colors.PRIMARY} weight="bold">
-                                <FormattedMessage id="login_footer_sign_up" defaultMessage="Sign up" />
+                                <FormattedMessage id="registration_footer_sign_up" defaultMessage="Login" />
                             </Paragraph>
                         </a>
                     </Paragraph>
@@ -153,4 +153,4 @@ const LoginModal = () => {
     )
 }
 
-export default LoginModal
+export default RegistrationModal

@@ -23,13 +23,15 @@ interface Props {
 
 type ModalTypes = 'login' | 'register'
 
-const ModalProvider = ({children}: Props) => {
-    const [modals, setModalVisibility] = useState<{[key in ModalTypes]: boolean}>({
-        login: false,
-        register: false
-    })
+const initialState = {
+    login: false,
+    register: false
+}
 
-    const openModal = (type: ModalTypes) => setModalVisibility({...modals, [type]: true})
+const ModalProvider = ({children}: Props) => {
+    const [modals, setModalVisibility] = useState<{[key in ModalTypes]: boolean}>(initialState)
+
+    const openModal = (type: ModalTypes) => setModalVisibility({...initialState, [type]: true})
 
     const closeModal = (type: ModalTypes) => setModalVisibility({...modals, [type]: false})
 

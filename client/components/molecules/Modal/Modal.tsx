@@ -6,6 +6,8 @@ interface Props extends ReactModal.Props {
     children: React.ReactNode
 }
 
+Modal.setAppElement('#__next')
+
 const CustomModal = ({
     children,
     ...rest
