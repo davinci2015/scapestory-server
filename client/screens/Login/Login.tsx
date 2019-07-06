@@ -54,6 +54,12 @@ const Login = () => {
                             </FacebookLogin>
                         </div>
                     </div>
+                    <div className="footer">
+                        <Paragraph as="span" color={colors.SHADE_DEEP}>
+                            <FormattedMessage id="login_footer_not_member" defaultMessage="Not a member yet?"/>
+                            <FormattedMessage id="login_footer_sign_up" defaultMessage="Sign up"/>
+                        </Paragraph>
+                    </div>
                 </div>
             </div>
 
@@ -100,7 +106,13 @@ const Login = () => {
                 .social-buttons > :global(.button) {
                     margin: 0 ${spaces.s16};
                 }
-
+                    
+                .footer {
+                    text-align: center;
+                    padding: ${spaces.s24};
+                    margin: 0 ${spaces.s6};
+                    border-top: 1px solid ${colors.SHADE_LIGHT};
+                }
             `}</style>
         </Layout>
     )

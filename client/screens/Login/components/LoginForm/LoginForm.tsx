@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import Router from 'next/router'
 import gql from 'graphql-tag'
-import Link from 'next/link'
 import {Mutation} from 'react-apollo'
 import {injectIntl, InjectedIntlProps} from 'react-intl'
 

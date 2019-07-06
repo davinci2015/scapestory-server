@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import {colors, borderRadius, spaces, boxShadow} from 'styles'
+import {colors, borderRadius, spaces} from 'styles'
 
 type Props = {
     children: React.ReactNode,
@@ -58,7 +58,7 @@ const Button = ({
                 .secondary {
                     color: ${colors.BLACK};
                     background-color: ${colors.WHITE};
-                    border: 1px solid ${colors.LIGHT_GRAY}
+                    border: 1px solid ${colors.SHADE_LIGHT}
                 }
 
                 .outlined {
