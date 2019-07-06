@@ -3,23 +3,24 @@ import gql from 'graphql-tag'
 import {Mutation} from 'react-apollo'
 import {injectIntl, InjectedIntlProps} from 'react-intl'
 
-import auth from 'utils/auth'
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
-import validator from 'utils/validator'
 import {MessageDescriptor} from 'components/atoms/FormattedMessage'
-import {spaces} from 'styles';
-import {ModalContext} from 'context/modal';
+import auth from 'utils/auth'
+import validator from 'utils/validator'
 
-const LOGIN = gql`
-    mutation Login($email: String!, $password: String!) {
-        login(email: $email, password: $password) {
+import {spaces} from 'styles'
+import {ModalContext} from 'context/modal'
+
+const SIGN_UP = gql`
+    mutation SignUp($email: String!, $password: String!) {
+        register(email: $email, password: $password) {
             token
         }
     }
 `
 
 interface Data {
-    login: {
+    register: {
         token: string
     }
 }
@@ -36,8 +37,8 @@ const inputKeys = {
 
 interface Props extends InjectedIntlProps {}
 
-const LoginForm = ({
-    intl    
+const RegistrationForm = ({
+    intl
 }: Props) => {
     const {closeModal} = useContext(ModalContext)
 
@@ -60,8 +61,8 @@ const LoginForm = ({
     const [password, setPassword] = useState('')
 
     const onCompleted = (data: Data) => {
-        auth.persistToken(data.login.token)
-        closeModal('login')
+        auth.persistToken(data.register.token)
+        closeModal('register')
     }
 
     const validateEmail = (email: string) => {
@@ -113,15 +114,15 @@ const LoginForm = ({
         return message ? <FormattedMessage {...message} /> : null
     }
 
-    const emailLabel = intl.formatMessage({id: 'login_input_label_email', defaultMessage: 'Email'})
-    const passwordLabel = intl.formatMessage({id: 'login_input_label_password', defaultMessage: 'Password'})
+    const emailLabel = intl.formatMessage({id: 'registration_input_label_email', defaultMessage: 'Email'})
+    const passwordLabel = intl.formatMessage({id: 'registration_input_label_password', defaultMessage: 'Password'})
 
     return (
         <>
             <Mutation<Data, Variables>
                 onCompleted={onCompleted}
-                mutation={LOGIN}>
-                {(login) => (
+                mutation={SIGN_UP}>
+                {(register) => (
                     <form className="form">
                         <Input
                             id={inputKeys.email}
@@ -146,15 +147,15 @@ const LoginForm = ({
                         />
 
 
-                        <div className="login-button">
+                        <div className="submit-button">
                             <Button
                                 onClick={() => {
-                                    login({
+                                    register({
                                         variables: {email, password}
                                     })
                                 }}>
                                 <Paragraph as="span" weight="bold" color="light">
-                                    <FormattedMessage id="login_submit_button" defaultMessage="Login" />
+                                    <FormattedMessage id="registration_submit_button" defaultMessage="Sign Up" />
                                 </Paragraph>
                             </Button>
                         </div>
@@ -170,7 +171,7 @@ const LoginForm = ({
                     margin-bottom: 28px;
                 }
 
-                .login-button {
+                .submit-button {
                     margin-top: ${spaces.s48};
                 }
             `}</style>
@@ -178,4 +179,4 @@ const LoginForm = ({
     )
 }
 
-export default injectIntl(LoginForm)
+export default injectIntl(RegistrationForm)

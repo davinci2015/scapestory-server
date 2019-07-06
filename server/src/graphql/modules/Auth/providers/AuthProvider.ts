@@ -70,7 +70,9 @@ export class AuthProvider implements AuthProviderInterface {
 
         let username = this.slugifyUsername(email.substring(0, email.lastIndexOf('@')))
 
-        if (this.usernameExists(username)) {
+        const usernameExists = await this.usernameExists(username)
+
+        if (usernameExists) {
            username = await this.generateUniqueUsername(username)
         }
 

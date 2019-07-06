@@ -1,10 +1,11 @@
 import {useContext} from 'react'
 
-import {LoginForm} from 'components/organisms'
 import {FacebookLogin, GoogleLogin, Modal} from 'components/molecules'
 import {Headline, Paragraph, FormattedMessage, Bubble, Button, ButtonIcon, Icon} from 'components/atoms'
 import {FacebookProps} from 'components/molecules/FacebookLogin'
 import {GoogleProps} from 'components/molecules/GoogleLogin'
+import {RegistrationForm} from 'components/organisms'
+
 import {colors, spaces} from 'styles'
 import {ModalContext} from 'context/modal'
 
@@ -35,7 +36,7 @@ const RegistrationModal = () => {
                         <FormattedMessage id="registration_subtitle" defaultMessage="Create account to get the full Scapestory experience." />
                     </Paragraph>
                     <div className="form">
-                        <LoginForm />
+                        <RegistrationForm />
                     </div>
                     <div className="social">
                         <div className="social-text">
