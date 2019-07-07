@@ -47,7 +47,10 @@ const RegistrationModal = () => {
                         <div className="social-buttons">
                             <GoogleLogin>
                                 {(props: GoogleProps) => (
-                                    <Button color="secondary" onClick={props.onClick}>
+                                    <Button color="secondary" onClick={() => {
+                                        closeRegistrationModal()
+                                        props.onClick()
+                                    }}>
                                         <ButtonIcon side="left">
                                             <img src="/static/icons/icon-google.png" alt="Google Login" />
                                         </ButtonIcon>
@@ -59,7 +62,10 @@ const RegistrationModal = () => {
                             </GoogleLogin>
                             <FacebookLogin>
                                 {(props: FacebookProps) => (
-                                    <Button color="secondary" onClick={props.onClick}>
+                                    <Button color="secondary" onClick={() => {
+                                        closeRegistrationModal()
+                                        props.onClick()
+                                    }}>
                                         <ButtonIcon side="left">
                                             <img src="/static/icons/icon-facebook.png" alt="Facebook Login" />
                                         </ButtonIcon>
