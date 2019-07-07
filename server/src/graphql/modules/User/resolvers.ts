@@ -1,7 +1,8 @@
 import {ModuleContext} from '@graphql-modules/core'
+
 import {UsersProviderInterface} from 'graphql/modules/User/providers/UsersProvider'
-import {authenticate} from 'graphql/guards/authentication'
 import {AuthenticationContext} from 'graphql/context'
+import {authenticate} from 'graphql/guards'
 import {tokens} from 'di/tokens'
 
 type UserArgsType = {

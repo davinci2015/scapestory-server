@@ -1,6 +1,7 @@
 import {ModuleContext} from '@graphql-modules/core'
+
 import {FollowProviderInterface} from 'graphql/modules/Follow/providers/FollowProvider'
-import {authenticate} from 'graphql/guards/authentication'
+import {authenticate} from 'graphql/guards'
 import {tokens} from 'di/tokens'
 
 type FollowUserArgsType = {

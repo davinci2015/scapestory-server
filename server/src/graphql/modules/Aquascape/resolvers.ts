@@ -1,6 +1,7 @@
 import {ModuleContext} from '@graphql-modules/core'
-import {authenticate} from 'graphql/guards/authentication'
+
 import {AquascapeProviderInterface} from 'graphql/modules/Aquascape/providers/AquascapeProvider'
+import {authenticate} from 'graphql/guards'
 import {tokens} from 'di/tokens'
 
 export type CreateAquascapeArgs = {

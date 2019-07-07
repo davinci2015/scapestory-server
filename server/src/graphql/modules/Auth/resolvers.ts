@@ -1,7 +1,10 @@
 import {ModuleContext} from '@graphql-modules/core'
-import {tokens} from 'di/tokens'
 import {SessionContext} from 'graphql/context'
+
+import {tokens} from 'di/tokens'
+import {validate} from 'graphql/guards'
 import {AuthProviderInterface} from 'graphql/modules/Auth/providers/AuthProvider'
+import {loginValidationSchema, registerValidationSchema} from 'graphql/modules/Auth/validation'
 
 type LoginArgsType = {
     email: string,
@@ -36,7 +39,6 @@ export const resolvers = {
     },
     Mutation: {
         async login(root, args: LoginArgsType, context: ModuleContext) {
-            console.log(context)
             const provider: AuthProviderInterface = context.injector.get(tokens.AUTH_PROVIDER)
             return await provider.login(args.email, args.password)
         },
@@ -53,4 +55,9 @@ export const resolvers = {
             return await provider.googleRegister(args.token, req, res)
         }
     }
+}
+
+export const resolversComposition = {
+    'Mutation.login': [validate(loginValidationSchema)],
+    'Mutation.register': [validate(registerValidationSchema)]
 }
