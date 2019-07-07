@@ -22,8 +22,8 @@ const CustomModal = ({
                 :global(.modal) {
                     position: absolute;
                     top: 40px;
-                    left: 50%;
                     bottom: 40px;
+                    left: 50%;
                     max-width: 730px;
                     background: rgb(255, 255, 255);
                     overflow: auto;

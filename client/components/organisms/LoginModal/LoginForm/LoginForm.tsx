@@ -1,7 +1,6 @@
 import React, {useState, useContext} from 'react'
 import {useMutation} from 'react-apollo-hooks'
 import {injectIntl, InjectedIntlProps} from 'react-intl'
-import gql from 'graphql-tag'
 
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
 import {MessageDescriptor} from 'components/atoms/FormattedMessage'
@@ -10,25 +9,7 @@ import auth from 'utils/auth'
 import validator from 'utils/validator'
 import {ModalContext} from 'context/modal'
 import {spaces} from 'styles'
-
-const LOGIN_MUTATION = gql`
-    mutation Login($email: String!, $password: String!) {
-        login(email: $email, password: $password) {
-            token
-        }
-    }
-`
-
-interface Data {
-    login: {
-        token: string
-    }
-}
-
-interface Variables {
-    email: string,
-    password: string
-}
+import {LOGIN_MUTATION, LoginResult, LoginVariables} from 'components/organisms/LoginModal/LoginForm/mutations'
 
 const inputKeys = {
     email: 'email',
@@ -41,7 +22,7 @@ const LoginForm = ({
     intl
 }: Props) => {
     const {closeModal} = useContext(ModalContext)
-    const login = useMutation<Data, Variables>(LOGIN_MUTATION)
+    const login = useMutation<LoginResult, LoginVariables>(LOGIN_MUTATION)
 
     const [errors, setError] = useState({
         [inputKeys.email]: true,
@@ -143,7 +124,6 @@ const LoginForm = ({
                     onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validatePassword(e.target.value)}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 />
-
 
                 <div className="login-button">
                     <Button onClick={onSubmit}>

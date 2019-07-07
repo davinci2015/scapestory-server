@@ -1,7 +1,6 @@
 import React, {useState, useContext} from 'react'
 import {injectIntl, InjectedIntlProps} from 'react-intl'
 import {useMutation} from 'react-apollo-hooks'
-import gql from 'graphql-tag'
 
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
 import {MessageDescriptor} from 'components/atoms/FormattedMessage'
@@ -10,31 +9,14 @@ import auth from 'utils/auth'
 import validator from 'utils/validator'
 import {spaces} from 'styles'
 import {ModalContext} from 'context/modal'
-
-const SIGN_UP_MUTATION = gql`
-    mutation SignUp($email: String!, $password: String!) {
-        register(email: $email, password: $password) {
-            token
-        }
-    }
-`
-
-interface Data {
-    register: {
-        token: string
-    }
-}
-
-interface Variables {
-    email: string,
-    password: string
-}
+import {RegisterResult, RegisterVariables, SIGN_UP_MUTATION} from 'components/organisms/RegistrationModal/RegistrationForm/mutations'
 
 const inputKeys = {
     email: 'email',
     password: 'password'
 }
 
+const PASSWORD_MIN_LENGTH = 6
 interface Props extends InjectedIntlProps {}
 
 const RegistrationForm = ({
@@ -60,7 +42,7 @@ const RegistrationForm = ({
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const register = useMutation<Data, Variables>(SIGN_UP_MUTATION)
+    const register = useMutation<RegisterResult, RegisterVariables>(SIGN_UP_MUTATION)
 
     const onSubmit = async () => {
         const {data} = await register({variables: {email, password}})
@@ -104,6 +86,16 @@ const RegistrationForm = ({
                 ...errorMessages, [inputKeys.password]: {
                     id: 'general_error_empty_password',
                     defaultMessage: 'Please enter your password'
+                }
+            })
+            return setError({...errors, [inputKeys.password]: true})
+        }
+
+        if (password.length < PASSWORD_MIN_LENGTH) {
+            setErrorMessage({
+                ...errorMessages, [inputKeys.password]: {
+                    id: 'general_error_password_length',
+                    defaultMessage: 'Your password must be at least 6 characters'
                 }
             })
             return setError({...errors, [inputKeys.password]: true})
