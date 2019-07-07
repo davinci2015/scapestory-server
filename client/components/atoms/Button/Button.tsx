@@ -2,9 +2,9 @@ import React from 'react'
 import cx from 'classnames'
 import {colors, borderRadius, spaces} from 'styles'
 
-type Props = {
-    children: React.ReactNode,
-    onClick?: (...args: any[]) => any,
+interface Props extends React.HTMLProps<HTMLButtonElement> {
+    children: React.ReactNode
+    onClick?: (...args: any[]) => any
     variant?: 'default' | 'outlined'
     color?: 'primary' | 'secondary'
 }
