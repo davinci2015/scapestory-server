@@ -26,28 +26,28 @@ const Headline = ({
                 }
 
                 .h1 {
-                    font-size: ${typography.fontSize.XXXXL};
-                    line-height: ${typography.lineHeight.XXL};
+                    font-size: ${typography.fontSize.fs67};
+                    line-height: ${typography.lineHeight.lh88};
                 }
 
                 .h2 {
-                    font-size: ${typography.fontSize.XXXL};
-                    line-height: ${typography.lineHeight.XL};
+                    font-size: ${typography.fontSize.fs51};
+                    line-height: ${typography.lineHeight.lh66};
                 }
 
                 .h3 {
-                    font-size: ${typography.fontSize.XXL};
-                    line-height: ${typography.lineHeight.L};
+                    font-size: ${typography.fontSize.fs38};
+                    line-height: ${typography.lineHeight.lh48};
                 }
 
                 .h4 {
-                    font-size: ${typography.fontSize.XL};
-                    line-height: ${typography.lineHeight.M};
+                    font-size: ${typography.fontSize.fs28};
+                    line-height: ${typography.lineHeight.lh36};
                 }
 
                 .h5 {
-                    font-size: ${typography.fontSize.L};
-                    line-height: ${typography.lineHeight.S};
+                    font-size: ${typography.fontSize.fs18};
+                    line-height: ${typography.lineHeight.lh24};
                 }
             `}</style>
         </Component>

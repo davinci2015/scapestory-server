@@ -11,23 +11,26 @@ export default {
     },
 
     fontSize: {
-        XS: '12px',
-        S: '14px',
-        M: '16px',
-        L: '21px',
-        XL: '28px',
-        XXL: '38px',
-        XXXL: '51px',
-        XXXXL: '67px'
+        fs11: '11px',
+        fs12: '12px',
+        fs13: '13px',
+        fs14: '14px',
+        fs16: '16px',
+        fs18: '18px',
+        fs21: '21px',
+        fs28: '28px',
+        fs38: '38px',
+        fs51: '51px',
+        fs67: '67px'
     },
 
     lineHeight: {
-        XXS: '18px',
-        XS: '24px',
-        S: '30px',
-        M: '36px',
-        L: '48px',
-        XL: '66px',
-        XXL: '86px'
+        lh18: '18px',
+        lh24: '24px',
+        lh30: '30px',
+        lh36: '36px',
+        lh48: '48px',
+        lh66: '66px',
+        lh88: '88px'
     }
 }

@@ -4,7 +4,7 @@ import cx from 'classnames'
 
 interface Props {
     as?: 'p' | 'span',
-    size?: 'xs' | 's' | 'body',
+    type?: 't1' | 's1' | 's2' | 'body',
     color?: string,
     children: React.ReactNode | string
     weight?: 'regular' | 'bold' | 'semibold'
@@ -13,7 +13,7 @@ interface Props {
 const Paragraph = ({
     as = 'p',
     children,
-    size = 'body',
+    type = 'body',
     weight = 'regular',
     color = colors.BLACK,
     ...props
@@ -21,16 +21,11 @@ const Paragraph = ({
     const Component = as
 
     return (
-        <Component className={cx('paragraph', size, weight)} {...props}> 
+        <Component className={cx('paragraph', type, weight)} {...props}> 
 
             {children}
-            
+
             <style jsx>{`
-                .body {
-                    font-size: ${typography.fontSize.M};
-                    line-height: ${typography.lineHeight.S};
-                }
-                
                 .paragraph {
                     color: ${color};
                 }
@@ -47,14 +42,24 @@ const Paragraph = ({
                     font-weight: ${typography.fontWeight.bold};
                 }
 
-                .s {
-                    font-size: ${typography.fontSize.S};
-                    line-height: ${typography.lineHeight.S};
+                .t1 {
+                    font-size: ${typography.fontSize.fs11};
+                    line-height: ${typography.lineHeight.lh18};
                 }
 
-                .xs {
-                    font-size: ${typography.fontSize.XS};
-                    line-height: ${typography.lineHeight.XS};
+                .s1 {
+                    font-size: ${typography.fontSize.fs14};
+                    line-height: ${typography.lineHeight.lh24};
+                }
+
+                .s2 {
+                    font-size: ${typography.fontSize.fs13};
+                    line-height: ${typography.lineHeight.lh18};
+                }
+
+                .body {
+                    font-size: ${typography.fontSize.fs16};
+                    line-height: ${typography.lineHeight.lh24};
                 }
             `}</style>
         </Component>
