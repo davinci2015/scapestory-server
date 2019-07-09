@@ -14,7 +14,7 @@ const CustomModal = ({
 }: Props) => {
     return (
         <>
-            <Modal className="modal" {...rest}>
+            <Modal className="modal" overlayClassName="modal-overlay" {...rest}>
                {children}
             </Modal>
 
@@ -33,6 +33,15 @@ const CustomModal = ({
                     background-color: ${colors.WHITE};
                     border: 1px solid ${colors.SHADE_LIGHT};
                     transform: translateX(-50%);
+                }
+
+                :global(.modal-overlay) {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    right: 0px;
+                    bottom: 0px;
+                    background-color: rgba(0, 0, 0, .7);
                 }
             `}</style>
         </>
