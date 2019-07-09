@@ -5,7 +5,7 @@ import {colors, spaces} from 'styles'
 
 interface Props {
     image: string
-    name: string
+    name: React.ReactNode
 }
 
 const UserWidget = ({

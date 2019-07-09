@@ -5,11 +5,14 @@ export default {
     BG: '#FFF',
     WHITE: '#FFF',
     BLACK: '#000',
+    
     GRAY: '#c5c7cb',
-    SHADE_LIGHT: '#dbdde1',
     MID_GRAY: '#c5c7cb',
     DARK_GRAY: '#91929c',
+
+    SHADE_LIGHT: '#dbdde1',
     SHADE_DEEP: '#83848e',
+    SHADE_EXTRA_LIGHT: '#eaeaec',
 
     ERROR: '#e06979',
 
