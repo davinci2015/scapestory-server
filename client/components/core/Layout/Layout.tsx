@@ -16,7 +16,7 @@ const Layout = ({children}: Props) => (
 
             body {
                 font-family: ${typography.fontFamily.PRIMARY};
-                font-size: ${typography.fontSize.M};
+                font-size: ${typography.fontSize.fs16};
                 background-color: ${colors.BG};
             }
         `}</style>
