@@ -40,7 +40,7 @@ const Input = ({
             {
                 error &&
                 <div className="error-message">
-                    <Paragraph as="span" size="xs" color={colors.ERROR}>
+                    <Paragraph as="span" type="s2" color={colors.ERROR}>
                         {errorMessage}
                     </Paragraph>
                 </div>
@@ -130,7 +130,7 @@ const Input = ({
             }
 
             label {
-                font-size: ${typography.fontSize.XS};
+                font-size: ${typography.fontSize.fs14};
                 pointer-events: none;
                 
                 position: absolute;

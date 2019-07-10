@@ -20,6 +20,7 @@ const Card = ({
 }: Props) => (
         <div className="card">
             <div className="header">
+                <div className="header-gradient"></div>
                 <div className="icons">
                     <IconText icon={Icon.EYE_SHOW_FULL} text={numeral(3233).format('0a+')} />
                     <IconText icon={Icon.HEART} text={32} />
@@ -57,11 +58,11 @@ const Card = ({
                 ${backgroundImage(image)}
             }
 
-            .header::before {
-                content: '';
+            .header-gradient {
                 position: absolute;
                 top: 0; left: 0; bottom: 0; right: 0;
-                background: radial-gradient(circle, transparent 20%, black 120%);
+                height: 72px;
+                background: linear-gradient(to bottom, ${colors.BLACK}, rgba(0, 0, 0, 0));
             }
 
             .header > .icons {
@@ -72,6 +73,7 @@ const Card = ({
 
             .header > .icons > :global(.icon-text) {
                 margin-left: ${spaces.s12};
+                opacity: .8;
             }
 
             .body {

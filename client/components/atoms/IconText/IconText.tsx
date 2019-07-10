@@ -21,7 +21,6 @@ const IconText = ({
             .icon-text {
                 display: inline-flex;
                 align-items: center;
-                opacity: .8;
             }  
 
             .icon-text :global(svg) {
