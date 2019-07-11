@@ -3,7 +3,7 @@ import {AuthenticationError} from 'apollo-server'
 
 export const authenticate = (next: (root, args, context, info) => void) => {
     return (root, args, context: ModuleContext, info) => {
-        if (!context.currentUser) {
+        if (!context.currentUserId) {
             throw new AuthenticationError('Unauthorized')
         }
 

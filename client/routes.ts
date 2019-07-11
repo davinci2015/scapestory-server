@@ -7,8 +7,8 @@ export default {
 }
 
 export const routeMapping = {
-	profile: {
-		as: (username: string) => `/profile/${username}`,
-		href: (username: string) => `/profile?username=${username}`
+	user: {
+		as: (username: string) => `/user/${username}`,
+		href: (username: string) => `/user?username=${username}`
 	}
 }

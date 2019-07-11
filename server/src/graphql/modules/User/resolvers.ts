@@ -11,8 +11,9 @@ type UserArgsType = {
 
 export const resolvers = {
     Query: {
-        me(root, args, context: ModuleContext & AuthenticationContext) {
-            return context.currentUser
+        async me(root, args, context: ModuleContext & AuthenticationContext) {
+            const provider: UsersProviderInterface = context.injector.get(tokens.USERS_PROVIDER)
+            return await provider.getUser(context.currentUserId)
         },
         async user(root, args: UserArgsType, {injector}: ModuleContext) {
             const provider: UsersProviderInterface = injector.get(tokens.USERS_PROVIDER)

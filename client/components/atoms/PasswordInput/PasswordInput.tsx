@@ -45,7 +45,7 @@ const PasswordInput = (props: Props) => {
                 }
 
                 .text {
-                    font-size: ${typography.fontSize.XS};
+                    font-size: ${typography.fontSize.fs14};
                     text-transform: uppercase;
                     color: ${colors.MID_GRAY};
                     margin-right: 8px;

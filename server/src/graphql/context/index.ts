@@ -1,12 +1,12 @@
 import {ModuleContext} from '@graphql-modules/core'
-import {appConstants} from 'constants/appConstants'
-import {AuthHelper, JWTTokenPayload} from 'utils/AuthHelper'
-import {User} from 'db/models/User'
-import {SessionInterface} from 'interfaces'
 import {Context} from 'apollo-server-core'
 
+import {appConstants} from 'constants/appConstants'
+import {AuthHelper, JWTTokenPayload} from 'utils/AuthHelper'
+import {SessionInterface} from 'interfaces'
+
 export type AuthenticationContext = {
-    currentUser: User
+    currentUserId: number
 }
 
 export type SessionContext = SessionInterface

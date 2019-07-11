@@ -3,11 +3,11 @@ import * as React from 'react'
 import {Navigation} from 'components/molecules'
 import {App} from 'components/core'
 
-const Index = () => (
+const News = () => (
     <App>
         <Navigation/>
-        <h1>Home page</h1>
+        <h1>News page</h1>
     </App>
 )
 
-export default Index
+export default News

@@ -29,7 +29,7 @@ interface Props {
 const Profile = (props: Props) => (
     <App>
         <Navigation />
-        <h1>Profile page {props.router.query && props.router.query.username}</h1>
+        <h1>User page {props.router.query && props.router.query.username}</h1>
         <Query query={MY_PROFILE}>
             {() => {
                 return null

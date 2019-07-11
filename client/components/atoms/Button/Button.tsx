@@ -16,6 +16,7 @@ const Button = ({
     ...rest
 }: Props) => (
         <button
+            // @ts-ignore
             type="button"
             className={cx('button', {
                 outlined: variant === 'outlined',

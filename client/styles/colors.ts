@@ -11,8 +11,10 @@ export default {
     DARK_GRAY: '#91929c',
 
     SHADE_LIGHT: '#dbdde1',
-    SHADE_DEEP: '#83848e',
     SHADE_EXTRA_LIGHT: '#eaeaec',
+    SHADE_DEEP: '#83848e',
+    SHADE_EXTRA_DEEP: '#35353b',
+    SHADE_MIDDLE: '#b4b7bc',
 
     ERROR: '#e06979',
 

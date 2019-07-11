@@ -1,8 +1,9 @@
 import React, {useContext} from 'react'
-import Link from 'next/link'
+
 import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
-import {ModalContext} from 'context/modal';
+import {ModalContext} from 'context/modal'
+import NavLink from 'components/molecules/Navigation/NavLink'
 
 const Navigation = () => {
     const {openModal} = useContext(ModalContext)
@@ -11,18 +12,18 @@ const Navigation = () => {
         <nav>
             <div className="container">
                 <div>
-                    <Link href={routes.index}>
+                    <NavLink href={routes.index}>
                         <a>Home</a>
-                    </Link>
-                    <Link href={routes.news}>
+                    </NavLink>
+                    <NavLink href={routes.news}>
                         <a>News</a>
-                    </Link>
+                    </NavLink>
                 </div>
                 <div>
                     <button onClick={() => openModal('login')}>Login</button>
-                    <Link as={routeMapping.profile.as('test')} href={routeMapping.profile.href('test')}>
+                    <NavLink as={routeMapping.user.as('test')} href={routeMapping.user.href('test')}>
                         <a>Profile</a>
-                    </Link>
+                    </NavLink>
                 </div>
             </div>
 
@@ -30,7 +31,7 @@ const Navigation = () => {
             nav {
                 width: 100%;
                 height: 64px;
-                background-color: ${styles.colors.PRIMARY};
+                background-color: ${styles.colors.WHITE};
                 box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
             }
             
