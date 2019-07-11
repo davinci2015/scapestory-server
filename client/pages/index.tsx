@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import {Navigation} from 'components/molecules'
 import {App} from 'components/core'
+import withAuth from 'hocs/withAuth';
 
 const Index = () => (
     <App>
@@ -10,4 +11,4 @@ const Index = () => (
     </App>
 )
 
-export default Index
+export default withAuth(Index)

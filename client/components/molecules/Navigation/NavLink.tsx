@@ -4,7 +4,7 @@ import {withRouter, RouterProps} from "next/router"
 
 import {colors, spaces} from 'styles'
 
-interface Props {
+export interface Props {
     router: RouterProps
     children: any
     as?: string

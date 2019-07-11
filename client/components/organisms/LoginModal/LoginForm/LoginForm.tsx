@@ -1,13 +1,11 @@
-import React, {useState, useContext} from 'react'
+import React, {useState} from 'react'
 import {useMutation} from 'react-apollo-hooks'
 import {injectIntl, InjectedIntlProps} from 'react-intl'
 
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
 import {MessageDescriptor} from 'components/atoms/FormattedMessage'
 
-import auth from 'utils/auth'
 import validator from 'utils/validator'
-import {ModalContext} from 'context/modal'
 import {spaces} from 'styles'
 import {LOGIN_MUTATION, LoginResult, LoginVariables} from 'components/organisms/LoginModal/LoginForm/mutations'
 
@@ -16,12 +14,14 @@ const inputKeys = {
     password: 'password'
 }
 
-interface Props extends InjectedIntlProps {}
+interface Props extends InjectedIntlProps {
+    onSuccess: (token: string) => void
+}
 
 const LoginForm = ({
-    intl
+    intl,
+    onSuccess
 }: Props) => {
-    const {closeModal} = useContext(ModalContext)
     const login = useMutation<LoginResult, LoginVariables>(LOGIN_MUTATION)
 
     const [errors, setError] = useState({
@@ -44,8 +44,7 @@ const LoginForm = ({
 
     const onSubmit = async () => {
         const {data} = await login({variables: {email, password}})
-        auth.persistToken(data.login.token)
-        closeModal('login')
+        onSuccess(data.login.token)
     }
 
     const validateEmail = (email: string) => {

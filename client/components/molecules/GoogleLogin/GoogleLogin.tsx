@@ -1,13 +1,10 @@
 import gql from 'graphql-tag'
 import * as React from 'react'
-import Router from 'next/router'
 import {Mutation, FetchResult} from 'react-apollo'
 import GoogleLogin, {GoogleLoginResponse, GoogleLoginResponseOffline} from 'react-google-login'
 
 import config from 'config'
-import routes from 'routes'
 import logger from 'utils/logger'
-import auth from 'utils/auth'
 
 const LOGIN = gql`
     mutation Login($token: String!) {
@@ -27,6 +24,7 @@ interface Variables {
 
 interface Props {
     children: (props: GoogleProps) => React.ReactElement
+    onSuccess: (token: string) => void
 }
 
 interface Data {
@@ -35,7 +33,7 @@ interface Data {
     }
 }
 
-const Login = ({children}: Props) => {
+const Login = ({children, onSuccess}: Props) => {
     const responseGoogle = (login: (props: { variables: Variables }) => Promise<void | FetchResult<Data>>) =>
         async (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
             if ('code' in response) {
@@ -46,8 +44,7 @@ const Login = ({children}: Props) => {
             const res = await login({variables: {token}})
 
             if (res && res.data) {
-                auth.persistToken(res.data.googleRegister.token)
-                Router.push(routes.index)
+                onSuccess(res.data.googleRegister.token)
             }
         }
 

@@ -1,14 +1,12 @@
-import React, {useState, useContext} from 'react'
+import React, {useState} from 'react'
 import {injectIntl, InjectedIntlProps} from 'react-intl'
 import {useMutation} from 'react-apollo-hooks'
 
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
 import {MessageDescriptor} from 'components/atoms/FormattedMessage'
 
-import auth from 'utils/auth'
 import validator from 'utils/validator'
 import {spaces} from 'styles'
-import {ModalContext} from 'context/modal'
 import {RegisterResult, RegisterVariables, SIGN_UP_MUTATION} from 'components/organisms/RegistrationModal/RegistrationForm/mutations'
 
 const inputKeys = {
@@ -17,13 +15,14 @@ const inputKeys = {
 }
 
 const PASSWORD_MIN_LENGTH = 6
-interface Props extends InjectedIntlProps {}
+interface Props extends InjectedIntlProps {
+    onSuccess: (token: string) => void
+}
 
 const RegistrationForm = ({
-    intl
+    intl,
+    onSuccess
 }: Props) => {
-    const {closeModal} = useContext(ModalContext)
-
     const [errors, setError] = useState({
         [inputKeys.email]: true,
         [inputKeys.password]: true
@@ -46,8 +45,7 @@ const RegistrationForm = ({
 
     const onSubmit = async () => {
         const {data} = await register({variables: {email, password}})
-        auth.persistToken(data.register.token)
-        closeModal('register')
+        onSuccess(data.register.token)
     }
 
     const validateEmail = (email: string) => {

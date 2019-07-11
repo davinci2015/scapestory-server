@@ -4,9 +4,6 @@ import {Mutation, FetchResult} from 'react-apollo'
 import {ReactFacebookFailureResponse, ReactFacebookLoginInfo} from 'react-facebook-login'
 import config from 'config'
 import logger from 'utils/logger/logger'
-import Router from 'next/router'
-import routes from 'routes'
-import auth from 'utils/auth'
 // @ts-ignore
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
@@ -28,6 +25,7 @@ interface Variables {
 
 interface Props {
     children: (props: FacebookProps) => React.ReactElement
+    onSuccess: (token: string) => void
 }
 
 interface Data {
@@ -36,14 +34,12 @@ interface Data {
     }
 }
 
-const Login = ({children}: Props) => {
+const Login = ({children, onSuccess}: Props) => {
     const responseFacebook = (login: (props: { variables: Variables }) => Promise<void | FetchResult<Data>>) =>
         async (response: ReactFacebookLoginInfo) => {
             const res = await login({variables: {token: response.accessToken}})
             if (res && res.data) {
-                const token = res.data.fbRegister.token
-                auth.persistToken(token)
-                Router.push(routes.index)
+                onSuccess(res.data.fbRegister.token)
             }
         }
 

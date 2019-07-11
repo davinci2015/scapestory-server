@@ -3,7 +3,9 @@ import React, {useContext} from 'react'
 import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
 import {ModalContext} from 'context/modal'
-import NavLink from 'components/molecules/Navigation/NavLink'
+import {AuthenticationGuard} from 'components/core'
+
+import NavLink from './NavLink'
 
 const Navigation = () => {
     const {openModal} = useContext(ModalContext)
@@ -20,17 +22,23 @@ const Navigation = () => {
                     </NavLink>
                 </div>
                 <div>
-                    <button onClick={() => openModal('login')}>Login</button>
-                    <NavLink as={routeMapping.user.as('test')} href={routeMapping.user.href('test')}>
-                        <a>Profile</a>
-                    </NavLink>
+                    <AuthenticationGuard render={({isAuthenticated}) =>
+                        !isAuthenticated
+                            ? (<button onClick={() => openModal('login')}>Login</button>)
+                            : null}
+                    />
+                    <AuthenticationGuard>
+                        <NavLink as={routeMapping.user.as('test')} href={routeMapping.user.href('test')}>
+                            <a>Profile</a>
+                        </NavLink>
+                    </AuthenticationGuard>
                 </div>
             </div>
 
             <style jsx>{`
             nav {
                 width: 100%;
-                height: 64px;
+                height: 64px;   
                 background-color: ${styles.colors.WHITE};
                 box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
             }
@@ -49,4 +57,5 @@ const Navigation = () => {
     )
 }
 
+Navigation.NavLink = NavLink
 export default Navigation

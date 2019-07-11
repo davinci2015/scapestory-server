@@ -9,6 +9,7 @@ import {ModalContext} from 'context/modal'
 
 interface Props {
     authType: 'login' | 'register'
+    onSuccess: (token: string) => void
     title: React.ReactNode
     subtitle: React.ReactNode
     footer: React.ReactNode
@@ -20,15 +21,16 @@ const AuthModal = ({
     title,
     subtitle,
     footer,
-    form
+    form,
+    onSuccess
 }: Props) => {
     const {isOpen, closeModal} = useContext(ModalContext)
 
-    const closeLoginModal = () => closeModal(authType)
+    const closeAuthModal = () => closeModal(authType)
 
     return (
         <>
-            <Modal isOpen={isOpen(authType)} onRequestClose={closeLoginModal}>
+            <Modal isOpen={isOpen(authType)} onRequestClose={closeAuthModal}>
                 <div className="wrapper">
                     <div className="body">
                         <div className="bubble-left">
@@ -37,7 +39,7 @@ const AuthModal = ({
                         <div className="bubble-right">
                             <Bubble size="334px" />
                         </div>
-                        <a onClick={closeLoginModal} className="close-button">
+                        <a onClick={closeAuthModal} className="close-button">
                             <Icon d={Icon.CLOSE} color={colors.DARK_GRAY} size={26} />
                         </a>
                         <Headline as="h1" variant="h3">
@@ -56,12 +58,9 @@ const AuthModal = ({
                                 </Paragraph>
                             </div>
                             <div className="social-buttons">
-                                <GoogleLogin>
+                                <GoogleLogin onSuccess={onSuccess}>
                                     {(props: GoogleProps) => (
-                                        <Button color="secondary" onClick={() => {
-                                            closeLoginModal()
-                                            props.onClick()
-                                        }}>
+                                        <Button color="secondary" onClick={() => props.onClick()}>
                                             <ButtonIcon side="left">
                                                 <img src="/static/icons/icon-google.png" alt="Google Login" />
                                             </ButtonIcon>
@@ -71,12 +70,9 @@ const AuthModal = ({
                                         </Button>
                                     )}
                                 </GoogleLogin>
-                                <FacebookLogin>
+                                <FacebookLogin onSuccess={onSuccess}>
                                     {(props: FacebookProps) => (
-                                        <Button color="secondary" onClick={() => {
-                                            closeLoginModal()
-                                            props.onClick()
-                                        }}>
+                                        <Button color="secondary" onClick={() => props.onClick()}>
                                             <ButtonIcon side="left">
                                                 <img src="/static/icons/icon-facebook.png" alt="Facebook Login" />
                                             </ButtonIcon>

@@ -1,12 +1,13 @@
+import {IncomingMessage} from 'http'
 import {ApolloClient, HttpLink, InMemoryCache, ApolloLink, concat, NormalizedCacheObject} from 'apollo-boost'
 import fetch from 'isomorphic-unfetch'
+
 import appConstants from 'appConstants'
-import {Request} from 'node-fetch'
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null
 
 export interface InitApolloOptions {
-    getToken: (req?: Request) => string | void
+    getToken: (req?: IncomingMessage) => string | void
 }
 
 function create(initialState: {[key: string]: any}, options: InitApolloOptions) {

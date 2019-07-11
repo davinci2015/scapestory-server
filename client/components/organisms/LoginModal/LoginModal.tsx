@@ -1,19 +1,30 @@
 import {useContext} from 'react'
+import Router from 'next/router'
 
 import {LoginForm, AuthModal} from 'components/organisms'
 import {Paragraph, FormattedMessage} from 'components/atoms'
+
 import {colors} from 'styles'
 import {ModalContext} from 'context/modal'
+import auth from 'utils/auth'
+import routes from 'routes'
 
 const LoginModal = () => {
-    const {openModal} = useContext(ModalContext)
+    const {openModal, closeModal} = useContext(ModalContext)
 
     const openRegistrationModal = () => openModal('register')
 
+    const handleSuccess = (token: string) => {
+        auth.persistToken(token)
+        closeModal('login')
+        Router.push(routes.index)
+    } 
+
     return (
         <AuthModal
+            onSuccess={handleSuccess}
             authType="login"
-            form={<LoginForm />}
+            form={<LoginForm onSuccess={handleSuccess}/>}
             title={<FormattedMessage id="login_title" defaultMessage="Welcome back! Your scapestory is waiting." />}
             subtitle={<FormattedMessage id="login_subtitle" defaultMessage="Login and continue exploring aquascapes." />}
             footer={(

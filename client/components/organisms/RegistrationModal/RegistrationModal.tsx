@@ -1,20 +1,30 @@
 import {useContext} from 'react'
+import Router from 'next/router'
 
 import {Paragraph, FormattedMessage} from 'components/atoms'
 import {RegistrationForm, AuthModal} from 'components/organisms'
 
 import {colors} from 'styles'
 import {ModalContext} from 'context/modal'
+import auth from 'utils/auth'
+import routes from 'routes'
 
 const RegistrationModal = () => {
-    const {openModal} = useContext(ModalContext)
+    const {openModal, closeModal} = useContext(ModalContext)
 
     const openLoginModal = () => openModal('login')
 
+    const handleSuccess = (token: string) => {
+        auth.persistToken(token)
+        closeModal('register')
+        Router.push(routes.index)
+    } 
+
     return (
         <AuthModal
+            onSuccess={handleSuccess}
             authType="register"
-            form={<RegistrationForm />}
+            form={<RegistrationForm onSuccess={handleSuccess}/>}
             title={<FormattedMessage id="registration_title" defaultMessage="Don’t be shy! Sign up to share your scapestory." />}
             subtitle={<FormattedMessage id="registration_subtitle" defaultMessage="Create account to get the full Scapestory experience." />}
             footer={(
