@@ -1,10 +1,11 @@
 import * as React from 'react'
-import {Query} from 'react-apollo'
+import {Query, compose} from 'react-apollo'
 import {withRouter, SingletonRouter} from 'next/router'
 import gql from 'graphql-tag'
 
 import {Navigation} from 'components/molecules'
 import {App} from 'components/core'
+import withAuth from 'hocs/withAuth'
 
 const MY_PROFILE = gql`
     query {
@@ -38,4 +39,7 @@ const Profile = (props: Props) => (
     </App>
 )
 
-export default withRouter(Profile)
+export default compose(
+    withRouter,
+    withAuth
+)(Profile)
