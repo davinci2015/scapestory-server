@@ -2,7 +2,8 @@ import React from 'react'
 import numeral from 'numeral'
 
 import {backgroundImage} from 'styles/mixins'
-import {Headline, UserWidget, Tag, IconText, Icon} from 'components/atoms'
+import {Headline, Tag, IconText, Icon} from 'components/atoms'
+import {UserWidget} from 'components/molecules'
 import {colors, spaces} from 'styles'
 
 interface Props {

@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
 
 interface ModalContextInterface {
-    modals: {[key in ModalTypes]: boolean}
-    openModal: (type: ModalTypes) => void
-    closeModal: (type: ModalTypes) => void
-    isOpen: (type: ModalTypes) => boolean
+    modals: {[key in ModalType]: boolean}
+    openModal: (type: ModalType) => void
+    closeModal: (type: ModalType) => void
+    isOpen: (type: ModalType) => boolean
 }
 
 const ModalContext = React.createContext<ModalContextInterface>({
@@ -21,7 +21,7 @@ interface Props {
     children: React.ReactNode
 }
 
-type ModalTypes = 'login' | 'register'
+export type ModalType = 'login' | 'register'
 
 const initialState = {
     login: false,
@@ -29,13 +29,13 @@ const initialState = {
 }
 
 const ModalProvider = ({children}: Props) => {
-    const [modals, setModalVisibility] = useState<{[key in ModalTypes]: boolean}>(initialState)
+    const [modals, setModalVisibility] = useState<{[key in ModalType]: boolean}>(initialState)
 
-    const openModal = (type: ModalTypes) => setModalVisibility({...initialState, [type]: true})
+    const openModal = (type: ModalType) => setModalVisibility({...initialState, [type]: true})
 
-    const closeModal = (type: ModalTypes) => setModalVisibility({...modals, [type]: false})
+    const closeModal = (type: ModalType) => setModalVisibility({...modals, [type]: false})
 
-    const isOpen = (type: ModalTypes) => modals[type]
+    const isOpen = (type: ModalType) => modals[type]
 
     return (
         <ModalContext.Provider value={{

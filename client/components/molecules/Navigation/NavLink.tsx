@@ -2,7 +2,7 @@ import React from "react"
 import Link from "next/link"
 import {withRouter, RouterProps} from "next/router"
 
-import {colors, spaces} from 'styles'
+import {colors, spaces, typography} from 'styles'
 
 export interface Props {
     router: RouterProps
@@ -20,20 +20,29 @@ const NavLink = (({router, children, as, href, ...rest}: Props) => (
         </Link>
         <style jsx>{`
             :global(nav a.nav-link) {
-                padding: 0 ${spaces.s6}; 
                 position: relative;
+                padding: ${spaces.s12} ${spaces.s6}; 
+                margin: 0 ${spaces.s36};
+
                 text-decoration: none;
-                text-transform: uppercase;
+                font-weight: ${typography.fontWeight.bold};
+                color: ${colors.SHADE_DEEP};
+            }
+
+            :global(nav a.nav-link.active) {
                 color: ${colors.BLACK};
             }
 
             :global(nav a.nav-link.active::before) {
                 content: "";
                 position: absolute;
-                bottom: -22px;
+                
+                bottom: -24px;
                 left: 0;
-                width: 100%;
+                right: 0;
+
                 height: 3px;
+                
                 background-color: ${colors.PRIMARY};
             }
         `}</style>

@@ -3,9 +3,9 @@ import {Query, compose} from 'react-apollo'
 import {withRouter, SingletonRouter} from 'next/router'
 import gql from 'graphql-tag'
 
-import {Navigation} from 'components/molecules'
 import {App} from 'components/core'
 import withAuth from 'hocs/withAuth'
+import {NavigationContainer} from 'components/organisms'
 
 const MY_PROFILE = gql`
     query {
@@ -29,7 +29,7 @@ interface Props {
 
 const Profile = (props: Props) => (
     <App>
-        <Navigation />
+        <NavigationContainer />
         <h1>User page {props.router.query && props.router.query.username}</h1>
         <Query query={MY_PROFILE}>
             {() => {

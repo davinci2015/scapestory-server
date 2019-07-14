@@ -1,15 +1,14 @@
 import * as React from 'react'
 import numeral from 'numeral'
 
-import Navigation from 'components/molecules/Navigation'
 import App from 'components/core/App'
-import UserWidget from 'components/atoms/UserWidget'
 import {Tag, IconText, Paragraph, Headline, Icon} from 'components/atoms'
-import {Card} from 'components/molecules'
+import {Card, UserWidget} from 'components/molecules'
+import {NavigationContainer} from 'components/organisms'
 
 const Index = () => (
     <App>
-        <Navigation />
+        <NavigationContainer />
         <Headline as="h1">Scapestory</Headline>
         <Headline as="h2">News Page</Headline>
         <Headline as="h3">News Page</Headline>

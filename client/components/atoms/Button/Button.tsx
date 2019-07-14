@@ -1,18 +1,24 @@
 import React from 'react'
 import cx from 'classnames'
+
 import {colors, borderRadius, spaces} from 'styles'
+import {Paragraph} from 'components/atoms'
 
 interface Props extends React.HTMLProps<HTMLButtonElement> {
     children: React.ReactNode
     onClick?: (...args: any[]) => any
     variant?: 'default' | 'outlined'
     color?: 'primary' | 'secondary'
+    type?: 'default' | 'small'
+    leftIcon?: React.ReactNode
 }
 
 const Button = ({
     children,
     variant = 'default',
     color = 'primary',
+    type = 'default',
+    leftIcon,
     ...rest
 }: Props) => (
         <button
@@ -24,8 +30,12 @@ const Button = ({
                 secondary: color === 'secondary'
             })}
             {...rest}>
+                
+            {leftIcon}
 
-            {children}
+            <Paragraph as="span" type="body" weight="bold" color={colors.WHITE}>
+                {children}
+            </Paragraph>
 
             <style jsx>{`
                 .button {
@@ -37,9 +47,21 @@ const Button = ({
                     outline: 0;
                     border: 0;
                     cursor: pointer;
-                    padding-top: ${spaces.s16}; 
-                    padding-bottom: ${spaces.s16};
+                    padding: ${spaces.s12} ${spaces.s24};
                     transition: all 120ms ease-in-out;
+
+                    ${type === 'small' && `
+                        padding-top: ${spaces.s12}; 
+                        padding-bottom: ${spaces.s12};
+                    `}
+
+                    ${leftIcon && `
+                        padding-left: ${spaces.s18};
+                    `}
+                }
+
+                button :global(svg) {
+                    margin-right: ${spaces.s12};
                 }
 
                 button:disabled {

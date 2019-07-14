@@ -1,12 +1,12 @@
 import * as React from 'react'
 
-import {Navigation} from 'components/molecules'
 import {App} from 'components/core'
 import withAuth from 'hocs/withAuth';
+import {NavigationContainer} from 'components/organisms'
 
 const Index = () => (
     <App>
-        <Navigation/>
+        <NavigationContainer/>
         <h1>Home page</h1>
     </App>
 )
