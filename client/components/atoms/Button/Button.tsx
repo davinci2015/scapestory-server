@@ -60,8 +60,11 @@ const Button = ({
                     `}
                 }
 
-                button :global(svg) {
+                button :global(svg),
+                button :global(img) {
                     margin-right: ${spaces.s12};
+                    width: ${spaces.s24};
+                    height: ${spaces.s24};
                 }
 
                 button:disabled {

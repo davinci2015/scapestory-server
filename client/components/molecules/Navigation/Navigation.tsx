@@ -74,6 +74,7 @@ const Navigation = ({
             .right :global(.user-image) {
                 flex: 0 0 auto;
                 margin: 0 ${styles.spaces.s36};
+                cursor: pointer;
             }
         `}</style>
         </nav>

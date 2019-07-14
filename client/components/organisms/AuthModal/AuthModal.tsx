@@ -60,25 +60,27 @@ const AuthModal = ({
                             <div className="social-buttons">
                                 <GoogleLogin onSuccess={onSuccess}>
                                     {(props: GoogleProps) => (
-                                        <Button color="secondary" onClick={() => props.onClick()}>
-                                            <ButtonIcon side="left">
-                                                <img src="/static/icons/icon-google.png" alt="Google Login" />
-                                            </ButtonIcon>
+                                        <Button
+                                            leftIcon={<img src="/static/icons/icon-google.png" alt="Google Login" />}
+                                            color="secondary"
+                                            onClick={props.onClick}
+                                        >
                                             <Paragraph weight="bold" as="span">
                                                 Google
-                                        </Paragraph>
+                                            </Paragraph>
                                         </Button>
                                     )}
                                 </GoogleLogin>
                                 <FacebookLogin onSuccess={onSuccess}>
                                     {(props: FacebookProps) => (
-                                        <Button color="secondary" onClick={() => props.onClick()}>
-                                            <ButtonIcon side="left">
-                                                <img src="/static/icons/icon-facebook.png" alt="Facebook Login" />
-                                            </ButtonIcon>
+                                        <Button
+                                            leftIcon={<img src="/static/icons/icon-facebook.png" alt="Facebook Login" />}
+                                            color="secondary"
+                                            onClick={props.onClick}
+                                        >
                                             <Paragraph weight="bold" as="span">
                                                 Facebook
-                                        </Paragraph>
+                                            </Paragraph>
                                         </Button>
                                     )}
                                 </FacebookLogin>
