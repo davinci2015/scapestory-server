@@ -37,7 +37,9 @@ const Navigation = ({
                     {
                         isAuthenticated &&
                         <NavLink as={routeMapping.user.as('test')} href={routeMapping.user.href('test')}>
-                            <UserImage size="l" image={userImage} />
+                            <div>
+                                <UserImage size="l" image={userImage} />
+                            </div>
                         </NavLink>
                     }
                     <Button

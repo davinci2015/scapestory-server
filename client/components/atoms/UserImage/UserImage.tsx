@@ -19,7 +19,7 @@ const UserImage = ({
                 height: 24px;
                 border-radius: 50%;
                 ${backgroundImage(image)}
-
+                    
                 ${size === 'l' && `
                     width: 36px;
                     height: 36px;
