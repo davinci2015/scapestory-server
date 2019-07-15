@@ -2,6 +2,10 @@ import React from 'react'
 
 import {backgroundImage} from 'styles/mixins'
 
+const classes = {
+    root: 'userImage'
+}
+
 interface Props {
     image: string
     size?: 'default' | 'l'
@@ -12,9 +16,9 @@ const UserImage = ({
     size = 'default'
 }: Props) => (
     <>
-        <div className="user-image"></div>
+        <div className={classes.root}></div>
         <style jsx>{`
-            .user-image {
+            .${classes.root} {
                 width: 24px;
                 height: 24px;
                 border-radius: 50%;
@@ -28,5 +32,7 @@ const UserImage = ({
         `}</style>
     </>
 )
+
+UserImage.classes = classes
 
 export default UserImage

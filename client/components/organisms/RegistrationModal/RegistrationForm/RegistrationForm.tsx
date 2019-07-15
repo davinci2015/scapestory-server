@@ -146,7 +146,7 @@ const RegistrationForm = ({
             </form>
 
             <style jsx>{`
-                .form :global(.input-container) {
+                .form :global(.${Input.classes.inputContainer}) {
                     display: block;
                     width: 100%;
                     margin-top: 28px;

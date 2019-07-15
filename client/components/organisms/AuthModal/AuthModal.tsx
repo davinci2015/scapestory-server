@@ -152,7 +152,7 @@ const AuthModal = ({
                     width: 100%;
                 }
 
-                .social-buttons > :global(.button):first-of-type {
+                .social-buttons > :global(.${Button.classes.root}):first-of-type {
                     margin-right: ${spaces.s30};
                 }
                     

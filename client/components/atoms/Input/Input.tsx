@@ -3,6 +3,10 @@ import React from 'react'
 import {borderRadius, colors, typography} from 'styles'
 import {Paragraph} from 'components/atoms'
 
+const classes = {
+    inputContainer: 'inputContainer'
+}
+
 export interface InputProps extends React.HTMLProps<HTMLInputElement> {
     type?: string
     placeholder?: string
@@ -25,7 +29,7 @@ const Input = ({
     const setFocus = () => inputRef && inputRef.current && inputRef.current.focus()
 
     return (
-        <div className="input-container">
+        <div className={classes.inputContainer}>
             <div className="base">
                 <div className="root">
                     <input ref={inputRef} {...props} />
@@ -141,7 +145,7 @@ const Input = ({
                 transition: color 120ms linear;
             }
 
-            .input-container {
+            .${classes.inputContainer} {
                 position: relative;
                 width: 100%;
             }
@@ -155,5 +159,7 @@ const Input = ({
         </div>
     )
 }
+
+Input.classes = classes
 
 export default Input

@@ -13,6 +13,10 @@ interface Props extends React.HTMLProps<HTMLButtonElement> {
     leftIcon?: React.ReactNode
 }
 
+const classes = {
+    root: 'button'
+}
+
 const Button = ({
     children,
     variant = 'default',
@@ -24,7 +28,7 @@ const Button = ({
         <button
             // @ts-ignore
             type="button"
-            className={cx('button', {
+            className={cx(classes.root, {
                 outlined: variant === 'outlined',
                 primary: color === 'primary',
                 secondary: color === 'secondary'
@@ -96,5 +100,7 @@ const Button = ({
             `}</style>
         </button>
     )
+
+Button.classes = classes
 
 export default Button

@@ -73,7 +73,7 @@ const Navigation = ({
                 align-items: center;
             }
 
-            .right :global(.user-image) {
+            .right :global(.${UserImage.classes.root}) {
                 flex: 0 0 auto;
                 margin: 0 ${styles.spaces.s36};
                 cursor: pointer;
