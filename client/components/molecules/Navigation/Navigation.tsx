@@ -14,6 +14,11 @@ interface Props {
     openModal: (modalType: ModalType) => void
 }
 
+export const navigationHeight = {
+    default: '94px',
+    slim: '66px'
+}
+
 const scrollOffset = 80
 
 const Navigation = ({
@@ -99,15 +104,11 @@ const Navigation = ({
                 top: 0;
                 left: 0;
                 right: 0;
-                height: 94px;   
+                height: ${isSlim() ? navigationHeight.slim : navigationHeight.default};   
                 
                 background-color: ${styles.colors.WHITE};
                 box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
                 transition: height 180ms ease-in-out;
-
-                ${isSlim() ? `
-                    height: 66px;
-                ` : ''}
             }
             
             .container {
