@@ -8,6 +8,7 @@ const Index = () => (
     <App>
         <NavigationContainer/>
         <h1>Home page</h1>
+        <div style={{height: '200vh'}}></div>
     </App>
 )
 

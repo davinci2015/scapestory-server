@@ -49,25 +49,22 @@ const Button = ({
 
             <style jsx>{`
                 .button {
+                    box-sizing: border-box;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     white-space: nowrap;
                     
-                    padding: ${spaces.s18} ${spaces.s24};
+                    padding: 0 ${spaces.s24};
                     width: 100%;
                     min-width: 120px;
+                    min-height: 60px;
 
                     outline: 0;
                     border: 0;
                     border-radius: ${borderRadius.SECONDARY};
                     cursor: pointer;
                     transition: all 120ms ease-in-out;
-
-                    ${type === 'small' && `
-                        padding-top: ${spaces.s12}; 
-                        padding-bottom: ${spaces.s12};
-                    `}
 
                     ${leftIcon && `
                         padding-left: ${spaces.s18};
@@ -98,16 +95,16 @@ const Button = ({
                 .secondary {
                     color: ${colors.BLACK};
                     background-color: ${colors.WHITE};
-                    border: 1px solid ${colors.SHADE_LIGHT}
+                    border: 2px solid ${colors.SHADE_LIGHT}
                 }
 
                 .outlined {
                     background-color: transparent;
-                    border: 1px solid ${colors.PRIMARY};
+                    border: 2px solid ${colors.PRIMARY};
                 }
 
                 .small {
-                    padding: ${spaces.s12} ${spaces.s24};
+                    min-height: 44px;
                 }
             
             `}</style>

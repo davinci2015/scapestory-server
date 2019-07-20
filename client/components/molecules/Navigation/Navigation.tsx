@@ -3,6 +3,7 @@ import React from 'react'
 import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
 import {ModalType} from 'context/modal'
+import useScrollPosition from 'hooks/useScrollPosition'
 import {Button, FormattedMessage, Icon, UserImage, Paragraph} from 'components/atoms'
 
 import NavLink from './NavLink'
@@ -13,11 +14,30 @@ interface Props {
     openModal: (modalType: ModalType) => void
 }
 
+const scrollOffset = 80
+
 const Navigation = ({
     isAuthenticated,
     openModal,
     userImage,
-}: Props) => (
+}: Props) => {
+    const position = useScrollPosition()
+
+    const isSlim = () => position.y > scrollOffset
+
+    const openLoginModal = () => openModal('login')
+
+    const openRegisterModal = () => openModal('register')
+
+    const onCreateAquascape = () => {
+        if (isAuthenticated) {
+            // TODO: redirect to aquascape creation
+        } else {
+            openLoginModal()
+        }
+    }
+
+    return (
         <nav>
             <div className="container">
                 <div className="left">
@@ -37,7 +57,7 @@ const Navigation = ({
                                 <Paragraph as="span" color={styles.colors.SHADE_DEEP}>
                                     <FormattedMessage id="navigation_not_member_yet" defaultMessage="Not a member yet?" />
                                 </Paragraph>
-                                <div className="signup" onClick={() => openModal('register')}>
+                                <div className="signup" onClick={openRegisterModal}>
                                     <Paragraph as="span" color={styles.colors.PRIMARY} weight="bold">
                                         <FormattedMessage id="navigation_sign_up" defaultMessage="Sign Up" />
                                     </Paragraph>
@@ -48,7 +68,7 @@ const Navigation = ({
                                     color="secondary"
                                     variant="outlined"
                                     type="small"
-                                    onClick={() => openModal('login')}
+                                    onClick={openLoginModal}
                                 >
                                     <FormattedMessage id="navigation_login" defaultMessage="Login" />
                                 </Button>
@@ -57,6 +77,7 @@ const Navigation = ({
                     }
                     <Button
                         type="small"
+                        onClick={onCreateAquascape}
                         leftIcon={<Icon d={Icon.ADD_FULL} viewBox="0 0 22 22" color={styles.colors.WHITE} />}
                     >
                         <FormattedMessage id="navigation_add_your_aquascape" defaultMessage="Add your aquascape" />
@@ -74,10 +95,19 @@ const Navigation = ({
 
             <style jsx>{`
             nav {
-                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
                 height: 94px;   
+                
                 background-color: ${styles.colors.WHITE};
                 box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+                transition: height 180ms ease-in-out;
+
+                ${isSlim() ? `
+                    height: 66px;
+                ` : ''}
             }
             
             .container {
@@ -97,6 +127,7 @@ const Navigation = ({
             .right, .left {
                 display: flex;
                 align-items: center;
+                height: 100%;
             }
 
             .right :global(.${UserImage.classes.root}) {
@@ -123,6 +154,7 @@ const Navigation = ({
         `}</style>
         </nav>
     )
+}
 
 Navigation.NavLink = NavLink
 
