@@ -20,7 +20,8 @@ const Navigation = ({
 }: Props) => (
         <nav>
             <div className="container">
-                <div>
+                <div className="left">
+                    <img className="logo" src="/static/logo.svg" />
                     <NavLink href={routes.index}>
                         <a>Discover</a>
                     </NavLink>
@@ -30,10 +31,24 @@ const Navigation = ({
                 </div>
                 <div className="right">
                     {
-                        !isAuthenticated
-                            ? <button onClick={() => openModal('login')}>Login</button>
-                            : null
+                        !isAuthenticated &&
+                        <div className="login-btn">
+                            <Button
+                                color="secondary"
+                                variant="outlined"
+                                type="small"
+                                onClick={() => openModal('login')}
+                            >
+                                <FormattedMessage id="navigation_login" defaultMessage="Login" />
+                            </Button>
+                        </div>
                     }
+                    <Button
+                        type="small"
+                        leftIcon={<Icon d={Icon.ADD_FULL} viewBox="0 0 22 22" color={styles.colors.WHITE} />}
+                    >
+                        <FormattedMessage id="navigation_add_your_aquascape" defaultMessage="Add your aquascape" />
+                    </Button>
                     {
                         isAuthenticated &&
                         <NavLink as={routeMapping.user.as('test')} href={routeMapping.user.href('test')}>
@@ -42,11 +57,6 @@ const Navigation = ({
                             </div>
                         </NavLink>
                     }
-                    <Button
-                        type="small"
-                        leftIcon={<Icon d={Icon.ADD_FULL} viewBox="0 0 22 22" color={styles.colors.WHITE} />}>
-                        <FormattedMessage id="navigation_add_your_aquascapoe" defaultMessage="Add your aquascape" />
-                    </Button>
                 </div>
             </div>
 
@@ -61,14 +71,18 @@ const Navigation = ({
             .container {
                 height: 100%;
                 margin: 0 auto;
-                padding: 0 60px;
+                padding: 0 24px 0 60px;
                 
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
             }
 
-            .right {
+            .logo {
+                padding-right: 60px;
+            }
+
+            .right, .left {
                 display: flex;
                 align-items: center;
             }
@@ -77,6 +91,12 @@ const Navigation = ({
                 flex: 0 0 auto;
                 margin: 0 ${styles.spaces.s36};
                 cursor: pointer;
+            }
+
+            .right .login-btn {
+                flex: 0;
+                margin-right: ${styles.spaces.s24};
+                margin-left: ${styles.spaces.s36};
             }
         `}</style>
         </nav>

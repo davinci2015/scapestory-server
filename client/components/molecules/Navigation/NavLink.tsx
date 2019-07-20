@@ -37,7 +37,7 @@ const NavLink = (({router, children, as, href, ...rest}: Props) => (
                 content: "";
                 position: absolute;
                 
-                bottom: -24px;
+                bottom: -26px;
                 left: 0;
                 right: 0;
 

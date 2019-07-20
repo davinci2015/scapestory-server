@@ -17,6 +17,11 @@ const classes = {
     root: 'button'
 }
 
+const paragraphColor = {
+    primary: colors.WHITE,
+    secondary: colors.PRIMARY
+}
+
 const Button = ({
     children,
     variant = 'default',
@@ -31,13 +36,14 @@ const Button = ({
             className={cx(classes.root, {
                 outlined: variant === 'outlined',
                 primary: color === 'primary',
-                secondary: color === 'secondary'
+                secondary: color === 'secondary',
+                small: type === 'small'
             })}
             {...rest}>
                 
             {leftIcon}
 
-            <Paragraph as="span" type="body" weight="bold" color={colors.WHITE}>
+            <Paragraph as="span" type="body" weight="bold" color={paragraphColor[color]}>
                 {children}
             </Paragraph>
 
@@ -46,12 +52,15 @@ const Button = ({
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    border-radius: ${borderRadius.SECONDARY};
+                    
+                    padding: ${spaces.s18} ${spaces.s24};
                     width: 100%;
+                    min-width: 120px;
+
                     outline: 0;
                     border: 0;
+                    border-radius: ${borderRadius.SECONDARY};
                     cursor: pointer;
-                    padding: ${spaces.s12} ${spaces.s24};
                     transition: all 120ms ease-in-out;
 
                     ${type === 'small' && `
@@ -94,7 +103,10 @@ const Button = ({
                 .outlined {
                     background-color: transparent;
                     border: 1px solid ${colors.PRIMARY};
-                    color: ${colors.PRIMARY};
+                }
+
+                .small {
+                    padding: ${spaces.s12} ${spaces.s24};
                 }
             
             `}</style>

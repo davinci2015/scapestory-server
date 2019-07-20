@@ -8,7 +8,8 @@
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/main.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "lint": "tslint ./src/**/*.ts"
+    "lint": "tslint ./src/**/*.ts",
+    "codegen": "graphql-codegen --config codegen.json"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,11 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/scapestory/scapestory#readme",
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.4.0",
+    "@graphql-codegen/introspection": "1.4.0",
+    "@graphql-codegen/typescript": "1.4.0",
+    "@graphql-codegen/typescript-operations": "1.4.0",
+    "@graphql-codegen/typescript-react-apollo": "1.4.0",
     "@types/bcrypt": "^3.0.0",
     "@types/bluebird": "^3.5.26",
     "@types/dotenv": "^6.1.1",
@@ -27,10 +33,11 @@
     "@types/passport-facebook-token": "^0.4.33",
     "@types/yup": "^0.26.20",
     "nodemon": "^1.18.10",
-    "ts-node": "^8.0.3",
+    "ts-node": "^8.3.0",
     "tsconfig-paths": "^3.8.0",
     "tslint": "^5.17.0",
-    "typescript": "^3.3.4000"
+    "typescript": "^3.3.4000",
+    "@graphql-codegen/typescript-resolvers": "1.4.0"
   },
   "dependencies": {
     "@graphql-modules/core": "^0.6.6",

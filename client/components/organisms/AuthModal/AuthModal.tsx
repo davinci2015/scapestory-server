@@ -1,7 +1,7 @@
 import {useContext} from 'react'
 
 import {FacebookLogin, GoogleLogin, Modal} from 'components/molecules'
-import {Headline, Paragraph, FormattedMessage, Bubble, Button, ButtonIcon, Icon} from 'components/atoms'
+import {Headline, Paragraph, FormattedMessage, Bubble, Button, Icon} from 'components/atoms'
 import {FacebookProps} from 'components/molecules/FacebookLogin'
 import {GoogleProps} from 'components/molecules/GoogleLogin'
 import {colors, spaces} from 'styles'
@@ -146,10 +146,6 @@ const AuthModal = ({
                 .social-buttons {
                     display: flex;
                     justify-content: space-between;
-                }
-
-                .social-buttons img {
-                    width: 100%;
                 }
 
                 .social-buttons > :global(.${Button.classes.root}):first-of-type {
