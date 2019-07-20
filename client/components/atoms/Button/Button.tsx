@@ -52,6 +52,7 @@ const Button = ({
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    white-space: nowrap;
                     
                     padding: ${spaces.s18} ${spaces.s24};
                     width: 100%;

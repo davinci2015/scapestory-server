@@ -3,7 +3,7 @@ import React from 'react'
 import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
 import {ModalType} from 'context/modal'
-import {Button, FormattedMessage, Icon, UserImage} from 'components/atoms'
+import {Button, FormattedMessage, Icon, UserImage, Paragraph} from 'components/atoms'
 
 import NavLink from './NavLink'
 
@@ -32,16 +32,28 @@ const Navigation = ({
                 <div className="right">
                     {
                         !isAuthenticated &&
-                        <div className="login-btn">
-                            <Button
-                                color="secondary"
-                                variant="outlined"
-                                type="small"
-                                onClick={() => openModal('login')}
-                            >
-                                <FormattedMessage id="navigation_login" defaultMessage="Login" />
-                            </Button>
-                        </div>
+                        <>
+                            <div className="text">
+                                <Paragraph as="span" color={styles.colors.SHADE_DEEP}>
+                                    <FormattedMessage id="navigation_not_member_yet" defaultMessage="Not a member yet?" />
+                                </Paragraph>
+                                <div className="signup" onClick={() => openModal('register')}>
+                                    <Paragraph as="span" color={styles.colors.PRIMARY} weight="bold">
+                                        <FormattedMessage id="navigation_sign_up" defaultMessage="Sign Up" />
+                                    </Paragraph>
+                                </div>
+                            </div>
+                            <div className="login-btn">
+                                <Button
+                                    color="secondary"
+                                    variant="outlined"
+                                    type="small"
+                                    onClick={() => openModal('login')}
+                                >
+                                    <FormattedMessage id="navigation_login" defaultMessage="Login" />
+                                </Button>
+                            </div>
+                        </>
                     }
                     <Button
                         type="small"
@@ -97,6 +109,16 @@ const Navigation = ({
                 flex: 0;
                 margin-right: ${styles.spaces.s24};
                 margin-left: ${styles.spaces.s36};
+            }
+
+            .right .text {
+                flex: 1 1 100%;
+            }
+
+            .right .text .signup {
+                display: inline;
+                margin-left: ${styles.spaces.s6};
+                cursor: pointer;
             }
         `}</style>
         </nav>
