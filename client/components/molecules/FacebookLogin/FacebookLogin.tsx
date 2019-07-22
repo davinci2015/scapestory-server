@@ -3,7 +3,7 @@ import * as React from 'react'
 import {Mutation, FetchResult} from 'react-apollo'
 import {ReactFacebookFailureResponse, ReactFacebookLoginInfo} from 'react-facebook-login'
 import config from 'config'
-import logger from 'utils/logger/logger'
+import logger from 'services/logger'
 // @ts-ignore
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 

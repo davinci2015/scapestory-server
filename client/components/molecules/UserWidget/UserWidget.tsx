@@ -17,16 +17,17 @@ const UserWidget = ({
 }: Props) => (
     <div className={classes.root}>
         <UserImage image={image}/>
-        <Paragraph as="span" type="s1" color={colors.SHADE_DEEP}>
+        <Paragraph as="span" type="s2" color={colors.SHADE_DEEP}>
             {name}
         </Paragraph>
         
         <style jsx>{`
-            .user-widget {
+            .${classes.root} {
                 display: flex;
+                align-items: center;
             }
 
-            .user-widget :global(.${UserImage.classes.root}) {
+            .${classes.root} :global(.${UserImage.classes.root}) {
                 margin-right: ${spaces.s6};
             }
         `}</style>

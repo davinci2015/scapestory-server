@@ -4,7 +4,7 @@ import {Mutation, FetchResult} from 'react-apollo'
 import GoogleLogin, {GoogleLoginResponse, GoogleLoginResponseOffline} from 'react-google-login'
 
 import config from 'config'
-import logger from 'utils/logger'
+import logger from 'services/logger'
 
 const LOGIN = gql`
     mutation Login($token: String!) {

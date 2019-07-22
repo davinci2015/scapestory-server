@@ -1,13 +1,67 @@
 import * as React from 'react'
 
-import {App} from 'components/core'
+import {App, Grid} from 'components/core'
 import withAuth from 'hocs/withAuth';
-import {NavigationContainer} from 'components/organisms'
+import {SectionCardList} from 'components/organisms'
+import {Card} from 'components/molecules'
+import NavigationContainer from 'containers/Navigation'
+import {Headline, FormattedMessage} from 'components/atoms'
 
 const Index = () => (
     <App>
-        <NavigationContainer/>
-        <h1>Home page</h1>
+        <NavigationContainer />
+        <Grid>
+            <SectionCardList>
+                <Headline as="h2" variant="h4">
+                    <FormattedMessage id="home_list_title_trending" defaultMessage="Trending now" />
+                </Headline>
+                <SectionCardList.List>
+                    {Array(8).fill("").map((_, index) => (
+                        <Card
+                            key={index}
+                            name="by John Snow"
+                            title="My awesome aquascape"
+                            userImage="https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80"
+                            image="https://images.homify.com/image/upload/a_0,c_fill,f_auto,h_900,q_auto,w_1920/v1441196948/p/photo/image/745836/360er-aktuell_resize2.jpg"
+                        />
+                    ))}
+                </SectionCardList.List>
+            </SectionCardList>
+
+            <SectionCardList>
+                <Headline as="h2" variant="h4">
+                    <FormattedMessage id="home_list_title_newest" defaultMessage="Recently added" />
+                </Headline>
+                <SectionCardList.List>
+                    {Array(4).fill("").map((_, index) => (
+                        <Card
+                            key={index}
+                            name="by John Snow"
+                            title="My awesome aquascape"
+                            userImage="https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80"
+                            image="https://images.homify.com/image/upload/a_0,c_fill,f_auto,h_900,q_auto,w_1920/v1441196948/p/photo/image/745836/360er-aktuell_resize2.jpg"
+                        />
+                    ))}
+                </SectionCardList.List>
+            </SectionCardList>
+
+            <SectionCardList>
+                <Headline as="h2" variant="h4">
+                    <FormattedMessage id="home_list_title_explore" defaultMessage="Explore all aquascapes" />
+                </Headline>
+                <SectionCardList.List>
+                    {Array(8).fill("").map((_, index) => (
+                        <Card
+                            key={index}
+                            name="by John Snow"
+                            title="My awesome aquascape"
+                            userImage="https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80"
+                            image="https://images.homify.com/image/upload/a_0,c_fill,f_auto,h_900,q_auto,w_1920/v1441196948/p/photo/image/745836/360er-aktuell_resize2.jpg"
+                        />
+                    ))}
+                </SectionCardList.List>
+            </SectionCardList>
+        </Grid>
     </App>
 )
 

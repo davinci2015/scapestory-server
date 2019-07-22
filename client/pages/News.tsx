@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import {App} from 'components/core'
 import withAuth from 'hocs/withAuth'
-import {NavigationContainer} from 'components/organisms'
+import NavigationContainer from 'containers/Navigation'
 
 const News = () => (
     <App>

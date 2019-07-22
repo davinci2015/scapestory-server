@@ -1,4 +1,6 @@
 import * as React from 'react'
+import classnames from 'classnames'
+
 import {typography} from 'styles'
 
 type HeadlineVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
@@ -7,6 +9,10 @@ interface Props {
     as?: HeadlineVariant,
     variant?: HeadlineVariant,
     children: React.ReactNode | string
+}
+
+const classes = {
+    root: 'root'
 }
 
 const Headline = ({
@@ -18,7 +24,7 @@ const Headline = ({
     const Component = as
 
     return (
-        <Component className={variant ? variant : as} {...props}> 
+        <Component className={classnames(classes.root, variant ? variant : as)} {...props}> 
             {children}
             <style jsx>{`
                 .h1, .h2, .h3, .h4, .h5 {
@@ -54,5 +60,7 @@ const Headline = ({
 
     )
 }
+
+Headline.classes = classes
 
 export default Headline

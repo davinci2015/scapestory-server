@@ -5,7 +5,7 @@ import {useMutation} from 'react-apollo-hooks'
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
 import {MessageDescriptor} from 'components/atoms/FormattedMessage'
 
-import validator from 'utils/validator'
+import validator from 'services/validator'
 import {spaces} from 'styles'
 import {RegisterResult, RegisterVariables, SIGN_UP_MUTATION} from 'components/organisms/RegistrationModal/RegistrationForm/mutations'
 

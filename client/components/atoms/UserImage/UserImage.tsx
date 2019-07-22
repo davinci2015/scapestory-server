@@ -1,6 +1,7 @@
 import React from 'react'
 
 import {backgroundImage} from 'styles/mixins'
+import {applyStyles} from 'styles'
 
 const classes = {
     root: 'userImage'
@@ -24,10 +25,10 @@ const UserImage = ({
                 border-radius: 50%;
                 ${backgroundImage(image)}
                     
-                ${size === 'l' && `
+                ${applyStyles(size === 'l')(`
                     width: 36px;
                     height: 36px;
-                `}
+                `)}
             }
         `}</style>
     </>

@@ -1,6 +1,6 @@
 import Modal from 'react-modal'
 
-import {colors} from 'styles'
+import {colors, zIndex} from 'styles'
 
 interface Props extends ReactModal.Props {
     children: React.ReactNode
@@ -33,6 +33,7 @@ const CustomModal = ({
                     background-color: ${colors.WHITE};
                     border: 1px solid ${colors.SHADE_LIGHT};
                     transform: translateX(-50%);
+                    z-index: ${zIndex.HIGHEST};
                 }
 
                 :global(.modal-overlay) {
@@ -42,6 +43,7 @@ const CustomModal = ({
                     right: 0px;
                     bottom: 0px;
                     background-color: rgba(0, 0, 0, .7);
+                    z-index: ${zIndex.HIGHEST};
                 }
             `}</style>
         </>

@@ -4,7 +4,7 @@ import {Navigation} from 'components/molecules'
 import {ModalContext} from 'context/modal'
 import {AuthenticationGuard} from 'components/core'
 import {useQuery} from 'react-apollo-hooks'
-import {USER_PROFILE_IMAGE} from 'components/organisms/Navigation/queries'
+import {USER_PROFILE_IMAGE} from 'containers/Navigation/queries'
 
 const NavigationContainer = () => {
     const {openModal} = useContext(ModalContext)

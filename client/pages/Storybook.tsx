@@ -4,7 +4,7 @@ import numeral from 'numeral'
 import App from 'components/core/App'
 import {Tag, IconText, Paragraph, Headline, Icon} from 'components/atoms'
 import {Card, UserWidget} from 'components/molecules'
-import {NavigationContainer} from 'components/organisms'
+import NavigationContainer from 'containers/Navigation'
 
 const Index = () => (
     <App>

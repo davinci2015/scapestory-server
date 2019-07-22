@@ -6,7 +6,7 @@ import {NextContext} from 'next'
 import {AppComponentType} from 'next/app'
 
 import initApollo from './apollo'
-import auth from 'utils/auth'
+import auth from 'services/auth'
 
 const withApolloClient = (App: AppComponentType) => {
     return class Apollo extends React.Component {

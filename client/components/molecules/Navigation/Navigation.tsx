@@ -48,10 +48,10 @@ const Navigation = ({
                 <div className="left">
                     <img className="logo" src="/static/logo.svg" />
                     <NavLink href={routes.index}>
-                        <a>Discover</a>
+                        <a><FormattedMessage id="navigation_discover" defaultMessage="Discover" /></a>
                     </NavLink>
                     <NavLink href={routes.news}>
-                        <a>Newsfeed</a>
+                        <a><FormattedMessage id="navigation_newsfeed" defaultMessage="Newsfeed" /></a>
                     </NavLink>
                 </div>
                 <div className="right">
@@ -106,6 +106,7 @@ const Navigation = ({
                 right: 0;
                 height: ${isSlim() ? navigationHeight.slim : navigationHeight.default};   
                 
+                z-index: ${styles.zIndex.MEDIUM};
                 background-color: ${styles.colors.WHITE};
                 box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
                 transition: height 180ms ease-in-out;

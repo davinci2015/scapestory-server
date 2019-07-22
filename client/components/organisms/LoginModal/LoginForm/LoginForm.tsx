@@ -5,7 +5,7 @@ import {injectIntl, InjectedIntlProps} from 'react-intl'
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
 import {MessageDescriptor} from 'components/atoms/FormattedMessage'
 
-import validator from 'utils/validator'
+import validator from 'services/validator'
 import {spaces} from 'styles'
 import {LOGIN_MUTATION, LoginResult, LoginVariables} from 'components/organisms/LoginModal/LoginForm/mutations'
 

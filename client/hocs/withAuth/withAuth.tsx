@@ -1,7 +1,7 @@
 import React from 'react'
 import {NextContext, NextFunctionComponent} from 'next'
 
-import auth from 'utils/auth'
+import auth from 'services/auth'
 
 interface AuthContextInterface {
     isAuthenticated: boolean

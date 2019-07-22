@@ -6,7 +6,7 @@ import {RegistrationForm, AuthModal} from 'components/organisms'
 
 import {colors} from 'styles'
 import {ModalContext} from 'context/modal'
-import auth from 'utils/auth'
+import auth from 'services/auth'
 import routes from 'routes'
 
 const RegistrationModal = () => {

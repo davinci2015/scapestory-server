@@ -30,6 +30,11 @@ const NavLink = (({router, children, as, href, ...rest}: Props) => (
                 text-decoration: none;
                 font-weight: ${typography.fontWeight.bold};
                 color: ${colors.SHADE_DEEP};
+                transition: color 100ms ease-in-out;
+            }
+
+            :global(nav a.nav-link:hover) {
+                color: ${colors.BLACK};
             }
 
             :global(nav a.nav-link.active) {

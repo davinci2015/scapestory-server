@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 
 import {App} from 'components/core'
 import withAuth from 'hocs/withAuth'
-import {NavigationContainer} from 'components/organisms'
+import NavigationContainer from 'containers/Navigation'
 
 const MY_PROFILE = gql`
     query {

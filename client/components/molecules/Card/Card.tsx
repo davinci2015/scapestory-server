@@ -13,13 +13,17 @@ interface Props {
     name: React.ReactNode
 }
 
+const classes = {
+    root: 'card'
+}
+
 const Card = ({
     image,
     userImage,
     name,
     title
 }: Props) => (
-        <div className="card">
+        <div className={classes.root}>
             <div className="header">
                 <div className="header-gradient"></div>
                 <div className="icons">
@@ -101,5 +105,7 @@ const Card = ({
         `}</style>
         </div>
     )
+
+Card.classes = classes
 
 export default Card
