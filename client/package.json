@@ -34,6 +34,7 @@
     "react-google-login": "^5.0.4",
     "react-intl": "^2.9.0",
     "react-modal": "^3.8.2",
+    "react-scrolllock": "^4.0.1",
     "styled-jsx": "^3.2.1",
     "universal-cookie": "^4.0.0"
   },

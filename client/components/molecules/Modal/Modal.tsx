@@ -1,4 +1,5 @@
 import Modal from 'react-modal'
+import ScrollLock from 'react-scrolllock'
 
 import {colors, zIndex} from 'styles'
 
@@ -15,7 +16,9 @@ const CustomModal = ({
     return (
         <>
             <Modal className="modal" overlayClassName="modal-overlay" {...rest}>
-               {children}
+                <ScrollLock>
+                    {children}
+                </ScrollLock>
             </Modal>
 
             <style jsx>{`
