@@ -12,7 +12,7 @@ interface Props {
 }
 
 const classes = {
-    root: 'root'
+    root: 'headline'
 }
 
 const Headline = ({

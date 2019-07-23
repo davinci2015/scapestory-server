@@ -11,10 +11,11 @@ const Index = () => (
     <App>
         <NavigationContainer />
         <Grid>
-            <SectionCardList>
+            <SectionCardList title={(
                 <Headline as="h2" variant="h4">
                     <FormattedMessage id="home_list_title_trending" defaultMessage="Trending now" />
                 </Headline>
+            )}>
                 <SectionCardList.List>
                     {Array(8).fill("").map((_, index) => (
                         <Card
@@ -28,10 +29,11 @@ const Index = () => (
                 </SectionCardList.List>
             </SectionCardList>
 
-            <SectionCardList>
+            <SectionCardList title={(
                 <Headline as="h2" variant="h4">
                     <FormattedMessage id="home_list_title_newest" defaultMessage="Recently added" />
                 </Headline>
+            )}>
                 <SectionCardList.List>
                     {Array(4).fill("").map((_, index) => (
                         <Card
@@ -45,10 +47,11 @@ const Index = () => (
                 </SectionCardList.List>
             </SectionCardList>
 
-            <SectionCardList>
+            <SectionCardList title={(
                 <Headline as="h2" variant="h4">
                     <FormattedMessage id="home_list_title_explore" defaultMessage="Explore all aquascapes" />
                 </Headline>
+            )}>
                 <SectionCardList.List>
                     {Array(8).fill("").map((_, index) => (
                         <Card

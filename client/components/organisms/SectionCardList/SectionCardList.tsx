@@ -1,16 +1,20 @@
 import React from 'react'
-import {Headline} from 'components/atoms'
 
 import CardList from './CardList'
 
 interface Props {
     children: React.ReactNode
+    title: React.ReactNode
 }
 
 const SectionCardList = ({
-    children
+    children,
+    title,
 }: Props) => (
         <div className="section-card-list">
+            <div className="title">
+                {title}
+            </div>
             {children}
             <style jsx>{`
                 .section-card-list {
@@ -18,7 +22,7 @@ const SectionCardList = ({
                     margin: 75px 0;
                 }
 
-                .section-card-list :global(.${Headline.classes.root}) {
+                .section-card-list .title {
                     margin-bottom: 40px;
                 }
             `}</style>
