@@ -1,21 +1,46 @@
 # import User from '../User/schema.graphql'
 
+type Like {
+    user: User
+}
+
+type Comment {
+    content: String
+    user: User
+}
+
+type AquascapeImage {
+    mainImage: Boolean!
+    title: String
+    description: String
+    gridSize: Int
+    gridPosition: Int
+    url: String!
+    likes: [User]
+    comments: [Comment]
+}
+
 type Aquascape {
     id: Int!
     title: String!
     volume: Int
     startedAt: String
-    likes: Int!
-    votes: Int!
-    inContest: Boolean!
     description: String
     user: User
+    CO2: String
+    CO2BPS: String
+    photoperiod: String
+    images: [AquascapeImage]
 }
 
 type Query {
-    aquascapes: [Aquascape]
+    aquascapes(limit: Int): [Aquascape]
+    trendingAquascapes(limit: Int): [Aquascape]
+    newestAquascapes(limit: Int): [Aquascape]
+
 }
 
 type Mutation {
     createAquascape(title: String!): Aquascape
+    visitAquascape(aquascapeId: Int!, userId: String): String!
 }

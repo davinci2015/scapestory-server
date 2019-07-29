@@ -1,6 +1,7 @@
-import {Table, Column, Model, ForeignKey, BelongsTo, HasMany, Default} from 'sequelize-typescript'
+import {Table, Column, Model, ForeignKey, HasMany, Default} from 'sequelize-typescript'
 import {Aquascape} from 'db/models/Aquascape'
 import {Comment} from 'db/models/Comment'
+import {Like} from 'db/models/Like'
 
 @Table
 export class AquascapeImage extends Model<AquascapeImage> {
@@ -15,9 +16,6 @@ export class AquascapeImage extends Model<AquascapeImage> {
     description: string
 
     @Column
-    likes: number
-
-    @Column
     gridSize: number
 
     @Column
@@ -26,13 +24,13 @@ export class AquascapeImage extends Model<AquascapeImage> {
     @Column
     url: string
 
-    @HasMany(() => Comment)
-    comments: Comment[]
-
     @ForeignKey(() => Aquascape)
     @Column
     aquascapeId: number
 
-    @BelongsTo(() => Aquascape)
-    aquascape: Aquascape
+    @HasMany(() => Comment)
+    comments: Comment[]
+
+    @HasMany(() => Like)
+    likes: Like[]
 }

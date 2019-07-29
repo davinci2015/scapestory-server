@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import {App, Grid} from 'components/core'
 import withAuth from 'hocs/withAuth';
-import {SectionCardList} from 'components/organisms'
+import {SectionCardList, HeroSection} from 'components/organisms'
 import {Card} from 'components/molecules'
 import NavigationContainer from 'containers/Navigation'
 import {Headline, FormattedMessage} from 'components/atoms'
@@ -11,6 +11,8 @@ const Index = () => (
     <App>
         <NavigationContainer />
         <Grid>
+            <HeroSection image="https://www.fishtanksetups.com/wp-content/uploads/2017/06/aquascape-guide.jpg"/>
+
             <SectionCardList title={(
                 <Headline as="h2" variant="h4">
                     <FormattedMessage id="home_list_title_trending" defaultMessage="Trending now" />

@@ -3,7 +3,7 @@ import {Aquascape} from 'db/models/Aquascape'
 import {User} from 'db/models/User'
 
 @Table
-export class FavoriteUserAquascape extends Model<FavoriteUserAquascape> {
+export class FavoriteAquascape extends Model<FavoriteAquascape> {
     @ForeignKey(() => User)
     @Column
     userId: number
