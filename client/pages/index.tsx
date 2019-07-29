@@ -11,7 +11,12 @@ const Index = () => (
     <App>
         <NavigationContainer />
         <Grid>
-            <HeroSection image="https://www.fishtanksetups.com/wp-content/uploads/2017/06/aquascape-guide.jpg"/>
+            <HeroSection
+                username="Justin Belieber"
+                userImage="https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80"
+                title="Purple and yellow paradise"
+                image="https://www.fishtanksetups.com/wp-content/uploads/2017/06/aquascape-guide.jpg"
+            />
 
             <SectionCardList title={(
                 <Headline as="h2" variant="h4">

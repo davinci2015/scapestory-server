@@ -2,9 +2,11 @@ import * as React from 'react'
 import {typography, colors} from 'styles'
 import cx from 'classnames'
 
+export type ParagraphTypes = 't1' | 's1' | 's2' | 'body'
+
 interface Props {
     as?: 'p' | 'span',
-    type?: 't1' | 's1' | 's2' | 'body',
+    type?: ParagraphTypes,
     color?: string,
     children: React.ReactNode | string
     weight?: 'regular' | 'bold' | 'semibold'

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import classnames from 'classnames'
 
-import {typography} from 'styles'
+import {typography, colors} from 'styles'
 
 type HeadlineVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
 
@@ -9,6 +9,7 @@ interface Props {
     as?: HeadlineVariant,
     variant?: HeadlineVariant,
     children: React.ReactNode | string
+    color?: string
 }
 
 const classes = {
@@ -19,6 +20,7 @@ const Headline = ({
     as = 'h1',
     children,
     variant,
+    color = colors.BLACK,
     ...props
 }: Props) => {
     const Component = as
@@ -27,6 +29,10 @@ const Headline = ({
         <Component className={classnames(classes.root, variant ? variant : as)} {...props}> 
             {children}
             <style jsx>{`
+                .${classes.root} {
+                    color: ${color};
+                }
+
                 .h1, .h2, .h3, .h4, .h5 {
                     font-weight: ${typography.fontWeight.extraBold};
                 }
