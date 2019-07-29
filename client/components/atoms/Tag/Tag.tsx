@@ -17,6 +17,10 @@ const colorMapping = {
     quaternary: '#de79ae'
 }
 
+const classes = {
+    root: 'tag'
+}
+
 const getColor = (variant: VariantType) => colorMapping[variant]
 
 const Tag = ({
@@ -25,10 +29,12 @@ const Tag = ({
 }: Props) => {
   
     return (
-        <div className="tag">
+        <div className={classes.root}>
+        
             <Paragraph as="span" type="t1" weight="semibold" color={colors.WHITE}>{text}</Paragraph>
+
             <style jsx>{`
-            .tag {
+            .${classes.root} {
                 padding: 0 8px;
                 border-radius: 20px;
                 text-align: center;
@@ -43,4 +49,7 @@ const Tag = ({
         </div>
     )
 }
+
+Tag.classes = classes
+
 export default Tag

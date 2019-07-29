@@ -6,28 +6,34 @@ interface Props {
     text: React.ReactNode
 }
 
+const classes = {
+    root: 'icon-text'
+}
+
 const IconText = ({
     icon,
     text
 }: Props) => (
-    <div className="icon-text">
-
+    <div className={classes.root}>
+    
         <Icon d={icon} color={colors.WHITE} />
         <Paragraph color={colors.WHITE} as="span" type="s2" weight="semibold">
             {text}
         </Paragraph>
 
         <style jsx>{`
-            .icon-text {
+            .${classes.root} {
                 display: inline-flex;
                 align-items: center;
             }  
 
-            .icon-text :global(svg) {
+            .${classes.root} :global(svg) {
                 margin-right: ${spaces.s6};
             }
         `}</style>
     </div>
 )
+
+IconText.classes = classes
 
 export default IconText

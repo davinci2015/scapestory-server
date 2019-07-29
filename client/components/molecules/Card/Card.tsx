@@ -76,7 +76,7 @@ const Card = ({
                 padding-top: ${spaces.s18};
             }
 
-            .header > .icons > :global(.icon-text) {
+            .header > .icons > :global(.${IconText.classes.root}) {
                 margin-left: ${spaces.s12};
                 opacity: .8;
             }
@@ -85,7 +85,7 @@ const Card = ({
                 padding: ${spaces.s12} ${spaces.s18} ${spaces.s18} ${spaces.s18};
             }
 
-            .body > .headline :global(h2) {
+            .body > .headline :global(.${Headline.classes.root}) {
                 margin-top: 0;
                 height: 48px;
                 overflow: hidden;
@@ -99,7 +99,7 @@ const Card = ({
                 justify-content: space-between;
             }
 
-            .footer > .tags :global(.tag) {
+            .footer > .tags :global(.${Tag.classes.root}) {
                 margin-left: ${spaces.s6};
             }
         `}</style>

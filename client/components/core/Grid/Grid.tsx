@@ -9,8 +9,8 @@ const Grid = ({children}: Props) => (
         {children}
         <style jsx global>{`
             .grid {
-                padding-left: 225px;
-                padding-right: 225px;
+                padding-left: 10%;
+                padding-right: 10%;
             }
         `}</style>
     </div>
