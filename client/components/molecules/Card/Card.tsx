@@ -4,7 +4,7 @@ import numeral from 'numeral'
 import {backgroundImage} from 'styles/mixins'
 import {Headline, Tag, IconText, Icon} from 'components/atoms'
 import {UserWidget} from 'components/molecules'
-import {colors, spaces} from 'styles'
+import {colors, spaces, borderRadius} from 'styles'
 
 interface Props {
     image: string
@@ -37,7 +37,7 @@ const Card = ({
                 </div>
                 <div className="footer">
                     <UserWidget image={userImage} name={name} />
-                    <div className="tags"> 
+                    <div className="tags">
                         <Tag text="Tag" variant="primary" />
                         <Tag text="Long tag" variant="secondary" />
                     </div>
@@ -47,7 +47,7 @@ const Card = ({
             .card {
                 position: relative;
                 border: 1px solid ${colors.SHADE_EXTRA_LIGHT};
-                border-radius: 8px;
+                border-radius: ${borderRadius.TERTIARY};
             }
 
             .header {
@@ -57,8 +57,8 @@ const Card = ({
                 margin-left: -1px;
                 overflow: hidden;
 
-                border-top-left-radius: 8px;
-                border-top-right-radius: 8px;
+                border-top-left-radius: ${borderRadius.TERTIARY};
+                border-top-right-radius: ${borderRadius.TERTIARY};
                 
                 ${backgroundImage(image)}
             }
