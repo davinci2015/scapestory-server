@@ -24,7 +24,11 @@ const PasswordInput = (props: Props) => {
                                         : <FormattedMessage id="password_input_show_password" defaultMessage="Show"/> 
                                     }
                                 </span>
-                                <Icon d={passwordVisible ? Icon.EYE_HIDE : Icon.EYE_SHOW} color={colors.MID_GRAY} />
+                                <Icon 
+                                    viewBox="0 0 48 48"
+                                    d={passwordVisible ? Icon.EYE_HIDE : Icon.EYE_SHOW} 
+                                    color={colors.MID_GRAY} 
+                                />
                             </IconButton>
                         </div>
                     </InputAdornment>

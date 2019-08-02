@@ -81,6 +81,11 @@ const Card = ({
                 opacity: .8;
             }
 
+            .header > .icons > :global(.${IconText.classes.root}) :global(svg) {
+                height: 16px;
+                width: 16px;
+            }
+
             .body {
                 padding: ${spaces.s12} ${spaces.s18} ${spaces.s18} ${spaces.s18};
             }

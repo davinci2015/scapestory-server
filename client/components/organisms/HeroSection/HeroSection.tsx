@@ -2,7 +2,7 @@ import React from 'react'
 
 import {backgroundImage} from 'styles/mixins'
 import {borderRadius, spaces, colors, zIndex} from 'styles'
-import {Headline, ImageStack, Button, Icon} from 'components/atoms'
+import {Headline, ImageStack, Button, Icon, FormattedMessage} from 'components/atoms'
 import {UserWidget} from 'components/molecules'
 
 interface Props {
@@ -10,13 +10,15 @@ interface Props {
     title: string
     userImage: string
     username: string
+    imageStackText: React.ReactNode
 }
 
 const HeroSection = ({
     image,
     title,
     userImage,
-    username
+    username,
+    imageStackText,
 }: Props) => (
         <div className="hero-section">
             <div className="image">
@@ -34,7 +36,7 @@ const HeroSection = ({
                 </div>
             </div>
             <div className="bottom">
-                <ImageStack text="liked by Ines, Draško and 24 others" images={[
+                <ImageStack text={imageStackText} images={[
                     userImage,
                     userImage,
                     userImage,
@@ -42,10 +44,10 @@ const HeroSection = ({
                 ]} />
                 <div className="bottom-buttons">
                     <Button type="small" leftIcon={<Icon d={Icon.SHARE} color={colors.WHITE}/>}>
-                        Share
+                        <FormattedMessage id="hero_section.share" defaultMessage="Share"/>
                     </Button>
                     <Button type="small" leftIcon={<Icon d={Icon.HEART_OUTLINE} color={colors.WHITE}/>}>
-                        Like
+                        <FormattedMessage id="hero_section.like" defaultMessage="Like"/>
                     </Button>
                 </div>
             </div>
