@@ -2,7 +2,7 @@ import React from 'react'
 
 import {backgroundImage} from 'styles/mixins'
 import {borderRadius, spaces, colors, zIndex} from 'styles'
-import {Headline, ImageStack, Button, Icon, FormattedMessage} from 'components/atoms'
+import {Headline, ImageStack, Button, Icon, FormattedMessage, Paragraph} from 'components/atoms'
 import {UserWidget} from 'components/molecules'
 
 interface Props {
@@ -22,6 +22,14 @@ const HeroSection = ({
 }: Props) => (
         <div className="hero-section">
             <div className="image">
+                <div className="badge">
+                    <div className="badge-icon">
+                        <Icon d={Icon.FIRE} color={colors.WHITE}/>
+                    </div>
+                    <Paragraph type="body" color={colors.WHITE}>
+                        <FormattedMessage id="hero_section.our_choice" defaultMessage="Our Choice"/>
+                    </Paragraph>
+                </div>
                 <div className="content">
                     <Headline as="h1" variant="h3" color={colors.WHITE}>
                         {title}
@@ -77,6 +85,7 @@ const HeroSection = ({
                 .image::before {
                     top: 0;
                     height: 120px;
+                    z-index: -1;
                     background-image: linear-gradient(to bottom, ${colors.BLACK}, rgba(0, 0, 0, 0));
                 }
 
@@ -84,6 +93,26 @@ const HeroSection = ({
                     bottom: 0;
                     height: 200px;
                     background-image: linear-gradient(to top, ${colors.BLACK}, rgba(0, 0, 0, 0));
+                }
+
+                .badge {
+                    display: flex;
+                    align-items: center;
+                    padding-top: ${spaces.s30};
+                    padding-left: ${spaces.s48};
+                }
+
+                .badge-icon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    margin-right: ${spaces.s18};
+                    height: ${spaces.s36};
+                    width: ${spaces.s36};
+                    
+                    border-radius: 50%;
+                    background-image: linear-gradient(to bottom, ${colors.SECONDARY}, ${colors.SECONDARY_DARK});
                 }
 
                 .content {
