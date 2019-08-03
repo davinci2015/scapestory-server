@@ -30,6 +30,7 @@ const Paragraph = ({
             <style jsx>{`
                 .paragraph {
                     color: ${color};
+                    margin: 0;
                 }
 
                 .regular {

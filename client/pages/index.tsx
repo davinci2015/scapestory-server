@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import {App, Grid} from 'components/core'
 import withAuth from 'hocs/withAuth';
-import {SectionCardList, HeroSection} from 'components/organisms'
+import {SectionCardList, HeroSection, Footer} from 'components/organisms'
 import {Card} from 'components/molecules'
 import NavigationContainer from 'containers/Navigation'
 import {Headline, FormattedMessage} from 'components/atoms'
@@ -25,7 +25,7 @@ const Index = () => (
                 </Headline>
             )}>
                 <SectionCardList.List>
-                    {Array(8).fill("").map((_, index) => (
+                    {Array(4).fill("").map((_, index) => (
                         <Card
                             key={index}
                             name="by John Snow"
@@ -43,7 +43,7 @@ const Index = () => (
                 </Headline>
             )}>
                 <SectionCardList.List>
-                    {Array(4).fill("").map((_, index) => (
+                    {Array(8).fill("").map((_, index) => (
                         <Card
                             key={index}
                             name="by John Snow"
@@ -55,11 +55,13 @@ const Index = () => (
                 </SectionCardList.List>
             </SectionCardList>
 
-            <SectionCardList title={(
-                <Headline as="h2" variant="h4">
-                    <FormattedMessage id="home_list_title_explore" defaultMessage="Explore all aquascapes" />
-                </Headline>
-            )}>
+            <SectionCardList
+                loadMore={() => null}
+                title={(
+                    <Headline as="h2" variant="h4">
+                        <FormattedMessage id="home_list_title_explore" defaultMessage="Explore all aquascapes" />
+                    </Headline>
+                )}>
                 <SectionCardList.List>
                     {Array(8).fill("").map((_, index) => (
                         <Card
@@ -73,6 +75,7 @@ const Index = () => (
                 </SectionCardList.List>
             </SectionCardList>
         </Grid>
+        <Footer />
     </App>
 )
 

@@ -48,6 +48,8 @@ const Card = ({
                 position: relative;
                 border: 1px solid ${colors.SHADE_EXTRA_LIGHT};
                 border-radius: ${borderRadius.TERTIARY};
+                background-color: ${colors.WHITE};
+                box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.04);
             }
 
             .header {

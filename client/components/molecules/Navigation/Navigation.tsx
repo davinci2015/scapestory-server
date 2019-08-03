@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
@@ -46,7 +47,11 @@ const Navigation = ({
         <nav>
             <div className="container">
                 <div className="left">
-                    <img className="logo" src="/static/logo.svg" />
+                    <Link href={routes.index}>
+                        <a>
+                            <img className="logo" src="/static/logo.svg" />
+                        </a>
+                    </Link>
                     <NavLink href={routes.index}>
                         <a><FormattedMessage id="navigation_discover" defaultMessage="Discover" /></a>
                     </NavLink>
