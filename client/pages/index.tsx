@@ -43,7 +43,7 @@ const Index = () => (
                 </Headline>
             )}>
                 <SectionCardList.List>
-                    {Array(8).fill("").map((_, index) => (
+                    {Array(4).fill("").map((_, index) => (
                         <Card
                             key={index}
                             name="by John Snow"
