@@ -11,6 +11,9 @@ interface Props {
     userImage: string
     username: string
     imageStackText: React.ReactNode
+    imageStackImages: string[]
+    onLike: VoidFunction
+    onShare: VoidFunction
 }
 
 const HeroSection = ({
@@ -19,6 +22,9 @@ const HeroSection = ({
     userImage,
     username,
     imageStackText,
+    imageStackImages,
+    onLike,
+    onShare
 }: Props) => (
         <div className="hero-section">
             <div className="image">
@@ -44,17 +50,12 @@ const HeroSection = ({
                 </div>
             </div>
             <div className="bottom">
-                <ImageStack text={imageStackText} images={[
-                    userImage,
-                    userImage,
-                    userImage,
-                    userImage
-                ]} />
+                <ImageStack text={imageStackText} images={imageStackImages} />
                 <div className="bottom-buttons">
-                    <Button type="small" leftIcon={<Icon d={Icon.SHARE} color={colors.WHITE}/>}>
+                    <Button onClick={onShare} type="small" leftIcon={<Icon d={Icon.SHARE} color={colors.WHITE}/>}>
                         <FormattedMessage id="hero_section.share" defaultMessage="Share"/>
                     </Button>
-                    <Button type="small" leftIcon={<Icon d={Icon.HEART_OUTLINE} color={colors.WHITE}/>}>
+                    <Button onClick={onLike} type="small" leftIcon={<Icon d={Icon.HEART_OUTLINE} color={colors.WHITE}/>}>
                         <FormattedMessage id="hero_section.like" defaultMessage="Like"/>
                     </Button>
                 </div>

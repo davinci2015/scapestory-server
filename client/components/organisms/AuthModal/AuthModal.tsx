@@ -45,9 +45,11 @@ const AuthModal = ({
                         <Headline as="h1" variant="h3">
                             {title}
                         </Headline>
-                        <Paragraph as="p" color={colors.DARK_GRAY}>
-                            {subtitle}
-                        </Paragraph>
+                        <div className="subtitle">
+                            <Paragraph as="p" color={colors.DARK_GRAY}>
+                                {subtitle}
+                            </Paragraph>
+                        </div>
                         <div className="form">
                             {form}
                         </div>
@@ -109,8 +111,12 @@ const AuthModal = ({
                     overflow-x: hidden;
                 }
 
+                .subtitle {
+                    margin-top: ${spaces.s24};
+                    margin-bottom: ${spaces.s42};
+                }
+
                 .form {
-                    margin-top: ${spaces.s42};
                     margin-bottom: ${spaces.s24};
                 }
 
