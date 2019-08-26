@@ -137,6 +137,7 @@ const RegistrationForm = ({
 
                 <div className="submit-button">
                     <Button
+                        type="block"
                         onClick={onSubmit}>
                         <Paragraph as="span" weight="bold" color="light">
                             <FormattedMessage id="registration_submit_button" defaultMessage="Sign Up" />

@@ -125,7 +125,7 @@ const LoginForm = ({
                 />
 
                 <div className="login-button">
-                    <Button onClick={onSubmit}>
+                    <Button onClick={onSubmit} type="block">
                         <Paragraph as="span" weight="bold" color="light">
                             <FormattedMessage id="login_submit_button" defaultMessage="Login" />
                         </Paragraph>

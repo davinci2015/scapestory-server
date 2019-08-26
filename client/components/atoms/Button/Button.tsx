@@ -9,7 +9,7 @@ interface Props extends React.HTMLProps<HTMLButtonElement> {
     onClick?: (...args: any[]) => any
     variant?: 'default' | 'outlined'
     color?: 'primary' | 'secondary'
-    type?: 'default' | 'small'
+    type?: 'default' | 'small' | 'block'
     leftIcon?: React.ReactNode
 }
 
@@ -32,7 +32,8 @@ const Button = ({
                 outlined: variant === 'outlined',
                 primary: color === 'primary',
                 secondary: color === 'secondary',
-                small: type === 'small'
+                small: type === 'small',
+                block: type === 'block'
             })}
             {...rest}>
                 
@@ -51,7 +52,6 @@ const Button = ({
                     white-space: nowrap;
                     
                     padding: 0 ${spaces.s24};
-                    min-width: 120px;
                     min-height: 60px;
 
                     outline: 0;
@@ -104,6 +104,10 @@ const Button = ({
 
                 .small {
                     min-height: 44px;
+                }
+
+                .block {
+                    width: 100%;
                 }
             
             `}</style>

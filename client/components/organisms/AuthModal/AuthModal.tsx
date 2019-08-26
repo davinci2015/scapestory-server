@@ -63,6 +63,7 @@ const AuthModal = ({
                                 <GoogleLogin onSuccess={onSuccess}>
                                     {(props: GoogleProps) => (
                                         <Button
+                                            type="block"
                                             leftIcon={<img src="/static/icons/icon-google.png" alt="Google Login" />}
                                             color="secondary"
                                             onClick={props.onClick}
@@ -76,6 +77,7 @@ const AuthModal = ({
                                 <FacebookLogin onSuccess={onSuccess}>
                                     {(props: FacebookProps) => (
                                         <Button
+                                            type="block"
                                             leftIcon={<img src="/static/icons/icon-facebook.png" alt="Facebook Login" />}
                                             color="secondary"
                                             onClick={props.onClick}

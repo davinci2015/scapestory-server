@@ -16,7 +16,7 @@ const ImageStack = ({
     text
 }: Props) => (
         <div className={classes.root}>
-            <div>
+            <div className="images">
                 {images.map((image, index) => (
                     <div key={index} className="image" style={{
                         backgroundImage: `url("${image}")`,
@@ -38,12 +38,15 @@ const ImageStack = ({
                     margin-left: 15px;
                 }
 
+                .images {
+                    display: flex;
+                }
+
                 .image {
-                    display: inline-block;
                     width: 30px;
                     height: 30px;
+                    margin: 0;
                     margin-left: -15px;
-
                     border: 1px solid ${colors.WHITE};
                     border-radius: 50%;
                 }

@@ -1,13 +1,12 @@
 interface Props {
     children: React.ReactNode
-    onClick: (...args: any[]) => void 
+    onClick: (...args: any[]) => void
 }
 
 const IconButton = ({
     children,
     onClick
-}: Props) => {
-    return (
+}: Props) => (
         <button type="button" className="icon-button" onClick={onClick}>
             {children}
 
@@ -21,7 +20,6 @@ const IconButton = ({
             `}</style>
         </button>
     )
-}
 
 
 export default IconButton

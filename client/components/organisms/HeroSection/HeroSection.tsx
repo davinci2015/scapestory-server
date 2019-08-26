@@ -4,6 +4,7 @@ import {backgroundImage} from 'styles/mixins'
 import {borderRadius, spaces, colors, zIndex} from 'styles'
 import {Headline, ImageStack, Button, Icon, FormattedMessage, Paragraph} from 'components/atoms'
 import {UserWidget} from 'components/molecules'
+import {navigationHeight} from 'components/molecules/Navigation';
 
 interface Props {
     image: string
@@ -70,6 +71,7 @@ const HeroSection = ({
             <style jsx>{`
                 .hero-section {
                     margin-top: ${spaces.s60};
+                    padding-top: ${navigationHeight.default};
                 }
 
                 .image {

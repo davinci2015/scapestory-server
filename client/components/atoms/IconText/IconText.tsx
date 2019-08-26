@@ -1,4 +1,4 @@
-import {colors, spaces} from 'styles'
+import {spaces} from 'styles'
 import {Icon, Paragraph} from 'components/atoms'
 
 interface Props {
@@ -16,8 +16,8 @@ const IconText = ({
 }: Props) => (
     <div className={classes.root}>
     
-        <Icon d={icon} color={colors.WHITE} />
-        <Paragraph color={colors.WHITE} as="span" type="s2" weight="semibold">
+        <Icon d={icon} />
+        <Paragraph as="span" type="s2" weight="semibold">
             {text}
         </Paragraph>
 
