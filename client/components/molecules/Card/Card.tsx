@@ -3,8 +3,8 @@ import numeral from 'numeral'
 
 import {backgroundImage} from 'styles/mixins'
 import {Headline, Tag, IconText, Icon, Paragraph} from 'components/atoms'
-import {UserWidget} from 'components/molecules'
 import {colors, spaces, borderRadius} from 'styles'
+import UserWidget from 'components/molecules/UserWidget'
 
 interface Props {
     image: string
@@ -36,7 +36,7 @@ const Card = ({
                     <Headline as="h2" variant="h5">{title}</Headline>
                 </div>
                 <div className="footer">
-                    <UserWidget 
+                    <UserWidget
                         image={userImage} 
                         text={
                             <Paragraph type="t1" color={colors.SHADE_DEEP}>

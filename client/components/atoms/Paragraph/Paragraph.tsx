@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {typography, colors} from 'styles'
+import {typography} from 'styles'
 import cx from 'classnames'
 
 export type ParagraphTypes = 't1' | 's1' | 's2' | 'body'

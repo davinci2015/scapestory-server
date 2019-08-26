@@ -9,10 +9,10 @@ const classes = {
 
 export interface InputProps extends React.HTMLProps<HTMLInputElement> {
     type?: string
-    placeholder?: string
+    placeholder: string
     value?: string | number
     error?: boolean
-    label?: string | undefined
+    label: string
     errorMessage?: string | React.ReactNode
     endAdornment?: React.ReactNode
 }
