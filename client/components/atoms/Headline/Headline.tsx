@@ -10,6 +10,7 @@ interface Props {
     variant?: HeadlineVariant,
     children: React.ReactNode | string
     color?: string
+    fontWeight?: number
 }
 
 const classes = {
@@ -21,6 +22,7 @@ const Headline = ({
     children,
     variant,
     color = colors.BLACK,
+    fontWeight = typography.fontWeight.extraBold,
     ...props
 }: Props) => {
     const Component = as
@@ -35,7 +37,7 @@ const Headline = ({
                 }
 
                 .h1, .h2, .h3, .h4, .h5 {
-                    font-weight: ${typography.fontWeight.extraBold};
+                    font-weight: ${fontWeight};
                 }
 
                 .h1 {

@@ -2,7 +2,7 @@ import React from 'react'
 import numeral from 'numeral'
 
 import {backgroundImage} from 'styles/mixins'
-import {Headline, Tag, IconText, Icon} from 'components/atoms'
+import {Headline, Tag, IconText, Icon, Paragraph} from 'components/atoms'
 import {UserWidget} from 'components/molecules'
 import {colors, spaces, borderRadius} from 'styles'
 
@@ -36,7 +36,14 @@ const Card = ({
                     <Headline as="h2" variant="h5">{title}</Headline>
                 </div>
                 <div className="footer">
-                    <UserWidget image={userImage} name={name} />
+                    <UserWidget 
+                        image={userImage} 
+                        text={
+                            <Paragraph type="t1" color={colors.SHADE_DEEP}>
+                                {name}
+                            </Paragraph>
+                        }    
+                    />
                     <div className="tags">
                         <Tag text="Tag" variant="primary" />
                         <Tag text="Long tag" variant="secondary" />

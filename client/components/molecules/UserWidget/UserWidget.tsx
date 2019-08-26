@@ -1,9 +1,8 @@
 import React from 'react'
 import classnames from 'classnames'
 
-import {Paragraph, UserImage} from 'components/atoms'
-import {colors, spaces} from 'styles'
-import {ParagraphTypes} from 'components/atoms/Paragraph'
+import {UserImage} from 'components/atoms'
+import {spaces} from 'styles'
 
 const classes = {
     root: 'userWidget'
@@ -13,31 +12,24 @@ type WidgetSizes = 'default' | 'l'
 
 interface Props {
     image: string
-    name: React.ReactNode
+    text: React.ReactNode
     size?: WidgetSizes
     color?: string
     variant?: 'default' | 'border'
 }
 
-const paragraphMapping = {
-    default: 's2',
-    l: 'body'
-} as {[key in WidgetSizes]: ParagraphTypes}
-
 const UserWidget = ({
     image,
-    name,
     size = 'default',
     variant = 'default',
-    color = colors.SHADE_DEEP
+    text
 }: Props) => (
     <div className={classnames(classes.root, {
         large: size === 'l'
     })}>
         <UserImage variant={variant} size={size} image={image}/>
-        <Paragraph as="span" type={paragraphMapping[size]} color={color}>
-            {name}
-        </Paragraph>
+
+        {text}
         
         <style jsx>{`
             .${classes.root} {

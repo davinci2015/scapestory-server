@@ -33,11 +33,13 @@ type Aquascape {
     images: [AquascapeImage]
 }
 
-type Query {
-    aquascapes(limit: Int): [Aquascape]
-    trendingAquascapes(limit: Int): [Aquascape]
-    newestAquascapes(limit: Int): [Aquascape]
+type AquascapeFilter {
+    trending: Boolean
+}
 
+type Query {
+    aquascapes(limit: Int, filter: AquascapeFilter): [Aquascape]
+    featuredAquascape(): Aquascape
 }
 
 type Mutation {

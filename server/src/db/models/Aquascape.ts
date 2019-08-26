@@ -49,6 +49,10 @@ export class Aquascape extends Model<Aquascape> {
 
     @Default(false)
     @Column
+    featured: boolean
+
+    @Default(false)
+    @Column
     trending: boolean
 
     @Column

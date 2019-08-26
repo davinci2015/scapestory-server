@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 
 import {colors, spaces} from 'styles'
-import {Paragraph, FormattedMessage} from 'components/atoms'
+import {Paragraph, FormattedMessage, Icon} from 'components/atoms'
 import routes from 'routes'
 
 const Footer = () => (
@@ -60,7 +60,14 @@ const Footer = () => (
                     </li>
                 </ul>
             </div>
-            <div>instagram | facebook</div>
+            <div className="social-icons">
+                <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer" >
+                    <Icon d={Icon.FACEBOOK} viewBox="0 0 48 48" size={24}/>
+                </a>
+                <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer" >
+                    <Icon d={Icon.INSTAGRAM} viewBox="0 0 48 48" size={24}/>
+                </a>
+            </div>
         </div>
 
         <div className="bottom">
@@ -95,6 +102,7 @@ const Footer = () => (
                     align-items: center;
                     
                     margin: 0;
+                    padding: 0;
                }
 
                .top ul li {
@@ -112,6 +120,19 @@ const Footer = () => (
                    
                    padding: ${spaces.s18} ${spaces.s60} ${spaces.s24} ${spaces.s60};    
                    border-top: 1px solid ${colors.SHADE_EXTRA_LIGHT};
+               }
+               
+               .social-icons {
+                    margin: 0 -${spaces.s12};
+               }
+
+               .social-icon {
+                   margin: 0 ${spaces.s12};
+                   transition: fill 100ms ease-in-out;
+               }
+
+               .social-icon:hover {
+                   fill: ${colors.PRIMARY};
                }
             `}</style>
     </div>

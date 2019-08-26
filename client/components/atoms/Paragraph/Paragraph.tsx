@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {typography, colors} from 'styles'
+import {typography} from 'styles'
 import cx from 'classnames'
 
 export type ParagraphTypes = 't1' | 's1' | 's2' | 'body'
@@ -7,7 +7,6 @@ export type ParagraphTypes = 't1' | 's1' | 's2' | 'body'
 interface Props {
     as?: 'p' | 'span',
     type?: ParagraphTypes,
-    color?: string,
     children: React.ReactNode | string
     weight?: 'regular' | 'bold' | 'semibold'
 }
@@ -17,7 +16,6 @@ const Paragraph = ({
     children,
     type = 'body',
     weight = 'regular',
-    color = colors.BLACK,
     ...props
 }: Props) => {
     const Component = as
@@ -29,7 +27,6 @@ const Paragraph = ({
 
             <style jsx>{`
                 .paragraph {
-                    color: ${color};
                     margin: 0;
                 }
 

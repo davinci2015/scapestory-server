@@ -17,11 +17,6 @@ const classes = {
     root: 'button'
 }
 
-const paragraphColor = {
-    primary: colors.WHITE,
-    secondary: colors.PRIMARY
-}
-
 const Button = ({
     children,
     variant = 'default',
@@ -43,7 +38,7 @@ const Button = ({
                 
             {leftIcon}
 
-            <Paragraph as="span" type="body" weight="bold" color={paragraphColor[color]}>
+            <Paragraph as="span" type="body" weight="bold">
                 {children}
             </Paragraph>
 
@@ -56,7 +51,6 @@ const Button = ({
                     white-space: nowrap;
                     
                     padding: 0 ${spaces.s24};
-                    width: 100%;
                     min-width: 120px;
                     min-height: 60px;
 
@@ -99,8 +93,13 @@ const Button = ({
                 }
 
                 .outlined {
+                    color: ${colors.PRIMARY};
                     background-color: transparent;
                     border: 2px solid ${colors.PRIMARY};
+                }
+
+                .outlined:hover {
+                    background-color: transparent;
                 }
 
                 .small {

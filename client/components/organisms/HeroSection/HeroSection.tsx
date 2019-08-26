@@ -30,10 +30,10 @@ const HeroSection = ({
             <div className="image">
                 <div className="badge">
                     <div className="badge-icon">
-                        <Icon d={Icon.FIRE} color={colors.WHITE}/>
+                        <Icon d={Icon.FIRE} color={colors.WHITE} />
                     </div>
                     <Paragraph type="body" color={colors.WHITE}>
-                        <FormattedMessage id="hero_section.our_choice" defaultMessage="Our Choice"/>
+                        <FormattedMessage id="hero_section.editor_choice" defaultMessage="Editor's Choice" />
                     </Paragraph>
                 </div>
                 <div className="content">
@@ -43,20 +43,27 @@ const HeroSection = ({
                     <UserWidget
                         variant="border"
                         color={colors.WHITE}
-                        size="l"
                         image={userImage}
-                        name={username}
-                    />
+                        text={
+                            <Paragraph type="body" color={colors.WHITE}>
+                                <FormattedMessage
+                                    id="hero_section.aquascape_author"
+                                    defaultMessage="by {username}"
+                                    values={{username}}
+                                />
+                            </Paragraph>
+                        }
+                    />/
                 </div>
             </div>
             <div className="bottom">
                 <ImageStack text={imageStackText} images={imageStackImages} />
                 <div className="bottom-buttons">
-                    <Button onClick={onShare} type="small" leftIcon={<Icon d={Icon.SHARE} color={colors.WHITE}/>}>
-                        <FormattedMessage id="hero_section.share" defaultMessage="Share"/>
+                    <Button onClick={onShare} type="small" leftIcon={<Icon d={Icon.SHARE} color={colors.WHITE} />}>
+                        <FormattedMessage id="hero_section.share" defaultMessage="Share" />
                     </Button>
-                    <Button onClick={onLike} type="small" leftIcon={<Icon d={Icon.HEART_OUTLINE} color={colors.WHITE}/>}>
-                        <FormattedMessage id="hero_section.like" defaultMessage="Like"/>
+                    <Button onClick={onLike} type="small" leftIcon={<Icon d={Icon.HEART_OUTLINE} color={colors.WHITE} />}>
+                        <FormattedMessage id="hero_section.like" defaultMessage="Like" />
                     </Button>
                 </div>
             </div>

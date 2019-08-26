@@ -1,3 +1,4 @@
+/*
 import * as React from 'react'
 import numeral from 'numeral'
 
@@ -53,3 +54,4 @@ const Index = () => (
 )
 
 export default Index
+*/

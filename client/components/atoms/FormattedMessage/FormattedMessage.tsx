@@ -1,6 +1,6 @@
 import {FormattedMessage} from 'react-intl'
 
-export interface MessageDescriptor extends FormattedMessage.MessageDescriptor {}
+export interface MessageDescriptor extends FormattedMessage.Props {}
 
 const MyFormattedMessage = (descriptor: MessageDescriptor) => (
     <FormattedMessage {...descriptor}>{text => text}</FormattedMessage>

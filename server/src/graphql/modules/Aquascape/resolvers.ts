@@ -3,6 +3,7 @@ import {ModuleContext} from '@graphql-modules/core'
 import {AquascapeProviderInterface} from 'graphql/modules/Aquascape/providers/AquascapeProvider'
 import {authenticate} from 'graphql/guards'
 import {tokens} from 'di/tokens'
+import {AquascapeFilter} from 'db/repositories/Aquascape'
 
 export type CreateAquascapeArgs = {
     title: string
@@ -10,6 +11,7 @@ export type CreateAquascapeArgs = {
 
 export type GetAquascapesArgs = {
     limit: number
+    filter: AquascapeFilter
 }
 
 export type VisitAquascapeArgs = {
@@ -21,16 +23,12 @@ export const resolvers = {
     Query: {
         async aquascapes(root, args: GetAquascapesArgs, context: ModuleContext) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            return await provider.getAquascapes()
+            return await provider.getAquascapes(args.limit, args.filter)
         },
-        async trendingAquascapes(root, args: GetAquascapesArgs, context: ModuleContext) {
+        async featuredAquascape(root, args, context: ModuleContext) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            return await provider.getTrendingAquascapes()
+            return await provider.getFeaturedAquascape()
         },
-        async newestAquascapes(root, args: GetAquascapesArgs, context: ModuleContext) {
-            const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            return await provider.getNewestAquascapes()
-        }
     },
     Mutation: {
         async createAquascape(root, args: CreateAquascapeArgs, context: ModuleContext) {

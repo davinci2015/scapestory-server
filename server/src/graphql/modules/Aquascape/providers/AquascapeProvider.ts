@@ -1,18 +1,16 @@
 import {Injectable, Inject} from '@graphql-modules/di'
 import * as uuid from 'uuid/v4'
 
-import {AquascapeRepositoryInterface} from 'db/repositories/Aquascape'
+import {AquascapeRepositoryInterface, AquascapeFilter} from 'db/repositories/Aquascape'
 import {CreateAquascapeArgs} from 'graphql/modules/Aquascape/resolvers'
 import {VisitorRepositoryInterface} from 'db/repositories/Visitor'
 import {Aquascape} from 'db/models/Aquascape'
 import {tokens} from 'di/tokens'
 
 export interface AquascapeProviderInterface {
-    getAquascapes: (limit?: number) => Promise<Aquascape[]>,
+    getAquascapes: (limit?: number, filter?: AquascapeFilter) => Promise<Aquascape[]>,
 
-    getTrendingAquascapes: (limit?: number) => Promise<Aquascape[]>,
-
-    getNewestAquascapes: (limit?: number) => Promise<Aquascape[]>,
+    getFeaturedAquascape: () => Promise<Aquascape | null>,
 
     createAquascape: (userId: number, data: CreateAquascapeArgs) => Promise<Aquascape>
 
@@ -27,16 +25,12 @@ export class AquascapeProvider implements AquascapeProviderInterface {
     ) {
     }
 
-    async getAquascapes(limit?: number) {
-        return await this.aquascapeRepository.getAquascapes(limit)
+    async getAquascapes(limit?: number, filter?: AquascapeFilter) {
+        return await this.aquascapeRepository.getAquascapes(limit, filter)
     }
 
-    async getTrendingAquascapes(limit?: number) {
-        return await this.aquascapeRepository.getTrendingAquascapes(limit)
-    }
-
-    async getNewestAquascapes(limit?: number) {
-        return await this.aquascapeRepository.getNewestAquascapes(limit)
+    async getFeaturedAquascape() {
+        return await this.aquascapeRepository.getFeaturedAquascape()
     }
 
     async createAquascape(userId: number, data: CreateAquascapeArgs) {
