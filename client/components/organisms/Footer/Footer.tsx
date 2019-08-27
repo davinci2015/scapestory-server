@@ -112,6 +112,7 @@ const Footer = () => (
 
                .top ul li a {
                    text-decoration: none;
+                   color: ${colors.BLACK};
                }
 
                .bottom {

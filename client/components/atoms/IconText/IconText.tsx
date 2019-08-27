@@ -4,6 +4,7 @@ import {Icon, Paragraph} from 'components/atoms'
 interface Props {
     icon: string
     text: React.ReactNode
+    color?: string
 }
 
 const classes = {
@@ -12,14 +13,15 @@ const classes = {
 
 const IconText = ({
     icon,
-    text
+    text,
+    color
 }: Props) => (
-    <div className={classes.root}>
-    
-        <Icon d={icon} />
-        <Paragraph as="span" type="s2" weight="semibold">
-            {text}
-        </Paragraph>
+        <div className={classes.root}>
+
+            <Icon d={icon} color={color} />
+            <Paragraph as="span" type="s2" weight="semibold" color={color}>
+                {text}
+            </Paragraph>
 
         <style jsx>{`
             .${classes.root} {
@@ -31,8 +33,8 @@ const IconText = ({
                 margin-right: ${spaces.s6};
             }
         `}</style>
-    </div>
-)
+        </div>
+    )
 
 IconText.classes = classes
 

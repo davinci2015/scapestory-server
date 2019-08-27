@@ -27,8 +27,8 @@ const Card = ({
             <div className="header">
                 <div className="header-gradient"></div>
                 <div className="icons">
-                    <IconText icon={Icon.EYE_SHOW_FULL} text={numeral(3233).format('0a+')} />
-                    <IconText icon={Icon.HEART} text={32} />
+                    <IconText icon={Icon.EYE_SHOW_FULL} text={numeral(3233).format('0a+')} color={colors.WHITE}/>
+                    <IconText icon={Icon.HEART} text={32} color={colors.WHITE}/>
                 </div>
             </div>
             <div className="body">
@@ -87,7 +87,7 @@ const Card = ({
 
             .header > .icons > :global(.${IconText.classes.root}) {
                 margin-left: ${spaces.s12};
-                opacity: .8;
+                opacity: .9;
             }
 
             .header > .icons > :global(.${IconText.classes.root}) :global(svg) {
