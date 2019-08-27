@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import {RouterProps} from 'next/router'
 
 import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
@@ -10,6 +11,7 @@ import {Button, FormattedMessage, Icon, UserImage, Paragraph} from 'components/a
 import NavLink from './NavLink'
 
 interface Props {
+    router: RouterProps
     isAuthenticated: boolean
     userImage: string
     openModal: (modalType: ModalType) => void
@@ -23,6 +25,7 @@ export const navigationHeight = {
 const scrollOffset = 80
 
 const Navigation = ({
+    router,
     isAuthenticated,
     openModal,
     userImage,
@@ -52,10 +55,10 @@ const Navigation = ({
                             <img className="logo" src="/static/logo.svg" />
                         </a>
                     </Link>
-                    <NavLink href={routes.index}>
+                    <NavLink router={router} href={routes.index}>
                         <a><FormattedMessage id="navigation_discover" defaultMessage="Discover" /></a>
                     </NavLink>
-                    <NavLink href={routes.news}>
+                    <NavLink router={router} href={routes.news}>
                         <a><FormattedMessage id="navigation_newsfeed" defaultMessage="Newsfeed" /></a>
                     </NavLink>
                 </div>
@@ -94,7 +97,7 @@ const Navigation = ({
                     </Button>
                     {
                         isAuthenticated &&
-                        <NavLink as={routeMapping.user.as('test')} href={routeMapping.user.href('test')}>
+                        <NavLink router={router} as={routeMapping.user.as('test')} href={routeMapping.user.href('test')}>
                             <div>
                                 <UserImage size="l" image={userImage} />
                             </div>

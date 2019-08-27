@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import {withRouter, RouterProps} from "next/router"
+import {RouterProps} from "next/router"
 
 import {colors, spaces, typography} from 'styles'
 
@@ -45,4 +45,4 @@ const NavLink = (({router, children, as, href, ...rest}: Props) => (
     </>
 ))
 
-export default withRouter(NavLink)
+export default NavLink
