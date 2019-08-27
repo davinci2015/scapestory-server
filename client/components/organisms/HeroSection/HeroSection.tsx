@@ -1,10 +1,10 @@
 import React from 'react'
 
 import {backgroundImage} from 'styles/mixins'
-import {borderRadius, spaces, colors, zIndex} from 'styles'
+import {borderRadius, spaces, colors, zIndex, media} from 'styles'
 import {Headline, ImageStack, Button, Icon, FormattedMessage, Paragraph} from 'components/atoms'
 import {UserWidget} from 'components/molecules'
-import {navigationHeight} from 'components/molecules/Navigation';
+import {navigationHeight} from 'components/molecules/Navigation'
 
 interface Props {
     image: string
@@ -70,39 +70,49 @@ const HeroSection = ({
             </div>
             <style jsx>{`
                 .hero-section {
-                    margin-top: ${spaces.s60};
                     padding-top: ${navigationHeight.default};
+
+                    @media ${media.up('medium')} {
+                        margin-top: ${spaces.s60};
+                        padding-top: ${navigationHeight.default};
+                    }
                 }
 
                 .image {
                     position: relative;
-                    min-height: 646px;
-
-                    border-radius: ${borderRadius.SECONDARY};
+                    height: 60vh;
+                    margin-left: -${spaces.s24};
+                    margin-right: -${spaces.s24};
                     z-index: -1;
                     ${backgroundImage(image)}
-                }
 
-                .image::before,
-                .image::after {
-                    content: '';
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    border-radius: ${borderRadius.SECONDARY};
-                }
+                    &::before,
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        border-radius: ${borderRadius.SECONDARY};
+                    }
 
-                .image::before {
-                    top: 0;
-                    height: 120px;
-                    z-index: -1;
-                    background-image: linear-gradient(to bottom, ${colors.BLACK}, rgba(0, 0, 0, 0));
-                }
+                    &::before {
+                        top: 0;
+                        height: 120px;
+                        z-index: -1;
+                        background-image: linear-gradient(to bottom, ${colors.BLACK}, rgba(0, 0, 0, 0));
+                    }
 
-                .image::after {
-                    bottom: 0;
-                    height: 200px;
-                    background-image: linear-gradient(to top, ${colors.BLACK}, rgba(0, 0, 0, 0));
+                    &::after {
+                        bottom: 0;
+                        height: 200px;
+                        background-image: linear-gradient(to top, ${colors.BLACK}, rgba(0, 0, 0, 0));
+                    }
+
+                    @media ${media.up('medium')} {
+                        height: 646px;
+                        margin: 0;
+                        border-radius: ${borderRadius.SECONDARY};
+                    }
                 }
 
                 .badge {
@@ -110,19 +120,20 @@ const HeroSection = ({
                     align-items: center;
                     padding-top: ${spaces.s30};
                     padding-left: ${spaces.s48};
-                }
 
-                .badge-icon {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
 
-                    margin-right: ${spaces.s18};
-                    height: ${spaces.s36};
-                    width: ${spaces.s36};
-                    
-                    border-radius: 50%;
-                    background-image: linear-gradient(to bottom, ${colors.SECONDARY}, ${colors.SECONDARY_DARK});
+                    .badge-icon {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        margin-right: ${spaces.s18};
+                        height: ${spaces.s36};
+                        width: ${spaces.s36};
+                        
+                        border-radius: 50%;
+                        background-image: linear-gradient(to bottom, ${colors.SECONDARY}, ${colors.SECONDARY_DARK});
+                    }
                 }
 
                 .content {
@@ -136,16 +147,16 @@ const HeroSection = ({
                     display: flex;
                     justify-content: space-between;
                     margin-top: ${spaces.s30};
-                }
 
-                .bottom-buttons {
-                    display: flex;
-                    align-items: center;
-                    margin-right: -${spaces.s12};
-                }
+                    .bottom-buttons {
+                        display: flex;
+                        align-items: center;
+                        margin-right: -${spaces.s12};
 
-                .bottom-buttons :global(.${Button.classes.root}) {
-                    margin: 0 ${spaces.s12};
+                        & :global(.${Button.classes.root}) {
+                            margin: 0 ${spaces.s12};
+                        }
+                    }
                 }
             `}</style>
         </div>

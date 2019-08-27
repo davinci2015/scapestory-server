@@ -4,10 +4,6 @@ import classnames from 'classnames'
 import {UserImage} from 'components/atoms'
 import {spaces} from 'styles'
 
-const classes = {
-    root: 'userWidget'
-}
-
 type WidgetSizes = 'default' | 'l'
 
 interface Props {
@@ -24,7 +20,7 @@ const UserWidget = ({
     variant = 'default',
     text
 }: Props) => (
-    <div className={classnames(classes.root, {
+    <div className={classnames('user-widget', {
         large: size === 'l'
     })}>
         <UserImage variant={variant} size={size} image={image}/>
@@ -32,22 +28,20 @@ const UserWidget = ({
         {text}
         
         <style jsx>{`
-            .${classes.root} {
+            .user-widget {
                 display: flex;
                 align-items: center;
             }
 
-            .${classes.root} :global(.${UserImage.classes.root}) {
+            .user-widget :global(.${UserImage.classes.root}) {
                 margin-right: ${spaces.s6};
             }
 
-            .large.${classes.root} :global(.${UserImage.classes.root}) {
+            .large.user-widget :global(.${UserImage.classes.root}) {
                 margin-right: ${spaces.s18};
             }
         `}</style>
     </div>
 )
-
-UserWidget.classes = classes
 
 export default UserWidget

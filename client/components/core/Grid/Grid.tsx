@@ -1,4 +1,5 @@
 import React from 'react'
+import {spaces} from 'styles';
 
 type Props = {
     children: React.ReactNode
@@ -9,8 +10,8 @@ const Grid = ({children}: Props) => (
         {children}
         <style jsx global>{`
             .grid {
-                padding-left: 10%;
-                padding-right: 10%;
+                padding-left: ${spaces.s24};
+                padding-right: ${spaces.s24};
             }
         `}</style>
     </div>

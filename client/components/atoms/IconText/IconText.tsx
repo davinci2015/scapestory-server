@@ -24,12 +24,12 @@ const IconText = ({
             </Paragraph>
 
         <style jsx>{`
-            .${classes.root} {
+            .icon-text {
                 display: inline-flex;
                 align-items: center;
             }  
 
-            .${classes.root} :global(svg) {
+            .icon-text :global(svg) {
                 margin-right: ${spaces.s6};
             }
         `}</style>

@@ -113,6 +113,11 @@ const Footer = () => (
                .top ul li a {
                    text-decoration: none;
                    color: ${colors.BLACK};
+                   transition: color 100ms linear;
+               }
+
+               .top ul li a:hover {
+                   color: ${colors.PRIMARY};
                }
 
                .bottom {
