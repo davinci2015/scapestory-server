@@ -61,7 +61,7 @@ const Card = ({
 
             .header {
                 position: relative;
-                height: 160px;
+                height: 180px;
                 width: calc(100% + 2px);
                 margin-left: -1px;
                 overflow: hidden;
@@ -72,19 +72,19 @@ const Card = ({
                 ${backgroundImage(image)}
             }
 
-            @media ${media.up('small')} {
+            @media ${media.up('extraSmall')} {
                 .header { 
                     height: 200;
                 }
             }
 
-            @media ${media.up('medium')} {
+            @media ${media.up('small')} {
                 .header { 
                     height: 244px;
                 }
             }
 
-            @media ${media.up('large')} {
+            @media ${media.up('medium')} {
                 .header { 
                     height: 264px;
                 }
