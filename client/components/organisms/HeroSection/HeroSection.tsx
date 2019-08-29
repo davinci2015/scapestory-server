@@ -126,6 +126,13 @@ const HeroSection = ({
                     padding-left: ${spaces.s18};
                 }
 
+                @media ${media.up('medium')} {
+                    .badge {
+                        padding-top: ${spaces.s30};
+                        padding-left: ${spaces.s48};
+                    }
+                }
+
                 .badge-icon {
                     display: flex;
                     align-items: center;
@@ -137,13 +144,6 @@ const HeroSection = ({
                     
                     border-radius: 50%;
                     background-image: linear-gradient(to bottom, ${colors.SECONDARY}, ${colors.SECONDARY_DARK});
-                }
-
-                @media ${media.up('medium')} {
-                    .badge-icon {
-                        padding-top: ${spaces.s30};
-                        padding-left: ${spaces.s48};
-                    }
                 }
 
                 .content {
