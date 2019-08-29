@@ -71,8 +71,10 @@ const HeroSection = ({
             <style jsx>{`
                 .hero-section {
                     padding-top: ${navigationHeight.default};
+                }
 
-                    @media ${media.up('medium')} {
+                @media ${media.up('medium')} {
+                    .hero-section {
                         margin-top: ${spaces.s60};
                         padding-top: ${navigationHeight.default};
                     }
@@ -80,82 +82,119 @@ const HeroSection = ({
 
                 .image {
                     position: relative;
-                    height: 60vh;
+                    height: 80vh;
                     margin-left: -${spaces.s24};
                     margin-right: -${spaces.s24};
                     z-index: -1;
                     ${backgroundImage(image)}
+                }
 
-                    &::before,
-                    &::after {
-                        content: '';
-                        position: absolute;
-                        left: 0;
-                        right: 0;
-                        border-radius: ${borderRadius.SECONDARY};
-                    }
-
-                    &::before {
-                        top: 0;
-                        height: 120px;
-                        z-index: -1;
-                        background-image: linear-gradient(to bottom, ${colors.BLACK}, rgba(0, 0, 0, 0));
-                    }
-
-                    &::after {
-                        bottom: 0;
-                        height: 200px;
-                        background-image: linear-gradient(to top, ${colors.BLACK}, rgba(0, 0, 0, 0));
-                    }
-
-                    @media ${media.up('medium')} {
+                @media ${media.up('medium')} {
+                    .image {
                         height: 646px;
                         margin: 0;
                         border-radius: ${borderRadius.SECONDARY};
                     }
                 }
 
+                .image::before,
+                .image::after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    border-radius: ${borderRadius.SECONDARY};
+                }
+
+                .image::before {
+                    top: 0;
+                    height: 120px;
+                    z-index: -1;
+                    background-image: linear-gradient(to bottom, ${colors.BLACK}, rgba(0, 0, 0, 0));
+                }
+
+                .image::after {
+                    bottom: 0;
+                    height: 200px;
+                    background-image: linear-gradient(to top, ${colors.BLACK}, rgba(0, 0, 0, 0));
+                }
+
                 .badge {
                     display: flex;
                     align-items: center;
-                    padding-top: ${spaces.s30};
-                    padding-left: ${spaces.s48};
+                    padding-top: ${spaces.s18};
+                    padding-left: ${spaces.s18};
+                }
 
+                .badge-icon {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
 
+                    margin-right: ${spaces.s18};
+                    height: ${spaces.s36};  
+                    width: ${spaces.s36};
+                    
+                    border-radius: 50%;
+                    background-image: linear-gradient(to bottom, ${colors.SECONDARY}, ${colors.SECONDARY_DARK});
+                }
+
+                @media ${media.up('medium')} {
                     .badge-icon {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-
-                        margin-right: ${spaces.s18};
-                        height: ${spaces.s36};
-                        width: ${spaces.s36};
-                        
-                        border-radius: 50%;
-                        background-image: linear-gradient(to bottom, ${colors.SECONDARY}, ${colors.SECONDARY_DARK});
+                        padding-top: ${spaces.s30};
+                        padding-left: ${spaces.s48};
                     }
                 }
 
                 .content {
                     position: absolute;
-                    left: ${spaces.s48};
-                    bottom: ${spaces.s42};
+                    left: ${spaces.s18};
+                    bottom: ${spaces.s18};
                     z-index: ${zIndex.DEFAULT};
+                }
+
+                @media ${media.up('medium')} {
+                    .content {
+                        left: ${spaces.s48};
+                        bottom: ${spaces.s42};
+                    }
                 }
 
                 .bottom {
                     display: flex;
+                    flex-direction: column;
                     justify-content: space-between;
                     margin-top: ${spaces.s30};
+                }
 
+
+                @media ${media.up('medium')} {
+                    .bottom {
+                        flex-direction: row;
+                    }
+                }
+
+                .bottom-buttons {
+                    display: flex;
+                    align-items: flex-start;
+                    margin-right: -${spaces.s12};
+                    margin-top: ${spaces.s12};
+                }
+
+                @media ${media.up('medium')} {
                     .bottom-buttons {
-                        display: flex;
+                        margin-top: 0;
                         align-items: center;
-                        margin-right: -${spaces.s12};
+                    }
+                }
 
-                        & :global(.${Button.classes.root}) {
-                            margin: 0 ${spaces.s12};
-                        }
+                .bottom-buttons :global(.${Button.classes.root}) {
+                    margin-right: ${spaces.s12};
+                }
+
+                @media ${media.up('medium')} {
+                    .bottom-buttons :global(.${Button.classes.root}) {
+                        margin: 0 ${spaces.s12};
                     }
                 }
             `}</style>

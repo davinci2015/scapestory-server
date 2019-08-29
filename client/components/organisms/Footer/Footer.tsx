@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-import {colors, spaces} from 'styles'
+import {colors, spaces, media} from 'styles'
 import {Paragraph, FormattedMessage, Icon} from 'components/atoms'
 import routes from 'routes'
 
@@ -62,10 +62,10 @@ const Footer = () => (
             </div>
             <div className="social-icons">
                 <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer" >
-                    <Icon d={Icon.FACEBOOK} viewBox="0 0 48 48" size={24}/>
+                    <Icon d={Icon.FACEBOOK} viewBox="0 0 48 48" size={24} />
                 </a>
                 <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer" >
-                    <Icon d={Icon.INSTAGRAM} viewBox="0 0 48 48" size={24}/>
+                    <Icon d={Icon.INSTAGRAM} viewBox="0 0 48 48" size={24} />
                 </a>
             </div>
         </div>
@@ -92,41 +92,77 @@ const Footer = () => (
                .top {
                    display: flex;
                    justify-content: space-between;
+                   flex-direction: column;
                    align-items: center;
-
                    padding: ${spaces.s60};
                }
-                
+
+               @media ${media.up('medium')} {
+                    .top {
+                        flex-direction: row;
+                    }
+                }
+               
                .top ul {
                     display: flex;
-                    align-items: center;
-                    
-                    margin: 0;
+                    flex-direction: column;
+                    text-align: center; 
+
+                    margin: ${spaces.s18} 0;
                     padding: 0;
-               }
+                }
 
-               .top ul li {
-                   margin: 0 ${spaces.s30};
-                   list-style: none;
-               }
+                @media ${media.up('medium')} {
+                    .top ul {
+                        flex-direction: row;
+                        margin: 0;
+                    }
+                }
 
-               .top ul li a {
-                   text-decoration: none;
-                   color: ${colors.BLACK};
-                   transition: color 100ms linear;
-               }
+                .top ul li {
+                    margin: ${spaces.s16} 0; 
+                    list-style: none;
+                }
 
-               .top ul li a:hover {
-                   color: ${colors.PRIMARY};
-               }
+                @media ${media.up('medium')} {
+                    .top ul li { 
+                        margin: 0 ${spaces.s12}; 
+                    }
+                }
+            
+                @media ${media.up('large')} {
+                    .top ul li { 
+                        margin: 0 ${spaces.s30}; 
+                    }
+                }
+
+                .top ul li a {
+                    text-decoration: none;
+                    color: ${colors.BLACK};
+                    transition: color 100ms linear;
+                }
+
+                .top ul li a:hover {
+                    color: ${colors.PRIMARY};
+                }
+               
 
                .bottom {
                    display: flex;
-                   justify-content: space-between;  
-                   
+                   flex-direction: column;
+                   align-items: center;
+
                    padding: ${spaces.s18} ${spaces.s60} ${spaces.s24} ${spaces.s60};    
                    border-top: 1px solid ${colors.SHADE_EXTRA_LIGHT};
                }
+
+               @media ${media.up('small')} {
+                    .bottom { 
+                        justify-content: space-between; 
+                        flex-direction: row;
+                        align-items: stretch;
+                    }
+                }
                
                .social-icons {
                     margin: 0 -${spaces.s12};

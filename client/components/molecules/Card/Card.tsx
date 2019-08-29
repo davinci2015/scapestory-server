@@ -3,7 +3,7 @@ import numeral from 'numeral'
 
 import {backgroundImage} from 'styles/mixins'
 import {Headline, Tag, IconText, Icon, Paragraph} from 'components/atoms'
-import {colors, spaces, borderRadius} from 'styles'
+import {colors, spaces, borderRadius, media} from 'styles'
 import UserWidget from 'components/molecules/UserWidget'
 
 interface Props {
@@ -61,7 +61,7 @@ const Card = ({
 
             .header {
                 position: relative;
-                height: 264px;
+                height: 160px;
                 width: calc(100% + 2px);
                 margin-left: -1px;
                 overflow: hidden;
@@ -70,6 +70,24 @@ const Card = ({
                 border-top-right-radius: ${borderRadius.TERTIARY};
                 
                 ${backgroundImage(image)}
+            }
+
+            @media ${media.up('small')} {
+                .header { 
+                    height: 200;
+                }
+            }
+
+            @media ${media.up('medium')} {
+                .header { 
+                    height: 244px;
+                }
+            }
+
+            @media ${media.up('large')} {
+                .header { 
+                    height: 264px;
+                }
             }
 
             .header-gradient {

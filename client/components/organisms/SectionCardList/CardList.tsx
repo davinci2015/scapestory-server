@@ -1,5 +1,6 @@
 import React from 'react'
 import {Card} from 'components/molecules'
+import {media} from 'styles';
 
 interface Props {
     children: React.ReactNode
@@ -22,8 +23,26 @@ const CardList = ({
                 }
 
                 .card-list :global(.${Card.classes.root}) {
-                    width: calc(25% - ${gutter * 2}px);
+                    width: 100%;
                     margin: ${gutter}px;
+                }
+
+                @media ${media.up('small')} {
+                    .card-list :global(.${Card.classes.root}) {
+                        width: calc(50% - ${gutter * 2}px);
+                    }
+                }
+
+                @media ${media.up('medium')} {
+                    .card-list :global(.${Card.classes.root}) {
+                        width: calc(33.33% - ${gutter * 2}px);
+                    }
+                }
+
+                @media ${media.up('large')} {
+                    .card-list :global(.${Card.classes.root}) {
+                        width: calc(25% - ${gutter * 2}px);
+                    }
                 }
             `}</style>
         </div>

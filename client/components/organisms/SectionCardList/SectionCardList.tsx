@@ -2,7 +2,7 @@ import React from 'react'
 
 import CardList from './CardList'
 import {FormattedMessage, Headline, Icon} from 'components/atoms'
-import {colors, spaces} from 'styles'
+import {colors, spaces, media} from 'styles'
 
 interface Props {
     children: React.ReactNode
@@ -27,25 +27,38 @@ const SectionCardList = ({
                         <Headline as="h5" variant="h5" color={colors.PRIMARY}>
                             <FormattedMessage id="card_list.load_more" defaultMessage="Load more aquascapes" />
                         </Headline>
-                        <Icon d={Icon.ARROW_DOWN} color={colors.PRIMARY}/>
+                        <Icon d={Icon.ARROW_DOWN} color={colors.PRIMARY} />
                     </div>
                 </div>
             }
             <style jsx>{`
                 .section-card-list {
                     display: block;
-                    margin: 75px 0;
+                    margin: 36px 0;
                 }
 
-                .section-card-list .title {
+                @media ${media.up('medium')} {
+                    .section-card-list {
+                        margin: 75px 0;
+                    }
+                }
+
+                .title {
                     margin-bottom: 40px;
                 }
 
                 .load-more {
-                    margin-top: 105px;
-                    margin-bottom: 120px;
+                    margin-top: 36px;
+                    margin-bottom: 62px;
                     display: flex;
                     justify-content: center;
+                }
+
+                @media ${media.up('medium')} {
+                    .load-more {
+                        margin-top: 105px;
+                        margin-bottom: 120px;
+                    }
                 }
 
                 .load-more-button {
