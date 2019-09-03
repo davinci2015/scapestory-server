@@ -41,7 +41,7 @@ const Footer = () => (
                         </Link>
                     </li>
                     <li>
-                        <Link href={routes.index}>
+                        <Link href={routes.privacyPolicy}>
                             <a>
                                 <Paragraph weight="bold">
                                     <FormattedMessage id="footer.privacy_policy" defaultMessage="Privacy Policy" />
@@ -50,7 +50,7 @@ const Footer = () => (
                         </Link>
                     </li>
                     <li>
-                        <Link href={routes.index}>
+                        <Link href={routes.termsAndConditions}>
                             <a>
                                 <Paragraph weight="bold">
                                     <FormattedMessage id="footer.terms_and_conditions" defaultMessage="Terms & Conditions" />

@@ -3,7 +3,9 @@ export default {
 	signUp: '/signup',
 	signUpEmail: '/signup/email',
 	about: '/about',
-	news: '/news'
+	news: '/news',
+	privacyPolicy: '/privacy',
+	termsAndConditions: '/terms'
 }
 
 export const routeMapping = {
