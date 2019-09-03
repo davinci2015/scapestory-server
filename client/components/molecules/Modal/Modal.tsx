@@ -1,7 +1,7 @@
 import Modal from 'react-modal'
 import ScrollLock from 'react-scrolllock'
 
-import {colors, zIndex} from 'styles'
+import {colors, zIndex, media, spaces} from 'styles'
 
 interface Props extends ReactModal.Props {
     children: React.ReactNode
@@ -24,19 +24,30 @@ const CustomModal = ({
             <style jsx>{`
                 :global(.modal) {
                     position: absolute;
-                    top: 40px;
-                    bottom: 40px;
-                    left: 50%;
-                    max-width: 730px;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
                     background: rgb(255, 255, 255);
                     overflow: auto;
-                    border-radius: 4px;
                     outline: none;
-                    border-radius: 16px;
                     background-color: ${colors.WHITE};
-                    border: 1px solid ${colors.SHADE_LIGHT};
-                    transform: translateX(-50%);
                     z-index: ${zIndex.HIGHEST};
+                }
+
+                @media ${media.up('small')} {
+                    :global(.modal) {
+                        width: calc(100% - ${spaces.s36});
+                        max-width: 730px;
+
+                        top: 40px;
+                        bottom: 40px;
+                        left: 50%;
+                        
+                        border-radius: 16px;
+                        border: 1px solid ${colors.SHADE_LIGHT};
+                        transform: translateX(-50%);
+                    }
                 }
 
                 :global(.modal-overlay) {

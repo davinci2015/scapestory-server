@@ -4,7 +4,7 @@ import {FacebookLogin, GoogleLogin, Modal} from 'components/molecules'
 import {Headline, Paragraph, FormattedMessage, Bubble, Button, Icon} from 'components/atoms'
 import {FacebookProps} from 'components/molecules/FacebookLogin'
 import {GoogleProps} from 'components/molecules/GoogleLogin'
-import {colors, spaces} from 'styles'
+import {colors, spaces, media} from 'styles'
 import {ModalContext} from 'context/modal'
 
 interface Props {
@@ -108,9 +108,23 @@ const AuthModal = ({
                 }
 
                 .body {
-                    padding: ${spaces.s60} 96px 0 96px;
+                    padding: ${spaces.s36} ${spaces.s12} 0 ${spaces.s12};
                     position: relative;
                     overflow-x: hidden;
+                }
+
+                .body :global(.${Headline.classes.root}) {
+                    padding-right: ${spaces.s42};
+                }
+
+                @media ${media.up('small')} {
+                    .body {
+                        padding: ${spaces.s60} 96px 0 96px;
+                    }
+
+                    .body :global(.${Headline.classes.root}) {
+                        padding-right: 0;
+                    }
                 }
 
                 .subtitle {
@@ -153,11 +167,30 @@ const AuthModal = ({
 
                 .social-buttons {
                     display: flex;
-                    justify-content: space-between;
+                    flex-direction: column;
+                }
+
+                @media ${media.up('small')} {
+                    .social-buttons {
+                        display: flex;
+                        justify-content: space-between;
+                    }
                 }
 
                 .social-buttons > :global(.${Button.classes.root}):first-of-type {
                     margin-right: ${spaces.s30};
+                    margin-bottom: ${spaces.s18};
+                }
+
+                @media ${media.up('small')} {
+                    .social-buttons {
+                        flex-direction: row;
+                    }
+
+                    .social-buttons > :global(.${Button.classes.root}):first-of-type {
+                        margin-right: ${spaces.s30};
+                        margin-bottom: 0;
+                    }
                 }
                     
                 .footer {
