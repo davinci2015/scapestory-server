@@ -29,6 +29,7 @@ export default {
         lh24: '24px',
         lh30: '30px',
         lh36: '36px',
+        lh40: '40px',
         lh48: '48px',
         lh66: '66px',
         lh88: '88px'
