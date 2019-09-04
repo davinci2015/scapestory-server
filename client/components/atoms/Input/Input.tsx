@@ -104,7 +104,7 @@ const Input = ({
                 top: 0;
                 right: 0;
                 bottom: 0;
-                border-width: 1px;
+                border-width: 2px;
                 border-style: solid;
                 border-color: ${colors.SHADE_LIGHT};
                 border-radius: ${borderRadius.SECONDARY};
