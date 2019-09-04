@@ -16,14 +16,13 @@ const RegistrationModal = () => {
 
     const handleSuccess = (token: string) => {
         auth.persistToken(token)
-        closeModal('register')
+        closeModal()
         Router.push(routes.index)
     } 
 
     return (
         <AuthModal
             onSuccess={handleSuccess}
-            authType="register"
             form={<RegistrationForm onSuccess={handleSuccess}/>}
             title={<FormattedMessage id="registration_title" defaultMessage="Don’t be shy! Sign up to share your scapestory." />}
             subtitle={<FormattedMessage id="registration_subtitle" defaultMessage="Create account to get the full Scapestory experience." />}

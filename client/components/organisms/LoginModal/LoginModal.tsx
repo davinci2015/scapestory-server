@@ -16,14 +16,13 @@ const LoginModal = () => {
 
     const handleSuccess = (token: string) => {
         auth.persistToken(token)
-        closeModal('login')
+        closeModal()
         Router.push(routes.index)
     } 
 
     return (
         <AuthModal
             onSuccess={handleSuccess}
-            authType="login"
             form={<LoginForm onSuccess={handleSuccess}/>}
             title={<FormattedMessage id="login_title" defaultMessage="Welcome back! Your scapestory is waiting." />}
             subtitle={<FormattedMessage id="login_subtitle" defaultMessage="Login and continue exploring aquascapes." />}

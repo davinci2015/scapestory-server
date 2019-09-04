@@ -23,7 +23,7 @@ const Textarea = ({
     <div className={classes.textarea}>
         <textarea
             placeholder={placeholder}
-            rows={30}
+            rows={6}
             cols={10}
             {...props}
         />
@@ -41,7 +41,7 @@ const Textarea = ({
                 position: relative;
                 width: 100%;
             }
-            
+
             textarea {
                 padding: 30px;
                 width: 100%;

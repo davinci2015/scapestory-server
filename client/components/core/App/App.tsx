@@ -1,6 +1,6 @@
 import React from 'react'
 import {Layout} from 'components/core'
-import {LoginModal, RegistrationModal} from 'components/organisms'
+import ModalContainer from 'containers/Modal'
 
 type Props = {
     children: React.ReactNode
@@ -8,8 +8,7 @@ type Props = {
 
 const App = ({children}: Props) => (
     <Layout>
-        <LoginModal />
-        <RegistrationModal />
+        <ModalContainer/>
         {children}
     </Layout>
 )

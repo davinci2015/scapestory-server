@@ -2,10 +2,11 @@ import * as React from 'react'
 
 import {App, Grid} from 'components/core'
 import withAuth from 'hocs/withAuth';
-import {SectionCardList, HeroSection, Footer} from 'components/organisms'
+import {SectionCardList, HeroSection} from 'components/organisms'
 import {Card} from 'components/molecules'
 import NavigationContainer from 'containers/Navigation'
 import {Headline, FormattedMessage} from 'components/atoms'
+import FooterContainer from 'containers/Footer'
 
 const Index = () => (
     <App>
@@ -83,7 +84,7 @@ const Index = () => (
                 </SectionCardList.List>
             </SectionCardList>
         </Grid>
-        <Footer />
+        <FooterContainer/>
     </App>
 )
 

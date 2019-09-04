@@ -2,11 +2,13 @@ import React from 'react'
 
 import {Layout, Grid} from 'components/core'
 import {Headline, Paragraph} from 'components/atoms'
-import {spaces} from 'styles';
-import {Footer} from 'components/organisms'
+import FooterContainer from 'containers/Footer'
+import ModalContainer from 'containers/Modal'
+import {spaces} from 'styles'
 
 const Terms = () => (
     <Layout>
+        <ModalContainer/>
         <Grid>
             <div className="terms">
                 <Headline variant="h2">
@@ -73,7 +75,7 @@ const Terms = () => (
                 </Paragraph>
             </div>
         </Grid>
-        <Footer />
+        <FooterContainer/>
 
         <style jsx>{`
             .terms {

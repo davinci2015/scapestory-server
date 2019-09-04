@@ -3,9 +3,14 @@ import Link from 'next/link'
 
 import {colors, spaces, media} from 'styles'
 import {Paragraph, FormattedMessage, Icon} from 'components/atoms'
+import {ModalType} from 'context/modal'
 import routes from 'routes'
 
-const Footer = () => (
+interface Props {
+    openModal: (type: ModalType) => void
+}
+
+const Footer = ({ openModal }: Props) => (
     <div className="footer">
         <div className="top">
             <div>
@@ -32,13 +37,11 @@ const Footer = () => (
                         </Link>
                     </li>
                     <li>
-                        <Link href={routes.index}>
-                            <a>
-                                <Paragraph weight="bold">
-                                    <FormattedMessage id="footer.feedback" defaultMessage="Feedback" />
-                                </Paragraph>
-                            </a>
-                        </Link>
+                        <a onClick={() => openModal('feedback')}>
+                            <Paragraph weight="bold">
+                                <FormattedMessage id="footer.feedback" defaultMessage="Feedback" />
+                            </Paragraph>
+                        </a>
                     </li>
                     <li>
                         <Link href={routes.privacyPolicy}>
@@ -140,6 +143,7 @@ const Footer = () => (
                     text-decoration: none;
                     color: ${colors.BLACK};
                     transition: color 100ms linear;
+                    cursor: pointer;
                 }
 
                 .top ul li a:hover {

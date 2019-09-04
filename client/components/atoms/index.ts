@@ -1,4 +1,5 @@
 export {default as Input} from './Input'
+export {default as Textarea} from './Textarea'
 export {default as InputAdornment} from './InputAdornment'
 export {default as PasswordInput} from './PasswordInput'
 export {default as Paragraph} from './Paragraph'
