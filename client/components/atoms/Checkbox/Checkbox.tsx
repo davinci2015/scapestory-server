@@ -43,39 +43,39 @@ const Checkbox = ({id, children, onChange, defaultChecked = false, error, errorM
             }
 
             <style jsx>{`
-            .input {
-                position: absolute;
-                opacity: 0;
-            }
+                .input {
+                    position: absolute;
+                    opacity: 0;
+                }
 
-            .label {
-                position: relative;
-                cursor: pointer;
-                padding: 0;
-            }
+                .label {
+                    position: relative;
+                    cursor: pointer;
+                    padding: 0;
+                }
 
-            .content {
-                display: inline-block;
-                vertical-align: top;
-                margin-top: 6px;
-                font-size: ${typography.fontSize.fs16};
-                color: ${colors.SHADE_DEEP};
-            }
+                .content {
+                    display: inline-block;
+                    vertical-align: top;
+                    margin-top: 6px;
+                    font-size: ${typography.fontSize.fs16};
+                    color: ${colors.SHADE_DEEP};
+                }
 
-            .selector {
-                display: inline-block;
-                width: ${spaces.s30};
-                height: ${spaces.s30};
-                margin-right: ${spaces.s18};
-                border: 2px solid ${colors.SHADE_LIGHT};
-                border-radius: ${borderRadius.TERTIARY};
+                .selector {
+                    display: inline-block;
+                    width: ${spaces.s30};
+                    height: ${spaces.s30};
+                    margin-right: ${spaces.s18};
+                    border: 2px solid ${colors.SHADE_LIGHT};
+                    border-radius: ${borderRadius.TERTIARY};
 
-                ${applyStyles(checked)(`
-                    background-color: ${colors.PRIMARY};
-                    border: 2px solid ${colors.PRIMARY};
-                `)}
-            }
-        `}</style>
+                    ${applyStyles(checked)(`
+                        background-color: ${colors.PRIMARY};
+                        border: 2px solid ${colors.PRIMARY};
+                    `)}
+                }
+            `}</style>
         </div>
     )
 }
