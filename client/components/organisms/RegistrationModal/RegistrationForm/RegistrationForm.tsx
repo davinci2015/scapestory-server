@@ -1,15 +1,14 @@
 import React, {useState} from 'react'
 import {injectIntl, InjectedIntlProps} from 'react-intl'
 import {useMutation} from 'react-apollo-hooks'
+import Link from 'next/link'
 
-import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
+import {Paragraph, Button, Input, PasswordInput, FormattedMessage, Checkbox} from 'components/atoms'
 import {MessageDescriptor} from 'components/atoms/FormattedMessage'
 
+import {RegisterResult, RegisterVariables, SIGN_UP_MUTATION} from 'components/organisms/RegistrationModal/RegistrationForm/mutations'
 import validator from 'services/validator'
 import {spaces} from 'styles'
-import {RegisterResult, RegisterVariables, SIGN_UP_MUTATION} from 'components/organisms/RegistrationModal/RegistrationForm/mutations'
-import Checkbox from 'components/atoms/Checkbox'
-import Link from 'next/link'
 import routes from 'routes'
 
 const inputKeys = {
