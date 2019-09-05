@@ -8,6 +8,9 @@ import {MessageDescriptor} from 'components/atoms/FormattedMessage'
 import validator from 'services/validator'
 import {spaces} from 'styles'
 import {RegisterResult, RegisterVariables, SIGN_UP_MUTATION} from 'components/organisms/RegistrationModal/RegistrationForm/mutations'
+import Checkbox from 'components/atoms/Checkbox'
+import Link from 'next/link'
+import routes from 'routes'
 
 const inputKeys = {
     email: 'email',
@@ -23,6 +26,8 @@ const RegistrationForm = ({
     intl,
     onSuccess
 }: Props) => {
+    const [termsAccepted, setTermsAccepted] = useState(false)
+
     const [errors, setError] = useState({
         [inputKeys.email]: true,
         [inputKeys.password]: true
@@ -135,12 +140,37 @@ const RegistrationForm = ({
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 />
 
+                <Checkbox id="terms" onChange={setTermsAccepted}>
+                    <FormattedMessage 
+                        id="registration_terms_i_accept" 
+                        defaultMessage="I accept" 
+                    />
+                    {' '}
+                    <Link href={routes.termsAndConditions}>
+                        <a>
+                            <FormattedMessage id="registration_terms_text" defaultMessage="Terms & Conditions" />
+                        </a>
+                    </Link>
+                    {' '}
+                    <FormattedMessage 
+                        id="registration_terms_and" 
+                        defaultMessage="and" 
+                    />
+                    {' '}
+                    <Link href={routes.privacyPolicy}>
+                        <a>
+                            <FormattedMessage id="registration_privacy_text" defaultMessage="Privacy Policy" />
+                        </a>
+                    </Link>
+                </Checkbox>
+
                 <div className="submit-button">
                     <Button
+                        disabled={errors[inputKeys.email] || errors[inputKeys.password] || !termsAccepted}
                         type="block"
                         onClick={onSubmit}>
                         <Paragraph as="span" weight="bold" color="light">
-                            <FormattedMessage id="registration_submit_button" defaultMessage="Sign Up" />
+                            <FormattedMessage id="registration_submit_button" defaultMessage="Create Account" />
                         </Paragraph>
                     </Button>
                 </div>

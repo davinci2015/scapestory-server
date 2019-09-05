@@ -1,4 +1,5 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
+import Router from 'next/router'
 
 import {Modal} from 'components/molecules'
 import {ModalContext} from 'context/modal'
@@ -19,6 +20,10 @@ const ModalContainer = () => {
         
         return Component ? <Component /> : null
     }
+
+    useEffect(() => Router.events.on('routeChangeStart', () => {
+        if (modalType) closeModal()
+    }), [])
     
     return (
         <Modal isOpen={!!modalType} onRequestClose={closeModal}>

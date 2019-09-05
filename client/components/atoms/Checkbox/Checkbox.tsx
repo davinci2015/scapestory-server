@@ -62,6 +62,10 @@ const Checkbox = ({id, children, onChange, defaultChecked = false, error, errorM
                     color: ${colors.SHADE_DEEP};
                 }
 
+                .content :global(a) {
+                    color: ${colors.SHADE_DEEP};
+                }
+
                 .selector {
                     display: inline-block;
                     width: ${spaces.s30};
