@@ -7,14 +7,14 @@ import {AquascapeImage} from 'db/models/AquascapeImage'
 export class Like extends Model<Like> {
     @ForeignKey(() => User)
     @Column
-    userId: string
+    userId: number
 
     @BelongsTo(() => User)
     user: User
 
     @ForeignKey(() => AquascapeImage)
     @Column
-    aquascapeImageId: string
+    aquascapeImageId: number
 
     @ForeignKey(() => Aquascape)
     @Column

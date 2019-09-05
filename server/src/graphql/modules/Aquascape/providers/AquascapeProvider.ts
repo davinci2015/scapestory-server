@@ -6,9 +6,10 @@ import {CreateAquascapeArgs} from 'graphql/modules/Aquascape/resolvers'
 import {VisitorRepositoryInterface} from 'db/repositories/Visitor'
 import {Aquascape} from 'db/models/Aquascape'
 import {tokens} from 'di/tokens'
+import {Pagination} from 'interfaces'
 
 export interface AquascapeProviderInterface {
-    getAquascapes: (limit?: number, filter?: AquascapeFilter) => Promise<Aquascape[]>,
+    getAquascapes: (pagination: Pagination, filter?: AquascapeFilter) => Promise<Aquascape[]>,
 
     getFeaturedAquascape: () => Promise<Aquascape | null>,
 
@@ -25,8 +26,8 @@ export class AquascapeProvider implements AquascapeProviderInterface {
     ) {
     }
 
-    async getAquascapes(limit?: number, filter?: AquascapeFilter) {
-        return await this.aquascapeRepository.getAquascapes(limit, filter)
+    async getAquascapes(pagination: Pagination, filter?: AquascapeFilter) {
+        return await this.aquascapeRepository.getAquascapes(pagination.limit, filter)
     }
 
     async getFeaturedAquascape() {

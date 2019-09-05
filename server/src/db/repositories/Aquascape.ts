@@ -23,7 +23,9 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
 
         return await this.findAll({
             where,
-            order: ['createdAt', 'DESC'],
+            order: [
+                ['createdAt', 'DESC']
+            ],
             limit
         })
     }

@@ -4,14 +4,15 @@ import {AquascapeProviderInterface} from 'graphql/modules/Aquascape/providers/Aq
 import {authenticate} from 'graphql/guards'
 import {tokens} from 'di/tokens'
 import {AquascapeFilter} from 'db/repositories/Aquascape'
+import {Pagination} from 'interfaces'
 
 export type CreateAquascapeArgs = {
     title: string
 }
 
-export type GetAquascapesArgs = {
-    limit: number
-    filter: AquascapeFilter
+export type AquascapesArgs = {
+    filter?: AquascapeFilter
+    pagination: Pagination
 }
 
 export type VisitAquascapeArgs = {
@@ -21,9 +22,9 @@ export type VisitAquascapeArgs = {
 
 export const resolvers = {
     Query: {
-        async aquascapes(root, args: GetAquascapesArgs, context: ModuleContext) {
+        async aquascapes(root, args: AquascapesArgs, context: ModuleContext) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            return await provider.getAquascapes(args.limit, args.filter)
+            return await provider.getAquascapes(args.pagination, args.filter)
         },
         async featuredAquascape(root, args, context: ModuleContext) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)

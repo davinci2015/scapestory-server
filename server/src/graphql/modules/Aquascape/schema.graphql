@@ -33,13 +33,18 @@ type Aquascape {
     images: [AquascapeImage]
 }
 
-type AquascapeFilter {
+input Pagination {
+    limit: Int!
+    offset: Int!
+}
+
+input AquascapesFilter {
     trending: Boolean
 }
 
 type Query {
-    aquascapes(limit: Int, filter: AquascapeFilter): [Aquascape]
-    featuredAquascape(): Aquascape
+    aquascapes(pagination: Pagination, filter: AquascapesFilter): [Aquascape]
+    featuredAquascape: Aquascape
 }
 
 type Mutation {
