@@ -28,6 +28,8 @@ import {Hardscape} from 'db/models/Hardscape'
 import {Visitor} from 'db/models/Visitor'
 import {Like} from 'db/models/Like'
 import {CO2} from 'db/models/CO2'
+import {Filter} from 'db/models/Filter';
+import {AquascapeFilter} from 'db/models/manyToMany/AquascapeFilter';
 
 @DefaultScope({
     include: [
@@ -73,6 +75,7 @@ export class Aquascape extends Model<Aquascape> {
     @BelongsTo(() => CO2)
     co2: CO2
 
+    @Default(8)
     @Column
     photoperiod: number
 
@@ -87,6 +90,9 @@ export class Aquascape extends Model<Aquascape> {
 
     @HasMany(() => Like)
     likes: Like[]
+
+    @BelongsToMany(() => Filter, () => AquascapeFilter)
+    filters: Filter[]
 
     @BelongsToMany(() => Light, () => AquascapeLight)
     lights: Light[]

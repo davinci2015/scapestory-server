@@ -1,15 +1,35 @@
 # import User from '../User/schema.graphql'
 
+type CO2 {
+    id: Int!
+    type: String
+    bps: Int
+}
+
+type Visitor {
+    id: Int!
+    visitorId: String! 
+}
+
 type Like {
+    id: Int!
+    userId: Int!
     user: User
+    aquascapeImageId: Int
+    aquascapeId: Int
 }
 
 type Comment {
+    id: Int!
     content: String
+    userId: Int!
     user: User
+    aquascapeId: Int
+    aquascapeImageId: Int
 }
 
 type AquascapeImage {
+    id: Int!
     mainImage: Boolean!
     title: String
     description: String
@@ -17,7 +37,67 @@ type AquascapeImage {
     gridPosition: Int
     url: String!
     likes: [User]
-    comments: [Comment]
+    comments: [Comment]!
+}
+
+type Light {
+    id: Int!
+    predefined: Boolean!
+    name: String
+    description: String
+    image: String
+}
+
+type Substrate {
+    id: Int!
+    predefined: Boolean!
+    name: String
+    description: String
+    image: String 
+}
+
+type Additive {
+    id: Int!
+    predefined: Boolean!
+    name: String
+    description: String
+}
+
+type Hardscape {
+    id: Int!
+    predefined: Boolean!
+    name: String
+    description: String
+    image: String
+}
+
+type Tag {
+    id: Int!
+    predefined: Boolean!
+    name: String!
+}
+
+type Plant {
+    id: Int!
+    predefined: Boolean!
+    name: String
+    description: String
+    image: String
+    origin: String
+    minHeight: Int
+    maxHeight: Int
+    position: String
+    luminosity: String
+    growthSpeed: String
+    difficulty: String
+}
+
+type Filter {
+    id: Int!
+    predefined: Boolean!
+    name: String!
+    description: String
+    image: String
 }
 
 type Aquascape {
@@ -25,12 +105,24 @@ type Aquascape {
     title: String!
     volume: Int
     startedAt: String
+    featured: Boolean!
+    trending: Boolean!
     description: String
     user: User
-    CO2: String
-    CO2BPS: String
-    photoperiod: String
-    images: [AquascapeImage]
+    co2: CO2
+    photoperiod: Int!
+    images: [AquascapeImage]!
+    visitors: [Visitor]!
+    comments: [Comment]!
+    likes: [Like]!
+    filters: [Filter]!
+    lights: [Light]!
+    substrates: [Substrate]!
+    additives: [Additive]!
+    hardscapes: [Hardscape]!
+    tags: [Tag]!
+    favorites: [User]!
+    plants: [Plant]!
 }
 
 input Pagination {
