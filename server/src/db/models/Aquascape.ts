@@ -27,6 +27,7 @@ import {Tag} from 'db/models/Tag'
 import {Hardscape} from 'db/models/Hardscape'
 import {Visitor} from 'db/models/Visitor'
 import {Like} from 'db/models/Like'
+import {CO2} from 'db/models/CO2'
 
 @DefaultScope({
     include: [
@@ -65,11 +66,12 @@ export class Aquascape extends Model<Aquascape> {
     @BelongsTo(() => User)
     user: User
 
+    @ForeignKey(() => CO2)
     @Column
-    CO2: string
+    co2Id: number
 
-    @Column
-    CO2BPS: string
+    @BelongsTo(() => CO2)
+    co2: CO2
 
     @Column
     photoperiod: number
