@@ -8,7 +8,6 @@ type Light {
     predefined: Boolean!
     name: String
     brand: Brand
-    brandId: Int
     model: String
     description: String
     image: String
