@@ -1,0 +1,7 @@
+type Filter {
+    id: Int!
+    predefined: Boolean!
+    name: String!
+    description: String
+    image: String
+}

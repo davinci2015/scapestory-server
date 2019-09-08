@@ -2,11 +2,12 @@ import {Injectable, Inject} from '@graphql-modules/di'
 import * as uuid from 'uuid/v4'
 
 import {AquascapeRepositoryInterface, AquascapeFilter} from 'db/repositories/Aquascape'
-import {CreateAquascapeArgs} from 'graphql/modules/Aquascape/resolvers'
 import {VisitorRepositoryInterface} from 'db/repositories/Visitor'
 import {Aquascape} from 'db/models/Aquascape'
 import {tokens} from 'di/tokens'
 import {Pagination} from 'interfaces'
+
+import {CreateAquascapeArgs} from './resolvers'
 
 export interface AquascapeProviderInterface {
     getAquascapes: (pagination: Pagination, filter?: AquascapeFilter) => Promise<Aquascape[]>,

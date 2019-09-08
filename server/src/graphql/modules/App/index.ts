@@ -3,12 +3,14 @@ import {AquascapeModule} from 'graphql/modules/Aquascape'
 import {FollowModule} from 'graphql/modules/Follow'
 import {UserModule} from 'graphql/modules/User'
 import {AuthModule} from 'graphql/modules/Auth'
+import {LightModule} from 'graphql/modules/Light'
 
 export const AppModule = new GraphQLModule({
     imports: [
         UserModule,
         AuthModule,
         FollowModule,
-        AquascapeModule
+        AquascapeModule,
+        LightModule
     ]
 })

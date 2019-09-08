@@ -1,4 +1,6 @@
 # import User from '../User/schema.graphql'
+# import Filter from '../Filter/schema.graphql'
+# import Light from '../Light/schema.graphql'
 
 type CO2 {
     id: Int!
@@ -90,14 +92,6 @@ type Plant {
     luminosity: String
     growthSpeed: String
     difficulty: String
-}
-
-type Filter {
-    id: Int!
-    predefined: Boolean!
-    name: String!
-    description: String
-    image: String
 }
 
 type Aquascape {

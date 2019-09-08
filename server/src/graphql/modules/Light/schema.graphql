@@ -1,0 +1,19 @@
+type Brand {
+    id: Int!
+    name: String!
+}
+
+type Light {
+    id: Int!
+    predefined: Boolean!
+    name: String
+    brand: Brand
+    brandId: Int
+    model: String
+    description: String
+    image: String
+}
+
+type Query {
+    lights: [Light]!
+}
