@@ -1,6 +1,4 @@
-import {Table, Column, Model, BelongsToMany, Default} from 'sequelize-typescript'
-import {Aquascape} from 'db/models/Aquascape'
-import {AquascapeLivestock} from 'db/models/manyToMany/AquascapeLivestock'
+import {Table, Column, Model, Default} from 'sequelize-typescript'
 
 @Table
 export class Livestock extends Model<Livestock> {
@@ -16,7 +14,4 @@ export class Livestock extends Model<Livestock> {
 
     @Column
     image: string
-
-    @BelongsToMany(() => Aquascape, () => AquascapeLivestock)
-    usedInAquascapes: Aquascape[]
 }

@@ -1,6 +1,4 @@
-import {Table, Column, Model, BelongsToMany, Default} from 'sequelize-typescript'
-import {Aquascape} from 'db/models/Aquascape'
-import {AquascapeHardscape} from 'db/models/manyToMany/AquascapeHardscape'
+import {Table, Column, Model, Default} from 'sequelize-typescript'
 
 @Table
 export class Hardscape extends Model<Hardscape> {
@@ -16,7 +14,4 @@ export class Hardscape extends Model<Hardscape> {
 
     @Column
     image: string
-
-    @BelongsToMany(() => Aquascape, () => AquascapeHardscape)
-    usedInAquascapes: Aquascape[]
 }
