@@ -16,12 +16,6 @@ export class AquascapeImage extends Model<AquascapeImage> {
     description: string
 
     @Column
-    gridSize: number
-
-    @Column
-    gridPosition: number
-
-    @Column
     url: string
 
     @ForeignKey(() => Aquascape)

@@ -23,7 +23,7 @@ const lights = getEmptyArray(entriesCount.lights).map((_, index) => ({
     name: faker.commerce.productName(),
     brandId: brands[getRandomIndex(entriesCount.brands)].id,
     model: faker.commerce.productAdjective(),
-    description: faker.lorem.paragraph(),
+    description: faker.lorem.words(),
     image: faker.image.imageUrl()
 }))
 
@@ -31,7 +31,7 @@ const plants = realPlants.map((name, index) => ({
     id: index + 1,
     name,
     predefined: faker.random.boolean(),
-    description: faker.lorem.paragraph(),
+    description: faker.lorem.words(),
     image: faker.image.imageUrl(),
     origin: faker.address.country(),
     minHeight: faker.random.number(),

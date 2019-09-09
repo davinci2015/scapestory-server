@@ -1,14 +1,6 @@
-import {Table, Column, Model, Default, ForeignKey, BelongsTo, DefaultScope} from 'sequelize-typescript'
+import {Table, Column, Model, Default, ForeignKey, BelongsTo} from 'sequelize-typescript'
 import {Brand} from 'db/models/Brand'
 
-@DefaultScope({
-    include: [
-        {
-            as: 'brand',
-            model: () => Brand
-        }
-    ]
-})
 @Table
 export class Light extends Model<Light> {
     @Default(false)
