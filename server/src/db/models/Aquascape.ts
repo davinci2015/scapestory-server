@@ -6,8 +6,7 @@ import {
     BelongsTo,
     HasMany,
     BelongsToMany,
-    Default,
-    DefaultScope
+    Default
 } from 'sequelize-typescript'
 import {User} from 'db/models/User'
 import {AquascapeLight} from 'db/models/manyToMany/AquascapeLight'
@@ -31,14 +30,6 @@ import {CO2} from 'db/models/CO2'
 import {Filter} from 'db/models/Filter'
 import {AquascapeFilter} from 'db/models/manyToMany/AquascapeFilter'
 
-@DefaultScope({
-    include: [
-        {
-            as: 'user',
-            model: () => User
-        }
-    ]
-})
 @Table
 export class Aquascape extends Model<Aquascape> {
     @Column

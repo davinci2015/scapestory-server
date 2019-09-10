@@ -1,5 +1,5 @@
 import {GraphQLModule} from '@graphql-modules/core'
-import {UsersProvider} from 'graphql/modules/User/providers/UsersProvider'
+import {UsersProvider} from 'graphql/modules/User/UsersProvider'
 import {resolvers, resolversComposition} from 'graphql/modules/User/resolvers'
 import {UserRepository} from 'db/repositories/User'
 import {composeContext, attachCurrentUserId} from 'graphql/context'

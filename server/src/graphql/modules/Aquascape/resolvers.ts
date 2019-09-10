@@ -5,6 +5,9 @@ import {authenticate} from 'graphql/guards'
 import {tokens} from 'di/tokens'
 import {Pagination} from 'interfaces'
 
+import {Aquascape} from 'db/models/Aquascape'
+import {UsersProviderInterface} from 'graphql/modules/User/UsersProvider'
+
 import {AquascapeProviderInterface} from './AquascapeProvider'
 
 export type CreateAquascapeArgs = {
@@ -31,6 +34,12 @@ export const resolvers = {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
             return await provider.getFeaturedAquascape()
         },
+    },
+    Aquascape: {
+        async user(aquascape: Aquascape, args, context: ModuleContext) {
+            const provider: UsersProviderInterface = context.injector.get(tokens.USERS_PROVIDER)
+            return await provider.findUserById(aquascape.userId)
+        }
     },
     Mutation: {
         async createAquascape(root, args: CreateAquascapeArgs, context: ModuleContext) {

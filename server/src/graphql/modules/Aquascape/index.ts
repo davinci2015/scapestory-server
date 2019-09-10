@@ -3,6 +3,7 @@ import {GraphQLModule} from '@graphql-modules/core'
 import {AquascapeRepository} from 'db/repositories/Aquascape'
 import {composeContext, attachCurrentUserId} from 'graphql/context'
 import {VisitorRepository} from 'db/repositories/Visitor'
+import {UsersProvider} from 'graphql/modules/User/UsersProvider'
 import {tokens} from 'di/tokens'
 
 import {AquascapeProvider} from './AquascapeProvider'
@@ -14,7 +15,8 @@ export const AquascapeModule = new GraphQLModule({
     providers: [
         {provide: tokens.AQUASCAPE_PROVIDER, useClass: AquascapeProvider},
         {provide: tokens.AQUASCAPE_REPOSITORY, useClass: AquascapeRepository},
-        {provide: tokens.VISITOR_REPOSITORY, useClass: VisitorRepository}
+        {provide: tokens.VISITOR_REPOSITORY, useClass: VisitorRepository},
+        {provide: tokens.USERS_PROVIDER, useClass: UsersProvider}
     ],
     typeDefs,
     resolvers,

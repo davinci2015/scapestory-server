@@ -1,10 +1,10 @@
 import {ModuleContext} from '@graphql-modules/core'
 
 import {tokens} from 'di/tokens'
+import {Light} from 'db/models/Light'
+import {BrandProviderInterface} from 'graphql/modules/Brand/BrandProvider'
 
 import {LightProviderInterface} from './LightProvider'
-import {Light} from 'db/models/Light'
-import {BrandProviderInterface} from 'graphql/modules/Brand/BrandProvider';
 
 export const resolvers = {
     Query: {
