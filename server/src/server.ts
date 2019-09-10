@@ -4,7 +4,7 @@ import {SequelizeAdapter} from 'db/adapters/SequelizeAdapter'
 import {Database} from 'db/Database'
 import {initPassport} from 'graphql/modules/Auth/passport'
 
-export const connectToDatabase = (onConnect?: VoidFunction) => {
+export const connectToDatabase = (onConnect?: (db: Database) => void) => {
     const adapter = new SequelizeAdapter()
     const database = new Database(adapter)
 
@@ -17,7 +17,7 @@ export const connectToDatabase = (onConnect?: VoidFunction) => {
 
     database.testConnection()
         .then(() => console.log(`🚀 Connected to ${process.env.DB_NAME} database`))
-        .then(() => onConnect && onConnect())
+        .then(() => onConnect && onConnect(database))
         .catch(() => console.log('⚠️ Failed to connect to the database!'))
 }
 

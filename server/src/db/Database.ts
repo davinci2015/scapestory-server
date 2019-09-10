@@ -1,5 +1,6 @@
 import * as Bluebird from 'bluebird'
 import {DatabaseAdapter} from 'db/adapters/SequelizeAdapter'
+import {SyncOptions} from 'sequelize/types'
 
 export interface DatabaseConnectionParams {
     database: string
@@ -27,5 +28,9 @@ export class Database implements DatabaseInterface {
 
     testConnection() {
         return this.adapter.testConnection()
+    }
+
+    sync(options: SyncOptions) {
+        return this.adapter.sync(options)
     }
 }
