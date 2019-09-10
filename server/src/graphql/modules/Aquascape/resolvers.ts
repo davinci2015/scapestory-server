@@ -7,6 +7,8 @@ import {Pagination} from 'interfaces'
 
 import {Aquascape} from 'db/models/Aquascape'
 import {UsersProviderInterface} from 'graphql/modules/User/UsersProvider'
+import {LikeProviderInterface} from 'graphql/modules/Like/LikeProvider'
+import {VisitorProviderInterface} from 'graphql/modules/Visitor/VisitorProvider'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
 
@@ -39,6 +41,14 @@ export const resolvers = {
         async user(aquascape: Aquascape, args, context: ModuleContext) {
             const provider: UsersProviderInterface = context.injector.get(tokens.USERS_PROVIDER)
             return await provider.findUserById(aquascape.userId)
+        },
+        async likesCount(aquascape: Aquascape, args, context: ModuleContext) {
+            const provider: LikeProviderInterface = context.injector.get(tokens.LIGHT_PROVIDER)
+            return await provider.countLikesForAquascape(aquascape.id)
+        },
+        async viewsCount(aquascape: Aquascape, args, context: ModuleContext) {
+            const provider: VisitorProviderInterface = context.injector.get(tokens.VISITOR_PROVIDER)
+            return await provider.countViewsForAquascape(aquascape.id)
         }
     },
     Mutation: {

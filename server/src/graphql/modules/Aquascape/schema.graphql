@@ -106,9 +106,9 @@ type Aquascape {
     co2: CO2
     photoperiod: Int!
     images: [AquascapeImage]!
-    visitors: [Visitor]!
     comments: [Comment]!
-    likes: [Like]!
+    viewsCount: Int!
+    likesCount: Int!
     filters: [Filter]!
     lights: [Light]!
     substrates: [Substrate]!
