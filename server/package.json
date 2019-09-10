@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/main.ts",
+    "seed": "ts-node -r tsconfig-paths/register src/db/seed/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
     "lint": "tslint ./src/**/*.ts",

@@ -3,6 +3,7 @@ import realPlants from './plants'
 import {Brand} from 'db/models/Brand'
 import {Light} from 'db/models/Light'
 import {Plant} from 'db/models/Plant'
+import {connectToDatabase} from 'server'
 
 const getRandomIndex = (items: number) => Math.floor(Math.random() * items)
 const getEmptyArray = (items: number) => Array(items).fill('')
@@ -42,8 +43,8 @@ const plants = realPlants.map((name, index) => ({
     difficulty: 'easy'
 }))
 
-export default async () => {
+connectToDatabase(async () => {
     await Promise.all(brands.map((brand) => Brand.create(brand)))
     await Promise.all(lights.map((light) => Light.create(light)))
     await Promise.all(plants.map((plant) => Plant.create(plant)))
-}
+})

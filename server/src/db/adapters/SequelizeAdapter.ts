@@ -3,7 +3,6 @@ import * as path from 'path'
 import {Sequelize} from 'sequelize-typescript'
 import {AppHelper} from 'utils/AppHelper'
 import {DatabaseConnectionParams} from 'db/Database'
-import seed from 'db/seed'
 
 export interface DatabaseAdapter {
     connect: (params: DatabaseConnectionParams) => void,
@@ -28,11 +27,8 @@ export class SequelizeAdapter implements DatabaseAdapter {
         })
 
         if (AppHelper.isDevelopment()) {
-            this.instance.sync({force: true})
-                .then(() => {
-                    console.log('Database synced')
-                    seed()
-                })
+            this.instance.sync({force: false})
+                .then(() => console.log('Database synced'))
                 .catch((e) => console.log('Failed to sync database', e))
         }
     }
