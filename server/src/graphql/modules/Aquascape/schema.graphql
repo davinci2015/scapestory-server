@@ -114,7 +114,7 @@ type Aquascape {
     substrates: [Substrate]!
     additives: [Additive]!
     hardscapes: [Hardscape]!
-    tags: [Tag]!
+    tags: [Tag!]!
     favorites: [User]!
     plants: [Plant]!
 }

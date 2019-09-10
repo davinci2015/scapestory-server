@@ -1,4 +1,5 @@
 import {Injectable, Inject} from '@graphql-modules/di'
+import {Includeable} from 'sequelize/types'
 import * as uuid from 'uuid/v4'
 
 import {AquascapeRepositoryInterface, AquascapeFilter} from 'db/repositories/Aquascape'
@@ -10,9 +11,9 @@ import {Pagination} from 'interfaces'
 import {CreateAquascapeArgs} from './resolvers'
 
 export interface AquascapeProviderInterface {
-    getAquascapes: (pagination: Pagination, filter?: AquascapeFilter) => Promise<Aquascape[]>,
+    getAquascapes: (pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) => Promise<Aquascape[]>
 
-    getFeaturedAquascape: () => Promise<Aquascape | null>,
+    getFeaturedAquascape: (include?: Includeable[]) => Promise<Aquascape | null>
 
     createAquascape: (userId: number, data: CreateAquascapeArgs) => Promise<Aquascape>
 
@@ -27,12 +28,12 @@ export class AquascapeProvider implements AquascapeProviderInterface {
     ) {
     }
 
-    async getAquascapes(pagination: Pagination, filter?: AquascapeFilter) {
-        return await this.aquascapeRepository.getAquascapes(pagination.limit, filter)
+    async getAquascapes(pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) {
+        return await this.aquascapeRepository.getAquascapes(pagination.limit, filter, include)
     }
 
-    async getFeaturedAquascape() {
-        return await this.aquascapeRepository.getFeaturedAquascape()
+    async getFeaturedAquascape(include?: Includeable[]) {
+        return await this.aquascapeRepository.getFeaturedAquascape(include)
     }
 
     async createAquascape(userId: number, data: CreateAquascapeArgs) {

@@ -1,15 +1,16 @@
 import {Injectable} from '@graphql-modules/di'
 import {Aquascape} from 'db/models/Aquascape'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
+import {Includeable} from 'sequelize/types'
 
 export interface AquascapeFilter {
     trending: boolean
 }
 
 export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aquascape> {
-    getAquascapes: (limit?: number, filter?: AquascapeFilter) => Promise<Aquascape[]>
+    getAquascapes: (limit?: number, filter?: AquascapeFilter, include?: Includeable[]) => Promise<Aquascape[]>
 
-    getFeaturedAquascape: () => Promise<Aquascape | null>
+    getFeaturedAquascape: (include?: Includeable[]) => Promise<Aquascape | null>
 }
 
 @Injectable()
@@ -18,7 +19,7 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
         super(Aquascape)
     }
 
-    async getAquascapes(limit?: number, filter?: AquascapeFilter) {
+    async getAquascapes(limit?: number, filter?: AquascapeFilter, include?: Includeable[]) {
         const where = filter ? { trending: filter.trending } : undefined
 
         return await this.findAll({
@@ -26,11 +27,12 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
             order: [
                 ['createdAt', 'DESC']
             ],
-            limit
+            limit,
+            include
         })
     }
 
-    async getFeaturedAquascape() {
-        return await this.findOne({where: { featured: true }})
+    async getFeaturedAquascape(include?: Includeable[]) {
+        return await this.findOne({where: { featured: true }, include})
     }
 }

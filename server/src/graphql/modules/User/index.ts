@@ -9,7 +9,7 @@ import * as typeDefs from 'graphql/modules/User/schema.graphql'
 // @ts-ignore
 export const UserModule = new GraphQLModule({
     providers: [
-        {provide: tokens.USERS_PROVIDER, useClass: UsersProvider},
+        {provide: tokens.USER_PROVIDER, useClass: UsersProvider},
         {provide: tokens.USER_REPOSITORY, useClass: UserRepository},
     ],
     typeDefs,

@@ -8,6 +8,10 @@ export interface LikeRepositoryInterface extends BaseRepositoryInterface<Like> {
 
 @Injectable()
 export class LikeRepository extends BaseRepository<Like> {
+    constructor() {
+        super(Like)
+    }
+
     async countLikesForAquascape(aquascapeId: number) {
         return await this.count({where: {aquascapeId}})
     }
