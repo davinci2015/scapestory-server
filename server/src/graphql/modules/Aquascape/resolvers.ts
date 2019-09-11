@@ -60,7 +60,7 @@ export const resolvers = {
         async featuredAquascape(root, args, context: ModuleContext, info: GraphQLResolveInfo) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
             return await provider.getFeaturedAquascape(includeField(info))
-        },
+        }
     },
     Aquascape: {
         async user(aquascape: Aquascape, args, context: ModuleContext) {

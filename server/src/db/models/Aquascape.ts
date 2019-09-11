@@ -52,6 +52,9 @@ export class Aquascape extends Model<Aquascape> {
     @Column
     description: string
 
+    @Column
+    mainImage: string
+
     @ForeignKey(() => User)
     @Column
     userId: number

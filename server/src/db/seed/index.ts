@@ -11,6 +11,7 @@ import {Aquascape} from 'db/models/Aquascape'
 import {AquascapeTag} from 'db/models/AquascapeTag'
 import {Visitor} from 'db/models/Visitor'
 import {Like} from 'db/models/Like'
+import {AquascapeImage} from 'db/models/AquascapeImage'
 
 const getRandomIndex = (items: number) => Math.floor(Math.random() * items)
 const getEmptyArray = (items: number) => Array(items).fill('')
@@ -22,7 +23,8 @@ const entriesCount = {
     lights: 10,
     tags: 20,
     visitors: 100,
-    likes: 300
+    likes: 300,
+    images: 50
 }
 
 const users = getEmptyArray(entriesCount.users).map((_, index) => ({
@@ -41,11 +43,21 @@ const aquascapes = getEmptyArray(entriesCount.aquascapes).map((_, index) => ({
     id: index + 1,
     title: faker.commerce.productName(),
     volume: faker.random.number({min: 10, max: 1000}),
+    mainImage: faker.image.nature(),
     startedAt: faker.date.recent(),
     featured: false,
     trending: faker.random.boolean(),
     description: faker.lorem.sentence(),
     userId: users[getRandomIndex(entriesCount.users)].id,
+}))
+
+const images = getEmptyArray(entriesCount.images).map((_, index) => ({
+    id: index + 1,
+    mainImage: faker.random.boolean(),
+    title: faker.lorem.word(),
+    description: faker.lorem.sentence(),
+    url: faker.image.nature(),
+    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)].id,
 }))
 
 const visitors = getEmptyArray(entriesCount.visitors).map((_, index) => ({
@@ -113,6 +125,7 @@ connectToDatabase((database: Database) => {
             await Promise.all(aquascapeTags.map((aquascapeTag) => AquascapeTag.create(aquascapeTag)))
             await Promise.all(visitors.map((visitor) => Visitor.create(visitor)))
             await Promise.all(likes.map((like) => Like.create(like)))
+            await Promise.all(images.map((image) => AquascapeImage.create(image)))
         })
         .then(() => console.log('Database synced'))
         .catch((e) => console.log('Failed to sync database', e))

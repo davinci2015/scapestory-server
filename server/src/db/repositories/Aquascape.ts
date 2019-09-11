@@ -2,6 +2,7 @@ import {Injectable} from '@graphql-modules/di'
 import {Aquascape} from 'db/models/Aquascape'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Includeable} from 'sequelize/types'
+import {AquascapeImage} from 'db/models/AquascapeImage'
 
 export interface AquascapeFilter {
     trending: boolean
@@ -11,6 +12,8 @@ export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aq
     getAquascapes: (limit?: number, filter?: AquascapeFilter, include?: Includeable[]) => Promise<Aquascape[]>
 
     getFeaturedAquascape: (include?: Includeable[]) => Promise<Aquascape | null>
+
+    getAquascapeImages: (aquascapeId: number) => Promise<AquascapeImage[]>
 }
 
 @Injectable()
@@ -34,5 +37,9 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
 
     async getFeaturedAquascape(include?: Includeable[]) {
         return await this.findOne({where: {featured: true}, include})
+    }
+
+    async getAquascapeImages(aquascapeId: number) {
+        return await AquascapeImage.findAll({where: {aquascapeId}})
     }
 }

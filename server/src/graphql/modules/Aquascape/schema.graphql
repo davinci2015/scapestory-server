@@ -105,6 +105,7 @@ type Aquascape {
     user: User
     co2: CO2
     photoperiod: Int!
+    mainImage: String
     images: [AquascapeImage]!
     comments: [Comment]!
     viewsCount: Int!

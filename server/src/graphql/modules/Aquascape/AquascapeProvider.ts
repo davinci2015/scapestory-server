@@ -5,6 +5,7 @@ import * as uuid from 'uuid/v4'
 import {AquascapeRepositoryInterface, AquascapeFilter} from 'db/repositories/Aquascape'
 import {VisitorRepositoryInterface} from 'db/repositories/Visitor'
 import {Aquascape} from 'db/models/Aquascape'
+import {AquascapeImage} from 'db/models/AquascapeImage'
 import {tokens} from 'di/tokens'
 import {Pagination} from 'interfaces'
 
@@ -17,7 +18,9 @@ export interface AquascapeProviderInterface {
 
     createAquascape: (userId: number, data: CreateAquascapeArgs) => Promise<Aquascape>
 
-    visitAquascape: (aquascapeId: number, userId?: string) => Promise<string>
+    visitAquascape: (aquascapeId: number, userId?: string) => Promise<string>,
+
+    getAquascapeImages: (aquascapeId: number) => Promise<AquascapeImage[]>
 }
 
 @Injectable()
@@ -28,16 +31,16 @@ export class AquascapeProvider implements AquascapeProviderInterface {
     ) {
     }
 
-    async getAquascapes(pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) {
-        return await this.aquascapeRepository.getAquascapes(pagination.limit, filter, include)
+    getAquascapes(pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) {
+        return this.aquascapeRepository.getAquascapes(pagination.limit, filter, include)
     }
 
-    async getFeaturedAquascape(include?: Includeable[]) {
-        return await this.aquascapeRepository.getFeaturedAquascape(include)
+    getFeaturedAquascape(include?: Includeable[]) {
+        return this.aquascapeRepository.getFeaturedAquascape(include)
     }
 
     async createAquascape(userId: number, data: CreateAquascapeArgs) {
-        return await this.aquascapeRepository.create({userId, ...data})
+        return this.aquascapeRepository.create({userId, ...data})
     }
 
     async visitAquascape(aquascapeId: number, userId?: string) {
@@ -45,5 +48,9 @@ export class AquascapeProvider implements AquascapeProviderInterface {
         await this.visitorRepository.addVisitor(aquascapeId, visitorId)
 
         return visitorId
+    }
+
+    getAquascapeImages(aquascapeId: number) {
+        return this.aquascapeRepository.getAquascapeImages(aquascapeId)
     }
 }
