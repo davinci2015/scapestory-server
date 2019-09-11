@@ -32,7 +32,7 @@ export class AquascapeProvider implements AquascapeProviderInterface {
     }
 
     getAquascapes(pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) {
-        return this.aquascapeRepository.getAquascapes(pagination.limit, filter, include)
+        return this.aquascapeRepository.getAquascapes(pagination, filter, include)
     }
 
     getFeaturedAquascape(include?: Includeable[]) {

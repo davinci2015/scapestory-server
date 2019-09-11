@@ -110,14 +110,7 @@ type Aquascape {
     comments: [Comment]!
     viewsCount: Int!
     likesCount: Int!
-    filters: [Filter]!
-    lights: [Light]!
-    substrates: [Substrate]!
-    additives: [Additive]!
-    hardscapes: [Hardscape]!
     tags: [Tag!]!
-    favorites: [User]!
-    plants: [Plant]!
 }
 
 input Pagination {

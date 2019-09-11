@@ -3,13 +3,14 @@ import {Aquascape} from 'db/models/Aquascape'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Includeable} from 'sequelize/types'
 import {AquascapeImage} from 'db/models/AquascapeImage'
+import {Pagination} from 'interfaces'
 
 export interface AquascapeFilter {
     trending: boolean
 }
 
 export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aquascape> {
-    getAquascapes: (limit?: number, filter?: AquascapeFilter, include?: Includeable[]) => Promise<Aquascape[]>
+    getAquascapes: (pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) => Promise<Aquascape[]>
 
     getFeaturedAquascape: (include?: Includeable[]) => Promise<Aquascape | null>
 
@@ -22,16 +23,17 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
         super(Aquascape)
     }
 
-    async getAquascapes(limit?: number, filter?: AquascapeFilter, include?: Includeable[]) {
+    async getAquascapes(pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) {
         const where = filter ? {trending: filter.trending} : undefined
 
         return await this.findAll({
             where,
+            include,
             order: [
                 ['createdAt', 'DESC']
             ],
-            limit,
-            include
+            limit: pagination.limit,
+            offset: pagination.offset
         })
     }
 
