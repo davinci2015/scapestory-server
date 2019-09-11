@@ -20,7 +20,7 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
     }
 
     async getAquascapes(limit?: number, filter?: AquascapeFilter, include?: Includeable[]) {
-        const where = filter ? { trending: filter.trending } : undefined
+        const where = filter ? {trending: filter.trending} : undefined
 
         return await this.findAll({
             where,
@@ -33,6 +33,6 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
     }
 
     async getFeaturedAquascape(include?: Includeable[]) {
-        return await this.findOne({where: { featured: true }, include})
+        return await this.findOne({where: {featured: true}, include})
     }
 }

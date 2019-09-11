@@ -1,20 +1,20 @@
 import {GraphQLResolveInfo} from 'graphql'
 import {ModuleContext} from '@graphql-modules/core'
 import * as graphqlFields from 'graphql-fields'
+import {Includeable} from 'sequelize/types'
 
 import {AquascapeFilter} from 'db/repositories/Aquascape'
 import {authenticate} from 'graphql/guards'
+import {UsersProviderInterface} from 'graphql/modules/User/UsersProvider'
 import {tokens} from 'di/tokens'
 import {Pagination} from 'interfaces'
 
 import {Aquascape} from 'db/models/Aquascape'
-import {UsersProviderInterface} from 'graphql/modules/User/UsersProvider'
-import {LikeProviderInterface} from 'graphql/modules/Like/LikeProvider'
-import {VisitorProviderInterface} from 'graphql/modules/Visitor/VisitorProvider'
+import {Tag} from 'db/models/Tag'
+import {Visitor} from 'db/models/Visitor'
+import {Like} from 'db/models/Like'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
-import {Tag} from 'db/models/Tag'
-import {Includeable} from 'sequelize/types'
 
 export type CreateAquascapeArgs = {
     title: string
@@ -33,17 +33,18 @@ export type VisitAquascapeArgs = {
 const includeField = (info: GraphQLResolveInfo) => {
     // @ts-ignore
     const fields = graphqlFields(info)
-    const include: Includeable[] = []
+    const include: Includeable[] = [
+        {model: Visitor, attributes: ['id']}, // Include Visitor model for viewsCount
+        {model: Like, attributes: ['id']}, // Include Like model for likesCount
+    ]
+
     const includeMapping = {
         tags: Tag
     }
 
     for (const key in includeMapping) {
         if (fields.hasOwnProperty(key)) {
-            include.push({
-                model: includeMapping[key],
-                through: { attributes: [] }
-            })
+            include.push({model: includeMapping[key]})
         }
     }
 
@@ -66,13 +67,11 @@ export const resolvers = {
             const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
             return await provider.findUserById(aquascape.userId)
         },
-        async likesCount(aquascape: Aquascape, args, context: ModuleContext) {
-            const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
-            return await provider.countLikesForAquascape(aquascape.id)
+        async likesCount(aquascape: Aquascape) {
+            return aquascape.likes.length
         },
-        async viewsCount(aquascape: Aquascape, args, context: ModuleContext) {
-            const provider: VisitorProviderInterface = context.injector.get(tokens.VISITOR_PROVIDER)
-            return await provider.countViewsForAquascape(aquascape.id)
+        async viewsCount(aquascape: Aquascape) {
+            return aquascape.visitors.length
         }
     },
     Mutation: {
