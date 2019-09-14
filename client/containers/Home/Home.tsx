@@ -28,9 +28,6 @@ const HomeContainer = () => {
         }
     })
 
-    console.log(recent.data)
-    console.log(highlighted.data)
-
     return (
         <Content>
             <Grid>
@@ -40,7 +37,7 @@ const HomeContainer = () => {
                 }
 
                 {
-                    !highlighted.loading &&
+                    !highlighted.loading && highlighted.data.trending && 
                     <SectionCardList title={(
                         <Headline as="h2" variant="h4">
                             <FormattedMessage id="home_list_title_trending" defaultMessage="Trending now" />
@@ -51,7 +48,7 @@ const HomeContainer = () => {
                 }
 
                 {
-                    !recent.loading &&
+                    !recent.loading && recent.data.aquascapes && 
                     <>
                         <SectionCardList title={(
                             <Headline as="h2" variant="h4">

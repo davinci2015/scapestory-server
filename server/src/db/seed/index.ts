@@ -22,7 +22,7 @@ const entriesCount = {
     users: 10,
     lights: 10,
     tags: 20,
-    aquascapeTags: 100,
+    aquascapeTags: 20,
     visitors: 100,
     likes: 300,
     images: 50
@@ -46,8 +46,8 @@ const aquascapes = getEmptyArray(entriesCount.aquascapes).map((_, index) => ({
     volume: faker.random.number({min: 10, max: 1000}),
     mainImage: faker.image.nature(),
     startedAt: faker.date.recent(),
-    featured: false,
     trending: faker.random.boolean(),
+    featured: faker.random.boolean(),
     description: faker.lorem.sentence(),
     userId: users[getRandomIndex(entriesCount.users)].id,
 }))

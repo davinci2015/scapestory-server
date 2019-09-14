@@ -10,6 +10,8 @@ const AquascapesListContainer = ({aquascapes}: any) => (
                 key={scape.id}
                 name={scape.user.name}
                 title={scape.title}
+                viewsCount={scape.viewsCount}
+                likesCount={scape.likesCount}
                 userImage={scape.user.profileImage}
                 image={scape.mainImage}
                 tags={scape.tags}

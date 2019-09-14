@@ -11,6 +11,8 @@ interface Props {
     userImage: string
     title: React.ReactNode
     name: React.ReactNode
+    viewsCount: number
+    likesCount: number
     tags: any[]
 }
 
@@ -23,14 +25,16 @@ const Card = ({
     userImage,
     name,
     title,
+    viewsCount = 0,
+    likesCount = 0,
     tags = []
 }: Props) => (
         <div className={classes.root}>
             <div className="header">
                 <div className="header-gradient"></div>
                 <div className="icons">
-                    <IconText icon={Icon.EYE_SHOW_FULL} text={numeral(3233).format('0a+')} color={colors.WHITE} size="small"/>
-                    <IconText icon={Icon.HEART} text={32} color={colors.WHITE} size="small"/>
+                    <IconText icon={Icon.EYE_SHOW_FULL} text={numeral(viewsCount).format('0a')} color={colors.WHITE} size="small"/>
+                    <IconText icon={Icon.HEART} text={numeral(likesCount).format('0a')} color={colors.WHITE} size="small"/>
                 </div>
             </div>
             <div className="body">
