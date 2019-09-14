@@ -22,6 +22,7 @@ const entriesCount = {
     users: 10,
     lights: 10,
     tags: 20,
+    aquascapeTags: 100,
     visitors: 100,
     likes: 300,
     images: 50
@@ -78,7 +79,8 @@ const tags = getEmptyArray(entriesCount.tags).map((_, index) => ({
     name: faker.lorem.word()
 }))
 
-const aquascapeTags = getEmptyArray(entriesCount.tags).map((_, index) => ({
+const aquascapeTags = getEmptyArray(entriesCount.aquascapeTags).map((_, index) => ({
+    id: index + 1,
     tagId: tags[getRandomIndex(entriesCount.tags)].id,
     aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)].id
 }))

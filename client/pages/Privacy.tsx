@@ -1,14 +1,12 @@
 import React from 'react'
 
-import {Layout, Grid} from 'components/core'
+import {App, Grid} from 'components/core'
 import {Headline, Paragraph} from 'components/atoms'
 import FooterContainer from 'containers/Footer'
-import ModalContainer from 'containers/Modal'
 import {spaces} from 'styles'
 
 const PrivacyPolicy = () => (
-    <Layout>
-        <ModalContainer/>
+    <App>
         <Grid>
             <div className="privacy-policy">
                 <Headline variant="h2">
@@ -87,7 +85,7 @@ const PrivacyPolicy = () => (
                 margin-bottom: ${spaces.s24};
             }
         `}</style>
-    </Layout>
+    </App>
 )
 
 export default PrivacyPolicy

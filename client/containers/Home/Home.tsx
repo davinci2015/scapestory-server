@@ -1,6 +1,6 @@
 import {useQuery} from 'react-apollo-hooks'
 
-import {Grid} from 'components/core'
+import {Grid, Content} from 'components/core'
 import {SectionCardList} from 'components/organisms'
 import {Headline, FormattedMessage} from 'components/atoms'
 
@@ -32,47 +32,48 @@ const HomeContainer = () => {
     console.log(highlighted.data)
 
     return (
-        <Grid>
-            {
-                !highlighted.loading &&
-                <HeroContainer featuredAquascape={highlighted.data.featured} />
-            }
+        <Content>
+            <Grid>
+                {
+                    !highlighted.loading && highlighted.data.featured &&
+                    <HeroContainer featuredAquascape={highlighted.data.featured} />
+                }
 
-            {
-                !highlighted.loading &&
-                <SectionCardList title={(
-                    <Headline as="h2" variant="h4">
-                        <FormattedMessage id="home_list_title_trending" defaultMessage="Trending now" />
-                    </Headline>
-                )}>
-                    <AquascapeListContainer aquascapes={highlighted.data.trending} />
-                </SectionCardList>
-            }
-
-            {
-                !recent.loading &&
-                <>
+                {
+                    !highlighted.loading &&
                     <SectionCardList title={(
                         <Headline as="h2" variant="h4">
-                            <FormattedMessage id="home_list_title_newest" defaultMessage="Recently added" />
+                            <FormattedMessage id="home_list_title_trending" defaultMessage="Trending now" />
                         </Headline>
                     )}>
-                        <AquascapeListContainer aquascapes={recent.data.aquascapes.slice(0, 4)} />
+                        <AquascapeListContainer aquascapes={highlighted.data.trending} />
                     </SectionCardList>
+                }
 
-                    <SectionCardList
-                        loadMore={() => null}
-                        title={(
+                {
+                    !recent.loading &&
+                    <>
+                        <SectionCardList title={(
                             <Headline as="h2" variant="h4">
-                                <FormattedMessage id="home_list_title_explore" defaultMessage="Explore all aquascapes" />
+                                <FormattedMessage id="home_list_title_newest" defaultMessage="Recently added" />
                             </Headline>
                         )}>
-                        <AquascapeListContainer aquascapes={recent.data.aquascapes.slice(4)} />
-                    </SectionCardList>
-                </>
-            }
+                            <AquascapeListContainer aquascapes={recent.data.aquascapes.slice(0, 4)} />
+                        </SectionCardList>
 
-        </Grid>
+                        <SectionCardList
+                            loadMore={() => null}
+                            title={(
+                                <Headline as="h2" variant="h4">
+                                    <FormattedMessage id="home_list_title_explore" defaultMessage="Explore all aquascapes" />
+                                </Headline>
+                            )}>
+                            <AquascapeListContainer aquascapes={recent.data.aquascapes.slice(4)} />
+                        </SectionCardList>
+                    </>
+                }
+            </Grid>
+        </Content>
     )
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Layout} from 'components/core'
+import {GlobalStyles} from 'components/core'
 import ModalContainer from 'containers/Modal'
 
 type Props = {
@@ -7,10 +7,11 @@ type Props = {
 }
 
 const App = ({children}: Props) => (
-    <Layout>
+    <>
+        <GlobalStyles/>
         <ModalContainer/>
         {children}
-    </Layout>
+    </>
 )
 
 export default App

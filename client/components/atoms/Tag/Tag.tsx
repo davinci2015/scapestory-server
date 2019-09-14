@@ -52,19 +52,18 @@ const Tag = ({
 
             <style jsx>{`
                 .${classes.root} {
-                    padding: 0 8px;
+                    padding: 0 ${spaces.s6};
                     border-radius: 20px;
-                    text-align: center;
+                    align-items: center;
                     display: inline-flex;
 
-                    height: 18px;
                     width: auto;
 
                     background-color: ${colorMapping[variant]};
                 }
 
                 .large {
-                    padding: 0 ${spaces.s12};
+                    padding: ${spaces.s4} ${spaces.s16};
                 }
             `}</style>
         </div>

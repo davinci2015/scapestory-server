@@ -5,7 +5,6 @@ import {backgroundImage} from 'styles/mixins'
 import {borderRadius, spaces, colors, zIndex, media} from 'styles'
 import {Headline, Icon, FormattedMessage, Paragraph, IconText, Tag} from 'components/atoms'
 import {UserWidget} from 'components/molecules'
-import {navigationHeight} from 'components/molecules/Navigation'
 
 interface Props {
     image: string
@@ -14,7 +13,7 @@ interface Props {
     username: string
     viewsCount: number
     likesCount: number
-    tags: string[]
+    tags: any[]
 }
 
 const HeroSection = ({
@@ -67,23 +66,16 @@ const HeroSection = ({
                             </div>
                         </div>
                         <div className="tags">
-                            {tags.map((tag, index) => <Tag key={index} text={tag} variant="primary" size="large"/>)}
+                            {tags.map((tag, index) => <Tag key={index} text={tag.name} variant="primary" size="large"/>)}
                         </div>
                     </div>
                 </div>
             </div>
             <style jsx>{`
                 .hero-section {
-                    padding-top: ${navigationHeight.default};
+                    padding-top: ${spaces.s60};
                 }
-
-                @media ${media.up('medium')} {
-                    .hero-section {
-                        margin-top: ${spaces.s60};
-                        padding-top: ${navigationHeight.default};
-                    }
-                }
-
+                
                 .image {
                     position: relative;
                     height: 80vh;
