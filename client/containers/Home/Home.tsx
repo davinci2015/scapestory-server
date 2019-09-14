@@ -27,7 +27,7 @@ const HomeContainer = () => {
     const highlighted = useQuery(QUERY_TRENDING_AND_FEATURED_AQUASCAPES, {
         variables: {
             pagination: {
-                limit: 8,
+                limit: itemsPerLoad * 2,
                 offset: 0
             }
         }
