@@ -1,3 +1,4 @@
+import React, {useState} from 'react'
 import {useQuery} from 'react-apollo-hooks'
 
 import {Grid, Content} from 'components/core'
@@ -8,12 +9,16 @@ import {QUERY_TRENDING_AND_FEATURED_AQUASCAPES, QUERY_RECENT_AQUASCAPES} from '.
 import HeroContainer from './HeroContainer'
 import AquascapeListContainer from './AquascapeListContainer'
 
-
 const HomeContainer = () => {
+    const itemsPerLoad = 4
+    const recentInitialLimit = 12
+    const [allRecentLoaded, setAllRecentLoaded] = useState(false)
+    const [recentVisible, setRecentVisible] = useState(recentInitialLimit)
+
     const recent = useQuery(QUERY_RECENT_AQUASCAPES, {
         variables: {
             pagination: {
-                limit: 12,
+                limit: recentInitialLimit,
                 offset: 0
             }
         }
@@ -27,6 +32,24 @@ const HomeContainer = () => {
             }
         }
     })
+
+    const loadMore = () => {
+        setRecentVisible(recentVisible + itemsPerLoad)
+        recent.fetchMore({
+            variables: {
+                pagination: {
+                    limit: itemsPerLoad,
+                    offset: recentVisible
+                }
+            },
+            updateQuery: (prev, { fetchMoreResult }) => {
+                if (!fetchMoreResult) return prev
+                if (fetchMoreResult.aquascapes.length < itemsPerLoad) setAllRecentLoaded(true)
+
+                return {aquascapes: [...prev.aquascapes, ...fetchMoreResult.aquascapes]}
+            }
+        })
+    }
 
     return (
         <Content>
@@ -59,7 +82,7 @@ const HomeContainer = () => {
                         </SectionCardList>
 
                         <SectionCardList
-                            loadMore={() => null}
+                            loadMore={allRecentLoaded ? undefined : loadMore}
                             title={(
                                 <Headline as="h2" variant="h4">
                                     <FormattedMessage id="home_list_title_explore" defaultMessage="Explore all aquascapes" />
