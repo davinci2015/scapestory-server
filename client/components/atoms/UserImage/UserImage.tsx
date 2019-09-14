@@ -2,20 +2,20 @@ import React from 'react'
 import classnames from 'classnames'
 
 import {backgroundImage} from 'styles/mixins'
-import {colors} from 'styles';
+import {colors} from 'styles'
 
 const classes = {
     root: 'userImage'
 }
 
 interface Props {
-    image: string
+    image?: string
     size?: 'default' | 'large'
     variant?: 'default' | 'border'
 }
 
 const UserImage = ({
-    image,
+    image = '/static/placeholders/user.png',
     size = 'default',
     variant = 'default',
 }: Props) => (

@@ -3,7 +3,13 @@ import React from 'react'
 import {SectionCardList} from 'components/organisms'
 import {Card} from 'components/molecules'
 
-const AquascapesListContainer = ({aquascapes}: any) => (
+import {AquascapeData} from './query'
+
+interface Props {
+    aquascapes: AquascapeData[]
+}
+
+const AquascapesListContainer = ({aquascapes}: Props) => (
     <SectionCardList.List>
         {aquascapes.map((scape: any) => (
             <Card

@@ -9,6 +9,22 @@ export interface AquascapesFilter {
     trending: boolean
 }
 
+export interface AquascapeData {
+    id: string
+    title: string
+    mainImage: string
+    viewsCount: number
+    likesCount: number
+    tags: [{
+        name: string
+    }]
+    user: {
+        name?: string
+        profileImage?: string
+        username: string
+    }
+}
+
 const fragments = {
     aquascape: gql`
         fragment AquascapeFields on Aquascape {

@@ -1,8 +1,13 @@
 import * as React from 'react'
 
 import {HeroSection} from 'components/organisms'
+import {AquascapeData} from './query'
 
-const HeroContainer = ({featuredAquascape}: any) => (
+interface Props {
+    featuredAquascape: AquascapeData
+}
+
+const HeroContainer = ({featuredAquascape}: Props) => (
     <HeroSection
         title={featuredAquascape.title}
         viewsCount={featuredAquascape.viewsCount}

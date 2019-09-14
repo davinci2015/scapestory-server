@@ -7,7 +7,7 @@ import {spaces} from 'styles'
 type WidgetSizes = 'default' | 'large'
 
 interface Props {
-    image: string
+    image?: string
     text: React.ReactNode
     size?: WidgetSizes
     color?: string

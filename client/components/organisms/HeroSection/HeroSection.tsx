@@ -9,10 +9,10 @@ import {UserWidget} from 'components/molecules'
 interface Props {
     image: string
     title: string
-    userImage: string
+    userImage?: string
     username: string
-    viewsCount: number
-    likesCount: number
+    viewsCount?: number
+    likesCount?: number
     tags: any[]
 }
 
@@ -21,8 +21,8 @@ const HeroSection = ({
     title,
     userImage,
     username,
-    likesCount,
-    viewsCount,
+    likesCount = 0,
+    viewsCount = 0,
     tags
 }: Props) => (
         <div className="hero-section">
@@ -75,7 +75,7 @@ const HeroSection = ({
                 .hero-section {
                     padding-top: ${spaces.s60};
                 }
-                
+
                 .image {
                     position: relative;
                     height: 80vh;
