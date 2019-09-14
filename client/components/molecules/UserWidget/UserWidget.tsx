@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import {UserImage} from 'components/atoms'
 import {spaces} from 'styles'
 
-type WidgetSizes = 'default' | 'l'
+type WidgetSizes = 'default' | 'large'
 
 interface Props {
     image: string
@@ -21,7 +21,7 @@ const UserWidget = ({
     text
 }: Props) => (
     <div className={classnames('user-widget', {
-        large: size === 'l'
+        large: size === 'large'
     })}>
         <UserImage variant={variant} size={size} image={image}/>
 

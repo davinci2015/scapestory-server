@@ -22,7 +22,7 @@ const SectionCardList = ({
             {children}
             {
                 loadMore &&
-                <div className="load-more">
+                <div className="load-more" onClick={loadMore}>
                     <div className="load-more-button">
                         <Headline as="h5" variant="h5" color={colors.PRIMARY}>
                             <FormattedMessage id="card_list.load_more" defaultMessage="Load more aquascapes" />

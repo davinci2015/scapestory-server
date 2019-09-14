@@ -7,13 +7,13 @@ const image = 'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?ixli
 
 storiesOf('UserImage', module)
   .add('default', () => <UserImage image={image} />)
-  .add('size l', () => <UserImage image={image} size="l" />)
+  .add('size large', () => <UserImage image={image} size="large" />)
   .add('with border', () => (
     <div style={{
       width: 50,
       height: 50,
       backgroundColor: 'gray'
     }}>
-      <UserImage image={image} size="l" variant="border" />
+      <UserImage image={image} size="large" variant="border" />
     </div>
   ))

@@ -10,7 +10,7 @@ const Grid = ({children}: Props) => (
         {children}
         <style jsx global>{`
             .grid {
-                max-width: 1280px;
+                max-width: 1470px;
                 margin: 0 auto; 
                 padding-left: ${spaces.s16};
                 padding-right: ${spaces.s16};

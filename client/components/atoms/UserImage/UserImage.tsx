@@ -10,7 +10,7 @@ const classes = {
 
 interface Props {
     image: string
-    size?: 'default' | 'l'
+    size?: 'default' | 'large'
     variant?: 'default' | 'border'
 }
 
@@ -21,7 +21,7 @@ const UserImage = ({
 }: Props) => (
     <>
         <div className={classnames(classes.root, {
-            large: size === 'l',
+            large: size === 'large',
             border: variant === 'border'
         })}></div>
         <style jsx>{`

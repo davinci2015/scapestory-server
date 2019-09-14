@@ -1,8 +1,9 @@
 import React from 'react'
+import numeral from 'numeral'
 
 import {backgroundImage} from 'styles/mixins'
 import {borderRadius, spaces, colors, zIndex, media} from 'styles'
-import {Headline, ImageStack, Button, Icon, FormattedMessage, Paragraph} from 'components/atoms'
+import {Headline, Icon, FormattedMessage, Paragraph, IconText, Tag} from 'components/atoms'
 import {UserWidget} from 'components/molecules'
 import {navigationHeight} from 'components/molecules/Navigation'
 
@@ -11,10 +12,9 @@ interface Props {
     title: string
     userImage: string
     username: string
-    imageStackText: React.ReactNode
-    imageStackImages: string[]
-    onLike: VoidFunction
-    onShare: VoidFunction
+    viewsCount: number
+    likesCount: number
+    tags: string[]
 }
 
 const HeroSection = ({
@@ -22,10 +22,9 @@ const HeroSection = ({
     title,
     userImage,
     username,
-    imageStackText,
-    imageStackImages,
-    onLike,
-    onShare
+    likesCount,
+    viewsCount,
+    tags
 }: Props) => (
         <div className="hero-section">
             <div className="image">
@@ -38,34 +37,39 @@ const HeroSection = ({
                     </Paragraph>
                 </div>
                 <div className="content">
-                    <Headline as="h1" variant="h3" color={colors.WHITE}>
+                    <Headline as="h1" variant="h2" color={colors.WHITE}>
                         {title}
                     </Headline>
-                    <UserWidget
-                        variant="border"
-                        color={colors.WHITE}
-                        image={userImage}
-                        text={
-                            <Paragraph type="body" color={colors.WHITE}>
-                                <FormattedMessage
-                                    id="hero_section.aquascape_author"
-                                    defaultMessage="by {username}"
-                                    values={{username}}
-                                />
-                            </Paragraph>
-                        }
-                    />/
-                </div>
-            </div>
-            <div className="bottom">
-                <ImageStack text={imageStackText} images={imageStackImages} />
-                <div className="bottom-buttons">
-                    <Button onClick={onShare} type="small" leftIcon={<Icon d={Icon.SHARE} color={colors.WHITE} />}>
-                        <FormattedMessage id="hero_section.share" defaultMessage="Share" />
-                    </Button>
-                    <Button onClick={onLike} type="small" leftIcon={<Icon d={Icon.HEART_OUTLINE} color={colors.WHITE} />}>
-                        <FormattedMessage id="hero_section.like" defaultMessage="Like" />
-                    </Button>
+                    <div className="content-info">
+                        <div className="user-info">
+                            <UserWidget
+                                size="large"
+                                variant="border"
+                                color={colors.WHITE}
+                                image={userImage}
+                                text={
+                                    <Paragraph type="body" color={colors.WHITE}>
+                                        <FormattedMessage
+                                            id="hero_section.aquascape_author"
+                                            defaultMessage="by {username}"
+                                            values={{username}}
+                                        />
+                                    </Paragraph>
+                                }
+                            />
+                            <div className="stat-info">
+                                <div>
+                                    <IconText icon={Icon.EYE_SHOW_FULL} text={numeral(viewsCount).format('0,0')} color={colors.WHITE}/>
+                                </div>
+                                <div className="stat-icon">
+                                    <IconText icon={Icon.HEART} text={numeral(likesCount).format('0,0')} color={colors.WHITE}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="tags">
+                            {tags.map((tag, index) => <Tag key={index} text={tag} variant="primary" size="large"/>)}
+                        </div>
+                    </div>
                 </div>
             </div>
             <style jsx>{`
@@ -149,6 +153,7 @@ const HeroSection = ({
                 .content {
                     position: absolute;
                     left: ${spaces.s18};
+                    width: calc(100% - 36px);
                     bottom: ${spaces.s18};
                     z-index: ${zIndex.DEFAULT};
                 }
@@ -156,46 +161,37 @@ const HeroSection = ({
                 @media ${media.up('medium')} {
                     .content {
                         left: ${spaces.s48};
+                        width: calc(100% - 96px);
                         bottom: ${spaces.s42};
                     }
+
+                    .content :global(.${Headline.classes.root}) {
+                        margin-bottom: ${spaces.s42};
+                    }
                 }
 
-                .bottom {
+                .content-info {
                     display: flex;
-                    flex-direction: column;
+                    width: 100%;
                     justify-content: space-between;
-                    margin-top: ${spaces.s30};
                 }
 
-
-                @media ${media.up('medium')} {
-                    .bottom {
-                        flex-direction: row;
-                    }
-                }
-
-                .bottom-buttons {
+                .user-info {
                     display: flex;
-                    align-items: flex-start;
-                    margin-right: -${spaces.s12};
-                    margin-top: ${spaces.s12};
+                    align-items: center;
                 }
 
-                @media ${media.up('medium')} {
-                    .bottom-buttons {
-                        margin-top: 0;
-                        align-items: center;
-                    }
+                .stat-info {
+                    display: flex;
+                    margin-left: ${spaces.s60};
                 }
 
-                .bottom-buttons :global(.${Button.classes.root}) {
-                    margin-right: ${spaces.s12};
+                .stat-icon {
+                    margin-left: ${spaces.s24};
                 }
 
-                @media ${media.up('medium')} {
-                    .bottom-buttons :global(.${Button.classes.root}) {
-                        margin: 0 ${spaces.s12};
-                    }
+                .tags :global(.${Tag.classes.root}) {
+                    margin-left: ${spaces.s12};
                 }
             `}</style>
         </div>
