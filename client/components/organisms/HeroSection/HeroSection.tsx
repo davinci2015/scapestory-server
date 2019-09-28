@@ -1,7 +1,6 @@
 import React from 'react'
 import numeral from 'numeral'
 
-import {backgroundImage} from 'styles/mixins'
 import {borderRadius, spaces, colors, zIndex, media} from 'styles'
 import {Headline, Icon, FormattedMessage, Paragraph, IconText, Tag} from 'components/atoms'
 import {UserWidget} from 'components/molecules'
@@ -26,7 +25,9 @@ const HeroSection = ({
     tags
 }: Props) => (
         <div className="hero-section">
-            <div className="image">
+            <div className="container">
+                <img className="container-image" src={image} alt={title} />
+                <div className="gradient gradient--top"></div>
                 <div className="badge">
                     <div className="badge-icon">
                         <Icon d={Icon.FIRE} color={colors.WHITE} />
@@ -70,31 +71,28 @@ const HeroSection = ({
                         </div>
                     </div>
                 </div>
+                <div className="gradient gradient--bottom   "></div>
             </div>
             <style jsx>{`
                 .hero-section {
                     padding-top: ${spaces.s60};
                 }
 
-                .image {
+                .container {
                     position: relative;
                     height: 80vh;
                     margin-left: -${spaces.s24};
                     margin-right: -${spaces.s24};
-                    z-index: -1;
-                    ${backgroundImage(image)}
-                }
+                }   
 
                 @media ${media.up('medium')} {
-                    .image {
+                    .container {
                         height: 646px;
                         margin: 0;
-                        border-radius: ${borderRadius.SECONDARY};
                     }
                 }
 
-                .image::before,
-                .image::after {
+                .gradient {
                     content: '';
                     position: absolute;
                     left: 0;
@@ -102,24 +100,39 @@ const HeroSection = ({
                     border-radius: ${borderRadius.SECONDARY};
                 }
 
-                .image::before {
+                .gradient--top {
                     top: 0;
                     height: 120px;
-                    z-index: -1;
                     background-image: linear-gradient(to bottom, ${colors.BLACK}, rgba(0, 0, 0, 0));
                 }
 
-                .image::after {
+                .gradient--bottom {
                     bottom: 0;
                     height: 200px;
                     background-image: linear-gradient(to top, ${colors.BLACK}, rgba(0, 0, 0, 0));
                 }
 
+                .container-image {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    z-index: ${zIndex.BELOW};
+                }
+
+                @media ${media.up('medium')} {
+                    .container-image {
+                        border-radius: ${borderRadius.SECONDARY};
+                    }
+                }
+
                 .badge {
+                    position: absolute;
                     display: flex;
                     align-items: center;
                     padding-top: ${spaces.s18};
                     padding-left: ${spaces.s18};
+                    z-index: ${zIndex.DEFAULT};
                 }
 
                 @media ${media.up('medium')} {
