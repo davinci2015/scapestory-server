@@ -1,18 +1,18 @@
 import {configure, addDecorator} from '@storybook/react'
 import Router from 'next/router'
-
-import Layout from 'components/core/Layout'
+import {GlobalStyles} from 'components/core'
 
 addDecorator((story) => (
-  <Layout>
+  <>
+    <GlobalStyles />
     {story()}
-  </Layout>
+  </>
 ))
 
 
 // Mock router
-const mockedRouter = { 
-  push: () => {}, 
+const mockedRouter = {
+  push: () => {},
   prefetch: () => {},
   asPath: () => {}
 }

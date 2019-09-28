@@ -6,6 +6,9 @@ import Card from './Card'
 storiesOf('Card', module)
   .add('default', () => (
     <Card
+      viewsCount={100}
+      likesCount={200}
+      tags={["Diorama", "Iwagumi", "> 50l"]}
       name="by John Snow"
       title="My awesome aquascape"
       userImage="https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80"

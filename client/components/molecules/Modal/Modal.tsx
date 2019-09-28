@@ -1,3 +1,4 @@
+import {useEffect} from 'react'
 import Modal from 'react-modal'
 import ScrollLock from 'react-scrolllock'
 
@@ -7,12 +8,14 @@ interface Props extends ReactModal.Props {
     children: React.ReactNode
 }
 
-Modal.setAppElement('#__next')
-
 const CustomModal = ({
     children,
     ...rest
 }: Props) => {
+    useEffect(() => {
+        Modal.setAppElement('#__next')
+    }, [])
+
     return (
         <>
             <Modal className="modal" overlayClassName="modal-overlay" {...rest}>

@@ -1,7 +1,6 @@
 import React from 'react'
 import numeral from 'numeral'
 
-import {backgroundImage} from 'styles/mixins'
 import {Headline, Tag, IconText, Icon, Paragraph} from 'components/atoms'
 import {colors, spaces, borderRadius, media} from 'styles'
 import UserWidget from 'components/molecules/UserWidget'
@@ -31,6 +30,7 @@ const Card = ({
 }: Props) => (
         <div className={classes.root}>
             <div className="header">
+                <img className="header-image" src={image} alt="Aquascape" />
                 <div className="header-gradient"></div>
                 <div className="icons">
                     <IconText icon={Icon.EYE_SHOW_FULL} text={numeral(viewsCount).format('0a')} color={colors.WHITE} size="small"/>
@@ -73,13 +73,11 @@ const Card = ({
 
                 border-top-left-radius: ${borderRadius.TERTIARY};
                 border-top-right-radius: ${borderRadius.TERTIARY};
-                
-                ${backgroundImage(image)}
             }
 
             @media ${media.up('extraSmall')} {
                 .header { 
-                    height: 200;
+                    height: 200px;
                 }
             }
 
@@ -93,6 +91,12 @@ const Card = ({
                 .header { 
                     height: 264px;
                 }
+            }
+
+            .header-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
 
             .header-gradient {
