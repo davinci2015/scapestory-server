@@ -6,8 +6,8 @@ import {SectionCardList} from 'components/organisms'
 import {Headline, FormattedMessage} from 'components/atoms'
 
 import {QUERY_TRENDING_AND_FEATURED_AQUASCAPES, QUERY_RECENT_AQUASCAPES} from './query'
-import HeroContainer from './HeroContainer'
 import AquascapeListContainer from './AquascapeListContainer'
+import HeroSection from 'components/organisms/Home/HeroSection'
 
 const HomeContainer = () => {
     const itemsPerLoad = 4
@@ -56,7 +56,7 @@ const HomeContainer = () => {
             <Grid>
                 {
                     !highlighted.loading && highlighted.data.featured &&
-                    <HeroContainer featuredAquascape={highlighted.data.featured} />
+                    <HeroSection featuredAquascape={highlighted.data.featured} />
                 }
 
                 {

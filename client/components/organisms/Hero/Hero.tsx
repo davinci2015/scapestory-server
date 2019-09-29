@@ -13,71 +13,62 @@ interface Props {
     viewsCount?: number
     likesCount?: number
     tags: any[]
+    topSection: React.ReactNode
 }
 
-const HeroSection = ({
+const Hero = ({
     image,
     title,
     userImage,
     username,
     likesCount = 0,
     viewsCount = 0,
-    tags
+    tags,
+    topSection
 }: Props) => (
-        <div className="hero-section">
-            <div className="container">
-                <img className="container-image" src={image} alt={title} />
-                <div className="gradient gradient--top"></div>
-                <div className="badge">
-                    <div className="badge-icon">
-                        <Icon d={Icon.FIRE} color={colors.WHITE} />
-                    </div>
-                    <Paragraph type="body" color={colors.WHITE}>
-                        <FormattedMessage id="hero_section.editor_choice" defaultMessage="Editor's Choice" />
-                    </Paragraph>
-                </div>
-                <div className="content">
-                    <Headline as="h1" variant="h2" color={colors.WHITE}>
-                        {title}
-                    </Headline>
-                    <div className="content-info">
-                        <div className="user-info">
-                            <UserWidget
-                                size="large"
-                                variant="border"
-                                color={colors.WHITE}
-                                image={userImage}
-                                text={
-                                    <Paragraph type="body" color={colors.WHITE}>
-                                        <FormattedMessage
-                                            id="hero_section.aquascape_author"
-                                            defaultMessage="by {username}"
-                                            values={{username}}
-                                        />
-                                    </Paragraph>
-                                }
-                            />
-                            <div className="stat-info">
-                                <div>
-                                    <IconText icon={Icon.EYE_SHOW_FULL} text={numeral(viewsCount).format('0,0')} color={colors.WHITE}/>
-                                </div>
-                                <div className="stat-icon">
-                                    <IconText icon={Icon.HEART} text={numeral(likesCount).format('0,0')} color={colors.WHITE}/>
-                                </div>
+        <div className="container">
+            <img className="container-image" src={image} alt={title} />
+            <div className="gradient gradient--top"></div>
+            <div className="top-section">
+                {topSection}
+            </div>
+            <div className="content">
+                <Headline as="h1" variant="h2" color={colors.WHITE}>
+                    {title}
+                </Headline>
+                <div className="content-info">
+                    <div className="user-info">
+                        <UserWidget
+                            size="large"
+                            variant="border"
+                            color={colors.WHITE}
+                            image={userImage}
+                            text={
+                                <Paragraph type="body" color={colors.WHITE}>
+                                    <FormattedMessage
+                                        id="hero_section.aquascape_author"
+                                        defaultMessage="by {username}"
+                                        values={{username}}
+                                    />
+                                </Paragraph>
+                            }
+                        />
+                        <div className="stat-info">
+                            <div>
+                                <IconText icon={Icon.EYE_SHOW_FULL} text={numeral(viewsCount).format('0,0')} color={colors.WHITE} />
+                            </div>
+                            <div className="stat-icon">
+                                <IconText icon={Icon.HEART} text={numeral(likesCount).format('0,0')} color={colors.WHITE} />
                             </div>
                         </div>
-                        <div className="tags">
-                            {tags.map((tag, index) => <Tag key={index} text={tag.name} variant="primary" size="large"/>)}
-                        </div>
+                    </div>
+                    <div className="tags">
+                        {tags.map((tag, index) => <Tag key={index} text={tag.name} variant="primary" size="large" />)}
                     </div>
                 </div>
-                <div className="gradient gradient--bottom   "></div>
             </div>
+            <div className="gradient gradient--bottom   "></div>
             <style jsx>{`
-                .hero-section {
-                    padding-top: ${spaces.s60};
-                }
-
                 .container {
                     position: relative;
                     height: 80vh;
@@ -126,7 +117,7 @@ const HeroSection = ({
                     }
                 }
 
-                .badge {
+                .top-section {
                     position: absolute;
                     display: flex;
                     align-items: center;
@@ -136,23 +127,10 @@ const HeroSection = ({
                 }
 
                 @media ${media.up('medium')} {
-                    .badge {
+                    .top-section {
                         padding-top: ${spaces.s30};
                         padding-left: ${spaces.s48};
                     }
-                }
-
-                .badge-icon {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-
-                    margin-right: ${spaces.s18};
-                    height: ${spaces.s36};  
-                    width: ${spaces.s36};
-                    
-                    border-radius: 50%;
-                    background-image: linear-gradient(to bottom, ${colors.SECONDARY}, ${colors.SECONDARY_DARK});
                 }
 
                 .content {
@@ -202,4 +180,4 @@ const HeroSection = ({
         </div>
     )
 
-export default HeroSection
+export default Hero
