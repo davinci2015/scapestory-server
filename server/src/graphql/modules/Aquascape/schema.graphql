@@ -91,6 +91,13 @@ type Plant {
     difficulty: String
 }
 
+type Livestock {
+    id: Int!
+    name: String!
+    description: String
+    image: String   
+}
+
 type Aquascape {
     id: Int!
     title: String!
@@ -109,7 +116,8 @@ type Aquascape {
     likesCount: Int!
     tags: [Tag!]!
     plants: [Plant!]
-    hardscapes: [Hardscape!]
+    hardscape: [Hardscape!]
+    livestock: [Livestock!]
 }
 
 input Pagination {

@@ -16,6 +16,8 @@ import {AquascapeHardscape} from 'db/models/manyToMany/AquascapeHardscape'
 import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant'
 import {AquascapeSubstrate} from 'db/models/manyToMany/AquascapeSubstrate'
 import {AquascapeAdditive} from 'db/models/manyToMany/AquascapeAdditive'
+import {AquascapeFilter} from 'db/models/manyToMany/AquascapeFilter'
+import {AquascapeLivestock} from 'db/models/manyToMany/AquascapeLivestock'
 import {AquascapeTag} from 'db/models/AquascapeTag'
 import {Plant} from 'db/models/Plant'
 import {Light} from 'db/models/Light'
@@ -28,7 +30,7 @@ import {Visitor} from 'db/models/Visitor'
 import {Like} from 'db/models/Like'
 import {CO2} from 'db/models/CO2'
 import {Filter} from 'db/models/Filter'
-import {AquascapeFilter} from 'db/models/manyToMany/AquascapeFilter'
+import {Livestock} from 'db/models/Livestock'
 
 @Table
 export class Aquascape extends Model<Aquascape> {
@@ -98,7 +100,7 @@ export class Aquascape extends Model<Aquascape> {
     additives: Additive[]
 
     @BelongsToMany(() => Hardscape, () => AquascapeHardscape)
-    hardscapes: Hardscape[]
+    hardscape: Hardscape[]
 
     @BelongsToMany(() => Tag, () => AquascapeTag)
     tags: Tag[]
@@ -108,4 +110,7 @@ export class Aquascape extends Model<Aquascape> {
 
     @BelongsToMany(() => Plant, () => AquascapePlant)
     plants: Plant[]
+
+    @BelongsToMany(() => Livestock, () => AquascapeLivestock)
+    livestock: Livestock[]
 }

@@ -12,9 +12,11 @@ import {AquascapeTag} from 'db/models/AquascapeTag'
 import {Visitor} from 'db/models/Visitor'
 import {Like} from 'db/models/Like'
 import {AquascapeImage} from 'db/models/AquascapeImage'
-import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant';
-import {Hardscape} from 'db/models/Hardscape';
-import {AquascapeHardscape} from 'db/models/manyToMany/AquascapeHardscape';
+import {Hardscape} from 'db/models/Hardscape'
+import {Livestock} from 'db/models/Livestock'
+import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant'
+import {AquascapeHardscape} from 'db/models/manyToMany/AquascapeHardscape'
+import {AquascapeLivestock} from 'db/models/manyToMany/AquascapeLivestock'
 
 const getRandomIndex = (items: number) => Math.floor(Math.random() * items)
 const getEmptyArray = (items: number) => Array(items).fill('')
@@ -29,6 +31,7 @@ const filterDuplicateKeys = (arr: any[], keys: string[]) => {
 const entriesCount = {
     aquascapes: 40,
     hardscape: 10,
+    livestock: 10,
     brands: 10,
     users: 10,
     lights: 10,
@@ -36,6 +39,7 @@ const entriesCount = {
     aquascapeTags: 20,
     aquascapePlants: 100,
     aquascapeHardscape: 100,
+    aquascapeLivestock: 100,
     visitors: 100,
     likes: 300,
     images: 50
@@ -92,11 +96,11 @@ const tags = getEmptyArray(entriesCount.tags).map((_, index) => ({
     name: faker.lorem.word()
 }))
 
-const aquascapeTags = getEmptyArray(entriesCount.aquascapeTags).map((_, index) => ({
+const aquascapeTags = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapeTags).map((_, index) => ({
     id: index + 1,
     tagId: tags[getRandomIndex(entriesCount.tags)].id,
     aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)].id
-}))
+})), ['tagId', 'aquascapeId'])
 
 const brands = getEmptyArray(entriesCount.brands).map((_, index) => ({
     id: index + 1,
@@ -108,6 +112,13 @@ const hardscape = getEmptyArray(entriesCount.hardscape).map((_, index) => ({
     name: faker.commerce.productMaterial(),
     description: faker.lorem.words(),
     image: faker.image.imageUrl()
+}))
+
+const livestock = getEmptyArray(entriesCount.livestock).map((_, index) => ({
+    id: index + 1,
+    name: faker.commerce.productName(),
+    description: faker.lorem.words(),
+    image: faker.image.animals()
 }))
 
 const lights = getEmptyArray(entriesCount.lights).map((_, index) => ({
@@ -147,6 +158,12 @@ const aquascapeHardscape = filterDuplicateKeys(getEmptyArray(entriesCount.aquasc
     hardscapeId: hardscape[getRandomIndex(entriesCount.hardscape)].id
 })), ['aquascapeId', 'hardscapeId'])
 
+const aquascapeLivestock = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapeLivestock).map((_, index) => ({
+    id: index + 1,
+    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)].id,
+    livestockId: livestock[getRandomIndex(entriesCount.livestock)].id
+})), ['aquascapeId', 'livestockId'])
+
 connectToDatabase((database: Database) => {
     database.sync({force: true})
         .then(async () => {
@@ -154,6 +171,7 @@ connectToDatabase((database: Database) => {
             await Promise.all(lights.map((light) => Light.create(light)))
             await Promise.all(plants.map((plant) => Plant.create(plant)))
             await Promise.all(hardscape.map((hard) => Hardscape.create(hard)))
+            await Promise.all(livestock.map((animal) => Livestock.create(animal)))
             await Promise.all(users.map((user) => User.create(user)))
             await Promise.all(tags.map((tag) => Tag.create(tag)))
             await Promise.all(aquascapes.map((scape) => Aquascape.create(scape)))
@@ -163,6 +181,7 @@ connectToDatabase((database: Database) => {
             await Promise.all(images.map((image) => AquascapeImage.create(image)))
             await Promise.all(aquascapePlants.map((plant) => AquascapePlant.create(plant)))
             await Promise.all(aquascapeHardscape.map((hard) => AquascapeHardscape.create(hard)))
+            await Promise.all(aquascapeLivestock.map((animal) => AquascapeLivestock.create(animal)))
         })
         .then(() => console.log('Database synced'))
         .catch((e) => console.log('Failed to sync database', e))
