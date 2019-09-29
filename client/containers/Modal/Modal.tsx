@@ -22,7 +22,7 @@ const ModalContainer = () => {
     }
 
     useEffect(() => Router.events.on('routeChangeStart', () => {
-        if (modalType) closeModal()
+        closeModal()
     }), [])
     
     return (
