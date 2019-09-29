@@ -13,18 +13,29 @@ import {Visitor} from 'db/models/Visitor'
 import {Like} from 'db/models/Like'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant';
+import {Hardscape} from 'db/models/Hardscape';
+import {AquascapeHardscape} from 'db/models/manyToMany/AquascapeHardscape';
 
 const getRandomIndex = (items: number) => Math.floor(Math.random() * items)
 const getEmptyArray = (items: number) => Array(items).fill('')
+const filterDuplicateKeys = (arr: any[], keys: string[]) => {
+    return arr.filter((itemFilter) => {
+        return !arr.find((itemFind) => {
+            return itemFilter.id !== itemFind.id && keys.every((key) => itemFilter[key] === itemFind[key])
+        })
+    })
+}
 
 const entriesCount = {
     aquascapes: 40,
+    hardscape: 10,
     brands: 10,
     users: 10,
     lights: 10,
     tags: 20,
     aquascapeTags: 20,
-    aquascapePlants: 50,
+    aquascapePlants: 100,
+    aquascapeHardscape: 100,
     visitors: 100,
     likes: 300,
     images: 50
@@ -92,6 +103,13 @@ const brands = getEmptyArray(entriesCount.brands).map((_, index) => ({
     name: faker.company.companyName()
 }))
 
+const hardscape = getEmptyArray(entriesCount.hardscape).map((_, index) => ({
+    id: index + 1,
+    name: faker.commerce.productMaterial(),
+    description: faker.lorem.words(),
+    image: faker.image.imageUrl()
+}))
+
 const lights = getEmptyArray(entriesCount.lights).map((_, index) => ({
     id: index + 1,
     predefined: faker.random.boolean(),
@@ -117,11 +135,17 @@ const plants = realPlants.map((name, index) => ({
     difficulty: 'easy'
 }))
 
-const aquascapePlants = getEmptyArray(entriesCount.aquascapePlants).map((_, index) => ({
+const aquascapePlants = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapePlants).map((_, index) => ({
     id: index + 1,
     aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)].id,
     plantId: plants[getRandomIndex(realPlants.length)].id
-}))
+})), ['aquascapeId', 'plantId'])
+
+const aquascapeHardscape = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapeHardscape).map((_, index) => ({
+    id: index + 1,
+    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)].id,
+    hardscapeId: hardscape[getRandomIndex(entriesCount.hardscape)].id
+})), ['aquascapeId', 'hardscapeId'])
 
 connectToDatabase((database: Database) => {
     database.sync({force: true})
@@ -129,6 +153,7 @@ connectToDatabase((database: Database) => {
             await Promise.all(brands.map((brand) => Brand.create(brand)))
             await Promise.all(lights.map((light) => Light.create(light)))
             await Promise.all(plants.map((plant) => Plant.create(plant)))
+            await Promise.all(hardscape.map((hard) => Hardscape.create(hard)))
             await Promise.all(users.map((user) => User.create(user)))
             await Promise.all(tags.map((tag) => Tag.create(tag)))
             await Promise.all(aquascapes.map((scape) => Aquascape.create(scape)))
@@ -137,6 +162,7 @@ connectToDatabase((database: Database) => {
             await Promise.all(likes.map((like) => Like.create(like)))
             await Promise.all(images.map((image) => AquascapeImage.create(image)))
             await Promise.all(aquascapePlants.map((plant) => AquascapePlant.create(plant)))
+            await Promise.all(aquascapeHardscape.map((hard) => AquascapeHardscape.create(hard)))
         })
         .then(() => console.log('Database synced'))
         .catch((e) => console.log('Failed to sync database', e))

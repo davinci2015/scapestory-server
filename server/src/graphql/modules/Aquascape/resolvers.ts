@@ -14,6 +14,7 @@ import {Tag} from 'db/models/Tag'
 import {Visitor} from 'db/models/Visitor'
 import {Like} from 'db/models/Like'
 import {Plant} from 'db/models/Plant'
+import {Hardscape} from 'db/models/Hardscape'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
 
@@ -41,7 +42,8 @@ const includeField = (info: GraphQLResolveInfo) => {
 
     const includeMapping = {
         tags: Tag,
-        plants: Plant
+        plants: Plant,
+        hardscapes: Hardscape
     }
 
     for (const key in includeMapping) {
