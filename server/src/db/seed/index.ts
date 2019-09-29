@@ -12,6 +12,7 @@ import {AquascapeTag} from 'db/models/AquascapeTag'
 import {Visitor} from 'db/models/Visitor'
 import {Like} from 'db/models/Like'
 import {AquascapeImage} from 'db/models/AquascapeImage'
+import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant';
 
 const getRandomIndex = (items: number) => Math.floor(Math.random() * items)
 const getEmptyArray = (items: number) => Array(items).fill('')
@@ -23,6 +24,7 @@ const entriesCount = {
     lights: 10,
     tags: 20,
     aquascapeTags: 20,
+    aquascapePlants: 50,
     visitors: 100,
     likes: 300,
     images: 50
@@ -103,7 +105,7 @@ const lights = getEmptyArray(entriesCount.lights).map((_, index) => ({
 const plants = realPlants.map((name, index) => ({
     id: index + 1,
     name,
-    predefined: faker.random.boolean(),
+    predefined: true,
     description: faker.lorem.words(),
     image: faker.image.imageUrl(),
     origin: faker.address.country(),
@@ -113,6 +115,12 @@ const plants = realPlants.map((name, index) => ({
     luminosity: 'high',
     growthSpeed: 'fast',
     difficulty: 'easy'
+}))
+
+const aquascapePlants = getEmptyArray(entriesCount.aquascapePlants).map((_, index) => ({
+    id: index + 1,
+    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)].id,
+    plantId: plants[getRandomIndex(realPlants.length)].id
 }))
 
 connectToDatabase((database: Database) => {
@@ -128,6 +136,7 @@ connectToDatabase((database: Database) => {
             await Promise.all(visitors.map((visitor) => Visitor.create(visitor)))
             await Promise.all(likes.map((like) => Like.create(like)))
             await Promise.all(images.map((image) => AquascapeImage.create(image)))
+            await Promise.all(aquascapePlants.map((plant) => AquascapePlant.create(plant)))
         })
         .then(() => console.log('Database synced'))
         .catch((e) => console.log('Failed to sync database', e))

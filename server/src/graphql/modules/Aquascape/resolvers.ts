@@ -13,6 +13,7 @@ import {Aquascape} from 'db/models/Aquascape'
 import {Tag} from 'db/models/Tag'
 import {Visitor} from 'db/models/Visitor'
 import {Like} from 'db/models/Like'
+import {Plant} from 'db/models/Plant'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
 
@@ -39,7 +40,8 @@ const includeField = (info: GraphQLResolveInfo) => {
     ]
 
     const includeMapping = {
-        tags: Tag
+        tags: Tag,
+        plants: Plant
     }
 
     for (const key in includeMapping) {
@@ -60,7 +62,11 @@ export const resolvers = {
         async featuredAquascape(root, args, context: ModuleContext, info: GraphQLResolveInfo) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
             return await provider.getFeaturedAquascape(includeField(info))
-        }
+        },
+        async aquascape(root, args: {id: number}, context: ModuleContext, info: GraphQLResolveInfo) {
+            const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
+            return await provider.getAquascapeById(args.id, includeField(info))
+        },
     },
     Aquascape: {
         async user(aquascape: Aquascape, args, context: ModuleContext) {

@@ -16,6 +16,8 @@ export interface AquascapeProviderInterface {
 
     getFeaturedAquascape: (include?: Includeable[]) => Promise<Aquascape | null>
 
+    getAquascapeById: (id: number, include?: Includeable[]) => Promise<Aquascape | null>
+
     createAquascape: (userId: number, data: CreateAquascapeArgs) => Promise<Aquascape>
 
     visitAquascape: (aquascapeId: number, userId?: string) => Promise<string>,
@@ -37,6 +39,10 @@ export class AquascapeProvider implements AquascapeProviderInterface {
 
     getFeaturedAquascape(include?: Includeable[]) {
         return this.aquascapeRepository.getFeaturedAquascape(include)
+    }
+
+    getAquascapeById(id: number, include?: Includeable[]) {
+        return this.aquascapeRepository.getAquascapeById(id, include)
     }
 
     async createAquascape(userId: number, data: CreateAquascapeArgs) {

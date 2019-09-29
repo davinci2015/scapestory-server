@@ -14,6 +14,8 @@ export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aq
 
     getFeaturedAquascape: (include?: Includeable[]) => Promise<Aquascape | null>
 
+    getAquascapeById: (id: number, include?: Includeable[]) => Promise<Aquascape | null>
+
     getAquascapeImages: (aquascapeId: number) => Promise<AquascapeImage[]>
 }
 
@@ -39,6 +41,10 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
 
     async getFeaturedAquascape(include?: Includeable[]) {
         return await this.findOne({where: {featured: true}, include})
+    }
+
+    async getAquascapeById(id: number, include?: Includeable[]) {
+        return await this.findOne({where: {id}, include})
     }
 
     async getAquascapeImages(aquascapeId: number) {

@@ -32,13 +32,11 @@ type Comment {
 
 type AquascapeImage {
     id: Int!
-    mainImage: Boolean!
+    mainImage: Boolean! 
     title: String
     description: String
-    gridSize: Int
-    gridPosition: Int
     url: String!
-    likes: [User]
+    likes: [User]!
     comments: [Comment]!
 }
 
@@ -81,8 +79,7 @@ type Tag {
 
 type Plant {
     id: Int!
-    predefined: Boolean!
-    name: String
+    name: String!
     description: String
     image: String
     origin: String
@@ -111,6 +108,7 @@ type Aquascape {
     viewsCount: Int!
     likesCount: Int!
     tags: [Tag!]!
+    plants: [Plant]!
 }
 
 input Pagination {
@@ -125,6 +123,7 @@ input AquascapesFilter {
 type Query {
     aquascapes(pagination: Pagination, filter: AquascapesFilter): [Aquascape]
     featuredAquascape: Aquascape
+    aquascape(id: Int!): Aquascape
 }
 
 type Mutation {
