@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
+import {FormattedMessage} from 'react-intl'
+
 import {InputProps} from 'components/atoms/Input'
 import {Input, Icon, InputAdornment, IconButton} from 'components/atoms'
 import {colors, typography} from 'styles'
-import {FormattedMessage} from 'react-intl';
 
 type Props = InputProps & {}
 

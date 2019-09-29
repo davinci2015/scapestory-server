@@ -14,6 +14,8 @@ const IconButton = ({
                 .icon-button {
                     cursor: pointer;
                     background: transparent;
+                    padding: 0;
+                    margin: 0;
                     border: 0;
                     outline: 0; 
                 }

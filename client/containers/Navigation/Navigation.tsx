@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {useQuery} from 'react-apollo-hooks'
+import {useQuery} from '@apollo/react-hooks'
 
 import {Navigation} from 'components/molecules'
 import {ModalContext} from 'context/modal'
@@ -8,7 +8,9 @@ import {USER_PROFILE_IMAGE} from 'containers/Navigation/queries'
 
 const NavigationContainer = () => {
     const {openModal} = useContext(ModalContext)
-    const {data} = useQuery(USER_PROFILE_IMAGE)
+    const {data} = useQuery(USER_PROFILE_IMAGE, {
+        ssr: false
+    })
     
     return (
         <AuthenticationGuard render={({isAuthenticated}) => (

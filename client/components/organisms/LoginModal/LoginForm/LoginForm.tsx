@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
-import {useMutation} from 'react-apollo-hooks'
-import {injectIntl, InjectedIntlProps} from 'react-intl'
+import {useMutation} from '@apollo/react-hooks'
+import {MessageDescriptor, useIntl} from 'react-intl'
 
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
-import {MessageDescriptor} from 'components/atoms/FormattedMessage'
 
 import validator from 'services/validator'
 import {spaces} from 'styles'
@@ -14,15 +13,13 @@ const inputKeys = {
     password: 'password'
 }
 
-interface Props extends InjectedIntlProps {
+interface Props {
     onSuccess: (token: string) => void
 }
 
-const LoginForm = ({
-    intl,
-    onSuccess
-}: Props) => {
-    const login = useMutation<LoginResult, LoginVariables>(LOGIN_MUTATION)
+const LoginForm = ({onSuccess}: Props) => {
+    const intl = useIntl()
+    const [login] = useMutation<LoginResult, LoginVariables>(LOGIN_MUTATION)
 
     const [errors, setError] = useState({
         [inputKeys.email]: true,
@@ -44,7 +41,9 @@ const LoginForm = ({
 
     const onSubmit = async () => {
         const {data} = await login({variables: {email, password}})
-        onSuccess(data.login.token)
+        if (data) {
+            onSuccess(data.login.token)
+        }
     }
 
     const validateEmail = (email: string) => {
@@ -149,4 +148,4 @@ const LoginForm = ({
     )
 }
 
-export default injectIntl(LoginForm)
+export default LoginForm

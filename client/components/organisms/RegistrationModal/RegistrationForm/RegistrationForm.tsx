@@ -1,10 +1,9 @@
 import React, {useState} from 'react'
-import {injectIntl, InjectedIntlProps} from 'react-intl'
-import {useMutation} from 'react-apollo-hooks'
+import {useIntl, MessageDescriptor} from 'react-intl'
+import {useMutation} from '@apollo/react-hooks'
 import Link from 'next/link'
 
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage, Checkbox} from 'components/atoms'
-import {MessageDescriptor} from 'components/atoms/FormattedMessage'
 
 import {RegisterResult, RegisterVariables, SIGN_UP_MUTATION} from 'components/organisms/RegistrationModal/RegistrationForm/mutations'
 import validator from 'services/validator'
@@ -17,14 +16,12 @@ const inputKeys = {
 }
 
 const PASSWORD_MIN_LENGTH = 6
-interface Props extends InjectedIntlProps {
+interface Props {
     onSuccess: (token: string) => void
 }
 
-const RegistrationForm = ({
-    intl,
-    onSuccess
-}: Props) => {
+const RegistrationForm = ({onSuccess}: Props) => {
+    const intl = useIntl()
     const [termsAccepted, setTermsAccepted] = useState(false)
 
     const [errors, setError] = useState({
@@ -45,11 +42,13 @@ const RegistrationForm = ({
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const register = useMutation<RegisterResult, RegisterVariables>(SIGN_UP_MUTATION)
+    const [register] = useMutation<RegisterResult, RegisterVariables>(SIGN_UP_MUTATION)
 
     const onSubmit = async () => {
         const {data} = await register({variables: {email, password}})
-        onSuccess(data.register.token)
+        if (data) {
+            onSuccess(data.register.token)
+        }
     }
 
     const validateEmail = (email: string) => {
@@ -191,4 +190,4 @@ const RegistrationForm = ({
     )
 }
 
-export default injectIntl(RegistrationForm)
+export default RegistrationForm

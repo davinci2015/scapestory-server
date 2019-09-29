@@ -1,5 +1,5 @@
 import React from 'react'
-import {NextContext, NextFunctionComponent} from 'next'
+import {NextPageContext, NextComponentType} from 'next'
 
 import auth from 'services/auth'
 
@@ -15,9 +15,9 @@ interface WithAuthProps {
     isAuthenticated: boolean
 }
 
-const withAuth = <P extends Object>(WrappedComponent: NextFunctionComponent) =>
+const withAuth = <P extends Object>(WrappedComponent: NextComponentType) =>
     class extends React.Component<P & WithAuthProps> {
-        static async getInitialProps(ctx: NextContext) {
+        static async getInitialProps(ctx: NextPageContext) {
             const token = auth.getToken(ctx.req)
             const pageProps = WrappedComponent.getInitialProps && await WrappedComponent.getInitialProps(ctx)
             

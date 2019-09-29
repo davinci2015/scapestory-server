@@ -1,11 +1,12 @@
 import React from "react"
 import Link from "next/link"
-import {RouterProps, withRouter} from "next/router"
+import {withRouter} from "next/router"
 
 import {colors, spaces, typography} from 'styles'
+import {Router} from 'next/router'
 
 export interface Props {
-    router: RouterProps
+    router: Router
     children: any
     as?: string
     href: string

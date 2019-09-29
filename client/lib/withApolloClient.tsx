@@ -1,20 +1,20 @@
 import React from 'react'
 import Head from 'next/head'
-import {Context, getDataFromTree} from 'react-apollo'
+import {getDataFromTree} from '@apollo/react-ssr'
+import {Context} from 'react-apollo'
 import {NormalizedCacheObject, ApolloClient} from 'apollo-boost'
-import {NextContext} from 'next'
-import {AppComponentType} from 'next/app'
+import {NextComponentType, NextPageContext} from 'next'
 
 import initApollo from './apollo'
 import auth from 'services/auth'
 
-const withApolloClient = (App: AppComponentType) => {
+const withApolloClient = (App: NextComponentType) => {
     return class Apollo extends React.Component {
         static displayName = 'withApollo(App)'
 
         apolloClient: ApolloClient<NormalizedCacheObject>
 
-        static async getInitialProps(ctx: NextContext & Context) {
+        static async getInitialProps(ctx: NextPageContext & Context) {
             const {Component, router} = ctx
 
             let appProps = {}
