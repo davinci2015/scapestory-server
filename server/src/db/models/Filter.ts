@@ -7,7 +7,10 @@ export class Filter extends Model<Filter> {
     predefined: boolean
 
     @Column
-    name: string
+    brand: string
+
+    @Column
+    model: string
 
     @Column
     description: string

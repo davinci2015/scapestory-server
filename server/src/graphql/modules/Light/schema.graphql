@@ -1,14 +1,17 @@
-type Brand {
-    id: Int!
-    name: String!
-}
-
 type Light {
     id: Int!
     predefined: Boolean!
-    name: String
-    brand: Brand
-    model: String
+    brand: String!
+    model: String!
+    width: Float
+    height: Float
+    depth: Float
+    power: Float
+    lumenMin: Int
+    lumenMax: Int
+    kelvinMin: Int
+    kelvinMax: Int
+    dimmable: Boolean
     description: String
     image: String
 }

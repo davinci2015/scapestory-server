@@ -40,14 +40,6 @@ type AquascapeImage {
     comments: [Comment]!
 }
 
-type Light {
-    id: Int!
-    predefined: Boolean!
-    name: String
-    description: String
-    image: String
-}
-
 type Substrate {
     id: Int!
     predefined: Boolean!
@@ -98,6 +90,14 @@ type Livestock {
     image: String   
 }
 
+type Filter {
+    id: Int!
+    brand: String!
+    model: String!
+    description: String
+    image: String
+}
+
 type Aquascape {
     id: Int!
     title: String!
@@ -118,6 +118,8 @@ type Aquascape {
     plants: [Plant!]
     hardscape: [Hardscape!]
     livestock: [Livestock!]
+    filters: [Filter!]
+    lights: [Light!]
 }
 
 input Pagination {
