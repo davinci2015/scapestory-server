@@ -15,6 +15,7 @@ import {AquascapeImage} from 'db/models/AquascapeImage'
 import {Hardscape} from 'db/models/Hardscape'
 import {Livestock} from 'db/models/Livestock'
 import {Filter} from 'db/models/Filter'
+import {CO2} from 'db/models/CO2'
 import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant'
 import {AquascapeHardscape} from 'db/models/manyToMany/AquascapeHardscape'
 import {AquascapeLivestock} from 'db/models/manyToMany/AquascapeLivestock'
@@ -38,6 +39,7 @@ const entriesCount = {
     users: 10,
     lights: 10,
     tags: 20,
+    co2: 5,
     aquascapeTags: 20,
     aquascapePlants: 100,
     aquascapeHardscape: 100,
@@ -61,6 +63,12 @@ const users = getEmptyArray(entriesCount.users).map((_, index) => ({
     instagramLink: faker.internet.url()
 }))
 
+const co2 = getEmptyArray(entriesCount.co2).map((_, index) => ({
+    id: index + 1,
+    type: faker.random.word(),
+    bps: faker.random.number({min: 1, max: 10})
+}))
+
 const aquascapes = getEmptyArray(entriesCount.aquascapes).map((_, index) => ({
     id: index + 1,
     title: faker.commerce.productName(),
@@ -71,6 +79,7 @@ const aquascapes = getEmptyArray(entriesCount.aquascapes).map((_, index) => ({
     featured: faker.random.boolean(),
     description: faker.lorem.sentence(),
     userId: users[getRandomIndex(entriesCount.users)].id,
+    co2Id: co2[getRandomIndex(entriesCount.co2)].id
 }))
 
 const images = getEmptyArray(entriesCount.images).map((_, index) => ({
@@ -199,6 +208,7 @@ connectToDatabase((database: Database) => {
     database.sync({force: true})
         .then(async () => {
             await Promise.all(lights.map((light) => Light.create(light)))
+            await Promise.all(co2.map((item) => CO2.create(item)))
             await Promise.all(plants.map((plant) => Plant.create(plant)))
             await Promise.all(hardscape.map((hard) => Hardscape.create(hard)))
             await Promise.all(livestock.map((animal) => Livestock.create(animal)))

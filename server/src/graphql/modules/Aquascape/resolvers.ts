@@ -18,6 +18,7 @@ import {Hardscape} from 'db/models/Hardscape'
 import {Livestock} from 'db/models/Livestock'
 import {Filter} from 'db/models/Filter'
 import {Light} from 'db/models/Light'
+import {CO2} from 'db/models/CO2'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
 
@@ -49,7 +50,8 @@ const includeField = (info: GraphQLResolveInfo) => {
         hardscape: Hardscape,
         livestock: Livestock,
         filters: Filter,
-        lights: Light
+        lights: Light,
+        co2: CO2
     }
 
     for (const key in includeMapping) {
