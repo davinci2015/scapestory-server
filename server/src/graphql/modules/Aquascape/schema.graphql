@@ -99,6 +99,17 @@ type Filter {
     image: String
 }
 
+type Tank {
+    id: Int!
+    brand: String
+    model: String
+    volume: Float
+    width: Float
+    height: Float
+    depth: Float
+    glassThickness: Float
+}
+
 type Aquascape {
     id: Int!
     title: String!
@@ -109,6 +120,7 @@ type Aquascape {
     description: String
     user: User
     co2: CO2
+    tank: Tank
     photoperiod: Int!
     mainImage: String
     images: [AquascapeImage]!

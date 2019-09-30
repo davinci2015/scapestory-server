@@ -31,6 +31,7 @@ import {Like} from 'db/models/Like'
 import {CO2} from 'db/models/CO2'
 import {Filter} from 'db/models/Filter'
 import {Livestock} from 'db/models/Livestock'
+import {Tank} from 'db/models/Tank'
 
 @Table
 export class Aquascape extends Model<Aquascape> {
@@ -70,6 +71,13 @@ export class Aquascape extends Model<Aquascape> {
 
     @BelongsTo(() => CO2)
     co2: CO2
+
+    @ForeignKey(() => Tank)
+    @Column
+    tankId: number
+
+    @BelongsTo(() => Tank)
+    tank: Tank
 
     @Default(8)
     @Column

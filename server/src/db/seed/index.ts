@@ -18,6 +18,7 @@ import {Filter} from 'db/models/Filter'
 import {CO2} from 'db/models/CO2'
 import {Substrate} from 'db/models/Substrate'
 import {Additive} from 'db/models/Additive'
+import {Tank} from 'db/models/Tank'
 
 import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant'
 import {AquascapeHardscape} from 'db/models/manyToMany/AquascapeHardscape'
@@ -47,6 +48,7 @@ const entriesCount = {
     substrate: 20,
     additives: 20,
     co2: 5,
+    tanks: 20,
     aquascapeTags: 20,
     aquascapePlants: 100,
     aquascapeHardscape: 100,
@@ -78,6 +80,17 @@ const co2 = getEmptyArray(entriesCount.co2).map((_, index) => ({
     bps: faker.random.number({min: 1, max: 10})
 }))
 
+const tanks = getEmptyArray(entriesCount.tanks).map((_, index) => ({
+    id: index + 1,
+    brand: faker.company.companyName(),
+    model: faker.commerce.productMaterial(),
+    volume: faker.random.number(),
+    width: faker.random.number(),
+    height: faker.random.number(),
+    depth: faker.random.number(),
+    glassThickness: faker.random.number()
+}))
+
 const aquascapes = getEmptyArray(entriesCount.aquascapes).map((_, index) => ({
     id: index + 1,
     title: faker.commerce.productName(),
@@ -88,7 +101,8 @@ const aquascapes = getEmptyArray(entriesCount.aquascapes).map((_, index) => ({
     featured: faker.random.boolean(),
     description: faker.lorem.sentence(),
     userId: users[getRandomIndex(entriesCount.users)].id,
-    co2Id: co2[getRandomIndex(entriesCount.co2)].id
+    co2Id: co2[getRandomIndex(entriesCount.co2)].id,
+    tankId: tanks[getRandomIndex(entriesCount.tanks)].id
 }))
 
 const images = getEmptyArray(entriesCount.images).map((_, index) => ({
@@ -244,8 +258,10 @@ const aquascapeAdditives = filterDuplicateKeys(getEmptyArray(entriesCount.aquasc
 connectToDatabase((database: Database) => {
     database.sync({force: true})
         .then(async () => {
-            await Promise.all(lights.map((light) => Light.create(light)))
+            await Promise.all(tanks.map((tank) => Tank.create(tank)))
             await Promise.all(co2.map((item) => CO2.create(item)))
+            
+            await Promise.all(lights.map((light) => Light.create(light)))
             await Promise.all(plants.map((plant) => Plant.create(plant)))
             await Promise.all(hardscape.map((hard) => Hardscape.create(hard)))
             await Promise.all(livestock.map((animal) => Livestock.create(animal)))
@@ -255,11 +271,11 @@ connectToDatabase((database: Database) => {
             await Promise.all(users.map((user) => User.create(user)))
             await Promise.all(tags.map((tag) => Tag.create(tag)))
             await Promise.all(aquascapes.map((scape) => Aquascape.create(scape)))
-            await Promise.all(aquascapeTags.map((aquascapeTag) => AquascapeTag.create(aquascapeTag)))
             await Promise.all(visitors.map((visitor) => Visitor.create(visitor)))
             await Promise.all(likes.map((like) => Like.create(like)))
             await Promise.all(images.map((image) => AquascapeImage.create(image)))
 
+            await Promise.all(aquascapeTags.map((aquascapeTag) => AquascapeTag.create(aquascapeTag)))
             await Promise.all(aquascapePlants.map((plant) => AquascapePlant.create(plant)))
             await Promise.all(aquascapeHardscape.map((hard) => AquascapeHardscape.create(hard)))
             await Promise.all(aquascapeLivestock.map((animal) => AquascapeLivestock.create(animal)))
