@@ -16,11 +16,14 @@ import {Hardscape} from 'db/models/Hardscape'
 import {Livestock} from 'db/models/Livestock'
 import {Filter} from 'db/models/Filter'
 import {CO2} from 'db/models/CO2'
+import {Substrate} from 'db/models/Substrate'
+
 import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant'
 import {AquascapeHardscape} from 'db/models/manyToMany/AquascapeHardscape'
 import {AquascapeLivestock} from 'db/models/manyToMany/AquascapeLivestock'
 import {AquascapeFilter} from 'db/models/manyToMany/AquascapeFilter'
 import {AquascapeLight} from 'db/models/manyToMany/AquascapeLight'
+import {AquascapeSubstrate} from 'db/models/manyToMany/AquascapeSubstrate'
 
 const getRandomIndex = (items: number) => Math.floor(Math.random() * items)
 const getEmptyArray = (items: number) => Array(items).fill('')
@@ -39,6 +42,7 @@ const entriesCount = {
     users: 10,
     lights: 10,
     tags: 20,
+    substrate: 20,
     co2: 5,
     aquascapeTags: 20,
     aquascapePlants: 100,
@@ -46,6 +50,7 @@ const entriesCount = {
     aquascapeLivestock: 100,
     aquascapeFilters: 50,
     aquascapeLights: 50,
+    aquascapeSubstrate: 50,
     visitors: 100,
     likes: 300,
     images: 50
@@ -117,6 +122,14 @@ const aquascapeTags = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapeTa
 
 const hardscape = getEmptyArray(entriesCount.hardscape).map((_, index) => ({
     id: index + 1,
+    name: faker.commerce.productMaterial(),
+    description: faker.lorem.words(),
+    image: faker.image.imageUrl()
+}))
+
+const substrate = getEmptyArray(entriesCount.substrate).map((_, index) => ({
+    id: index + 1,
+    brand: faker.company.companyName(),
     name: faker.commerce.productMaterial(),
     description: faker.lorem.words(),
     image: faker.image.imageUrl()
@@ -204,6 +217,12 @@ const aquascapeLights = filterDuplicateKeys(getEmptyArray(entriesCount.aquascape
     lightId: lights[getRandomIndex(entriesCount.lights)].id
 })), ['aquascapeId', 'lightId'])
 
+const aquascapeSubstrate = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapeSubstrate).map((_, index) => ({
+    id: index + 1,
+    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)].id,
+    substrateId: lights[getRandomIndex(entriesCount.lights)].id
+})), ['aquascapeId', 'substrateId'])
+
 connectToDatabase((database: Database) => {
     database.sync({force: true})
         .then(async () => {
@@ -212,6 +231,7 @@ connectToDatabase((database: Database) => {
             await Promise.all(plants.map((plant) => Plant.create(plant)))
             await Promise.all(hardscape.map((hard) => Hardscape.create(hard)))
             await Promise.all(livestock.map((animal) => Livestock.create(animal)))
+            await Promise.all(substrate.map((sub) => Substrate.create(sub)))
             await Promise.all(filters.map((filter) => Filter.create(filter)))
             await Promise.all(users.map((user) => User.create(user)))
             await Promise.all(tags.map((tag) => Tag.create(tag)))
@@ -220,11 +240,13 @@ connectToDatabase((database: Database) => {
             await Promise.all(visitors.map((visitor) => Visitor.create(visitor)))
             await Promise.all(likes.map((like) => Like.create(like)))
             await Promise.all(images.map((image) => AquascapeImage.create(image)))
+
             await Promise.all(aquascapePlants.map((plant) => AquascapePlant.create(plant)))
             await Promise.all(aquascapeHardscape.map((hard) => AquascapeHardscape.create(hard)))
             await Promise.all(aquascapeLivestock.map((animal) => AquascapeLivestock.create(animal)))
             await Promise.all(aquascapeFilter.map((filter) => AquascapeFilter.create(filter)))
             await Promise.all(aquascapeLights.map((light) => AquascapeLight.create(light)))
+            await Promise.all(aquascapeSubstrate.map((sub) => AquascapeSubstrate.create(sub)))
         })
         .then(() => console.log('Database synced'))
         .catch((e) => console.log('Failed to sync database', e))

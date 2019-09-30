@@ -42,8 +42,8 @@ type AquascapeImage {
 
 type Substrate {
     id: Int!
-    predefined: Boolean!
-    name: String
+    brand: String
+    name: String!
     description: String
     image: String 
 }
@@ -120,6 +120,7 @@ type Aquascape {
     livestock: [Livestock!]
     filters: [Filter!]
     lights: [Light!]
+    substrates: [Substrate!]
 }
 
 input Pagination {

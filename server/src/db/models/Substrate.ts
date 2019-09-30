@@ -7,6 +7,9 @@ export class Substrate extends Model<Substrate> {
     predefined: boolean
 
     @Column
+    brand: string
+
+    @Column
     name: string
 
     @Column
