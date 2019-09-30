@@ -9,17 +9,17 @@ export class Tank extends Model<Tank> {
     model: string
 
     @Column
-    volume: number
+    volume: number // litres
 
     @Column
-    width: number
+    width: number // milimetres
 
     @Column
-    height: number
+    height: number // milimetres
 
     @Column
-    depth: number
+    depth: number // milimetres
 
     @Column
-    glassThickness: number
+    glassThickness: number // milimetres
 }

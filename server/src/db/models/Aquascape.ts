@@ -38,12 +38,6 @@ export class Aquascape extends Model<Aquascape> {
     @Column
     title: string
 
-    @Column
-    volume: number // Default in litres
-
-    @Column
-    startedAt: Date
-
     @Default(false)
     @Column
     featured: boolean

@@ -113,8 +113,6 @@ type Tank {
 type Aquascape {
     id: Int!
     title: String!
-    volume: Int
-    startedAt: String
     featured: Boolean!
     trending: Boolean!
     description: String
