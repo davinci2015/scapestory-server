@@ -7,8 +7,14 @@ export class Additive extends Model<Additive> {
     predefined: boolean
 
     @Column
+    brand: string
+
+    @Column
     name: string
 
     @Column
     description: string
+
+    @Column
+    image: string
 }

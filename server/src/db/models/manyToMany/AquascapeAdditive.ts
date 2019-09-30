@@ -10,5 +10,5 @@ export class AquascapeAdditive extends Model<AquascapeAdditive> {
 
     @ForeignKey(() => Additive)
     @Column
-    additivesId: number
+    additiveId: number
 }

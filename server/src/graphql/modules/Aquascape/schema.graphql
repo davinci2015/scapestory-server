@@ -50,9 +50,10 @@ type Substrate {
 
 type Additive {
     id: Int!
-    predefined: Boolean!
+    brand: String
     name: String
     description: String
+    image: String
 }
 
 type Hardscape {
@@ -121,6 +122,7 @@ type Aquascape {
     filters: [Filter!]
     lights: [Light!]
     substrates: [Substrate!]
+    additives: [Additive!]
 }
 
 input Pagination {
