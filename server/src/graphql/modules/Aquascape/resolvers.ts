@@ -21,6 +21,7 @@ import {Light} from 'db/models/Light'
 import {CO2} from 'db/models/CO2'
 import {Substrate} from 'db/models/Substrate'
 import {Additive} from 'db/models/Additive'
+import {Tank} from 'db/models/Tank'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
 
@@ -55,7 +56,8 @@ const includeField = (info: GraphQLResolveInfo) => {
         lights: Light,
         co2: CO2,
         substrates: Substrate,
-        additives: Additive
+        additives: Additive,
+        tank: Tank
     }
 
     for (const key in includeMapping) {
