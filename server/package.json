@@ -27,7 +27,7 @@
     "@graphql-codegen/typescript-react-apollo": "1.4.0",
     "@graphql-codegen/typescript-resolvers": "1.4.0",
     "@types/bcrypt": "^3.0.0",
-    "@types/bluebird": "^3.5.26",
+    "@types/bluebird": "^3.5.27",
     "@types/dotenv": "^6.1.1",
     "@types/faker": "^4.1.5",
     "@types/graphql": "^14.0.7",

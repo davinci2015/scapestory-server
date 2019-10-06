@@ -1,0 +1,26 @@
+# import User from '../User/schema.graphql'
+
+type Comment {
+    id: Int!
+    content: String!
+    parentCommentId: Int
+    user: User!
+}
+
+input Pagination {
+    limit: Int!
+    offset: Int!
+}
+
+enum EntityType {
+    AQUASCAPE
+    IMAGE
+}
+
+type Query {
+    comments(entityId: Int!, entityType: EntityType!, pagination: Pagination)
+}
+
+type Mutation {
+    addComment(entityId: Int!, entityType: EntityType!, content: String!, parentCommentId: Int): Comment
+}

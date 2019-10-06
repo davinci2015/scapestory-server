@@ -1,6 +1,5 @@
 import {GraphQLResolveInfo} from 'graphql'
 import {ModuleContext} from '@graphql-modules/core'
-import * as graphqlFields from 'graphql-fields'
 import {Includeable} from 'sequelize/types'
 
 import {AquascapeFilter} from 'db/repositories/Aquascape'
@@ -24,6 +23,7 @@ import {Additive} from 'db/models/Additive'
 import {Tank} from 'db/models/Tank'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
+import {GraphQLHelper} from 'utils/GraphQLHelper'
 
 export type CreateAquascapeArgs = {
     title: string
@@ -39,49 +39,40 @@ export type VisitAquascapeArgs = {
     userId?: string
 }
 
-const includeField = (info: GraphQLResolveInfo) => {
-    // @ts-ignore
-    const fields = graphqlFields(info)
-    const include: Includeable[] = [
-        {model: Visitor, attributes: ['id']}, // Include Visitor model for viewsCount
-        {model: Like, attributes: ['id']}, // Include Like model for likesCount
-    ]
+const defaultInclude: Includeable[] = [
+    {model: Visitor, attributes: ['id']}, // Include Visitor model for viewsCount
+    {model: Like, attributes: ['id']}, // Include Like model for likesCount
+]
 
-    const includeMapping = {
-        tags: Tag,
-        plants: Plant,
-        hardscape: Hardscape,
-        livestock: Livestock,
-        filters: Filter,
-        lights: Light,
-        co2: CO2,
-        substrates: Substrate,
-        additives: Additive,
-        tank: Tank
-    }
-
-    for (const key in includeMapping) {
-        if (fields.hasOwnProperty(key)) {
-            include.push({model: includeMapping[key]})
-        }
-    }
-
-    return include
+const modelMapping = {
+    tags: Tag,
+    plants: Plant,
+    hardscape: Hardscape,
+    livestock: Livestock,
+    filters: Filter,
+    lights: Light,
+    co2: CO2,
+    substrates: Substrate,
+    additives: Additive,
+    tank: Tank
 }
 
 export const resolvers = {
     Query: {
         async aquascapes(root, args: AquascapesArgs, context: ModuleContext, info: GraphQLResolveInfo) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            return await provider.getAquascapes(args.pagination, args.filter, includeField(info))
+            const fields = [...defaultInclude, ...GraphQLHelper.getIncludeableFields(info, modelMapping)]
+            return await provider.getAquascapes(args.pagination, args.filter, fields)
         },
         async featuredAquascape(root, args, context: ModuleContext, info: GraphQLResolveInfo) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            return await provider.getFeaturedAquascape(includeField(info))
+            const fields = [...defaultInclude, ...GraphQLHelper.getIncludeableFields(info, modelMapping)]
+            return await provider.getFeaturedAquascape(fields)
         },
         async aquascape(root, args: {id: number}, context: ModuleContext, info: GraphQLResolveInfo) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            return await provider.getAquascapeById(args.id, includeField(info))
+            const fields = [...defaultInclude, ...GraphQLHelper.getIncludeableFields(info, modelMapping)]
+            return await provider.getAquascapeById(args.id, fields)
         },
     },
     Aquascape: {
