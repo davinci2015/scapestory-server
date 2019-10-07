@@ -1,6 +1,7 @@
 import {Injectable, Inject} from '@graphql-modules/di'
 import {Includeable} from 'sequelize/types'
 import * as uuid from 'uuid/v4'
+import * as Bluebird from 'bluebird'
 
 import {AquascapeRepositoryInterface, AquascapeFilter} from 'db/repositories/Aquascape'
 import {VisitorRepositoryInterface} from 'db/repositories/Visitor'
@@ -12,17 +13,17 @@ import {Pagination} from 'interfaces'
 import {CreateAquascapeArgs} from './resolvers'
 
 export interface AquascapeProviderInterface {
-    getAquascapes: (pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) => Promise<Aquascape[]>
+    getAquascapes: (pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) => Bluebird<Aquascape[]>
 
-    getFeaturedAquascape: (include?: Includeable[]) => Promise<Aquascape | null>
+    getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape | null>
 
-    getAquascapeById: (id: number, include?: Includeable[]) => Promise<Aquascape | null>
+    getAquascapeById: (id: number, include?: Includeable[]) => Bluebird<Aquascape | null>
 
     createAquascape: (userId: number, data: CreateAquascapeArgs) => Promise<Aquascape>
 
     visitAquascape: (aquascapeId: number, userId?: string) => Promise<string>,
 
-    getAquascapeImages: (aquascapeId: number) => Promise<AquascapeImage[]>
+    getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
 }
 
 @Injectable()

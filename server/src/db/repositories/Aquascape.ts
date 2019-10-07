@@ -4,19 +4,21 @@ import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Includeable} from 'sequelize/types'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {Pagination} from 'interfaces'
+import * as Bluebird from 'bluebird'
 
 export interface AquascapeFilter {
     trending: boolean
+    userId: number
 }
 
 export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aquascape> {
-    getAquascapes: (pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) => Promise<Aquascape[]>
+    getAquascapes: (pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) => Bluebird<Aquascape[]>
 
-    getFeaturedAquascape: (include?: Includeable[]) => Promise<Aquascape | null>
+    getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape>
 
-    getAquascapeById: (id: number, include?: Includeable[]) => Promise<Aquascape | null>
+    getAquascapeById: (id: number, include?: Includeable[]) => Bluebird<Aquascape | null>
 
-    getAquascapeImages: (aquascapeId: number) => Promise<AquascapeImage[]>
+    getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
 }
 
 @Injectable()
@@ -26,28 +28,29 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
     }
 
     async getAquascapes(pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) {
-        const where = filter ? {trending: filter.trending} : undefined
+        const where = filter ? {
+            trending: filter.trending,
+            userId: filter.userId
+        } : undefined
 
-        return await this.findAll({
+        return this.findAll({
             where,
             include,
-            order: [
-                ['createdAt', 'DESC']
-            ],
+            order: [['createdAt', 'DESC']],
             limit: pagination.limit,
             offset: pagination.offset
         })
     }
 
-    async getFeaturedAquascape(include?: Includeable[]) {
-        return await this.findOne({where: {featured: true}, include})
+    getFeaturedAquascape(include?: Includeable[]) {
+        return this.findOne({where: {featured: true}, include})
     }
 
-    async getAquascapeById(id: number, include?: Includeable[]) {
-        return await this.findOne({where: {id}, include})
+    getAquascapeById(id: number, include?: Includeable[]) {
+        return this.findOne({where: {id}, include})
     }
 
-    async getAquascapeImages(aquascapeId: number) {
-        return await AquascapeImage.findAll({where: {aquascapeId}})
+    getAquascapeImages(aquascapeId: number) {
+        return AquascapeImage.findAll({where: {aquascapeId}})
     }
 }
