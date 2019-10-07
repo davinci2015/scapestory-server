@@ -49,12 +49,12 @@ export const resolvers = {
                 [CommentEntityType.IMAGE]: provider.addCommentForAquascapeImage
             }
 
-            return await methodMapper[args.entityType](
-                args.entityId,
-                context.currentUser.id,
-                args.content,
-                args.parentCommentId
-            )
+            return await methodMapper[args.entityType]({
+                entityId: args.entityId,
+                userId: context.currentUser.id,
+                content: args.content,
+                parentCommentId: args.parentCommentId
+            })
         }
     }
 }
