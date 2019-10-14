@@ -260,7 +260,7 @@ connectToDatabase((database: Database) => {
         .then(async () => {
             await Promise.all(tanks.map((tank) => Tank.create(tank)))
             await Promise.all(co2.map((item) => CO2.create(item)))
-            
+
             await Promise.all(lights.map((light) => Light.create(light)))
             await Promise.all(plants.map((plant) => Plant.create(plant)))
             await Promise.all(hardscape.map((hard) => Hardscape.create(hard)))

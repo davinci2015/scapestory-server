@@ -21,6 +21,7 @@ import {CO2} from 'db/models/CO2'
 import {Substrate} from 'db/models/Substrate'
 import {Additive} from 'db/models/Additive'
 import {Tank} from 'db/models/Tank'
+import {AquascapeImage} from 'db/models/AquascapeImage'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
@@ -54,7 +55,8 @@ const modelMapping = {
     co2: CO2,
     substrates: Substrate,
     additives: Additive,
-    tank: Tank
+    tank: Tank,
+    images: AquascapeImage
 }
 
 export const resolvers = {
