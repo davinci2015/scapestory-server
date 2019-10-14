@@ -30,15 +30,15 @@ export class CommentProvider implements CommentProviderInterface {
     ) {
     }
 
-    getCommentsForAquascape(aquascapeId: number, include?: Includeable[]) {
+    getCommentsForAquascape = (aquascapeId: number, include?: Includeable[]) => {
         return this.commentRepository.findAll({where: {aquascapeId}, include})
     }
 
-    getCommentsForAquascapeImage(aquascapeImageId: number, include?: Includeable[]) {
+    getCommentsForAquascapeImage = (aquascapeImageId: number, include?: Includeable[]) => {
         return this.commentRepository.findAll({where: {aquascapeImageId}, include})
     }
 
-    addCommentForAquascape(data: AddCommentArgs) {
+    addCommentForAquascape = (data: AddCommentArgs) => {
         return this.commentRepository.create({
             aquascapeId: data.entityId,
             userId: data.userId,
@@ -47,7 +47,7 @@ export class CommentProvider implements CommentProviderInterface {
         })
     }
 
-    addCommentForAquascapeImage(data: AddCommentArgs) {
+    addCommentForAquascapeImage = (data: AddCommentArgs) => {
         return this.commentRepository.create({
             aquascapeImageId: data.entityId,
             userId: data.userId,

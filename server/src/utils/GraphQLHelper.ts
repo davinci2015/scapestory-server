@@ -1,3 +1,4 @@
+import * as graphqlFields from 'graphql-fields'
 import {Includeable} from 'sequelize/types'
 import {GraphQLResolveInfo} from 'graphql'
 

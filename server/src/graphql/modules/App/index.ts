@@ -4,6 +4,7 @@ import {FollowModule} from 'graphql/modules/Follow'
 import {UserModule} from 'graphql/modules/User'
 import {AuthModule} from 'graphql/modules/Auth'
 import {LightModule} from 'graphql/modules/Light'
+import {CommentModule} from 'graphql/modules/Comment'
 
 export const AppModule = new GraphQLModule({
     imports: [
@@ -11,6 +12,7 @@ export const AppModule = new GraphQLModule({
         AuthModule,
         FollowModule,
         AquascapeModule,
-        LightModule
+        LightModule,
+        CommentModule
     ]
 })
