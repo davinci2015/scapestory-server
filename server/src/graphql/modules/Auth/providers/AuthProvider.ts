@@ -9,7 +9,7 @@ import {authenticateFacebook, authenticateGoogle} from 'graphql/modules/Auth/pas
 import {AuthHelper} from 'utils/AuthHelper'
 import {tokens} from 'di/tokens'
 import {SocialLoginRepositoryInterface} from 'db/repositories/SocialLogin'
-import {appConstants} from 'constants/appConstants'
+import socialProviders from 'constants/socialProviders'
 import {SocialLogin} from 'db/models/SocialLogin'
 
 export type AuthPayload = {
@@ -97,7 +97,7 @@ export class AuthProvider implements AuthProviderInterface {
                 email: data.profile.emails[0].value,
                 username: data.profile.displayName,
                 profileImage: data.profile.photos[0].value,
-                provider: appConstants.socialLoginProviders.FACEBOOK,
+                provider: socialProviders.FACEBOOK,
                 socialProfileId: data.profile.id
             })
         }
@@ -113,7 +113,7 @@ export class AuthProvider implements AuthProviderInterface {
                 email: data.profile.emails[0].value,
                 username: data.profile.displayName,
                 profileImage: data.profile._json.picture,
-                provider: appConstants.socialLoginProviders.GOOGLE,
+                provider: socialProviders.GOOGLE,
                 socialProfileId: data.profile.id
             })
         }

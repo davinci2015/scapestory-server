@@ -1,5 +1,5 @@
-import {appConstants} from 'constants/appConstants'
+import environments from 'constants/environments'
 
 export class AppHelper {
-    static isDevelopment = () => process.env.ENVIRONMENT === appConstants.environments.DEVELOP
+    static isDevelopment = () => process.env.ENVIRONMENT === environments.DEVELOP
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@graphql-modules/di'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {SocialLogin} from 'db/models/SocialLogin'
-import {appConstants} from 'constants/appConstants'
+import socialProviders from 'constants/socialProviders'
 
 export interface SocialLoginRepositoryInterface extends BaseRepositoryInterface<SocialLogin> {
     addFacebookLogin(userId: number, socialId: string): Promise<SocialLogin>
@@ -22,7 +22,7 @@ export class SocialLoginRepository extends BaseRepository<SocialLogin> implement
 
     async addFacebookLogin(userId: number, socialId: string): Promise<SocialLogin> {
         return await this.create({
-            userId, socialId, provider: appConstants.socialLoginProviders.FACEBOOK
+            userId, socialId, provider: socialProviders.FACEBOOK
         })
     }
 }

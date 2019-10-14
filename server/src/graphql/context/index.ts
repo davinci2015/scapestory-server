@@ -1,7 +1,7 @@
 import {ModuleContext} from '@graphql-modules/core'
 import {Context} from 'apollo-server-core'
 
-import {appConstants} from 'constants/appConstants'
+import headers from 'constants/headers'
 import {AuthHelper, JWTTokenPayload} from 'utils/AuthHelper'
 import {SessionInterface} from 'interfaces'
 
@@ -35,7 +35,7 @@ export const attachCurrentUserId = (
     currentContext: ModuleContext,
     moduleSessionInfo: SessionInterface
 ): {currentUserId: number} | object => {
-    const authToken = session.req.headers[appConstants.headers.AUTH_TOKEN]
+    const authToken = session.req.headers[headers.AUTH_TOKEN]
 
     if (!authToken || typeof authToken !== 'string') {
         return {}

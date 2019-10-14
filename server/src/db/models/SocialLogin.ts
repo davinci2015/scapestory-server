@@ -1,4 +1,4 @@
-import {appConstants} from 'constants/appConstants'
+import socialProviders from 'constants/socialProviders'
 import {User} from 'db/models/User'
 import {Table, Column, Model, ForeignKey, DataType} from 'sequelize-typescript'
 
@@ -11,6 +11,6 @@ export class SocialLogin extends Model<SocialLogin> {
     @Column
     socialId: string
 
-    @Column(DataType.ENUM(appConstants.socialLoginProviders.FACEBOOK, appConstants.socialLoginProviders.GOOGLE))
+    @Column(DataType.ENUM(socialProviders.FACEBOOK, socialProviders.GOOGLE))
     provider: string
 }
