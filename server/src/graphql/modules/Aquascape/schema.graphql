@@ -20,11 +20,9 @@ type Like {
 
 type AquascapeImage {
     id: Int!
-    mainImage: Boolean! 
     title: String
     description: String
     url: String!
-    likes: [User]!
 }
 
 type Substrate {
@@ -108,7 +106,7 @@ type Aquascape {
     tank: Tank
     photoperiod: Int!
     mainImage: String
-    images: [AquascapeImage]!
+    images: [AquascapeImage!]
     viewsCount: Int!
     likesCount: Int!
     tags: [Tag!]!
