@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import * as React from 'react'
+import React from 'react'
 import {Mutation, MutationResult} from 'react-apollo'
 import {ReactFacebookFailureResponse, ReactFacebookLoginInfo} from 'react-facebook-login'
 import config from 'config'

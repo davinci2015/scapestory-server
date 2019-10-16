@@ -7,7 +7,7 @@ import UserWidget from 'components/molecules/UserWidget'
 
 interface Props {
     image: string
-    userImage: string
+    userImage?: string
     title: React.ReactNode
     name: React.ReactNode
     viewsCount: number

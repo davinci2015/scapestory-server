@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import {typography} from 'styles'
 import cx from 'classnames'
 

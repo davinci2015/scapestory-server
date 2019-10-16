@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 
 import {Badge, FormattedMessage, Paragraph, Icon} from 'components/atoms'
 import {AquascapeData} from 'containers/Home/query'

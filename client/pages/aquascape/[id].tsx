@@ -1,17 +1,16 @@
 import React from 'react'
 
 import {App} from 'components/core'
-import withAuth from 'hocs/withAuth'
 import NavigationContainer from 'containers/Navigation'
 import FooterContainer from 'containers/Footer'
-import HomeContainer from 'containers/Home'
+import AquascapeDetailsContainer from 'containers/AquascapeDetails'
 
-const Index = () => (
+const AquascapeDetails = () => (
     <App>
         <NavigationContainer />
-        <HomeContainer/>
-        <FooterContainer/>
+        <AquascapeDetailsContainer />
+        <FooterContainer />
     </App>
 )
 
-export default withAuth(Index)
+export default AquascapeDetails
