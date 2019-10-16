@@ -1,14 +1,8 @@
 // next.config.js
-const withTypescript = require('@zeit/next-typescript')
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-
-module.exports = withTypescript({
+module.exports = {
     webpack(config, options) {
-        // Do not run type checking twice
-        if (options.isServer) config.plugins.push(new ForkTsCheckerWebpackPlugin())
-
         config.resolve.modules.unshift(__dirname)
 
         return config
-    },
-})
+    }
+}

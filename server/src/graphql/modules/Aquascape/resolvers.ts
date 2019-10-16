@@ -32,6 +32,7 @@ export type CreateAquascapeArgs = {
 
 export type AquascapesArgs = {
     filter?: AquascapeFilter
+    userId?: number
     pagination: Pagination
 }
 
@@ -61,10 +62,25 @@ const modelMapping = {
 
 export const resolvers = {
     Query: {
-        async aquascapes(root, args: AquascapesArgs, context: ModuleContext, info: GraphQLResolveInfo) {
+        async aquascapes(
+            root,
+            args: {pagination: Pagination, userId?: number},
+            context: ModuleContext,
+            info: GraphQLResolveInfo
+        ) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
             const fields = [...defaultInclude, ...GraphQLHelper.getIncludeableFields(info, modelMapping)]
-            return await provider.getAquascapes(args.pagination, args.filter, fields)
+            return await provider.getAquascapes(args.pagination, args.userId, fields)
+        },
+        async trendingAquascapes(
+            root,
+            args: {pagination: Pagination},
+            context: ModuleContext,
+            info: GraphQLResolveInfo
+        ) {
+            const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
+            const fields = [...defaultInclude, ...GraphQLHelper.getIncludeableFields(info, modelMapping)]
+            return await provider.getTrendingAquascapes(args.pagination, fields)
         },
         async featuredAquascape(root, args, context: ModuleContext, info: GraphQLResolveInfo) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)

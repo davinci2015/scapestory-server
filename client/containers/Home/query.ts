@@ -57,7 +57,7 @@ export const QUERY_RECENT_AQUASCAPES = gql`
 
 export const QUERY_TRENDING_AND_FEATURED_AQUASCAPES = gql`
     query Aquascapes($pagination: Pagination!) {
-        trending: aquascapes(pagination: $pagination, filter: { trending: true }) {
+        trending: trendingAquascapes(pagination: $pagination) {
             ...AquascapeFields
         }
         featured: featuredAquascape {

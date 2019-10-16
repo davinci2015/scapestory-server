@@ -3,7 +3,7 @@ import {Includeable} from 'sequelize/types'
 import * as uuid from 'uuid/v4'
 import * as Bluebird from 'bluebird'
 
-import {AquascapeRepositoryInterface, AquascapeFilter} from 'db/repositories/Aquascape'
+import {AquascapeRepositoryInterface} from 'db/repositories/Aquascape'
 import {VisitorRepositoryInterface} from 'db/repositories/Visitor'
 import {Aquascape} from 'db/models/Aquascape'
 import {AquascapeImage} from 'db/models/AquascapeImage'
@@ -13,9 +13,11 @@ import {Pagination} from 'interfaces'
 import {CreateAquascapeArgs} from './resolvers'
 
 export interface AquascapeProviderInterface {
-    getAquascapes: (pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) => Bluebird<Aquascape[]>
+    getAquascapes: (pagination: Pagination, userId?: number, include?: Includeable[]) => Bluebird<Aquascape[]>
 
     getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape | null>
+
+    getTrendingAquascapes: (pagination: Pagination, include?: Includeable[]) => Bluebird<Aquascape>
 
     getAquascapeById: (id: number, include?: Includeable[]) => Bluebird<Aquascape | null>
 
@@ -34,12 +36,16 @@ export class AquascapeProvider implements AquascapeProviderInterface {
     ) {
     }
 
-    getAquascapes(pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) {
-        return this.aquascapeRepository.getAquascapes(pagination, filter, include)
+    getAquascapes(pagination: Pagination, userId?: number, include?: Includeable[]) {
+        return this.aquascapeRepository.getAquascapes(pagination, userId, include)
     }
 
     getFeaturedAquascape(include?: Includeable[]) {
         return this.aquascapeRepository.getFeaturedAquascape(include)
+    }
+
+    getTrendingAquascapes(pagination: Pagination, include?: Includeable[]) {
+        return this.aquascapeRepository.getTrendingAquascapes(pagination, include)
     }
 
     getAquascapeById(id: number, include?: Includeable[]) {

@@ -11,7 +11,7 @@ const NavigationContainer = () => {
     const {data} = useQuery(USER_PROFILE_IMAGE, {
         ssr: false
     })
-    
+
     return (
         <AuthenticationGuard render={({isAuthenticated}) => (
             <Navigation

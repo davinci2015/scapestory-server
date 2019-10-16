@@ -126,11 +126,11 @@ input Pagination {
 
 input AquascapesFilter {
     trending: Boolean
-    userId: Int
 }
 
 type Query {
-    aquascapes(pagination: Pagination, filter: AquascapesFilter): [Aquascape]
+    aquascapes(pagination: Pagination, userId: Int): [Aquascape]
+    trendingAquascapes(pagination: Pagination): [Aquascape]
     featuredAquascape: Aquascape
     aquascape(id: Int!): Aquascape
 }

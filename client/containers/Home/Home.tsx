@@ -55,12 +55,12 @@ const HomeContainer = () => {
         <Content>
             <Grid>
                 {
-                    !highlighted.loading && highlighted.data.featured &&
+                    !highlighted.loading && highlighted.data && highlighted.data.featured &&
                     <HeroSection featuredAquascape={highlighted.data.featured} />
                 }
 
                 {
-                    !highlighted.loading && highlighted.data.trending && 
+                    !highlighted.loading && highlighted.data && highlighted.data.trending && 
                     <SectionCardList title={(
                         <Headline as="h2" variant="h4">
                             <FormattedMessage id="home_list_title_trending" defaultMessage="Trending now" />
@@ -71,7 +71,7 @@ const HomeContainer = () => {
                 }
 
                 {
-                    !recent.loading && recent.data.aquascapes && 
+                    !recent.loading && recent.data && recent.data.aquascapes && 
                     <>
                         <SectionCardList title={(
                             <Headline as="h2" variant="h4">

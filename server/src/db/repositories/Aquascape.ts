@@ -8,13 +8,14 @@ import * as Bluebird from 'bluebird'
 
 export interface AquascapeFilter {
     trending: boolean
-    userId: number
 }
 
 export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aquascape> {
-    getAquascapes: (pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) => Bluebird<Aquascape[]>
+    getAquascapes: (pagination: Pagination, userId?: number, include?: Includeable[]) => Bluebird<Aquascape[]>
 
     getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape>
+
+    getTrendingAquascapes: (pagination: Pagination, include?: Includeable[]) => Bluebird<Aquascape>
 
     getAquascapeById: (id: number, include?: Includeable[]) => Bluebird<Aquascape | null>
 
@@ -27,14 +28,25 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
         super(Aquascape)
     }
 
-    async getAquascapes(pagination: Pagination, filter?: AquascapeFilter, include?: Includeable[]) {
-        const where = filter ? {
-            trending: filter.trending,
-            userId: filter.userId
-        } : undefined
+    getAquascapes(pagination: Pagination, userId?: number, include?: Includeable[]) {
+        const where: {[key: string]: number} = {}
+
+        if (userId) {
+            where.userId = userId
+        }
 
         return this.findAll({
             where,
+            include,
+            order: [['createdAt', 'DESC']],
+            limit: pagination.limit,
+            offset: pagination.offset
+        })
+    }
+
+    async getTrendingAquascapes(pagination: Pagination, include?: Includeable[]) {
+        return this.findAll({
+            where: {trending: true},
             include,
             order: [['createdAt', 'DESC']],
             limit: pagination.limit,
