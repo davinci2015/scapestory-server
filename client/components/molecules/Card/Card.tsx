@@ -65,6 +65,7 @@ const Card = ({
             }
 
             .header {
+                cursor: pointer;
                 position: relative;
                 height: 180px;
                 width: calc(100% + 2px);
@@ -107,9 +108,11 @@ const Card = ({
             }
 
             .header > .icons {
+                position: absolute;
+                top: 0;
+                width: 100%;
                 text-align: right;
-                padding-right: ${spaces.s16};
-                padding-top: ${spaces.s18};
+                padding: ${spaces.s18} ${spaces.s16} 0 ${spaces.s16};
             }
 
             .header > .icons > :global(.${IconText.classes.root}) {
