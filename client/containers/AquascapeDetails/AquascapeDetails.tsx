@@ -1,19 +1,41 @@
 import React from 'react'
-import {useRouter} from 'next/router'
+import {withRouter, Router} from 'next/router'
+import {useQuery} from 'react-apollo'
 
+import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetails/query'
 import {Grid, Content} from 'components/core'
+import HeroSection from 'components/organisms/Home/HeroSection';
 
+interface Props {
+    router: Router
+}
 
-const AquascapeDetailsContainer = () => {
-    const router = useRouter()
+const AquascapeDetailsContainer = ({router}: Props) => {
+    const id = router.query.id
+    const {data, error, loading} = useQuery(AQUASCAPE_DETAILS, {variables: {id: Number(id)}})
+
+    if (loading) {
+        // TODO: Show loader
+        return null
+    }
+
+    if (error) {
+        // TODO: Show error
+        return null
+    }
+
+    if (data && data.aquascape === null) {
+        // TODO: Return not found page
+        return null
+    }
 
     return (
         <Content>
             <Grid>
-                <h1>{router.query.id}</h1>
+                <HeroSection aquascape={data.aquascape} />
             </Grid>
         </Content>
     )
 }
 
-export default AquascapeDetailsContainer
+export default withRouter(AquascapeDetailsContainer)

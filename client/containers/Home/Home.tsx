@@ -56,7 +56,7 @@ const HomeContainer = () => {
             <Grid>
                 {
                     !highlighted.loading && highlighted.data && highlighted.data.featured &&
-                    <HeroSection featuredAquascape={highlighted.data.featured} />
+                    <HeroSection aquascape={highlighted.data.featured} />
                 }
 
                 {

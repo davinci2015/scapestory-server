@@ -6,20 +6,20 @@ import {colors, spaces} from 'styles'
 import Hero from 'components/organisms/Hero'
 
 interface Props {
-    featuredAquascape: AquascapeData
+    aquascape: AquascapeData
 }
 
-const HeroSection = ({featuredAquascape}: Props) => (
+const HeroSection = ({aquascape}: Props) => (
     <>
         <div className="section">
             <Hero
-                title={featuredAquascape.title}
-                viewsCount={featuredAquascape.viewsCount}
-                likesCount={featuredAquascape.likesCount}
-                tags={featuredAquascape.tags}
-                username={featuredAquascape.user.username}
-                userImage={featuredAquascape.user.profileImage}
-                image={featuredAquascape.mainImage}
+                title={aquascape.title}
+                viewsCount={aquascape.viewsCount}
+                likesCount={aquascape.likesCount}
+                tags={aquascape.tags}
+                username={aquascape.user.username}
+                userImage={aquascape.user.profileImage}
+                image={aquascape.mainImage}
                 topSection={
                     <Badge background="gradient" icon={<Icon d={Icon.FIRE} color={colors.WHITE} />}>
                         <Paragraph type="body" color={colors.WHITE} weight="bold">
