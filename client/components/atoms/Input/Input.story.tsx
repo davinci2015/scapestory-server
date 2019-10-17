@@ -4,7 +4,7 @@ import {storiesOf} from '@storybook/react'
 import Input from './Input'
 import {Icon, InputAdornment} from 'components/atoms'
 
-storiesOf('Input', module)
+storiesOf('Atoms | Input', module)
   .add('default', () => <Input placeholder='Email' label='Email' />)
   .add('with end adornment', () => (
     <Input

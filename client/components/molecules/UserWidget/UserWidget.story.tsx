@@ -3,7 +3,7 @@ import {storiesOf} from '@storybook/react'
 
 import UserWidget from './UserWidget'
 
-storiesOf('UserWidget', module)
+storiesOf('Molecules | UserWidget', module)
   .add('default', () => (
     <UserWidget
       text="My awesome aquascape"

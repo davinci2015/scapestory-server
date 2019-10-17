@@ -3,7 +3,7 @@ import React from 'react'
 import {Badge, FormattedMessage, Paragraph, Icon} from 'components/atoms'
 import {AquascapeData} from 'containers/Home/query'
 import {colors, spaces} from 'styles'
-import Hero from 'components/organisms/Hero'
+import Hero from 'components/sections/Hero'
 
 interface Props {
     aquascape: AquascapeData

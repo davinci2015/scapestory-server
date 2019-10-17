@@ -3,10 +3,10 @@ import {useQuery} from '@apollo/react-hooks'
 
 import {Grid, Content} from 'components/core'
 import {Headline, FormattedMessage} from 'components/atoms'
-import {SectionCardList} from 'components/organisms'
+import {SectionCardList} from 'components/sections'
 
 import {QUERY_TRENDING_AND_FEATURED_AQUASCAPES, QUERY_RECENT_AQUASCAPES} from './query'
-import HeroSection from 'components/organisms/Home/HeroSection'
+import HeroSection from 'components/sections/Home/HeroSection'
 import {renderAquascapeCards} from 'utils/render'
 
 const HomeContainer = () => {

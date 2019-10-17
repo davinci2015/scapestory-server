@@ -3,7 +3,7 @@ import {storiesOf} from '@storybook/react'
 
 import Paragraph from './Paragraph'
 
-storiesOf('Paragraph', module)
+storiesOf('Atoms | Paragraph', module)
   .add('default', () => <Paragraph>Lorem ipsum</Paragraph>)
   .add('t1', () => <Paragraph type="t1">Lorem ipsum</Paragraph>)
   .add('s1', () => <Paragraph type="s1">Lorem ipsum</Paragraph>)

@@ -4,7 +4,7 @@ import {useQuery} from 'react-apollo'
 
 import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetails/query'
 import {Grid, Content} from 'components/core'
-import HeroSection from 'components/organisms/Home/HeroSection';
+import HeroSection from 'components/sections/Home/HeroSection'
 
 interface Props {
     router: Router

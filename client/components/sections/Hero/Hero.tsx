@@ -13,7 +13,7 @@ interface Props {
     viewsCount?: number
     likesCount?: number
     tags: any[]
-    topSection: React.ReactNode
+    topSection?: React.ReactNode
 }
 
 const Hero = ({
@@ -29,9 +29,12 @@ const Hero = ({
         <div className="container">
             <img className="container-image" src={image} alt={title} />
             <div className="gradient gradient--top"></div>
-            <div className="top-section">
-                {topSection}
-            </div>
+            {
+                topSection &&
+                <div className="top-section">
+                    {topSection}
+                </div>
+            }
             <div className="content">
                 <Headline as="h1" variant="h2" color={colors.WHITE}>
                     {title}

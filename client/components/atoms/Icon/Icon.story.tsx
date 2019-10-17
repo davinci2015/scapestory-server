@@ -6,7 +6,7 @@ import Icon from './Icon'
 import IconButton from './IconButton'
 import IconText from './IconText'
 
-storiesOf('Icon', module)
+storiesOf('Atoms | Icon', module)
   .add('default', () => <Icon d={Icon.HEART}/>)
   .add('icon button', () => <IconButton onClick={() => action('Icon click')}><Icon d={Icon.HEART}/></IconButton>)
   .add('icon with text', () => <IconText icon={Icon.HEART} text='Some icon'/>)

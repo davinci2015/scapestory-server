@@ -5,6 +5,7 @@ import Link from 'next/link'
 import {Headline, Tag, IconText, Icon, Paragraph} from 'components/atoms'
 import {colors, spaces, borderRadius, media} from 'styles'
 import UserWidget from 'components/molecules/UserWidget'
+import {TagInterface} from 'interfaces'
 
 interface Props {
     id: string,
@@ -15,7 +16,7 @@ interface Props {
     name: React.ReactNode
     viewsCount: number
     likesCount: number
-    tags: any[]
+    tags: TagInterface[]
 }
 
 const classes = {

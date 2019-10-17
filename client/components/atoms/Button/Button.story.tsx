@@ -5,7 +5,7 @@ import Button from './Button'
 import {Icon} from 'components/atoms'
 import {colors} from 'styles'
 
-storiesOf('Button', module)
+storiesOf('Atoms | Button', module)
   .add('primary', () => <Button>Button</Button>)
   .add('secondary', () => <Button color="secondary">Button</Button>)
   .add('outlined', () => <Button variant="outlined">Button</Button>)

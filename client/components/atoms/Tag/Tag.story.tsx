@@ -3,7 +3,7 @@ import {storiesOf} from '@storybook/react'
 
 import Tag from './Tag'
 
-storiesOf('Tag', module)
+storiesOf('Atoms | Tag', module)
   .add('primary', () => <Tag text="Tag" variant="primary"/>)
   .add('secondary', () => <Tag text="Tag" variant="secondary"/>)
   .add('tertiary', () => <Tag text="Tag" variant="tertiary"/>)

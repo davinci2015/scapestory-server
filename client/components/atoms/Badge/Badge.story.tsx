@@ -5,7 +5,7 @@ import {Icon, Paragraph} from 'components/atoms'
 import {colors} from 'styles'
 import Badge from './Badge'
 
-storiesOf('Badge', module)
+storiesOf('Atoms | Badge', module)
   .add('default', () => (
     <Badge icon={<Icon d={Icon.FIRE} color={colors.WHITE} />}>
       <Paragraph type="body" color={colors.BLACK}>

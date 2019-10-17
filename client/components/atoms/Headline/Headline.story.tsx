@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 
 import Headline from './Headline'
 
-storiesOf('Headline', module)
+storiesOf('Atoms | Headline', module)
   .add('h1', () => <Headline variant="h1">Button</Headline>)
   .add('h2', () => <Headline variant="h2">Button</Headline>)
   .add('h3', () => <Headline variant="h3">Button</Headline>)

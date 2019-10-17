@@ -5,7 +5,7 @@ import List from './List'
 import {Icon} from 'components/atoms'
 import {colors} from 'styles'
 
-storiesOf('List', module)
+storiesOf('Molecules | List', module)
   .add('default', () => (
     <List
       title="Plants"
