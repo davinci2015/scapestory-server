@@ -6,7 +6,7 @@ import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'compone
 
 import validator from 'services/validator'
 import {spaces} from 'styles'
-import {LOGIN_MUTATION, LoginResult, LoginVariables} from 'components/organisms/LoginModal/LoginForm/mutations'
+import {LOGIN_MUTATION, LoginResult, LoginVariables} from 'components/modals/LoginModal/LoginForm/mutations'
 
 const inputKeys = {
     email: 'email',

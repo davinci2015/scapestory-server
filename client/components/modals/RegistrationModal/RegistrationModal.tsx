@@ -2,7 +2,7 @@ import {useContext} from 'react'
 import Router from 'next/router'
 
 import {Paragraph, FormattedMessage} from 'components/atoms'
-import {RegistrationForm, AuthModal} from 'components/organisms'
+import {RegistrationForm, AuthModal} from 'components/modals'
 
 import {colors} from 'styles'
 import {ModalContext} from 'context/modal'

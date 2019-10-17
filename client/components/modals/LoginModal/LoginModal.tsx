@@ -1,7 +1,7 @@
 import {useContext} from 'react'
 import Router from 'next/router'
 
-import {LoginForm, AuthModal} from 'components/organisms'
+import {LoginForm, AuthModal} from 'components/modals'
 import {Paragraph, FormattedMessage} from 'components/atoms'
 
 import {colors} from 'styles'

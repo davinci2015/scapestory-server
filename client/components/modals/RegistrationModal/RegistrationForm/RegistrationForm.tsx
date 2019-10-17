@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage, Checkbox} from 'components/atoms'
 
-import {RegisterResult, RegisterVariables, SIGN_UP_MUTATION} from 'components/organisms/RegistrationModal/RegistrationForm/mutations'
+import {RegisterResult, RegisterVariables, SIGN_UP_MUTATION} from 'components/modals/RegistrationModal/RegistrationForm/mutations'
 import validator from 'services/validator'
 import {spaces} from 'styles'
 import routes from 'routes'

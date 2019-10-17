@@ -3,7 +3,7 @@ import Router from 'next/router'
 
 import {Modal} from 'components/molecules'
 import {ModalContext} from 'context/modal'
-import {LoginModal, RegistrationModal, FeedbackModal} from 'components/organisms'
+import {LoginModal, RegistrationModal, FeedbackModal} from 'components/modals'
 
 const modalMapping = {
     login: LoginModal,

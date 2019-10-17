@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 
 import {ModalContext} from 'context/modal'
-import {Footer} from 'components/organisms'
+import {Footer} from 'components/sections'
 
 const FooterContainer = () => {
     const {openModal} = useContext(ModalContext)
