@@ -12,6 +12,7 @@ export interface AquascapesFilter {
 export interface AquascapeData {
     id: string
     title: string
+    slug: string
     mainImage: string
     viewsCount: number
     likesCount: number

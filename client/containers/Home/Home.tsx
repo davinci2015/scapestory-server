@@ -7,7 +7,7 @@ import {SectionCardList} from 'components/organisms'
 
 import {QUERY_TRENDING_AND_FEATURED_AQUASCAPES, QUERY_RECENT_AQUASCAPES} from './query'
 import HeroSection from 'components/organisms/Home/HeroSection'
-import {renderAquascapeCards} from 'utils/render';
+import {renderAquascapeCards} from 'utils/render'
 
 const HomeContainer = () => {
     const itemsPerLoad = 4

@@ -5,6 +5,8 @@ export const renderAquascapeCards = (aquascapes: AquascapeData[]) =>
     aquascapes.map((scape: AquascapeData) => (
         <Card
             key={scape.id}
+            id={scape.id}
+            slug={scape.title}
             name={scape.user.name}
             title={scape.title}
             viewsCount={scape.viewsCount}
