@@ -9,9 +9,10 @@ import {SubNavigation} from 'components/molecules'
 import HeroSection from 'components/sections/AquascapeDetails/HeroSection'
 import FloraSection from 'components/sections/AquascapeDetails/FloraSection'
 import {Plant, Livestock, Hardscape} from 'generated/graphql'
+import EquipmentSection from 'components/sections/AquascapeDetails/EquipmentSection';
 
 
-export type AquascapeDetailsPlant = Pick<Plant, 'id' | 'name'> 
+export type AquascapeDetailsPlant = Pick<Plant, 'id' | 'name'>
 
 export type AquascapeDetailsLivestock = Pick<Livestock, 'id' | 'name'>
 
@@ -58,16 +59,15 @@ const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => 
                 </SubNavigation.Item>
             </SubNavigation>
             <Grid>
-                <Divider/>
-                <FloraSection 
-                    plants={data.aquascape.plants} 
+                <Divider />
+                <FloraSection
+                    plants={data.aquascape.plants}
                     livestock={data.aquascape.livestock}
                     hardscape={data.aquascape.hardscape}
                 />
-                <Divider/>
-                <div style={{paddingBottom: '100vh'}}>
-
-                </div>
+                <Divider />
+                <EquipmentSection />
+                <Divider />
             </Grid>
         </Content>
     )

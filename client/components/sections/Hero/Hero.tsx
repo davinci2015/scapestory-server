@@ -1,10 +1,11 @@
 import React from 'react'
+import cx from 'classnames'
 
-import {borderRadius, spaces, colors, zIndex, media, applyStyles} from 'styles'
+import {borderRadius, spaces, colors, zIndex, media} from 'styles'
 import {Headline} from 'components/atoms'
 import {TopSection, TopLeft, TopRight} from 'components/sections/Hero/TopSection'
 import {BottomSection, BottomLeft, BottomRight} from 'components/sections/Hero/BottomSection'
-import {GRID_MAX_WIDTH} from 'components/core/Grid'
+import {GRID_MAX_WIDTH} from 'components/core/Grid';
 
 interface Props {
     image: string
@@ -20,15 +21,19 @@ const Hero = ({
     topSection,
     bottomSection,
     variant = 'default'
-}: Props) => {
-    const applyDefaultStyles = applyStyles(variant === 'default')
-    const applyCoverStyles = applyStyles(variant === 'cover')
-
-    return (
+}: Props) => (
         <div className="container">
-            <img className="container-image" src={image} alt={title} />
-            <div className="gradient gradient--top"></div>
-            <div className="content">
+            <img className={cx('container-image', {
+                'radius': variant === 'default'
+            })} src={image} alt={title} />
+
+            <div className={cx('gradient gradient--top', {
+                'radius': variant === 'default'
+            })}></div>
+
+            <div className={cx('content', {
+                'content--cover': variant === 'cover'
+            })}>
                 {topSection}
                 <div className="bottom">
                     <Headline as="h1" variant="h2" color={colors.WHITE}>
@@ -37,7 +42,11 @@ const Hero = ({
                     {bottomSection}
                 </div>
             </div>
-            <div className="gradient gradient--bottom"></div>
+
+            <div className={cx('gradient gradient--bottom', {
+                'radius': variant === 'default'
+            })}></div>
+
             <style jsx>{`
                 .container {
                     position: relative;
@@ -61,10 +70,8 @@ const Hero = ({
                 }
 
                 @media ${media.up('medium')} {
-                    .gradient {
-                        ${applyDefaultStyles(`
-                            border-radius: ${borderRadius.SECONDARY};
-                        `)}
+                    .radius {
+                        border-radius: ${borderRadius.SECONDARY};
                     }
                 }
 
@@ -88,40 +95,24 @@ const Hero = ({
                     z-index: ${zIndex.BELOW};
                 }
 
-                @media ${media.up('medium')} {
-                    .container-image {
-                        ${applyDefaultStyles(`
-                            border-radius: ${borderRadius.SECONDARY};
-                        `)}
-                    }
-                }
-
                 .content {
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
                     height: 100%;
-                    padding: 0 ${spaces.s48};
+                    padding: ${spaces.s36} ${spaces.s48} ${spaces.s48} ${spaces.s48};
 
                     z-index: ${zIndex.DEFAULT};
-
-                    ${applyCoverStyles(`
-                        margin: 0 auto;
-                        max-width: ${GRID_MAX_WIDTH};
-                        padding: ${spaces.s36} ${spaces.s24} ${spaces.s48} ${spaces.s24}; 
-                    `)}
                 }
 
-                @media ${media.up('medium')} {
-                    .content {
-                        ${applyDefaultStyles(`
-                            padding: ${spaces.s36} ${spaces.s48} ${spaces.s48} ${spaces.s48};
-                        `)}
-                    }
+                .content--cover {
+                    max-width: ${GRID_MAX_WIDTH};
+                    margin: 0 auto;
+                    padding: ${spaces.s36} ${spaces.s24} ${spaces.s48} ${spaces.s24}; 
+                }
 
-                    .content :global(.${Headline.classes.root}) {
-                        margin-bottom: ${spaces.s60};
-                    }
+                .content :global(.${Headline.classes.root}) {
+                    margin-bottom: ${spaces.s60};
                 }
 
                 .content .bottom {
@@ -130,7 +121,6 @@ const Hero = ({
             `}</style>
         </div>
     )
-}
 
 Hero.TopSection = TopSection
 Hero.TopLeft = TopLeft

@@ -1,9 +1,9 @@
 import React from 'react'
 
 import {colors, boxShadow, zIndex} from 'styles'
-import {GRID_MAX_WIDTH} from 'components/core/Grid'
 import {SubNavigationItemProps, Item} from 'components/molecules/SubNavigation/Item'
-import {navigationHeight} from 'components/molecules/Navigation';
+import {navigationHeight} from 'components/molecules/Navigation'
+import {Grid} from 'components/core'
 
 type SubNavigationInterface<P = {}> = React.FunctionComponent<P> & {
     Item: React.FunctionComponent<SubNavigationItemProps>
@@ -13,7 +13,11 @@ const SubNavigation: SubNavigationInterface = ({children}) => {
     return (
         <>
             <div className="subnav">
-                <ul>{children}</ul>
+                <div className="wrapper">
+                    <Grid>
+                        <ul>{children}</ul>
+                    </Grid>
+                </div>
             </div>
 
             <style jsx>{`
@@ -29,18 +33,25 @@ const SubNavigation: SubNavigationInterface = ({children}) => {
                     box-shadow: ${boxShadow.PRIMARY};
                     z-index: ${zIndex.HIGH};
                 }
-                
-                .subnav > ul {
+
+                .subnav .wrapper {
                     width: 100%;
-                    max-width: ${GRID_MAX_WIDTH};
-                    margin: 0 auto;
+                }
+                
+                .subnav ul {
+                    width: 100%;
                     list-style: none;
                     display: flex;
                     padding: 0;
                 }
 
-                .subnav > ul :global(li:last-of-type::after) {
+                .subnav ul :global(li:last-of-type::after) {
                     display: none;
+                }
+
+                .subnav ul :global(li:first-of-type) {
+                    margin-left: 0;
+                    padding-left: 0;
                 }
             `}</style>
         </>

@@ -1,12 +1,12 @@
 import React from 'react'
 import {storiesOf} from '@storybook/react'
 
-import Card from './Card'
+import AquascapeCard from './AquascapeCard'
 
-storiesOf('Molecules | Card', module)
+storiesOf('Molecules | AquascapeCard', module)
   .add('default', () => (
     <div style={{ maxWidth: 420 }}>
-      <Card
+      <AquascapeCard
         id="random"
         slug="random"
         viewsCount={100}

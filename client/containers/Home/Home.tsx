@@ -3,7 +3,7 @@ import {useQuery} from '@apollo/react-hooks'
 
 import {Grid, Content} from 'components/core'
 import {Headline, FormattedMessage} from 'components/atoms'
-import {SectionCardList} from 'components/sections'
+import AquascapeCardList from 'components/sections/AquascapeCardList'
 
 import {QUERY_TRENDING_AND_FEATURED_AQUASCAPES, QUERY_RECENT_AQUASCAPES} from './query'
 import HeroSection from 'components/sections/Home/HeroSection'
@@ -61,41 +61,41 @@ const HomeContainer = () => {
 
                 {
                     !highlighted.loading && highlighted.data && highlighted.data.trending &&
-                    <SectionCardList title={(
+                    <AquascapeCardList title={(
                         <Headline as="h2" variant="h4">
                             <FormattedMessage id="home_list_title_trending" defaultMessage="Trending now" />
                         </Headline>
                     )}>
-                        <SectionCardList.List>
+                        <Grid.Row>
                             {renderAquascapeCards(highlighted.data.trending)}
-                        </SectionCardList.List>
-                    </SectionCardList>
+                        </Grid.Row>
+                    </AquascapeCardList>
                 }
 
                 {
                     !recent.loading && recent.data && recent.data.aquascapes &&
                     <>
-                        <SectionCardList title={(
+                        <AquascapeCardList title={(
                             <Headline as="h2" variant="h4">
                                 <FormattedMessage id="home_list_title_newest" defaultMessage="Recently added" />
                             </Headline>
                         )}>
-                            <SectionCardList.List>
+                            <Grid.Row>
                                 {renderAquascapeCards(recent.data.aquascapes.slice(0, 4))}
-                            </SectionCardList.List>
-                        </SectionCardList>
+                            </Grid.Row>
+                        </AquascapeCardList>
 
-                        <SectionCardList
+                        <AquascapeCardList
                             loadMore={allRecentLoaded ? undefined : loadMore}
                             title={(
                                 <Headline as="h2" variant="h4">
                                     <FormattedMessage id="home_list_title_explore" defaultMessage="Explore all aquascapes" />
                                 </Headline>
                             )}>
-                            <SectionCardList.List>
+                            <Grid.Row>
                                 {renderAquascapeCards(recent.data.aquascapes.slice(4))}
-                            </SectionCardList.List>
-                        </SectionCardList>
+                            </Grid.Row>
+                        </AquascapeCardList>
                     </>
                 }
             </Grid>

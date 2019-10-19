@@ -1,8 +1,8 @@
 import React from 'react'
 
-import CardList from './CardList'
 import {FormattedMessage, Headline, Icon} from 'components/atoms'
 import {colors, spaces, media} from 'styles'
+import {AquascapeCard} from 'components/molecules';
 
 interface Props {
     children: React.ReactNode
@@ -10,12 +10,12 @@ interface Props {
     loadMore?: VoidFunction
 }
 
-const SectionCardList = ({
+const AquascapeCardListSection = ({
     children,
     title,
     loadMore,
 }: Props) => (
-        <div className="section-card-list">
+        <div className="section">
             <div className="title">
                 {title}
             </div>
@@ -32,15 +32,20 @@ const SectionCardList = ({
                 </div>
             }
             <style jsx>{`
-                .section-card-list {
+                .section {
                     display: block;
                     margin: 36px 0;
                 }
 
                 @media ${media.up('medium')} {
-                    .section-card-list {
+                    .section {
                         margin: 75px 0;
                     }
+                }
+
+                .section :global(.${AquascapeCard.classes.root}) {
+                    margin-top: ${spaces.s16};
+                    margin-bottom: ${spaces.s16};
                 }
 
                 .title {
@@ -74,6 +79,4 @@ const SectionCardList = ({
         </div>
     )
 
-SectionCardList.List = CardList
-
-export default SectionCardList
+export default AquascapeCardListSection

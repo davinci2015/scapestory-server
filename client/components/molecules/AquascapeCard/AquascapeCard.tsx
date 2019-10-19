@@ -20,10 +20,10 @@ interface Props {
 }
 
 const classes = {
-    root: 'card'
+    root: 'aquascape-card'
 }
 
-const Card = ({
+const AquascapeCard = ({
     id,
     image,
     userImage,
@@ -70,7 +70,7 @@ const Card = ({
             </div>
 
             <style jsx>{`
-                .card {
+                .aquascape-card {
                     position: relative;
                     background-color: ${colors.WHITE};
                     
@@ -82,7 +82,7 @@ const Card = ({
                     transition: box-shadow 200ms ease-in;
                 }
 
-                .card:hover {
+                .aquascape-card:hover {
                     box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
                 }
 
@@ -174,6 +174,6 @@ const Card = ({
         </>
     )
 
-Card.classes = classes
+AquascapeCard.classes = classes
 
-export default Card
+export default AquascapeCard
