@@ -1,6 +1,6 @@
 import React from 'react'
 import {storiesOf} from '@storybook/react'
-import SubNavigation from 'components/molecules/SubNavigation/SubNavigation';
+import SubNavigation from 'components/molecules/SubNavigation/SubNavigation'
 
 storiesOf('Molecules | SubNavigation', module)
   .add('default', () => (

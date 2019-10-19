@@ -16,8 +16,8 @@ interface Props {
 }
 
 export const navigationHeight = {
-    default: '94px',
-    slim: '66px'
+    DEFAULT: '94px',
+    SLIM: '66px'
 }
 
 const scrollOffset = 80
@@ -109,7 +109,7 @@ const Navigation = ({
                 top: 0;
                 left: 0;
                 right: 0;
-                height: ${isSlim() ? navigationHeight.slim : navigationHeight.default};   
+                height: ${isSlim() ? navigationHeight.SLIM : navigationHeight.DEFAULT};   
                 
                 z-index: ${styles.zIndex.MEDIUM};
                 background-color: ${styles.colors.WHITE};

@@ -10,7 +10,7 @@ const Content = ({children}: Props) => (
         {children}
         <style jsx>{`
             .content {
-                padding-top: ${navigationHeight.default};
+                padding-top: ${navigationHeight.DEFAULT};
             }
         `}</style>
     </div>
