@@ -17,7 +17,7 @@ export default {
         fs14: '14px',
         fs16: '16px',
         fs18: '18px',
-        fs21: '21px',
+        fs20: '20px',
         fs28: '28px',
         fs38: '38px',
         fs51: '51px',

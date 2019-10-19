@@ -64,20 +64,20 @@ const FloraSection: React.FunctionComponent<Props> = ({
                 </div>
             </div>
             <style jsx>{`
-            .section {
-                margin-top: ${spaces.s90};
-                margin-bottom: ${spaces.s110};
-            }
+                .section {
+                    margin-top: ${spaces.s90};
+                    margin-bottom: ${spaces.s110};
+                }
 
-            .list {
-                display: flex;
-                margin-top: ${spaces.s90};
-            }
+                .list {
+                    display: flex;
+                    margin-top: ${spaces.s90};
+                }
 
-            .list :global(.${List.classes.root}) {
-                min-width: 470px;
-            }
-        `}</style>
+                .list :global(.${List.classes.root}) {
+                    min-width: 470px;
+                }
+            `}</style>
         </>
     )
 

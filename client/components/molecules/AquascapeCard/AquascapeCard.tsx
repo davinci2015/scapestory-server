@@ -73,6 +73,7 @@ const AquascapeCard = ({
                 .aquascape-card {
                     position: relative;
                     background-color: ${colors.WHITE};
+                    width: 100%;
                     
                     border: 1px solid ${colors.SHADE_EXTRA_LIGHT};
                     border-radius: ${borderRadius.TERTIARY};

@@ -23,30 +23,31 @@ const Item: React.FunctionComponent<ItemProps> = ({
         </div>
         <style jsx>{`
             .item {
+                display: flex;
                 margin: 0 ${GUTTER}px;
             }
 
             @media ${media.up('extraSmall')} {
                 .item {
-                    width: calc(${(extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
+                    flex: 0 1 calc(${(extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
                 }
             }
 
             @media ${media.up('small')} {
                 .item {
-                    width: calc(${(small || extraSmall ) / COLUMNS * 100}% - ${GUTTER * 2}px);
+                    flex: 0 1 calc(${(small || extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
                 }
             }
 
             @media ${media.up('medium')} {
                 .item {
-                    width: calc(${(medium || small || extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
+                    flex: 0 1 calc(${(medium || small || extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
                 }
             }
 
             @media ${media.up('large')} {
                 .item {
-                    width: calc(${(large || medium || small || extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
+                    flex: 0 1 calc(${(large || medium || small || extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
                 }
             }
         `}</style>

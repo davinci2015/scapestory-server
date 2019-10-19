@@ -78,7 +78,7 @@ const Headline = ({
                 }
 
                 .h4 {
-                    font-size: ${typography.fontSize.fs21};
+                    font-size: ${typography.fontSize.fs20};
                     line-height: ${typography.lineHeight.lh24};
                 }
 

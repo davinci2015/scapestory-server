@@ -6,17 +6,27 @@ import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetails/query'
 import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
+import {Plant, Livestock, Hardscape, Light, Filter, Substrate, Additive, Co2} from 'generated/graphql'
 import HeroSection from 'components/sections/AquascapeDetails/HeroSection'
 import FloraSection from 'components/sections/AquascapeDetails/FloraSection'
-import {Plant, Livestock, Hardscape} from 'generated/graphql'
-import EquipmentSection from 'components/sections/AquascapeDetails/EquipmentSection';
-
+import EquipmentSection from 'components/sections/AquascapeDetails/EquipmentSection'
+import {FormattedMessage} from 'react-intl';
 
 export type AquascapeDetailsPlant = Pick<Plant, 'id' | 'name'>
 
 export type AquascapeDetailsLivestock = Pick<Livestock, 'id' | 'name'>
 
 export type AquascapeDetailsHardscape = Pick<Hardscape, 'id' | 'name'>
+
+export type AquascapeDetailsLight = Pick<Light, 'id' | 'brand' | 'model'>
+
+export type AquascapeDetailsFilter = Pick<Filter, 'id' | 'brand' | 'model'>
+
+export type AquascapeDetailsSubstrate = Pick<Substrate, 'id' | 'brand' | 'name'>
+
+export type AquascapeDetailsAdditive = Pick<Additive, 'id' | 'brand' | 'name'>
+
+export type AquascapeDetailsCo2 = Pick<Co2, 'id' | 'type' | 'bps'>
 
 interface Props {
     router: Router
@@ -41,21 +51,24 @@ const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => 
         return null
     }
 
+    const hasEquipment = ['lights', 'filters', 'substrates', 'additives']
+        .some(equipment => data.aquascape[equipment] && data.aquascape[equipment].length) || data.aquascape.co2
+
     return (
         <Content>
             <HeroSection aquascape={data.aquascape} />
             <SubNavigation>
                 <SubNavigation.Item active>
-                    Photo Posts
+                    <FormattedMessage id="aquascape.subnavigation.photo" defaultMessage="Photo Posts" />
                 </SubNavigation.Item>
                 <SubNavigation.Item active={false}>
-                    Flora & Fauna
+                    <FormattedMessage id="aquascape.subnavigation.flora" defaultMessage="Flora & Fauna" />
                 </SubNavigation.Item>
                 <SubNavigation.Item active={false}>
-                    Equipment
+                    <FormattedMessage id="aquascape.subnavigation.equipment" defaultMessage="Equipment" />
                 </SubNavigation.Item>
                 <SubNavigation.Item active={false}>
-                    Comments(22)
+                    <FormattedMessage id="aquascape.subnavigation.comments" defaultMessage="Comments({count})" values={{count: 10}} />
                 </SubNavigation.Item>
             </SubNavigation>
             <Grid>
@@ -66,8 +79,19 @@ const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => 
                     hardscape={data.aquascape.hardscape}
                 />
                 <Divider />
-                <EquipmentSection />
-                <Divider />
+                {
+                    hasEquipment &&
+                    <>
+                        <EquipmentSection
+                            lights={data.aquascape.lights}
+                            filters={data.aquascape.filters}
+                            substrates={data.aquascape.substrates}
+                            additives={data.aquascape.additives}
+                            co2={data.aquascape.co2}
+                        />
+                        <Divider />
+                    </>
+                }
             </Grid>
         </Content>
     )

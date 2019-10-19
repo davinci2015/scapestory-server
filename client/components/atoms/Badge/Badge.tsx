@@ -23,7 +23,7 @@ const Badge = ({icon, children, background = 'plain'}: Props) => (
                 align-items: center;
                 justify-content: center;
 
-                font-size: ${typography.fontSize.fs21};
+                font-size: ${typography.fontSize.fs20};
                 font-weight: ${typography.fontWeight.bold};
                 color: ${colors.WHITE};
                 text-transform: lowercase;

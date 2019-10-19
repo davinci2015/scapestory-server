@@ -24,6 +24,36 @@ export const AQUASCAPE_DETAILS = gql`
             name
         }
 
+        lights {
+            id
+            brand
+            model
+        }
+            
+        filters {
+            id
+            brand
+            model
+        }
+            
+        co2 {
+            id
+            type
+            bps
+        }
+            
+        substrates {
+            id
+            brand
+            name
+        }
+            
+        additives {
+            id
+            brand
+            name
+        }
+
         tags {  
             name
         }

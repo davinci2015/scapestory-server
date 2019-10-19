@@ -12,6 +12,10 @@ interface Props {
     weight?: 'regular' | 'bold' | 'semibold'
 }
 
+const classes = {
+    root: 'paragraph'
+}
+
 const Paragraph = ({
     as = 'p',
     children,
@@ -23,7 +27,7 @@ const Paragraph = ({
     const Component = as
 
     return (
-        <Component className={cx('paragraph', type, weight)} {...props}> 
+        <Component className={cx(classes.root, type, weight)} {...props}> 
 
             {children}
 
@@ -69,5 +73,7 @@ const Paragraph = ({
 
     )
 }
+
+Paragraph.classes = classes
 
 export default Paragraph
