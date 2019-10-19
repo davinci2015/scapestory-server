@@ -1,81 +1,16 @@
 import React from 'react'
 import {spaces, media} from 'styles'
+import Row from 'components/core/Grid/Row'
+import Item, {ItemProps} from 'components/core/Grid/Item'
 
 export const GRID_MAX_WIDTH = '1470px'
-const GUTTER = 15
-const COLUMNS = 12
-
-interface ItemProps {
-    extraSmall?: number
-    small?: number
-    medium?: number
-    large?: number
-}
+export const GUTTER = 15
+export const COLUMNS = 12
 
 type GridInterface = React.FunctionComponent & {
     Item: React.FunctionComponent<ItemProps>
     Row: React.FunctionComponent
 }
-
-const Row: React.FunctionComponent = ({children}) => (
-    <>
-        <div className="row">
-            {children}
-        </div>
-        <style jsx>{`
-            .row {
-                display: flex;
-                flex-wrap: wrap;
-
-                margin-left: -${GUTTER}px;
-                margin-right: -${GUTTER}px;
-            }
-        `}</style>
-    </>
-)
-
-const Item: React.FunctionComponent<ItemProps> = ({
-    children, 
-    extraSmall = 12,
-    small,
-    medium,
-    large
-}) => (
-    <>
-        <div className="item">
-            {children}
-        </div>
-        <style jsx>{`
-            .item {
-                margin: 0 ${GUTTER}px;
-            }
-
-            @media ${media.up('extraSmall')} {
-                .item {
-                    width: calc(${(extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
-                }
-            }
-
-            @media ${media.up('small')} {
-                .item {
-                    width: calc(${(small || extraSmall ) / COLUMNS * 100}% - ${GUTTER * 2}px);
-                }
-            }
-
-            @media ${media.up('medium')} {
-                .item {
-                    width: calc(${(medium || small || extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
-                }
-            }
-
-            @media ${media.up('large')} {
-                .item {
-                    width: calc(${(large || medium || small || extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
-                }
-            }
-        `}</style>
-    </>
-)
 
 const Grid: GridInterface = ({children}) => (
     <>
