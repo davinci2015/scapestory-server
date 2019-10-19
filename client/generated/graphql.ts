@@ -11,42 +11,43 @@ export type Scalars = {
 export type Additive = {
   __typename?: "Additive";
   id: Scalars["Int"];
-  predefined: Scalars["Boolean"];
+  brand?: Maybe<Scalars["String"]>;
   name?: Maybe<Scalars["String"]>;
   description?: Maybe<Scalars["String"]>;
+  image?: Maybe<Scalars["String"]>;
 };
 
 export type Aquascape = {
   __typename?: "Aquascape";
   id: Scalars["Int"];
   title: Scalars["String"];
-  volume?: Maybe<Scalars["Int"]>;
-  startedAt?: Maybe<Scalars["String"]>;
   featured: Scalars["Boolean"];
   trending: Scalars["Boolean"];
   description?: Maybe<Scalars["String"]>;
   user?: Maybe<User>;
   co2?: Maybe<Co2>;
+  tank?: Maybe<Tank>;
   photoperiod: Scalars["Int"];
   mainImage?: Maybe<Scalars["String"]>;
-  images: Array<Maybe<AquascapeImage>>;
-  comments: Array<Maybe<Comment>>;
+  images?: Maybe<Array<AquascapeImage>>;
   viewsCount: Scalars["Int"];
   likesCount: Scalars["Int"];
   tags: Array<Tag>;
+  plants?: Maybe<Array<Plant>>;
+  hardscape?: Maybe<Array<Hardscape>>;
+  livestock?: Maybe<Array<Livestock>>;
+  filters?: Maybe<Array<Filter>>;
+  lights?: Maybe<Array<Light>>;
+  substrates?: Maybe<Array<Substrate>>;
+  additives?: Maybe<Array<Additive>>;
 };
 
 export type AquascapeImage = {
   __typename?: "AquascapeImage";
   id: Scalars["Int"];
-  mainImage: Scalars["Boolean"];
   title?: Maybe<Scalars["String"]>;
   description?: Maybe<Scalars["String"]>;
-  gridSize?: Maybe<Scalars["Int"]>;
-  gridPosition?: Maybe<Scalars["Int"]>;
   url: Scalars["String"];
-  likes?: Maybe<Array<Maybe<User>>>;
-  comments: Array<Maybe<Comment>>;
 };
 
 export type AquascapesFilter = {
@@ -59,12 +60,6 @@ export type AuthPayload = {
   user?: Maybe<User>;
 };
 
-export type Brand = {
-  __typename?: "Brand";
-  id: Scalars["Int"];
-  name: Scalars["String"];
-};
-
 export type Co2 = {
   __typename?: "CO2";
   id: Scalars["Int"];
@@ -75,11 +70,23 @@ export type Co2 = {
 export type Comment = {
   __typename?: "Comment";
   id: Scalars["Int"];
-  content?: Maybe<Scalars["String"]>;
-  userId: Scalars["Int"];
-  user?: Maybe<User>;
-  aquascapeId?: Maybe<Scalars["Int"]>;
-  aquascapeImageId?: Maybe<Scalars["Int"]>;
+  content: Scalars["String"];
+  parentCommentId?: Maybe<Scalars["Int"]>;
+  user: User;
+};
+
+export enum EntityType {
+  Aquascape = "AQUASCAPE",
+  Image = "IMAGE"
+}
+
+export type Filter = {
+  __typename?: "Filter";
+  id: Scalars["Int"];
+  brand: Scalars["String"];
+  model: Scalars["String"];
+  description?: Maybe<Scalars["String"]>;
+  image?: Maybe<Scalars["String"]>;
 };
 
 export type Follow = {
@@ -103,7 +110,7 @@ export type Hardscape = {
   __typename?: "Hardscape";
   id: Scalars["Int"];
   predefined: Scalars["Boolean"];
-  name?: Maybe<Scalars["String"]>;
+  name: Scalars["String"];
   description?: Maybe<Scalars["String"]>;
   image?: Maybe<Scalars["String"]>;
 };
@@ -112,20 +119,33 @@ export type Light = {
   __typename?: "Light";
   id: Scalars["Int"];
   predefined: Scalars["Boolean"];
-  name?: Maybe<Scalars["String"]>;
+  brand: Scalars["String"];
+  model: Scalars["String"];
+  width?: Maybe<Scalars["Float"]>;
+  height?: Maybe<Scalars["Float"]>;
+  depth?: Maybe<Scalars["Float"]>;
+  power?: Maybe<Scalars["Float"]>;
+  lumenMin?: Maybe<Scalars["Int"]>;
+  lumenMax?: Maybe<Scalars["Int"]>;
+  kelvinMin?: Maybe<Scalars["Int"]>;
+  kelvinMax?: Maybe<Scalars["Int"]>;
+  dimmable?: Maybe<Scalars["Boolean"]>;
   description?: Maybe<Scalars["String"]>;
   image?: Maybe<Scalars["String"]>;
-  brand?: Maybe<Brand>;
-  model?: Maybe<Scalars["String"]>;
 };
 
 export type Like = {
   __typename?: "Like";
   id: Scalars["Int"];
-  userId: Scalars["Int"];
-  user?: Maybe<User>;
-  aquascapeImageId?: Maybe<Scalars["Int"]>;
-  aquascapeId?: Maybe<Scalars["Int"]>;
+  user: User;
+};
+
+export type Livestock = {
+  __typename?: "Livestock";
+  id: Scalars["Int"];
+  name: Scalars["String"];
+  description?: Maybe<Scalars["String"]>;
+  image?: Maybe<Scalars["String"]>;
 };
 
 export type Mutation = {
@@ -138,6 +158,7 @@ export type Mutation = {
   unfollowUser?: Maybe<User>;
   createAquascape?: Maybe<Aquascape>;
   visitAquascape: Scalars["String"];
+  addComment?: Maybe<Comment>;
 };
 
 export type MutationLoginArgs = {
@@ -175,6 +196,13 @@ export type MutationVisitAquascapeArgs = {
   userId?: Maybe<Scalars["String"]>;
 };
 
+export type MutationAddCommentArgs = {
+  entityId: Scalars["Int"];
+  entityType: EntityType;
+  content: Scalars["String"];
+  parentCommentId?: Maybe<Scalars["Int"]>;
+};
+
 export type Pagination = {
   limit: Scalars["Int"];
   offset: Scalars["Int"];
@@ -183,8 +211,7 @@ export type Pagination = {
 export type Plant = {
   __typename?: "Plant";
   id: Scalars["Int"];
-  predefined: Scalars["Boolean"];
-  name?: Maybe<Scalars["String"]>;
+  name: Scalars["String"];
   description?: Maybe<Scalars["String"]>;
   image?: Maybe<Scalars["String"]>;
   origin?: Maybe<Scalars["String"]>;
@@ -204,8 +231,11 @@ export type Query = {
   usernameExists?: Maybe<Scalars["Boolean"]>;
   follows?: Maybe<Follows>;
   aquascapes?: Maybe<Array<Maybe<Aquascape>>>;
+  trendingAquascapes?: Maybe<Array<Maybe<Aquascape>>>;
   featuredAquascape?: Maybe<Aquascape>;
+  aquascape?: Maybe<Aquascape>;
   lights: Array<Maybe<Light>>;
+  comments: Array<Comment>;
 };
 
 export type QueryUserArgs = {
@@ -222,14 +252,28 @@ export type QueryFollowsArgs = {
 
 export type QueryAquascapesArgs = {
   pagination?: Maybe<Pagination>;
-  filter?: Maybe<AquascapesFilter>;
+  userId?: Maybe<Scalars["Int"]>;
+};
+
+export type QueryTrendingAquascapesArgs = {
+  pagination?: Maybe<Pagination>;
+};
+
+export type QueryAquascapeArgs = {
+  id: Scalars["Int"];
+};
+
+export type QueryCommentsArgs = {
+  entityId: Scalars["Int"];
+  entityType: EntityType;
+  pagination?: Maybe<Pagination>;
 };
 
 export type Substrate = {
   __typename?: "Substrate";
   id: Scalars["Int"];
-  predefined: Scalars["Boolean"];
-  name?: Maybe<Scalars["String"]>;
+  brand?: Maybe<Scalars["String"]>;
+  name: Scalars["String"];
   description?: Maybe<Scalars["String"]>;
   image?: Maybe<Scalars["String"]>;
 };
@@ -239,6 +283,18 @@ export type Tag = {
   id: Scalars["Int"];
   predefined: Scalars["Boolean"];
   name: Scalars["String"];
+};
+
+export type Tank = {
+  __typename?: "Tank";
+  id: Scalars["Int"];
+  brand?: Maybe<Scalars["String"]>;
+  model?: Maybe<Scalars["String"]>;
+  volume?: Maybe<Scalars["Float"]>;
+  width?: Maybe<Scalars["Float"]>;
+  height?: Maybe<Scalars["Float"]>;
+  depth?: Maybe<Scalars["Float"]>;
+  glassThickness?: Maybe<Scalars["Float"]>;
 };
 
 export type User = {

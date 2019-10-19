@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {colors, boxShadow} from 'styles'
+import {colors, boxShadow, zIndex} from 'styles'
 import {GRID_MAX_WIDTH} from 'components/core/Grid'
 import {SubNavigationItemProps, Item} from 'components/molecules/SubNavigation/Item'
 import {navigationHeight} from 'components/molecules/Navigation';
@@ -27,6 +27,7 @@ const SubNavigation: SubNavigationInterface = ({children}) => {
 
                     background-color: ${colors.WHITE};
                     box-shadow: ${boxShadow.PRIMARY};
+                    z-index: ${zIndex.HIGH};
                 }
                 
                 .subnav > ul {

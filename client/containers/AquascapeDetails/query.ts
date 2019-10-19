@@ -8,6 +8,22 @@ export const AQUASCAPE_DETAILS = gql`
         mainImage
         viewsCount
         likesCount
+        
+        plants {
+            id
+            name
+        }
+
+        livestock {
+            id
+            name
+        }
+
+        hardscape {
+            id
+            name
+        }
+
         tags {  
             name
         }

@@ -113,11 +113,34 @@
                 "defaultValue": null
               },
               {
-                "name": "filter",
+                "name": "userId",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Aquascape",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "trendingAquascapes",
+            "description": null,
+            "args": [
+              {
+                "name": "pagination",
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "AquascapesFilter",
+                  "name": "Pagination",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -144,6 +167,25 @@
             "deprecationReason": null
           },
           {
+            "name": "aquascape",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": { "kind": "OBJECT", "name": "Aquascape", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "lights",
             "description": null,
             "args": [],
@@ -154,6 +196,65 @@
                 "kind": "LIST",
                 "name": null,
                 "ofType": { "kind": "OBJECT", "name": "Light", "ofType": null }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "comments",
+            "description": null,
+            "args": [
+              {
+                "name": "entityId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "entityType",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "EntityType",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "pagination",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "Pagination",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Comment",
+                    "ofType": null
+                  }
+                }
               }
             },
             "isDeprecated": false,
@@ -492,23 +593,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "AquascapesFilter",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "trending",
-            "description": null,
-            "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
-            "defaultValue": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "Aquascape",
         "description": null,
@@ -534,22 +618,6 @@
               "name": null,
               "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "volume",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "startedAt",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -602,6 +670,14 @@
             "deprecationReason": null
           },
           {
+            "name": "tank",
+            "description": null,
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "Tank", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "photoperiod",
             "description": null,
             "args": [],
@@ -626,34 +702,14 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "LIST",
+                "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
                   "name": "AquascapeImage",
-                  "ofType": null
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "comments",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Comment",
                   "ofType": null
                 }
               }
@@ -699,6 +755,134 @@
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": { "kind": "OBJECT", "name": "Tag", "ofType": null }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "plants",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "OBJECT", "name": "Plant", "ofType": null }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "hardscape",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Hardscape",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "livestock",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Livestock",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "filters",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "OBJECT", "name": "Filter", "ofType": null }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lights",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": { "kind": "OBJECT", "name": "Light", "ofType": null }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "substrates",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Substrate",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "additives",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Additive",
+                  "ofType": null
                 }
               }
             },
@@ -752,7 +936,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "AquascapeImage",
+        "name": "Tank",
         "description": null,
         "fields": [
           {
@@ -768,13 +952,90 @@
             "deprecationReason": null
           },
           {
-            "name": "mainImage",
+            "name": "brand",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "model",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "volume",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "width",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "height",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "depth",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "glassThickness",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "Float",
+        "description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AquascapeImage",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
             "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -796,22 +1057,6 @@
             "deprecationReason": null
           },
           {
-            "name": "gridSize",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "gridPosition",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "url",
             "description": null,
             "args": [],
@@ -820,105 +1065,6 @@
               "name": null,
               "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "likes",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": { "kind": "OBJECT", "name": "User", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "comments",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Comment",
-                  "ofType": null
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "Comment",
-        "description": null,
-        "fields": [
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "content",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "userId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "user",
-            "description": null,
-            "args": [],
-            "type": { "kind": "OBJECT", "name": "User", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "aquascapeId",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "aquascapeImageId",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -977,7 +1123,114 @@
       },
       {
         "kind": "OBJECT",
-        "name": "Light",
+        "name": "Plant",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "description",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "image",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "origin",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "minHeight",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "maxHeight",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "position",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "luminosity",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "growthSpeed",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "difficulty",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Hardscape",
         "description": null,
         "fields": [
           {
@@ -1008,7 +1261,11 @@
             "name": "name",
             "description": null,
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -1027,22 +1284,6 @@
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
-          },
-          {
-            "name": "brand",
-            "description": null,
-            "args": [],
-            "type": { "kind": "OBJECT", "name": "Brand", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "model",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -1052,7 +1293,7 @@
       },
       {
         "kind": "OBJECT",
-        "name": "Brand",
+        "name": "Livestock",
         "description": null,
         "fields": [
           {
@@ -1075,6 +1316,424 @@
               "kind": "NON_NULL",
               "name": null,
               "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "description",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "image",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Filter",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "brand",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "model",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "description",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "image",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Light",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "predefined",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "brand",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "model",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "width",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "height",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "depth",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "power",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Float", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lumenMin",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lumenMax",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "kelvinMin",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "kelvinMax",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "dimmable",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "description",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "image",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Substrate",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "brand",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "description",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "image",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Additive",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "brand",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "description",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "image",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "EntityType",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "AQUASCAPE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "IMAGE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Comment",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "content",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "parentCommentId",
+            "description": null,
+            "args": [],
+            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "User", "ofType": null }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1297,6 +1956,59 @@
               "name": null,
               "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
             },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "addComment",
+            "description": null,
+            "args": [
+              {
+                "name": "entityId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "entityType",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "EntityType",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "content",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "parentCommentId",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
+                "defaultValue": null
+              }
+            ],
+            "type": { "kind": "OBJECT", "name": "Comment", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -2026,112 +2738,19 @@
         "possibleTypes": null
       },
       {
-        "kind": "OBJECT",
-        "name": "Additive",
+        "kind": "INPUT_OBJECT",
+        "name": "AquascapesFilter",
         "description": null,
-        "fields": [
+        "fields": null,
+        "inputFields": [
           {
-            "name": "id",
+            "name": "trending",
             "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "predefined",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "name",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "description",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+            "defaultValue": null
           }
         ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "Hardscape",
-        "description": null,
-        "fields": [
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "predefined",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "name",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "description",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "image",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -2153,212 +2772,14 @@
             "deprecationReason": null
           },
           {
-            "name": "userId",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "user",
             "description": null,
             "args": [],
-            "type": { "kind": "OBJECT", "name": "User", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "aquascapeImageId",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "aquascapeId",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "Plant",
-        "description": null,
-        "fields": [
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": { "kind": "OBJECT", "name": "User", "ofType": null }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "predefined",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "name",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "description",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "image",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "origin",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minHeight",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "maxHeight",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "Int", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "position",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "luminosity",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "growthSpeed",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "difficulty",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "Substrate",
-        "description": null,
-        "fields": [
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "predefined",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "name",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "description",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "image",
-            "description": null,
-            "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           }

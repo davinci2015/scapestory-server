@@ -3,9 +3,19 @@ import {withRouter, Router} from 'next/router'
 import {useQuery} from 'react-apollo'
 
 import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetails/query'
+import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
+import {SubNavigation} from 'components/molecules'
 import HeroSection from 'components/sections/AquascapeDetails/HeroSection'
-import SubNavigation from 'components/molecules/SubNavigation'
+import FloraSection from 'components/sections/AquascapeDetails/FloraSection'
+import {Plant, Livestock, Hardscape} from 'generated/graphql'
+
+
+export type AquascapeDetailsPlant = Pick<Plant, 'id' | 'name'> 
+
+export type AquascapeDetailsLivestock = Pick<Livestock, 'id' | 'name'>
+
+export type AquascapeDetailsHardscape = Pick<Hardscape, 'id' | 'name'>
 
 interface Props {
     router: Router
@@ -48,7 +58,13 @@ const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => 
                 </SubNavigation.Item>
             </SubNavigation>
             <Grid>
-                <h1>Rest of the page</h1>
+                <Divider/>
+                <FloraSection 
+                    plants={data.aquascape.plants} 
+                    livestock={data.aquascape.livestock}
+                    hardscape={data.aquascape.hardscape}
+                />
+                <Divider/>
                 <div style={{paddingBottom: '100vh'}}>
 
                 </div>
