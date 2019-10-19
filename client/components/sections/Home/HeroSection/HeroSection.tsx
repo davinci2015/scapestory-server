@@ -10,7 +10,7 @@ interface Props {
     aquascape: AquascapeData
 }
 
-const HeroSection = ({aquascape}: Props) => (
+const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => (
     <>
         <div className="section">
             <Hero
@@ -29,37 +29,40 @@ const HeroSection = ({aquascape}: Props) => (
                 }
                 bottomSection={
                     <Hero.BottomSection>
-                    <Hero.BottomLeft>
-                        <UserWidget
-                            size="large"
-                            variant="border"
-                            image={aquascape.user.profileImage}
-                            text={
-                                <Paragraph type="body" color={colors.WHITE}>
-                                    <FormattedMessage
-                                        id="hero_section.aquascape_author"
-                                        defaultMessage="by {username}"
-                                        values={{username: aquascape.user.name || aquascape.user.username}}
-                                    />
-                                </Paragraph>
-                            }
-                        />
-          
-                      <IconText icon={Icon.EYE_SHOW_FULL} text={aquascape.viewsCount} color={colors.WHITE} />
-                      <IconText icon={Icon.HEART} text={aquascape.likesCount} color={colors.WHITE} />
-                    </Hero.BottomLeft>
-                    <Hero.BottomRight>
-                        {aquascape.tags.map((tag, index) => <Tag key={index} text={tag.name} variant="primary" size="large" />)}
-                    </Hero.BottomRight>
-                  </Hero.BottomSection>
+                        <Hero.BottomLeft>
+                            <UserWidget
+                                size="large"
+                                variant="border"
+                                image={aquascape.user.profileImage}
+                                text={
+                                    <Paragraph type="body" color={colors.WHITE}>
+                                        <FormattedMessage
+                                            id="hero_section.aquascape_author"
+                                            defaultMessage="by {username}"
+                                            values={{username: aquascape.user.name || aquascape.user.username}}
+                                        />
+                                    </Paragraph>
+                                }
+                            />
+                            <IconText icon={Icon.EYE_SHOW_FULL} text={aquascape.viewsCount} color={colors.WHITE} />
+                            <IconText icon={Icon.HEART} text={aquascape.likesCount} color={colors.WHITE} />
+                        </Hero.BottomLeft>
+                        <Hero.BottomRight>
+                            {aquascape.tags.map((tag, index) => <Tag key={index} text={tag.name} variant="primary" size="large" />)}
+                        </Hero.BottomRight>
+                    </Hero.BottomSection>
                 }
             />
         </div>
-        
+
         <style jsx>{`
             .section {
                 padding-top: ${spaces.s60};
             }  
+            
+            .section :global(.${UserWidget.classes.root}) {
+                margin-right: ${spaces.s30};
+            }
         `}</style>
     </>
 )

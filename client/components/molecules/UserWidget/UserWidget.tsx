@@ -15,13 +15,17 @@ interface Props {
     variant?: UserWidgetVariant
 }
 
+const classNames = {
+    root: 'user-widget'
+}
+
 const UserWidget = ({
     image,
     size = 'default',
     variant = 'default',
     text
 }: Props) => (
-    <div className={classnames('user-widget', {
+    <div className={classnames(classNames.root, {
         large: size === 'large'
     })}>
         <UserImage variant={variant} size={size} image={image}/>
@@ -44,5 +48,7 @@ const UserWidget = ({
         `}</style>
     </div>
 )
+
+UserWidget.classes = classNames
 
 export default UserWidget

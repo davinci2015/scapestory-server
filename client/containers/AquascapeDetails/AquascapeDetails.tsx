@@ -4,13 +4,13 @@ import {useQuery} from 'react-apollo'
 
 import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetails/query'
 import {Grid, Content} from 'components/core'
-import HeroSection from 'components/sections/Home/HeroSection'
+import HeroSection from 'components/sections/AquascapeDetails/HeroSection'
 
 interface Props {
     router: Router
 }
 
-const AquascapeDetailsContainer = ({router}: Props) => {
+const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => {
     const id = router.query.id
     const {data, error, loading} = useQuery(AQUASCAPE_DETAILS, {variables: {id: Number(id)}})
 
@@ -31,8 +31,9 @@ const AquascapeDetailsContainer = ({router}: Props) => {
 
     return (
         <Content>
+            <HeroSection aquascape={data.aquascape} />
             <Grid>
-                <HeroSection aquascape={data.aquascape} />
+                <h1>Rest of the page</h1>
             </Grid>
         </Content>
     )

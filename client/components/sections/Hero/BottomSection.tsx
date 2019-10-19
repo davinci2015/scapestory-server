@@ -14,11 +14,13 @@ const BottomSection: React.FunctionComponent = ({children}) => (
             }
 
             .section :global(.${Tag.classes.root}) {
-                margin-left: ${spaces.s12};
+                margin-left: ${spaces.s6};
+                margin-right: ${spaces.s6};
             }
 
             .section :global(.${IconText.classes.root}) {
-                margin-left: ${spaces.s24};
+                margin-left: ${spaces.s12};
+                margin-right: ${spaces.s12}
             }
         `}</style>
     </div>

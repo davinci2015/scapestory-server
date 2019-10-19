@@ -4,6 +4,7 @@ import {borderRadius, spaces, colors, zIndex, media, applyStyles} from 'styles'
 import {Headline} from 'components/atoms'
 import {TopSection, TopLeft, TopRight} from 'components/sections/Hero/TopSection'
 import {BottomSection, BottomLeft, BottomRight} from 'components/sections/Hero/BottomSection'
+import {GRID_MAX_WIDTH} from 'components/core/Grid'
 
 interface Props {
     image: string
@@ -21,17 +22,20 @@ const Hero = ({
     variant = 'default'
 }: Props) => {
     const applyDefaultStyles = applyStyles(variant === 'default')
+    const applyCoverStyles = applyStyles(variant === 'cover')
 
     return (
         <div className="container">
             <img className="container-image" src={image} alt={title} />
             <div className="gradient gradient--top"></div>
-            {topSection}
             <div className="content">
-                <Headline as="h1" variant="h2" color={colors.WHITE}>
-                    {title}
-                </Headline>
-                {bottomSection}
+                {topSection}
+                <div className="bottom">
+                    <Headline as="h1" variant="h2" color={colors.WHITE}>
+                        {title}
+                    </Headline>
+                    {bottomSection}
+                </div>
             </div>
             <div className="gradient gradient--bottom"></div>
             <style jsx>{`
@@ -93,23 +97,35 @@ const Hero = ({
                 }
 
                 .content {
-                    position: absolute;
-                    left: ${spaces.s18};
-                    width: calc(100% - 36px);
-                    bottom: ${spaces.s18};
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    height: 100%;
+                    padding: 0 ${spaces.s48};
+
                     z-index: ${zIndex.DEFAULT};
+
+                    ${applyCoverStyles(`
+                        margin: 0 auto;
+                        max-width: ${GRID_MAX_WIDTH};
+                        padding: ${spaces.s36} ${spaces.s24} ${spaces.s48} ${spaces.s24}; 
+                    `)}
                 }
 
                 @media ${media.up('medium')} {
                     .content {
-                        left: ${spaces.s48};
-                        width: calc(100% - 96px);
-                        bottom: ${spaces.s42};
+                        ${applyDefaultStyles(`
+                            padding: ${spaces.s36} ${spaces.s48} ${spaces.s48} ${spaces.s48};
+                        `)}
                     }
 
                     .content :global(.${Headline.classes.root}) {
-                        margin-bottom: ${spaces.s42};
+                        margin-bottom: ${spaces.s60};
                     }
+                }
+
+                .content .bottom {
+                    z-index: ${zIndex.DEFAULT};
                 }
             `}</style>
         </div>

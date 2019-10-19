@@ -1,17 +1,16 @@
 import React from 'react'
-import {spaces, media} from 'styles';
+import {spaces, media} from 'styles'
 
-type Props = {
-    children: React.ReactNode
-}
+export const GRID_MAX_WIDTH = '1470px'
 
-const Grid = ({children}: Props) => (
+const Grid: React.FunctionComponent = ({children}) => (
     <div className="grid">
         {children}
         <style jsx global>{`
             .grid {
-                max-width: 1470px;
+                max-width: ${GRID_MAX_WIDTH};
                 margin: 0 auto; 
+                height: 100%;
                 padding-left: ${spaces.s16};
                 padding-right: ${spaces.s16};
             }

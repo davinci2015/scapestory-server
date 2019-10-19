@@ -2,18 +2,17 @@ import React from 'react'
 import {storiesOf} from '@storybook/react'
 
 import UserImage from './UserImage'
-
-const image = 'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80'
+import mock from 'mocks/storybook'
 
 storiesOf('Atoms | UserImage', module)
-  .add('default', () => <UserImage image={image} />)
-  .add('size large', () => <UserImage image={image} size="large" />)
+  .add('default', () => <UserImage image={mock.userImage} />)
+  .add('size large', () => <UserImage image={mock.userImage} size="large" />)
   .add('with border', () => (
     <div style={{
       width: 50,
       height: 50,
       backgroundColor: 'gray'
     }}>
-      <UserImage image={image} size="large" variant="border" />
+      <UserImage image={mock.userImage} size="large" variant="border" />
     </div>
   ))
