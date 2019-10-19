@@ -29,7 +29,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                 <div className="list">
                     <Grid.Row>
                         {
-                            lights.length &&
+                            !!lights.length &&
                             <Grid.Item extraSmall={12} small={6} large={4}>
                                 <EquipmentCard
                                     title={<FormattedMessage id="aquascape.equipment.lighting" defaultMessage="Lighting" />}
@@ -39,7 +39,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                             </Grid.Item>
                         }
                         {
-                            filters.length &&
+                            !!filters.length &&
                             <Grid.Item extraSmall={12} small={6} large={4}>
                                 <EquipmentCard
                                     title={<FormattedMessage id="aquascape.equipment.filtration" defaultMessage="Filtration" />}
@@ -49,7 +49,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                             </Grid.Item>
                         }
                         {
-                            co2 && co2.type && co2.bps &&
+                            co2 && co2.type && !!co2.bps &&
                             <Grid.Item extraSmall={12} small={6} large={4}>
                                 <EquipmentCard
                                     title={<FormattedMessage id="aquascape.equipment.co2" defaultMessage="CO2" />}
@@ -72,7 +72,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                             </Grid.Item>
                         }
                         {
-                            substrates.length &&
+                            !!substrates.length &&
                             <Grid.Item extraSmall={12} small={6} large={4}>
                                 <EquipmentCard
                                     title={<FormattedMessage id="aquascape.equipment.substrate" defaultMessage="Substrate" />}
@@ -82,7 +82,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                             </Grid.Item>
                         }
                         {
-                            additives.length &&
+                            !!additives.length &&
                             <Grid.Item extraSmall={12} small={6} large={4}>
                                 <EquipmentCard
                                     title={<FormattedMessage id="aquascape.equipment.additives" defaultMessage="Additives" />}
@@ -97,12 +97,12 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
             <style jsx>{`
                 .list {
                     margin-top: ${spaces.s60};
+                    margin-bottom: -${spaces.s30};
                 }
 
                 .list :global(.${EquipmentCard.classes.root}) {
                     margin-bottom: ${spaces.s30};
                 }
-
             `}</style>
         </>
     )
