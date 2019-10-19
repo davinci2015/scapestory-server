@@ -1,76 +1,39 @@
 import React from 'react'
-import numeral from 'numeral'
 
-import {borderRadius, spaces, colors, zIndex, media} from 'styles'
-import {Headline, Icon, FormattedMessage, Paragraph, IconText, Tag} from 'components/atoms'
-import {UserWidget} from 'components/molecules'
+import {borderRadius, spaces, colors, zIndex, media, applyStyles} from 'styles'
+import {Headline} from 'components/atoms'
+import {TopSection, TopLeft, TopRight} from 'components/sections/Hero/TopSection'
+import {BottomSection, BottomLeft, BottomRight} from 'components/sections/Hero/BottomSection'
 
 interface Props {
     image: string
     title: string
-    userImage?: string
-    username: string
-    viewsCount?: number
-    likesCount?: number
-    tags: any[]
     topSection?: React.ReactNode
+    bottomSection?: React.ReactNode
+    variant?: 'default' | 'cover'
 }
 
 const Hero = ({
     image,
     title,
-    userImage,
-    username,
-    likesCount = 0,
-    viewsCount = 0,
-    tags,
-    topSection
-}: Props) => (
+    topSection,
+    bottomSection,
+    variant = 'default'
+}: Props) => {
+    const applyDefaultStyles = applyStyles(variant === 'default')
+
+    return (
         <div className="container">
             <img className="container-image" src={image} alt={title} />
             <div className="gradient gradient--top"></div>
-            {
-                topSection &&
-                <div className="top-section">
-                    {topSection}
-                </div>
-            }
+            {topSection}
             <div className="content">
                 <Headline as="h1" variant="h2" color={colors.WHITE}>
                     {title}
                 </Headline>
-                <div className="content-info">
-                    <div className="user-info">
-                        <UserWidget
-                            size="large"
-                            variant="border"
-                            color={colors.WHITE}
-                            image={userImage}
-                            text={
-                                <Paragraph type="body" color={colors.WHITE}>
-                                    <FormattedMessage
-                                        id="hero_section.aquascape_author"
-                                        defaultMessage="by {username}"
-                                        values={{username}}
-                                    />
-                                </Paragraph>
-                            }
-                        />
-                        <div className="stat-info">
-                            <div>
-                                <IconText icon={Icon.EYE_SHOW_FULL} text={numeral(viewsCount).format('0,0')} color={colors.WHITE} />
-                            </div>
-                            <div className="stat-icon">
-                                <IconText icon={Icon.HEART} text={numeral(likesCount).format('0,0')} color={colors.WHITE} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="tags">
-                        {tags.map((tag, index) => <Tag key={index} text={tag.name} variant="primary" size="large" />)}
-                    </div>
-                </div>
+                {bottomSection}
             </div>
-            <div className="gradient gradient--bottom   "></div>
+            <div className="gradient gradient--bottom"></div>
             <style jsx>{`
                 .container {
                     position: relative;
@@ -91,7 +54,14 @@ const Hero = ({
                     position: absolute;
                     left: 0;
                     right: 0;
-                    border-radius: ${borderRadius.SECONDARY};
+                }
+
+                @media ${media.up('medium')} {
+                    .gradient {
+                        ${applyDefaultStyles(`
+                            border-radius: ${borderRadius.SECONDARY};
+                        `)}
+                    }
                 }
 
                 .gradient--top {
@@ -116,23 +86,9 @@ const Hero = ({
 
                 @media ${media.up('medium')} {
                     .container-image {
-                        border-radius: ${borderRadius.SECONDARY};
-                    }
-                }
-
-                .top-section {
-                    position: absolute;
-                    display: flex;
-                    align-items: center;
-                    padding-top: ${spaces.s18};
-                    padding-left: ${spaces.s18};
-                    z-index: ${zIndex.DEFAULT};
-                }
-
-                @media ${media.up('medium')} {
-                    .top-section {
-                        padding-top: ${spaces.s30};
-                        padding-left: ${spaces.s48};
+                        ${applyDefaultStyles(`
+                            border-radius: ${borderRadius.SECONDARY};
+                        `)}
                     }
                 }
 
@@ -155,32 +111,18 @@ const Hero = ({
                         margin-bottom: ${spaces.s42};
                     }
                 }
-
-                .content-info {
-                    display: flex;
-                    width: 100%;
-                    justify-content: space-between;
-                }
-
-                .user-info {
-                    display: flex;
-                    align-items: center;
-                }
-
-                .stat-info {
-                    display: flex;
-                    margin-left: ${spaces.s60};
-                }
-
-                .stat-icon {
-                    margin-left: ${spaces.s24};
-                }
-
-                .tags :global(.${Tag.classes.root}) {
-                    margin-left: ${spaces.s12};
-                }
             `}</style>
         </div>
     )
+}
+
+Hero.TopSection = TopSection
+Hero.TopLeft = TopLeft
+Hero.TopRight = TopRight
+
+Hero.BottomSection = BottomSection
+Hero.BottomLeft = BottomLeft
+Hero.BottomRight = BottomRight
+
 
 export default Hero

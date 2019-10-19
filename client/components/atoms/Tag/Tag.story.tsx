@@ -1,7 +1,9 @@
 import React from 'react'
 import {storiesOf} from '@storybook/react'
 
-import Tag from './Tag'
+import Tag, {TagSize} from './Tag'
+
+export const createTag = (size?: TagSize) => <Tag text="Tag" variant="primary" size={size}/>
 
 storiesOf('Atoms | Tag', module)
   .add('primary', () => <Tag text="Tag" variant="primary"/>)

@@ -6,7 +6,7 @@ import {colors, spaces} from 'styles'
 import {ParagraphTypes} from 'components/atoms/Paragraph'
 
 type VariantType = 'primary' | 'secondary' | 'tertiary' | 'quaternary'
-type TagSize = 'default' | 'large'
+export type TagSize = 'default' | 'large'
 
 interface Props {
     text: string

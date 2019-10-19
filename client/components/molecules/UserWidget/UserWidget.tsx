@@ -4,14 +4,15 @@ import classnames from 'classnames'
 import {UserImage} from 'components/atoms'
 import {spaces} from 'styles'
 
-type WidgetSizes = 'default' | 'large'
+export type UserWidgetSize = 'default' | 'large'
+
+export type UserWidgetVariant = 'default' | 'border'
 
 interface Props {
     image?: string
     text: React.ReactNode
-    size?: WidgetSizes
-    color?: string
-    variant?: 'default' | 'border'
+    size?: UserWidgetSize
+    variant?: UserWidgetVariant
 }
 
 const UserWidget = ({

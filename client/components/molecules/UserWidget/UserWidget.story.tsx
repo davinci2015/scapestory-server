@@ -1,26 +1,19 @@
 import React from 'react'
 import {storiesOf} from '@storybook/react'
 
-import UserWidget from './UserWidget'
+import UserWidget, {UserWidgetSize, UserWidgetVariant} from './UserWidget'
+import mock from 'mocks/storybook';
+
+export const createUserWidget = (text: React.ReactNode = "My awesome aquascape", size?: UserWidgetSize, variant?: UserWidgetVariant) => (
+  <UserWidget
+    text={text}
+    image={mock.userImage}
+    size={size}
+    variant={variant}
+  />
+)
 
 storiesOf('Molecules | UserWidget', module)
-  .add('default', () => (
-    <UserWidget
-      text="My awesome aquascape"
-      image="https://images.homify.com/image/upload/a_0,c_fill,f_auto,h_900,q_auto,w_1920/v1441196948/p/photo/image/745836/360er-aktuell_resize2.jpg"
-    />
-  ))
-  .add('with border', () => (
-    <UserWidget
-      variant="border"
-      text="My awesome aquascape"
-      image="https://images.homify.com/image/upload/a_0,c_fill,f_auto,h_900,q_auto,w_1920/v1441196948/p/photo/image/745836/360er-aktuell_resize2.jpg"
-    />
-  ))
-  .add('size l', () => (
-    <UserWidget
-      size="large"
-      text="My awesome aquascape"
-      image="https://images.homify.com/image/upload/a_0,c_fill,f_auto,h_900,q_auto,w_1920/v1441196948/p/photo/image/745836/360er-aktuell_resize2.jpg"
-    />
-  ))
+  .add('default', () => createUserWidget())
+  .add('with border', () => createUserWidget("My awesome aquascape", 'default', 'border'))
+  .add('size l', () => createUserWidget("My awesome aquascape", 'large'))
