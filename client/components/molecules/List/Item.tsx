@@ -1,5 +1,5 @@
 import React from 'react'
-import {spaces, typography} from 'styles';
+import {spaces, typography} from 'styles'
 
 
 interface Props {

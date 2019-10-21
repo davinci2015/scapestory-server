@@ -15,7 +15,9 @@ const SubNavigation: SubNavigationInterface = ({children}) => {
             <div className="subnav">
                 <div className="wrapper">
                     <Grid>
-                        <ul>{children}</ul>
+                        <ul>
+                            {children}
+                        </ul>
                     </Grid>
                 </div>
             </div>

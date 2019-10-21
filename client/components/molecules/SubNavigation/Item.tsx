@@ -1,14 +1,25 @@
 import React from 'react'
+import {Link} from 'react-scroll'
 
-import {colors, spaces, typography, applyStyles} from 'styles'
+import {colors, spaces, typography} from 'styles'
+import {navigationHeight} from 'components/molecules/Navigation'
+import {pxToNumber} from 'utils/converter'
 
 export interface SubNavigationItemProps {
-    active: boolean
+    id: string
 }
 
-const Item: React.FunctionComponent<SubNavigationItemProps> = ({children, active}) => (
+const SUBNAVIGATION_HEIGHT = '72px'
+
+const offset = -(pxToNumber(SUBNAVIGATION_HEIGHT) + pxToNumber(navigationHeight.SLIM))
+
+const Item: React.FunctionComponent<SubNavigationItemProps> = ({children, id}) => (
     <>
-        <li>{children}</li>
+        <li>
+            <Link activeClass="active" to={id} spy smooth duration={500} offset={offset}>
+                {children}
+            </Link>
+        </li>
 
         <style jsx>{`
             li {
@@ -19,10 +30,10 @@ const Item: React.FunctionComponent<SubNavigationItemProps> = ({children, active
                 font-weight: ${typography.fontWeight.extraBold};
                 color: ${colors.SHADE_DEEP};
                 transition: color 100ms linear;
+            }
 
-                ${applyStyles(active)(`
-                    color: ${colors.PRIMARY};
-                `)}
+            li :global(.active) {
+                color: ${colors.PRIMARY};
             }
 
             li:hover {

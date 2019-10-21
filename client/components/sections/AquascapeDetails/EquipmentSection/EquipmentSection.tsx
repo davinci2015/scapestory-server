@@ -95,6 +95,10 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                 </div>
             </div>
             <style jsx>{`
+                .section {
+                    padding: ${spaces.s120} 0;
+                }
+
                 .list {
                     margin-top: ${spaces.s60};
                     margin-bottom: -${spaces.s30};

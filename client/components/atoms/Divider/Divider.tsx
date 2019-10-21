@@ -1,5 +1,5 @@
 import React from 'react'
-import {spaces, colors} from 'styles'
+import {colors} from 'styles'
 
 const Divider = () => (
     <>
@@ -9,7 +9,6 @@ const Divider = () => (
                 height: 1px;
                 width: 100%;
                 background-color: ${colors.SHADE_LIGHT};
-                margin: ${spaces.s120} 0;
             }
         `}</style>
     </>
