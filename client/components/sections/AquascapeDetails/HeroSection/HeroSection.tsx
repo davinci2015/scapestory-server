@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {FormattedMessage, Paragraph, Icon, Tag, IconText} from 'components/atoms'
+import {FormattedMessage, Paragraph, Icon, Tag, IconText, Button} from 'components/atoms'
 import {AquascapeData} from 'containers/Home/query'
 import {colors, spaces} from 'styles'
 import Hero from 'components/sections/Hero'
@@ -26,7 +26,7 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => (
                             text={
                                 <Paragraph type="body" color={colors.WHITE}>
                                     <FormattedMessage
-                                        id="hero_section.aquascape_author"
+                                        id="aquascape.hero_section.username"
                                         defaultMessage="by {username}"
                                         values={{username: aquascape.user.name || aquascape.user.username}}
                                     />
@@ -34,6 +34,14 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => (
                             }
                         />
                     </Hero.TopLeft>
+                    <Hero.TopRight>
+                        <Button
+                            leftIcon={<Icon d={Icon.HEART_OUTLINE} color={colors.WHITE} />} 
+                            dimensions="extraSmall" 
+                            color="tertiary">
+                            <FormattedMessage id="aquascape.hero_section.like" defaultMessage="Like"/>
+                        </Button>
+                    </Hero.TopRight>
                 </Hero.TopSection>
             }
             bottomSection={

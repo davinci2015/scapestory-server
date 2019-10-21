@@ -77,7 +77,7 @@ const Navigation = ({
                                 <Button
                                     color="secondary"
                                     variant="outlined"
-                                    type="small"
+                                    dimensions="small"
                                     onClick={openLoginModal}
                                 >
                                     <FormattedMessage id="navigation_login" defaultMessage="Login" />
@@ -86,7 +86,7 @@ const Navigation = ({
                         </>
                     }
                     <Button
-                        type="small"
+                        dimensions="small"
                         onClick={onCreateAquascape}
                         leftIcon={<Icon d={Icon.ADD_FULL} viewBox="0 0 22 22" color={styles.colors.WHITE} />}
                     >

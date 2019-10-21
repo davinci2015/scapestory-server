@@ -1,15 +1,15 @@
 import React from 'react'
 import cx from 'classnames'
 
-import {colors, borderRadius, spaces} from 'styles'
-import {Paragraph} from 'components/atoms'
+import {colors, borderRadius, spaces, typography} from 'styles'
 
 interface Props extends React.HTMLProps<HTMLButtonElement> {
     children: React.ReactNode
     onClick?: (...args: any[]) => any
     variant?: 'default' | 'outlined'
-    color?: 'primary' | 'secondary'
-    type?: 'default' | 'small' | 'block'
+    color?: 'primary' | 'secondary' | 'tertiary'
+    dimensions?: 'default' | 'small' | 'extraSmall'
+    type?: 'default' | 'block'
     leftIcon?: React.ReactNode
 }
 
@@ -22,6 +22,7 @@ const Button = ({
     variant = 'default',
     color = 'primary',
     type = 'default',
+    dimensions = 'default',
     leftIcon,
     ...rest
 }: Props) => (
@@ -32,16 +33,16 @@ const Button = ({
                 outlined: variant === 'outlined',
                 primary: color === 'primary',
                 secondary: color === 'secondary',
-                small: type === 'small',
+                tertiary: color === 'tertiary',
+                small: dimensions === 'small',
+                extraSmall: dimensions === 'extraSmall',
                 block: type === 'block'
             })}
             {...rest}>
-                
+
             {leftIcon}
 
-            <Paragraph as="span" type="body" weight="bold">
-                {children}
-            </Paragraph>
+            {children}
 
             <style jsx>{`
                 .button {
@@ -53,6 +54,9 @@ const Button = ({
                     
                     padding: 0 ${spaces.s24};
                     min-height: 60px;
+
+                    font-weight: ${typography.fontWeight.extraBold};
+                    font-size: ${typography.fontSize.fs20};
 
                     outline: 0;
                     border: 0;
@@ -92,6 +96,15 @@ const Button = ({
                     border: 2px solid ${colors.SHADE_LIGHT}
                 }
 
+                .tertiary {
+                    color: ${colors.WHITE};
+                    background-color: rgba(0, 0, 0, .3);
+                }
+
+                .tertiary:hover {
+                    background-color: rgba(0, 0, 0, .5);
+                }
+
                 .outlined {
                     color: ${colors.PRIMARY};
                     background-color: transparent;
@@ -104,6 +117,13 @@ const Button = ({
 
                 .small {
                     min-height: 44px;
+                    font-size: ${typography.fontSize.fs16};
+                }
+
+                .extraSmall {
+                    min-height: 36px;
+                    font-size: ${typography.fontSize.fs13};
+                    font-weight: ${typography.fontWeight.semibold};
                 }
 
                 .block {
