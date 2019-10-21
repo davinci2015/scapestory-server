@@ -1,7 +1,6 @@
-import {Table, Column, Model, Unique, HasMany, BelongsToMany} from 'sequelize-typescript'
+import {Table, Column, Model, Unique, HasMany} from 'sequelize-typescript'
 import {Aquascape} from 'db/models/Aquascape'
 import {SocialLogin} from 'db/models/SocialLogin'
-import {FavoriteAquascape} from 'db/models/manyToMany/FavoriteAquascape'
 import {Follow} from 'db/models/Follow'
 
 @Table
@@ -42,7 +41,4 @@ export class User extends Model<User> {
 
     @HasMany(() => Follow, 'followedUserId')
     followers: Follow[]
-
-    @BelongsToMany(() => Aquascape, () => FavoriteAquascape)
-    favoriteAquascapes: Aquascape[]
 }

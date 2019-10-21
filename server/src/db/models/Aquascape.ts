@@ -11,7 +11,6 @@ import {
 import {User} from 'db/models/User'
 import {AquascapeLight} from 'db/models/manyToMany/AquascapeLight'
 import {AquascapeImage} from 'db/models/AquascapeImage'
-import {FavoriteAquascape} from 'db/models/manyToMany/FavoriteAquascape'
 import {AquascapeHardscape} from 'db/models/manyToMany/AquascapeHardscape'
 import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant'
 import {AquascapeSubstrate} from 'db/models/manyToMany/AquascapeSubstrate'
@@ -106,9 +105,6 @@ export class Aquascape extends Model<Aquascape> {
 
     @BelongsToMany(() => Tag, () => AquascapeTag)
     tags: Tag[]
-
-    @BelongsToMany(() => User, () => FavoriteAquascape)
-    favorites: User[]
 
     @BelongsToMany(() => Plant, () => AquascapePlant)
     plants: Plant[]
