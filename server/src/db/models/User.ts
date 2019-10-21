@@ -2,6 +2,7 @@ import {Table, Column, Model, Unique, HasMany} from 'sequelize-typescript'
 import {Aquascape} from 'db/models/Aquascape'
 import {SocialLogin} from 'db/models/SocialLogin'
 import {Follow} from 'db/models/Follow'
+import {Like} from 'db/models/Like'
 
 @Table
 export class User extends Model<User> {
@@ -35,6 +36,9 @@ export class User extends Model<User> {
 
     @HasMany(() => Aquascape)
     aquascapes: Aquascape[]
+
+    @HasMany(() => Like)
+    likes: Like[]
 
     @HasMany(() => Follow, 'followerUserId')
     following: Follow[]

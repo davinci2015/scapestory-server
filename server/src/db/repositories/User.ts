@@ -19,16 +19,16 @@ export class UserRepository extends BaseRepository<User> implements UserReposito
         this.dataLoader = new DataLoader(this.batchGetUserById)
     }
 
-    async findUserById(id: number): Promise<User | null> {
-        return await this.dataLoader.load(id)
+    findUserById(id: number): Promise<User | null> {
+        return this.dataLoader.load(id)
     }
 
-    async findUserByEmail(email: string): Promise<User | null> {
-        return await this.findOne({where: {email}})
+    findUserByEmail(email: string): Promise<User | null> {
+        return this.findOne({where: {email}})
     }
 
-    async findUserByUsername(username: string): Promise<User | null> {
-        return await this.findOne({where: {username}})
+    findUserByUsername(username: string): Promise<User | null> {
+        return this.findOne({where: {username}})
     }
 
     private batchGetUserById = async (ids: number[]) => await User.findAll({where: {id: ids}})
