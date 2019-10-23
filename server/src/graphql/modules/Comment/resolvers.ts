@@ -6,20 +6,17 @@ import {GraphQLHelper} from 'utils/GraphQLHelper'
 import {tokens} from 'di/tokens'
 import {User} from 'db/models/User'
 import {authenticate} from 'graphql/guards'
-
-export enum CommentEntityType {
-    AQUASCAPE = 'AQUASCAPE',
-    IMAGE = 'IMAGE'
-}
+import {CommentEntityType} from 'db/repositories/Comment'
+import {AuthenticationContext} from 'graphql/context'
 
 export type CommentsArgs = {
     entityId: number
-    entityType: CommentEntityType
+    entity: CommentEntityType
 }
 
-export type AddCommentArgs = {
+export type MutationAddCommentArgs = {
     entityId: number
-    entityType: CommentEntityType,
+    entity: CommentEntityType,
     content: string
     parentCommentId?: number
 }
@@ -33,25 +30,16 @@ export const resolvers = {
         async comments(root, args: CommentsArgs, context: ModuleContext, info: GraphQLResolveInfo) {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
             const fields = GraphQLHelper.getIncludeableFields(info, modelMapping)
-            const methodMapper = {
-                [CommentEntityType.AQUASCAPE]: provider.getCommentsForAquascape,
-                [CommentEntityType.IMAGE]: provider.getCommentsForAquascapeImage
-            }
-
-            return await methodMapper[args.entityType](args.entityId, fields)
+            return await provider.getComments(args.entity, args.entityId, fields)
         },
     },
     Mutation: {
-        async addComment(root, args: AddCommentArgs, context: ModuleContext) {
+        async addComment(root, args: MutationAddCommentArgs, context: ModuleContext & AuthenticationContext) {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
-            const methodMapper = {
-                [CommentEntityType.AQUASCAPE]: provider.addCommentForAquascape,
-                [CommentEntityType.IMAGE]: provider.addCommentForAquascapeImage
-            }
-
-            return await methodMapper[args.entityType]({
+            return await provider.addComment({
+                entityType: args.entity,
                 entityId: args.entityId,
-                userId: context.currentUser.id,
+                userId: context.currentUserId,
                 content: args.content,
                 parentCommentId: args.parentCommentId
             })

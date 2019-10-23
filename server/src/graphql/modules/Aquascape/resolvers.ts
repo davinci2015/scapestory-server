@@ -25,6 +25,7 @@ import {AquascapeImage} from 'db/models/AquascapeImage'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
+import {AuthenticationContext} from 'graphql/context'
 
 export type CreateAquascapeArgs = {
     title: string
@@ -38,12 +39,11 @@ export type AquascapesArgs = {
 
 export type VisitAquascapeArgs = {
     aquascapeId: number
-    userId?: string
 }
 
 const defaultInclude: Includeable[] = [
     {model: Visitor, attributes: ['id']}, // Include Visitor model for viewsCount
-    {model: Like, attributes: ['id']}, // Include Like model for likesCount
+    {model: Like, attributes: ['id', 'userId', 'aquascapeId']}, // Include Like model for likesCount
 ]
 
 const modelMapping = {
@@ -98,21 +98,25 @@ export const resolvers = {
             const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
             return await provider.findUserById(aquascape.userId)
         },
-        async likesCount(aquascape: Aquascape) {
+        likesCount(aquascape: Aquascape) {
             return aquascape.likes.length
         },
-        async viewsCount(aquascape: Aquascape) {
+        viewsCount(aquascape: Aquascape) {
             return aquascape.visitors.length
+        },
+        isLikedByMe(aquascape: Aquascape, args, context: ModuleContext & AuthenticationContext) {
+            return Boolean(aquascape.likes.find((like) =>
+                like.userId === context.currentUserId && like.aquascapeId === aquascape.id))
         }
     },
     Mutation: {
-        async createAquascape(root, args: CreateAquascapeArgs, context: ModuleContext) {
+        async createAquascape(root, args: CreateAquascapeArgs, context: ModuleContext & AuthenticationContext) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            return await provider.createAquascape(context.currentUser.id, args)
+            return await provider.createAquascape(context.currentUserId, args)
         },
-        async visitAquascape(root, args: VisitAquascapeArgs, context: ModuleContext) {
+        async visitAquascape(root, args: VisitAquascapeArgs, context: ModuleContext & AuthenticationContext) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            return await provider.visitAquascape(args.aquascapeId, args.userId)
+            return await provider.visitAquascape(args.aquascapeId, context.currentUserId)
         }
     }
 }

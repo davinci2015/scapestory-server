@@ -23,7 +23,7 @@ export interface AquascapeProviderInterface {
 
     createAquascape: (userId: number, data: CreateAquascapeArgs) => Promise<Aquascape>
 
-    visitAquascape: (aquascapeId: number, userId?: string) => Promise<string>,
+    visitAquascape: (aquascapeId: number, userId?: number) => Promise<string | number>,
 
     getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
 }
@@ -56,9 +56,9 @@ export class AquascapeProvider implements AquascapeProviderInterface {
         return this.aquascapeRepository.create({userId, ...data})
     }
 
-    async visitAquascape(aquascapeId: number, userId?: string) {
+    async visitAquascape(aquascapeId: number, userId?: number) {
         const visitorId = userId || uuid()
-        await this.visitorRepository.addVisitor(aquascapeId, visitorId)
+        await this.visitorRepository.addVisitor(aquascapeId, visitorId.toString())
 
         return visitorId
     }

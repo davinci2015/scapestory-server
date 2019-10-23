@@ -117,6 +117,7 @@ type Aquascape {
     lights: [Light!]
     substrates: [Substrate!]
     additives: [Additive!]
+    isLikedByMe: Boolean!
 }
 
 input Pagination {
@@ -137,5 +138,5 @@ type Query {
 
 type Mutation {
     createAquascape(title: String!): Aquascape
-    visitAquascape(aquascapeId: Int!, userId: String): String!
+    visitAquascape(aquascapeId: Int!): String!
 }

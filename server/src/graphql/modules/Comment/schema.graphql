@@ -18,9 +18,9 @@ enum EntityType {
 }
 
 type Query {
-    comments(entityId: Int!, entityType: EntityType!, pagination: Pagination): [Comment!]!
+    comments(entity: EntityType!, entityId: Int!, pagination: Pagination): [Comment!]!
 }
 
 type Mutation {
-    addComment(entityId: Int!, entityType: EntityType!, content: String!, parentCommentId: Int): Comment
+    addComment(entity: EntityType!, entityId: Int!, content: String!, parentCommentId: Int): Comment
 }

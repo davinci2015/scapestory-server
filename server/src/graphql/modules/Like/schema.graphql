@@ -1,0 +1,15 @@
+type Like {
+    id: Int!
+    user: User!
+}
+
+enum EntityType {
+    AQUASCAPE
+    IMAGE
+    COMMENT
+}
+
+type Mutation {
+    like(entity: String!, entityId: Int!): Like
+    dislike(entity: String!, entityId: Int!): Like
+}
