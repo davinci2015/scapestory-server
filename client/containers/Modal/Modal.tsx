@@ -12,13 +12,13 @@ const modalMapping = {
 }
 
 const ModalContainer = () => {
-    const {modalType, closeModal} = useContext(ModalContext)
+    const {modalType, closeModal, modalProps} = useContext(ModalContext)
 
     const getComponent = () => {
         if (!modalType) return null
         const Component = modalMapping[modalType]
         
-        return Component ? <Component /> : null
+        return Component ? <Component {...modalProps}/> : null
     }
 
     useEffect(() => Router.events.on('routeChangeStart', () => {

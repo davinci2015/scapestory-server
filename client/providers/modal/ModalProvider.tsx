@@ -7,8 +7,15 @@ interface Props {
 
 const ModalProvider = ({children}: Props) => {
     const [modalType, setModalVisibility] = useState<ModalType | null>(null)
+    const [modalProps, setModalProps] = useState<Object>({})
 
-    const openModal = (type: ModalType) => setModalVisibility(type)
+    const openModal = (type: ModalType, props?: Object) => {
+        if (props) {
+            setModalProps(props)
+        }
+        
+        setModalVisibility(type)
+    }
 
     const closeModal = () => setModalVisibility(null)
 
@@ -16,6 +23,7 @@ const ModalProvider = ({children}: Props) => {
         <ModalContext.Provider value={{
             openModal, 
             closeModal,
+            modalProps,
             modalType
         }}>
             {children}
