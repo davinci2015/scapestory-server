@@ -9,7 +9,7 @@ const classes = {
 }
 
 interface Props {
-    image?: string
+    image?: string | null
     size?: 'default' | 'large'
     variant?: 'default' | 'border'
 }
@@ -29,7 +29,7 @@ const UserImage = ({
                 width: 24px;
                 height: 24px;
                 border-radius: 50%;
-                ${backgroundImage(image)}       
+                ${backgroundImage(image || '')}       
             }
 
             .large {

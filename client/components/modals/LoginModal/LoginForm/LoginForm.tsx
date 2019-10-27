@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {useMutation} from '@apollo/react-hooks'
+import {useMutation, useLazyQuery} from '@apollo/react-hooks'
 import {MessageDescriptor, useIntl} from 'react-intl'
 
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
@@ -7,6 +7,7 @@ import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'compone
 import validator from 'services/validator'
 import {spaces} from 'styles'
 import {LOGIN_MUTATION, LoginResult, LoginVariables} from 'components/modals/LoginModal/LoginForm/mutations'
+import {USER_PROFILE} from 'graphql/queries'
 
 const inputKeys = {
     email: 'email',
@@ -19,6 +20,7 @@ interface Props {
 
 const LoginForm = ({onSuccess}: Props) => {
     const intl = useIntl()
+    const [getUserProfile] = useLazyQuery(USER_PROFILE)
     const [login] = useMutation<LoginResult, LoginVariables>(LOGIN_MUTATION)
 
     const [errors, setError] = useState({
@@ -43,6 +45,7 @@ const LoginForm = ({onSuccess}: Props) => {
         const {data} = await login({variables: {email, password}})
         if (data) {
             onSuccess(data.login.token)
+            getUserProfile()
         }
     }
 

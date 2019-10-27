@@ -2,14 +2,7 @@ import React from 'react'
 import {NextPageContext, NextComponentType} from 'next'
 
 import auth from 'services/auth'
-
-interface AuthContextInterface {
-    isAuthenticated: boolean
-}
-
-export const AuthContext = React.createContext<AuthContextInterface>({
-    isAuthenticated: false
-})
+import {AuthContext} from 'context/auth'
 
 interface WithAuthProps {
     isAuthenticated: boolean
@@ -24,10 +17,15 @@ const withAuth = <P extends Object>(WrappedComponent: NextComponentType) =>
             return { ...pageProps, isAuthenticated: !!token } 
         }
 
+        state = {
+            isAuthenticated: this.props.isAuthenticated
+        }
+
         render() {
             return (
                 <AuthContext.Provider value={{
-                    isAuthenticated: this.props.isAuthenticated,
+                    isAuthenticated: this.state.isAuthenticated,
+                    setIsAuthenticated: (isAuthenticated: boolean) => this.setState({isAuthenticated})
                 }}>
                     <WrappedComponent {...this.props} />
                 </AuthContext.Provider>

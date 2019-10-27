@@ -3,12 +3,12 @@ import React from 'react'
 import {FormattedMessage, Headline, Icon} from 'components/atoms'
 import {List} from 'components/molecules'
 import {colors, spaces} from 'styles'
-import {AquascapeDetailsPlant, AquascapeDetailsLivestock, AquascapeDetailsHardscape} from 'containers/AquascapeDetails'
+import {AquascapeDetails} from 'containers/AquascapeDetails'
 
 interface Props {
-    plants: AquascapeDetailsPlant[],
-    livestock: AquascapeDetailsLivestock[],
-    hardscape: AquascapeDetailsHardscape[]
+    plants: AquascapeDetails["plants"]
+    livestock: AquascapeDetails["livestock"]
+    hardscape: AquascapeDetails["hardscape"]
 }
 
 const FloraSection: React.FunctionComponent<Props> = ({

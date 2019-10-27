@@ -1,2 +1,1 @@
-export {default as ModalProvider} from './ModalProvider'
-export * from './ModalProvider'
+export * from './modal'

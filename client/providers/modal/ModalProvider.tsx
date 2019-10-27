@@ -1,18 +1,5 @@
 import React, {useState} from 'react'
-
-interface ModalContextInterface {
-    openModal: (type: ModalType) => void
-    modalType: ModalType | null
-    closeModal: VoidFunction
-}
-
-export type ModalType = 'login' | 'register' | 'feedback'
-
-const ModalContext = React.createContext<ModalContextInterface>({
-    openModal: () => {},
-    closeModal: () => {},
-    modalType: null
-})
+import {ModalType, ModalContext} from 'context/modal'
 
 interface Props {
     children: React.ReactNode
@@ -35,7 +22,5 @@ const ModalProvider = ({children}: Props) => {
         </ModalContext.Provider>
     )
 }
-
-export {ModalContext}
 
 export default ModalProvider

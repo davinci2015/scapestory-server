@@ -4,14 +4,14 @@ import {FormattedMessage, Headline, Paragraph} from 'components/atoms'
 import {EquipmentCard} from 'components/molecules'
 import {spaces} from 'styles'
 import {Grid} from 'components/core'
-import {AquascapeDetailsFilter, AquascapeDetailsSubstrate, AquascapeDetailsAdditive, AquascapeDetailsCo2, AquascapeDetailsLight} from 'containers/AquascapeDetails/AquascapeDetails'
+import {AquascapeDetails} from 'containers/AquascapeDetails'
 
 interface Props {
-    lights: AquascapeDetailsLight[]
-    filters: AquascapeDetailsFilter[]
-    substrates: AquascapeDetailsSubstrate[]
-    additives: AquascapeDetailsAdditive[]
-    co2: AquascapeDetailsCo2
+    lights: AquascapeDetails["lights"]
+    filters: AquascapeDetails["filters"]
+    substrates: AquascapeDetails["substrates"]
+    additives: AquascapeDetails["additives"]
+    co2: AquascapeDetails["co2"]
 }
 
 const EquipmentSection: React.FunctionComponent<Props> = ({

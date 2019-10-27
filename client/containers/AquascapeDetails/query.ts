@@ -8,6 +8,7 @@ export const AQUASCAPE_DETAILS = gql`
         mainImage
         viewsCount
         likesCount
+        isLikedByMe
         
         plants {
             id

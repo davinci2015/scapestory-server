@@ -5,7 +5,7 @@ import {ApolloProvider} from 'react-apollo'
 import {IntlProvider} from 'react-intl'
 
 import withApolloClient from 'lib/withApolloClient'
-import {ModalProvider} from 'context/modal'
+import {ModalProvider} from 'providers/modal'
 
 interface Props {
     apolloClient: ApolloClient<NormalizedCacheObject>

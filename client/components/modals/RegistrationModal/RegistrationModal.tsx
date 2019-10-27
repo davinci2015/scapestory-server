@@ -1,5 +1,4 @@
 import {useContext} from 'react'
-import Router from 'next/router'
 
 import {Paragraph, FormattedMessage} from 'components/atoms'
 import {RegistrationForm, AuthModal} from 'components/modals'
@@ -7,17 +6,19 @@ import {RegistrationForm, AuthModal} from 'components/modals'
 import {colors} from 'styles'
 import {ModalContext} from 'context/modal'
 import auth from 'services/auth'
-import routes from 'routes'
+import {AuthContext} from 'context/auth'
+
 
 const RegistrationModal = () => {
+    const {setIsAuthenticated} = useContext(AuthContext)
     const {openModal, closeModal} = useContext(ModalContext)
 
     const openLoginModal = () => openModal('login')
 
     const handleSuccess = (token: string) => {
         auth.persistToken(token)
+        setIsAuthenticated(true)
         closeModal()
-        Router.push(routes.index)
     } 
 
     return (

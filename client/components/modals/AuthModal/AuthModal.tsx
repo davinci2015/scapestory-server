@@ -65,7 +65,7 @@ const AuthModal = ({
                                     >
                                         <Paragraph weight="bold" as="span">
                                             Google
-                                            </Paragraph>
+                                        </Paragraph>
                                     </Button>
                                 )}
                             </GoogleLogin>
@@ -79,7 +79,7 @@ const AuthModal = ({
                                     >
                                         <Paragraph weight="bold" as="span">
                                             Facebook
-                                            </Paragraph>
+                                        </Paragraph>
                                     </Button>
                                 )}
                             </FacebookLogin>

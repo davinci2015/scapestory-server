@@ -1,5 +1,5 @@
 import {useContext} from 'react'
-import {AuthContext} from 'hocs/withAuth'
+import {AuthContext} from 'context/auth'
 
 export interface Props {
     children?: React.ReactNode

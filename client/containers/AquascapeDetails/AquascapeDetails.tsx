@@ -1,31 +1,40 @@
 import React from 'react'
 import {withRouter, Router} from 'next/router'
-import {useQuery} from 'react-apollo'
+import {useQuery, useMutation} from 'react-apollo'
 import {FormattedMessage} from 'react-intl'
 import {Element} from 'react-scroll'
+import {DataProxy} from 'apollo-cache'
 
 import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetails/query'
 import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
-import {Plant, Livestock, Hardscape, Light, Filter, Substrate, Additive, Co2} from 'generated/graphql'
+import {Plant, Livestock, Hardscape, Light, Filter, Substrate, Additive, Co2, User, LikeEntityType} from 'generated/graphql'
 import {HeroSection, FloraSection, EquipmentSection} from 'components/sections/AquascapeDetails'
+import {LIKE, DISLIKE} from 'graphql/mutations'
 
-export type AquascapeDetailsPlant = Pick<Plant, 'id' | 'name'>
+export interface AquascapeDetails {
+    id: number
+    title: string
+    mainImage: string
+    viewsCount: number
+    likesCount: number
+    isLikedByMe: boolean
+    plants: Pick<Plant, 'id' | 'name'>[]
+    livestock: Pick<Livestock, 'id' | 'name'>[]
+    hardscape: Pick<Hardscape, 'id' | 'name'>[]
+    lights: Pick<Light, 'id' | 'brand' | 'model'>[]
+    filters: Pick<Filter, 'id' | 'brand' | 'model'>[]
+    co2: Pick<Co2, 'id' | 'type' | 'bps'>
+    substrates: Pick<Substrate, 'id' | 'brand' | 'name'>[]
+    additives: Pick<Additive, 'id' | 'brand' | 'name'>[]
+    tags: {name: string}[]
+    user: Pick<User, 'name' | 'profileImage' | 'username'>
+}
 
-export type AquascapeDetailsLivestock = Pick<Livestock, 'id' | 'name'>
-
-export type AquascapeDetailsHardscape = Pick<Hardscape, 'id' | 'name'>
-
-export type AquascapeDetailsLight = Pick<Light, 'id' | 'brand' | 'model'>
-
-export type AquascapeDetailsFilter = Pick<Filter, 'id' | 'brand' | 'model'>
-
-export type AquascapeDetailsSubstrate = Pick<Substrate, 'id' | 'brand' | 'name'>
-
-export type AquascapeDetailsAdditive = Pick<Additive, 'id' | 'brand' | 'name'>
-
-export type AquascapeDetailsCo2 = Pick<Co2, 'id' | 'type' | 'bps'>
+interface AquascapeDetailsQuery {
+    aquascape: AquascapeDetails
+}
 
 interface Props {
     router: Router
@@ -40,7 +49,7 @@ const sections = {
 
 const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => {
     const id = router.query.id
-    const {data, error, loading} = useQuery(AQUASCAPE_DETAILS, {variables: {id: Number(id)}})
+    const {data, error, loading} = useQuery<AquascapeDetailsQuery>(AQUASCAPE_DETAILS, {variables: {id: Number(id)}})
 
     if (loading) {
         // TODO: Show loader
@@ -52,17 +61,45 @@ const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => 
         return null
     }
 
-    if (data && data.aquascape === null) {
+    if (!data || data.aquascape === null) {
         // TODO: Return not found page
         return null
     }
 
+    const updateLikeCache = (isLiked: boolean) => (cache: DataProxy) => {
+        const data = cache.readQuery<AquascapeDetailsQuery>({query: AQUASCAPE_DETAILS})
+        if (data) {
+            cache.writeQuery({
+                query: AQUASCAPE_DETAILS,
+                data: {aquascape: {...data.aquascape, isLikedByMe: isLiked}}
+            })
+        }
+    }
+
+    const [like] = useMutation(LIKE, {
+        update: updateLikeCache(true)
+    })
+
+    const [dislike] = useMutation(DISLIKE, {
+        update: updateLikeCache(false)
+    })
+
+    const toggleLike = () => {
+        const mutateLike = data.aquascape.isLikedByMe ? dislike : like
+        mutateLike({
+            variables: {
+                entity: LikeEntityType.Aquascape,
+                entityId: data.aquascape.id
+            }
+        })
+    }
+
     const hasEquipment = ['lights', 'filters', 'substrates', 'additives']
-        .some(equipment => data.aquascape[equipment] && data.aquascape[equipment].length) || data.aquascape.co2
+        .some(equipment => data.aquascape.hasOwnProperty(equipment) && Boolean(data.aquascape.lights.length)) || data.aquascape.co2
 
     return (
         <Content>
-            <HeroSection aquascape={data.aquascape} />
+            <HeroSection aquascape={data.aquascape} isLiked={data.aquascape.isLikedByMe} toggleLike={toggleLike}/>
             <SubNavigation>
                 <SubNavigation.Item id={sections.PHOTO_POSTS}>
                     <FormattedMessage id="aquascape.subnavigation.photo" defaultMessage="Photo Posts" />

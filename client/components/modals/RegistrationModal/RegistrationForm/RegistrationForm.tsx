@@ -42,7 +42,9 @@ const RegistrationForm = ({onSuccess}: Props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const [register] = useMutation<RegisterResult, RegisterVariables>(SIGN_UP_MUTATION)
+    const [register] = useMutation<RegisterResult, RegisterVariables>(SIGN_UP_MUTATION, {
+        refetchQueries: ['USER_PROFILE']
+    })
 
     const onSubmit = async () => {
         const {data} = await register({variables: {email, password}})

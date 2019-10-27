@@ -40,6 +40,7 @@ export type Aquascape = {
   lights?: Maybe<Array<Light>>;
   substrates?: Maybe<Array<Substrate>>;
   additives?: Maybe<Array<Additive>>;
+  isLikedByMe: Scalars["Boolean"];
 };
 
 export type AquascapeImage = {
@@ -75,7 +76,7 @@ export type Comment = {
   user: User;
 };
 
-export enum EntityType {
+export enum CommentEntityType {
   Aquascape = "AQUASCAPE",
   Image = "IMAGE"
 }
@@ -138,7 +139,17 @@ export type Like = {
   __typename?: "Like";
   id: Scalars["Int"];
   user: User;
+  userId: Scalars["Int"];
+  aquascapeImageId: Scalars["Int"];
+  aquascapeId: Scalars["Int"];
+  commentId: Scalars["Int"];
 };
+
+export enum LikeEntityType {
+  Aquascape = "AQUASCAPE",
+  Image = "IMAGE",
+  Comment = "COMMENT"
+}
 
 export type Livestock = {
   __typename?: "Livestock";
@@ -159,6 +170,8 @@ export type Mutation = {
   createAquascape?: Maybe<Aquascape>;
   visitAquascape: Scalars["String"];
   addComment?: Maybe<Comment>;
+  like?: Maybe<Like>;
+  dislike?: Maybe<Like>;
 };
 
 export type MutationLoginArgs = {
@@ -193,14 +206,23 @@ export type MutationCreateAquascapeArgs = {
 
 export type MutationVisitAquascapeArgs = {
   aquascapeId: Scalars["Int"];
-  userId?: Maybe<Scalars["String"]>;
 };
 
 export type MutationAddCommentArgs = {
+  entity: CommentEntityType;
   entityId: Scalars["Int"];
-  entityType: EntityType;
   content: Scalars["String"];
   parentCommentId?: Maybe<Scalars["Int"]>;
+};
+
+export type MutationLikeArgs = {
+  entity: LikeEntityType;
+  entityId: Scalars["Int"];
+};
+
+export type MutationDislikeArgs = {
+  entity: LikeEntityType;
+  entityId: Scalars["Int"];
 };
 
 export type Pagination = {
@@ -264,8 +286,8 @@ export type QueryAquascapeArgs = {
 };
 
 export type QueryCommentsArgs = {
+  entity: CommentEntityType;
   entityId: Scalars["Int"];
-  entityType: EntityType;
   pagination?: Maybe<Pagination>;
 };
 
@@ -309,8 +331,6 @@ export type User = {
   instagramLink?: Maybe<Scalars["String"]>;
   createdAt: Scalars["String"];
   updatedAt: Scalars["String"];
-  following?: Maybe<Array<Maybe<Follow>>>;
-  followers?: Maybe<Array<Maybe<Follow>>>;
 };
 
 export type Visitor = {

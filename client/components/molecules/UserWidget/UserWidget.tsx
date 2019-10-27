@@ -9,7 +9,7 @@ export type UserWidgetSize = 'default' | 'large'
 export type UserWidgetVariant = 'default' | 'border'
 
 interface Props {
-    image?: string
+    image?: string | null
     text: React.ReactNode
     size?: UserWidgetSize
     variant?: UserWidgetVariant

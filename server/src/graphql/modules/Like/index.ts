@@ -9,7 +9,7 @@ import {LikeProvider} from 'graphql/modules/Like/LikeProvider'
 import {LikeRepository} from 'db/repositories/Like'
 
 // @ts-ignore
-export const CommentModule = new GraphQLModule({
+export const LikeModule = new GraphQLModule({
     providers: [
         {provide: tokens.LIKE_PROVIDER, useClass: LikeProvider},
         {provide: tokens.LIKE_REPOSITORY, useClass: LikeRepository},

@@ -42,7 +42,7 @@ const entriesCount = {
     aquascapes: 40,
     hardscape: 10,
     livestock: 10,
-    users: 10,
+    users: 1,
     lights: 10,
     tags: 20,
     substrate: 20,

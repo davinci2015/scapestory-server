@@ -1,16 +1,18 @@
 import React from 'react'
 
 import {FormattedMessage, Paragraph, Icon, Tag, IconText, Button} from 'components/atoms'
-import {AquascapeData} from 'containers/Home/query'
 import {colors, spaces} from 'styles'
 import Hero from 'components/sections/Hero'
 import {UserWidget} from 'components/molecules'
+import {AquascapeDetails} from 'containers/AquascapeDetails'
 
 interface Props {
-    aquascape: AquascapeData
+    aquascape: AquascapeDetails
+    isLiked: Boolean
+    toggleLike: () => void
 }
 
-const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => (
+const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, toggleLike}) => (
     <>
         <Hero
             variant="cover"
@@ -36,7 +38,8 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => (
                     </Hero.TopLeft>
                     <Hero.TopRight>
                         <Button
-                            leftIcon={<Icon d={Icon.HEART_OUTLINE} color={colors.WHITE} />} 
+                            onClick={toggleLike}
+                            leftIcon={<Icon d={isLiked ? Icon.HEART : Icon.HEART_OUTLINE} color={colors.WHITE} />} 
                             dimensions="extraSmall" 
                             color="tertiary">
                             <FormattedMessage id="aquascape.hero_section.like" defaultMessage="Like"/>
