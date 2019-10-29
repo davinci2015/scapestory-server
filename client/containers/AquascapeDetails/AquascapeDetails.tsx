@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {withRouter, Router} from 'next/router'
 import {useQuery, useMutation} from 'react-apollo'
 import {FormattedMessage} from 'react-intl'
@@ -12,6 +12,8 @@ import {SubNavigation} from 'components/molecules'
 import {Plant, Livestock, Hardscape, Light, Filter, Substrate, Additive, Co2, User, LikeEntityType} from 'generated/graphql'
 import {HeroSection, FloraSection, EquipmentSection} from 'components/sections/AquascapeDetails'
 import {LIKE, DISLIKE} from 'graphql/mutations'
+import {AuthContext} from 'context/auth'
+import {ModalContext} from 'context/modal'
 
 export interface AquascapeDetails {
     id: number
@@ -49,6 +51,8 @@ const sections = {
 
 const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => {
     const id = router.query.id
+    const {isAuthenticated} = useContext(AuthContext)
+    const {openModal} = useContext(ModalContext)
     const {data, error, loading} = useQuery<AquascapeDetailsQuery>(AQUASCAPE_DETAILS, {variables: {id: Number(id)}})
 
     if (loading) {
@@ -67,7 +71,9 @@ const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => 
     }
 
     const updateLikeCache = (isLiked: boolean) => (cache: DataProxy) => {
-        const data = cache.readQuery<AquascapeDetailsQuery>({query: AQUASCAPE_DETAILS})
+        const data = cache.readQuery<AquascapeDetailsQuery>({query: AQUASCAPE_DETAILS, 
+            variables: {id: Number(id)}
+        })
         if (data) {
             cache.writeQuery({
                 query: AQUASCAPE_DETAILS,
@@ -85,6 +91,10 @@ const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => 
     })
 
     const toggleLike = () => {
+        if (!isAuthenticated) {
+            return openModal('login')
+        }
+
         const mutateLike = data.aquascape.isLikedByMe ? dislike : like
         mutateLike({
             variables: {

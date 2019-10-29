@@ -5,9 +5,9 @@ import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Like} from 'db/models/Like'
 
 export enum LikeEntityType {
-    AQUASCAPE,
-    IMAGE,
-    COMMENT
+    AQUASCAPE = 'AQUASCAPE',
+    IMAGE = 'IMAGE',
+    COMMENT = 'COMMENT'
 }
 
 export interface LikeRepositoryInterface extends BaseRepositoryInterface<Like> {

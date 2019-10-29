@@ -39,7 +39,12 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, toggle
                     <Hero.TopRight>
                         <Button
                             onClick={toggleLike}
-                            leftIcon={<Icon d={isLiked ? Icon.HEART : Icon.HEART_OUTLINE} color={colors.WHITE} />} 
+                            leftIcon={
+                                <Icon 
+                                    d={isLiked ? Icon.HEART : Icon.HEART_OUTLINE} 
+                                    color={isLiked ? colors.SECONDARY : colors.WHITE} 
+                                />
+                            } 
                             dimensions="extraSmall" 
                             color="tertiary">
                             <FormattedMessage id="aquascape.hero_section.like" defaultMessage="Like"/>
