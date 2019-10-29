@@ -77,7 +77,11 @@ const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => 
         if (data) {
             cache.writeQuery({
                 query: AQUASCAPE_DETAILS,
-                data: {aquascape: {...data.aquascape, isLikedByMe: isLiked}}
+                data: {aquascape: {
+                    ...data.aquascape, 
+                    likesCount: isLiked ? data.aquascape.likesCount + 1 : data.aquascape.likesCount - 1,
+                    isLikedByMe: isLiked
+                }}
             })
         }
     }
