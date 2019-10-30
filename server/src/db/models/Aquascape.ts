@@ -46,6 +46,9 @@ export class Aquascape extends Model<Aquascape> {
     trending: boolean
 
     @Column
+    slug: string
+
+    @Column
     description: string
 
     @Column

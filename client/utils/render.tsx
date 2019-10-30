@@ -1,6 +1,6 @@
-import {AquascapeData} from 'containers/Home/query'
 import {AquascapeCard} from 'components/molecules'
 import {Grid} from 'components/core'
+import {AquascapeData} from 'graphql/queries'
 
 export const renderAquascapeCards = (aquascapes: AquascapeData[]) =>
     aquascapes.map((scape: AquascapeData) => (

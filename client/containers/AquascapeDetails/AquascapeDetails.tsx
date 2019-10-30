@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {withRouter, Router} from 'next/router'
+import {useRouter} from 'next/router'
 import {useQuery, useMutation} from 'react-apollo'
 import {FormattedMessage} from 'react-intl'
 import {Element} from 'react-scroll'
@@ -10,10 +10,11 @@ import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
 import {Plant, Livestock, Hardscape, Light, Filter, Substrate, Additive, Co2, User, LikeEntityType} from 'generated/graphql'
-import {HeroSection, FloraSection, EquipmentSection} from 'components/sections/AquascapeDetails'
+import {HeroSection, FloraSection, EquipmentSection, UserAquascapesSection} from 'components/sections/AquascapeDetails'
 import {LIKE, DISLIKE} from 'graphql/mutations'
 import {AuthContext} from 'context/auth'
 import {ModalContext} from 'context/modal'
+
 
 export interface AquascapeDetails {
     id: number
@@ -38,10 +39,6 @@ interface AquascapeDetailsQuery {
     aquascape: AquascapeDetails
 }
 
-interface Props {
-    router: Router
-}
-
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
     FLORA: 'FLORA',
@@ -49,27 +46,13 @@ const sections = {
     COMMENTS: 'COMMENTS'
 }
 
-const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => {
-    const id = router.query.id
+const AquascapeDetailsContainer: React.FunctionComponent = () => {
+    const router = useRouter()
     const {isAuthenticated} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
+    const id = router.query.id
     const {data, error, loading} = useQuery<AquascapeDetailsQuery>(AQUASCAPE_DETAILS, {variables: {id: Number(id)}})
-
-    if (loading) {
-        // TODO: Show loader
-        return null
-    }
-
-    if (error) {
-        // TODO: Show error
-        return null
-    }
-
-    if (!data || data.aquascape === null) {
-        // TODO: Return not found page
-        return null
-    }
-
+    
     const updateLikeCache = (isLiked: boolean) => (cache: DataProxy) => {
         const data = cache.readQuery<AquascapeDetailsQuery>({query: AQUASCAPE_DETAILS, 
             variables: {id: Number(id)}
@@ -95,6 +78,10 @@ const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => 
     })
 
     const toggleLike = () => {
+        if (!data || !data.aquascape) {
+            return 
+        }
+
         if (!isAuthenticated) {
             return openModal('login')
         }
@@ -106,6 +93,21 @@ const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => 
                 entityId: data.aquascape.id
             }
         })
+    }
+
+    if (loading) {
+        // TODO: Show loader
+        return null
+    }
+
+    if (error) {
+        // TODO: Show error
+        return null
+    }
+
+    if (!data || !data.aquascape) {
+        // TODO: Return not found page
+        return null
     }
 
     const hasEquipment = ['lights', 'filters', 'substrates', 'additives']
@@ -151,9 +153,10 @@ const AquascapeDetailsContainer: React.FunctionComponent<Props> = ({router}) => 
                         <Divider />
                     </Element>
                 }
+                <UserAquascapesSection username={data.aquascape.user.name || data.aquascape.user.username}/>
             </Grid>
         </Content>
     )
 }
 
-export default withRouter(AquascapeDetailsContainer)
+export default AquascapeDetailsContainer

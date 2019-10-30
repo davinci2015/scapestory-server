@@ -1,10 +1,10 @@
 import React from 'react'
 
 import {Badge, FormattedMessage, Paragraph, Icon, Tag, IconText} from 'components/atoms'
-import {AquascapeData} from 'containers/Home/query'
 import {colors, spaces} from 'styles'
 import Hero from 'components/sections/Hero'
 import {UserWidget} from 'components/molecules'
+import {AquascapeData} from 'graphql/queries'
 
 interface Props {
     aquascape: AquascapeData

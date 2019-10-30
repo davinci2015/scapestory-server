@@ -5,9 +5,9 @@ import {Grid, Content} from 'components/core'
 import {Headline, FormattedMessage} from 'components/atoms'
 import AquascapeCardList from 'components/sections/AquascapeCardList'
 
-import {QUERY_TRENDING_AND_FEATURED_AQUASCAPES, QUERY_RECENT_AQUASCAPES} from './query'
 import HeroSection from 'components/sections/Home/HeroSection'
 import {renderAquascapeCards} from 'utils/render'
+import {AQUASCAPES, TRENDING_AQUASCAPES, FEATURED_AQUASCAPE} from 'graphql/queries'
 
 const HomeContainer = () => {
     const itemsPerLoad = 4
@@ -15,7 +15,7 @@ const HomeContainer = () => {
     const [allRecentLoaded, setAllRecentLoaded] = useState(false)
     const [recentVisible, setRecentVisible] = useState(recentInitialLimit)
 
-    const recent = useQuery(QUERY_RECENT_AQUASCAPES, {
+    const recent = useQuery(AQUASCAPES, {
         variables: {
             pagination: {
                 limit: recentInitialLimit,
@@ -24,7 +24,7 @@ const HomeContainer = () => {
         }
     })
 
-    const highlighted = useQuery(QUERY_TRENDING_AND_FEATURED_AQUASCAPES, {
+    const trending = useQuery(TRENDING_AQUASCAPES, {
         variables: {
             pagination: {
                 limit: itemsPerLoad * 2,
@@ -32,6 +32,8 @@ const HomeContainer = () => {
             }
         }
     })
+
+    const featured = useQuery(FEATURED_AQUASCAPE)
 
     const loadMore = () => {
         setRecentVisible(recentVisible + itemsPerLoad)
@@ -55,19 +57,19 @@ const HomeContainer = () => {
         <Content>
             <Grid>
                 {
-                    !highlighted.loading && highlighted.data && highlighted.data.featured &&
-                    <HeroSection aquascape={highlighted.data.featured} />
+                    !featured.loading && featured.data && featured.data.featured &&
+                    <HeroSection aquascape={featured.data.featured} />
                 }
 
                 {
-                    !highlighted.loading && highlighted.data && highlighted.data.trending &&
+                    !trending.loading && trending.data && trending.data.trending &&
                     <AquascapeCardList title={(
                         <Headline as="h2" variant="h4">
                             <FormattedMessage id="home_list_title_trending" defaultMessage="Trending now" />
                         </Headline>
                     )}>
                         <Grid.Row>
-                            {renderAquascapeCards(highlighted.data.trending)}
+                            {renderAquascapeCards(trending.data.trending)}
                         </Grid.Row>
                     </AquascapeCardList>
                 }

@@ -23,6 +23,7 @@ export type Aquascape = {
   title: Scalars["String"];
   featured: Scalars["Boolean"];
   trending: Scalars["Boolean"];
+  slug: Scalars["String"];
   description?: Maybe<Scalars["String"]>;
   user?: Maybe<User>;
   co2?: Maybe<Co2>;
