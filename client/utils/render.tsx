@@ -13,7 +13,7 @@ export const renderAquascapeCards = (aquascapes: AquascapeData[]) =>
             <AquascapeCard 
                 id={scape.id}
                 slug={scape.title}
-                name={scape.user.name}
+                name={scape.user.name || scape.user.username}
                 title={scape.title}
                 viewsCount={scape.viewsCount}
                 likesCount={scape.likesCount}

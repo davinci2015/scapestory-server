@@ -1,5 +1,4 @@
 import * as DataLoader from 'dataloader'
-
 import {Injectable} from '@graphql-modules/di'
 import {User} from 'db/models/User'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
@@ -31,5 +30,8 @@ export class UserRepository extends BaseRepository<User> implements UserReposito
         return this.findOne({where: {username}})
     }
 
-    private batchGetUserById = async (ids: number[]) => await User.findAll({where: {id: ids}})
+    private batchGetUserById = async (ids: number[]) => {
+        const users = await this.findAll({where: {id: ids}})
+        return users.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
+    }
 }

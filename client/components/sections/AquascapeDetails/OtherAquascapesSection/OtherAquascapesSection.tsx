@@ -8,19 +8,17 @@ import {renderAquascapeCards} from 'utils/render'
 import {AquascapeData} from 'graphql/queries'
 
 interface Props {
-    username: string
     aquascapes: AquascapeData[]
 }
 
-const UserAquascapesSection: React.FunctionComponent<Props> = ({username, aquascapes}) => (
+const OtherAquascapesSection: React.FunctionComponent<Props> = ({aquascapes}) => (
     <>
         <div className="section">
             <AquascapeCardListSection title={(
-                <Headline as="h2" variant="h3">
+                <Headline as="h3" variant="h4">
                     <FormattedMessage
-                        id="aquascape.user_aquascapes.title"
-                        defaultMessage="{username}'s aquascapes"
-                        values={{username}}
+                        id="aquascape.other_aquascapes.title"
+                        defaultMessage="Other aquascapes"
                     />
                 </Headline>
             )}>
@@ -37,4 +35,4 @@ const UserAquascapesSection: React.FunctionComponent<Props> = ({username, aquasc
     </>
 )
 
-export default UserAquascapesSection
+export default OtherAquascapesSection

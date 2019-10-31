@@ -1,7 +1,12 @@
 import gql from 'graphql-tag'
+import {fragments} from 'graphql/queries'
 
 export const AQUASCAPE_DETAILS = gql`
     query Aquascape($id: Int!) {
+      aquascapes(pagination: {limit: 4, offset: 0}, random: true) {
+        ...AquascapeFields
+      }
+
       aquascape(id: $id) {
         id 
         title
@@ -60,10 +65,12 @@ export const AQUASCAPE_DETAILS = gql`
         }
 
         user {
+            id
             name
             profileImage
             username
         }
       }
     }
+    ${fragments.aquascape}
 `

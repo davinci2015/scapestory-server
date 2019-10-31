@@ -60,17 +60,21 @@ const modelMapping = {
     images: AquascapeImage
 }
 
+export const getAquascapeJoinFields = (info: GraphQLResolveInfo) => ([
+    ...defaultInclude,
+    ...GraphQLHelper.getIncludeableFields(info, modelMapping)
+])
+
 export const resolvers = {
     Query: {
         async aquascapes(
             root,
-            args: {pagination: Pagination, userId?: number},
+            args: {pagination: Pagination, userId?: number, random?: boolean},
             context: ModuleContext,
             info: GraphQLResolveInfo
         ) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            const fields = [...defaultInclude, ...GraphQLHelper.getIncludeableFields(info, modelMapping)]
-            return await provider.getAquascapes(args.pagination, args.userId, fields)
+            return await provider.getAquascapes(args.pagination, args.userId, args.random, getAquascapeJoinFields(info))
         },
         async trendingAquascapes(
             root,
@@ -79,18 +83,15 @@ export const resolvers = {
             info: GraphQLResolveInfo
         ) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            const fields = [...defaultInclude, ...GraphQLHelper.getIncludeableFields(info, modelMapping)]
-            return await provider.getTrendingAquascapes(args.pagination, fields)
+            return await provider.getTrendingAquascapes(args.pagination, getAquascapeJoinFields(info))
         },
         async featuredAquascape(root, args, context: ModuleContext, info: GraphQLResolveInfo) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            const fields = [...defaultInclude, ...GraphQLHelper.getIncludeableFields(info, modelMapping)]
-            return await provider.getFeaturedAquascape(fields)
+            return await provider.getFeaturedAquascape(getAquascapeJoinFields(info))
         },
         async aquascape(root, args: {id: number}, context: ModuleContext, info: GraphQLResolveInfo) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            const fields = [...defaultInclude, ...GraphQLHelper.getIncludeableFields(info, modelMapping)]
-            return await provider.getAquascapeById(args.id, fields)
+            return await provider.getAquascapeById(args.id, getAquascapeJoinFields(info))
         },
     },
     Aquascape: {

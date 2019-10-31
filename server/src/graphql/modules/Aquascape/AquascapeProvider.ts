@@ -13,7 +13,12 @@ import {Pagination} from 'interfaces'
 import {CreateAquascapeArgs} from './resolvers'
 
 export interface AquascapeProviderInterface {
-    getAquascapes: (pagination: Pagination, userId?: number, include?: Includeable[]) => Bluebird<Aquascape[]>
+    getAquascapes: (
+        pagination: Pagination,
+        userId?: number,
+        random?: boolean,
+        include?: Includeable[]
+    ) => Bluebird<Aquascape[]>
 
     getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape | null>
 
@@ -36,8 +41,8 @@ export class AquascapeProvider implements AquascapeProviderInterface {
     ) {
     }
 
-    getAquascapes(pagination: Pagination, userId?: number, include?: Includeable[]) {
-        return this.aquascapeRepository.getAquascapes(pagination, userId, include)
+    getAquascapes(pagination: Pagination, userId?: number, random?: boolean, include?: Includeable[]) {
+        return this.aquascapeRepository.getAquascapes(pagination, userId, random, include)
     }
 
     getFeaturedAquascape(include?: Includeable[]) {

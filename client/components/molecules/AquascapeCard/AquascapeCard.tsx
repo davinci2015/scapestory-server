@@ -8,7 +8,7 @@ import UserWidget from 'components/molecules/UserWidget'
 import {TagInterface} from 'interfaces'
 
 interface Props {
-    id: string,
+    id: number,
     image: string
     slug: string
     userImage?: string

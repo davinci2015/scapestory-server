@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export interface AquascapeData {
-  id: string
+  id: number
   title: string
   slug: string
   mainImage: string
@@ -11,13 +11,14 @@ export interface AquascapeData {
       name: string
   }]
   user: {
+      id: number
       name?: string
       profileImage?: string
       username: string
   }
 }
 
-const fragments = {
+export const fragments = {
   aquascape: gql`
       fragment AquascapeFields on Aquascape {
           id 
@@ -30,6 +31,7 @@ const fragments = {
           }
 
           user {
+              id
               name
               profileImage
               username
@@ -47,8 +49,8 @@ export const USER_PROFILE = gql`
 `
 
 export const AQUASCAPES = gql`
-    query Aquascapes($pagination: Pagination!) {
-        aquascapes(pagination: $pagination) {
+    query Aquascapes($pagination: Pagination!, $userId: Int) {
+        aquascapes(pagination: $pagination, userId: $userId) {
             ...AquascapeFields
         }
     }

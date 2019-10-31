@@ -1,6 +1,6 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {useRouter} from 'next/router'
-import {useQuery, useMutation} from 'react-apollo'
+import {useQuery, useMutation, useLazyQuery} from 'react-apollo'
 import {FormattedMessage} from 'react-intl'
 import {Element} from 'react-scroll'
 import {DataProxy} from 'apollo-cache'
@@ -14,7 +14,8 @@ import {HeroSection, FloraSection, EquipmentSection, UserAquascapesSection} from
 import {LIKE, DISLIKE} from 'graphql/mutations'
 import {AuthContext} from 'context/auth'
 import {ModalContext} from 'context/modal'
-
+import {AQUASCAPES, AquascapeData} from 'graphql/queries'
+import OtherAquascapesSection from 'components/sections/AquascapeDetails/OtherAquascapesSection';
 
 export interface AquascapeDetails {
     id: number
@@ -32,10 +33,11 @@ export interface AquascapeDetails {
     substrates: Pick<Substrate, 'id' | 'brand' | 'name'>[]
     additives: Pick<Additive, 'id' | 'brand' | 'name'>[]
     tags: {name: string}[]
-    user: Pick<User, 'name' | 'profileImage' | 'username'>
+    user: Pick<User, 'id' | 'name' | 'profileImage' | 'username'>
 }
 
 interface AquascapeDetailsQuery {
+    aquascapes: AquascapeData[]
     aquascape: AquascapeDetails
 }
 
@@ -51,20 +53,34 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
     const {isAuthenticated} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
     const id = router.query.id
-    const {data, error, loading} = useQuery<AquascapeDetailsQuery>(AQUASCAPE_DETAILS, {variables: {id: Number(id)}})
-    
+
+    const [
+        getUserAquascapes,
+        {
+            called: getUserAquascapesCalled,
+            data: userAquascapesResult,
+        }
+    ] = useLazyQuery(AQUASCAPES)
+
+    const {
+        data: aquascapeResult,
+        error,
+        loading
+    } = useQuery<AquascapeDetailsQuery>(AQUASCAPE_DETAILS, {variables: {id: Number(id)}})
+
     const updateLikeCache = (isLiked: boolean) => (cache: DataProxy) => {
-        const data = cache.readQuery<AquascapeDetailsQuery>({query: AQUASCAPE_DETAILS, 
-            variables: {id: Number(id)}
-        })
+        const data = cache.readQuery<AquascapeDetailsQuery>({query: AQUASCAPE_DETAILS, variables: {id: Number(id)}})
         if (data) {
             cache.writeQuery({
                 query: AQUASCAPE_DETAILS,
-                data: {aquascape: {
-                    ...data.aquascape, 
-                    likesCount: isLiked ? data.aquascape.likesCount + 1 : data.aquascape.likesCount - 1,
-                    isLikedByMe: isLiked
-                }}
+                data: {
+                    ...data,
+                    aquascape: {
+                        ...data.aquascape,
+                        likesCount: isLiked ? data.aquascape.likesCount + 1 : data.aquascape.likesCount - 1,
+                        isLikedByMe: isLiked
+                    }
+                }
             })
         }
     }
@@ -78,22 +94,31 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
     })
 
     const toggleLike = () => {
-        if (!data || !data.aquascape) {
-            return 
+        if (!aquascapeResult || !aquascapeResult.aquascape) {
+            return
         }
 
         if (!isAuthenticated) {
             return openModal('login')
         }
 
-        const mutateLike = data.aquascape.isLikedByMe ? dislike : like
+        const mutateLike = aquascapeResult.aquascape.isLikedByMe ? dislike : like
         mutateLike({
             variables: {
                 entity: LikeEntityType.Aquascape,
-                entityId: data.aquascape.id
+                entityId: aquascapeResult.aquascape.id
             }
         })
     }
+
+    useEffect(() => {
+        aquascapeResult && !getUserAquascapesCalled && getUserAquascapes({
+            variables: {
+                pagination: {limit: 4, offset: 0},
+                userId: aquascapeResult.aquascape.user.id
+            }
+        })
+    }, [aquascapeResult])
 
     if (loading) {
         // TODO: Show loader
@@ -105,17 +130,19 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         return null
     }
 
-    if (!data || !data.aquascape) {
+    if (!aquascapeResult || !aquascapeResult.aquascape) {
         // TODO: Return not found page
         return null
     }
 
     const hasEquipment = ['lights', 'filters', 'substrates', 'additives']
-        .some(equipment => data.aquascape.hasOwnProperty(equipment) && Boolean(data.aquascape.lights.length)) || data.aquascape.co2
+        .some(equipment => aquascapeResult.aquascape.hasOwnProperty(equipment) && Boolean(aquascapeResult.aquascape.lights.length)) || aquascapeResult.aquascape.co2
+
+    console.log(aquascapeResult)
 
     return (
         <Content>
-            <HeroSection aquascape={data.aquascape} isLiked={data.aquascape.isLikedByMe} toggleLike={toggleLike}/>
+            <HeroSection aquascape={aquascapeResult.aquascape} isLiked={aquascapeResult.aquascape.isLikedByMe} toggleLike={toggleLike} />
             <SubNavigation>
                 <SubNavigation.Item id={sections.PHOTO_POSTS}>
                     <FormattedMessage id="aquascape.subnavigation.photo" defaultMessage="Photo Posts" />
@@ -134,9 +161,9 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                 <Divider />
                 <Element name={sections.FLORA}>
                     <FloraSection
-                        plants={data.aquascape.plants}
-                        livestock={data.aquascape.livestock}
-                        hardscape={data.aquascape.hardscape}
+                        plants={aquascapeResult.aquascape.plants}
+                        livestock={aquascapeResult.aquascape.livestock}
+                        hardscape={aquascapeResult.aquascape.hardscape}
                     />
                 </Element>
                 <Divider />
@@ -144,16 +171,29 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                     hasEquipment &&
                     <Element name={sections.EQUIPMENT}>
                         <EquipmentSection
-                            lights={data.aquascape.lights}
-                            filters={data.aquascape.filters}
-                            substrates={data.aquascape.substrates}
-                            additives={data.aquascape.additives}
-                            co2={data.aquascape.co2}
+                            lights={aquascapeResult.aquascape.lights}
+                            filters={aquascapeResult.aquascape.filters}
+                            substrates={aquascapeResult.aquascape.substrates}
+                            additives={aquascapeResult.aquascape.additives}
+                            co2={aquascapeResult.aquascape.co2}
                         />
                         <Divider />
                     </Element>
                 }
-                <UserAquascapesSection username={data.aquascape.user.name || data.aquascape.user.username}/>
+                {
+                    userAquascapesResult &&
+                    <>
+                        <UserAquascapesSection
+                            aquascapes={userAquascapesResult.aquascapes.filter((scape: AquascapeData) => scape.id !== aquascapeResult.aquascape.id)}
+                            username={aquascapeResult.aquascape.user.name || aquascapeResult.aquascape.user.username}
+                        />
+                        <Divider />
+                    </>
+                }
+                {
+                    aquascapeResult.aquascapes && Boolean(aquascapeResult.aquascapes.length) &&
+                    <OtherAquascapesSection aquascapes={aquascapeResult.aquascapes} />
+                }
             </Grid>
         </Content>
     )

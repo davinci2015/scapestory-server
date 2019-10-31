@@ -28,6 +28,20 @@ import {AquascapeLight} from 'db/models/manyToMany/AquascapeLight'
 import {AquascapeSubstrate} from 'db/models/manyToMany/AquascapeSubstrate'
 import {AquascapeAdditive} from 'db/models/manyToMany/AquascapeAdditive'
 
+const getAquascapeImage = () => {
+    const aquascapeImages = [
+        'https://www.dmbotanicalgarden.com/wp-content/uploads/2018/09/aquascaping_creative-commons.jpg',
+        'https://img.rnudah.com/images/63/636924094540541.jpg',
+        'https://i.ytimg.com/vi/RL2bPr_8ZcM/maxresdefault.jpg',
+        'http://cdn.powered-by-nitrosell.com/store_images/11/2575/customcontent/1160/picholder.jpg',
+        'https://23pxcp3u31lgiybw92v8rma1-wpengine.netdna-ssl.com/wp-content/uploads/2019/07/Nature_style_aquascape-1-600x293.png',
+        'https://image.shutterstock.com/image-photo/aquascape-wood-rock-260nw-738632542.jpg',
+        'https://i.pinimg.com/originals/95/fd/11/95fd11bf394b5c252948da10368c9aef.jpg'
+    ]
+
+    return aquascapeImages[Math.floor(Math.random() * aquascapeImages.length)]
+}
+
 const getRandomIndex = (items: number) => Math.floor(Math.random() * items)
 const getEmptyArray = (items: number) => Array(items).fill('')
 const filterDuplicateKeys = (arr: any[], keys: string[]) => {
@@ -42,7 +56,7 @@ const entriesCount = {
     aquascapes: 40,
     hardscape: 10,
     livestock: 10,
-    users: 1,
+    users: 20,
     lights: 10,
     tags: 20,
     substrate: 20,
@@ -95,7 +109,7 @@ const aquascapes = getEmptyArray(entriesCount.aquascapes).map((_, index) => ({
     _id: index + 1,
     title: faker.commerce.productName(),
     volume: faker.random.number({min: 10, max: 1000}),
-    mainImage: faker.image.nature(),
+    mainImage: getAquascapeImage(),
     startedAt: faker.date.recent(),
     trending: faker.random.boolean(),
     featured: faker.random.boolean(),
@@ -110,7 +124,7 @@ const images = getEmptyArray(entriesCount.images).map((_, index) => ({
     mainImage: faker.random.boolean(),
     title: faker.lorem.word(),
     description: faker.lorem.sentence(),
-    url: faker.image.nature(),
+    url: getAquascapeImage(),
     aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
 }))
 

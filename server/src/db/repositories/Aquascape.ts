@@ -1,17 +1,24 @@
 import {Injectable} from '@graphql-modules/di'
+import {Includeable, Order} from 'sequelize/types'
+import {literal} from 'sequelize'
+import * as Bluebird from 'bluebird'
+
 import {Aquascape} from 'db/models/Aquascape'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
-import {Includeable} from 'sequelize/types'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {Pagination} from 'interfaces'
-import * as Bluebird from 'bluebird'
 
 export interface AquascapeFilter {
     trending: boolean
 }
 
 export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aquascape> {
-    getAquascapes: (pagination: Pagination, userId?: number, include?: Includeable[]) => Bluebird<Aquascape[]>
+    getAquascapes: (
+        pagination: Pagination,
+        userId?: number,
+        random?: boolean,
+        include?: Includeable[]
+    ) => Bluebird<Aquascape[]>
 
     getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape>
 
@@ -28,8 +35,10 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
         super(Aquascape)
     }
 
-    getAquascapes(pagination: Pagination, userId?: number, include?: Includeable[]) {
+    getAquascapes(pagination: Pagination, userId?: number, random?: boolean, include?: Includeable[]) {
         const where: {[key: string]: number} = {}
+        const defaultOrder: Order = [['createdAt', 'DESC']]
+        const randomOrder: Order = literal('random()')
 
         if (userId) {
             where.userId = userId
@@ -38,7 +47,7 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
         return this.findAll({
             where,
             include,
-            order: [['createdAt', 'DESC']],
+            order: random ? randomOrder : defaultOrder,
             limit: pagination.limit,
             offset: pagination.offset
         })
