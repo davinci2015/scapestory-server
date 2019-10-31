@@ -18,7 +18,7 @@ const OtherAquascapesSection: React.FunctionComponent<Props> = ({aquascapes}) =>
                 <Headline as="h3" variant="h4">
                     <FormattedMessage
                         id="aquascape.other_aquascapes.title"
-                        defaultMessage="Other aquascapes"
+                        defaultMessage="Similar aquascapes"
                     />
                 </Headline>
             )}>

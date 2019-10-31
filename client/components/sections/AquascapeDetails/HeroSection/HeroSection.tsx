@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {FormattedMessage, Paragraph, Icon, Tag, IconText, Button} from 'components/atoms'
+import {FormattedMessage, Paragraph, Icon, Tag, IconText, Button, IconButton} from 'components/atoms'
 import {colors, spaces} from 'styles'
 import Hero from 'components/sections/Hero'
 import {UserWidget} from 'components/molecules'
@@ -57,7 +57,9 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, toggle
                     <Hero.BottomLeft>
                         <div className="icons">
                             <IconText icon={Icon.EYE_SHOW_FULL} text={aquascape.viewsCount} color={colors.WHITE} />
-                            <IconText icon={Icon.HEART} text={aquascape.likesCount} color={colors.WHITE} />
+                            <IconButton onClick={toggleLike}>
+                                <IconText icon={isLiked ? Icon.HEART : Icon.HEART_OUTLINE} text={aquascape.likesCount} color={colors.WHITE} />
+                            </IconButton>
                         </div>
                     </Hero.BottomLeft>
                     <Hero.BottomRight>
