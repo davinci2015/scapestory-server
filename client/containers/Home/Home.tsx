@@ -10,7 +10,7 @@ import {renderAquascapeCards} from 'utils/render'
 import {AQUASCAPES, TRENDING_AQUASCAPES, FEATURED_AQUASCAPE} from 'graphql/queries'
 
 const HomeContainer = () => {
-    const itemsPerLoad = 4
+    const itemsPerLoad = 12
     const recentInitialLimit = 12
     const [allRecentLoaded, setAllRecentLoaded] = useState(false)
     const [recentVisible, setRecentVisible] = useState(recentInitialLimit)
@@ -27,7 +27,7 @@ const HomeContainer = () => {
     const trending = useQuery(TRENDING_AQUASCAPES, {
         variables: {
             pagination: {
-                limit: itemsPerLoad * 2,
+                limit: 8,
                 offset: 0
             }
         }

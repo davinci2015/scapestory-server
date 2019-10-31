@@ -57,7 +57,7 @@ const Hero = ({
 
                 @media ${media.up('medium')} {
                     .container {
-                        height: 646px;
+                        height: 70vh;
                         margin: 0;
                     }
                 }
