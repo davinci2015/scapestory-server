@@ -131,8 +131,8 @@ input AquascapesFilter {
 }
 
 type Query {
-    aquascapes(pagination: Pagination, userId: Int, random: Boolean): [Aquascape]
-    trendingAquascapes(pagination: Pagination): [Aquascape]
+    aquascapes(pagination: Pagination, userId: Int, random: Boolean): [Aquascape!]!
+    trendingAquascapes(pagination: Pagination): [Aquascape!]!
     featuredAquascape: Aquascape
     aquascape(id: Int!): Aquascape
 }

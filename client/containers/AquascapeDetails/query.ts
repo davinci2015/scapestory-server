@@ -71,6 +71,19 @@ export const AQUASCAPE_DETAILS = gql`
             username
         }
       }
+      comments(entity: AQUASCAPE, entityId: $id, pagination: {limit: 8, offset: 0}) {
+        id
+        content
+        parentCommentId
+        user {
+            id
+            name
+            username
+            profileImage
+        }
+      }
     }
+
+    
     ${fragments.aquascape}
 `
