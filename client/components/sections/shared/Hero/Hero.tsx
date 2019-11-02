@@ -3,8 +3,8 @@ import cx from 'classnames'
 
 import {borderRadius, spaces, colors, zIndex, media} from 'styles'
 import {Headline} from 'components/atoms'
-import {TopSection, TopLeft, TopRight} from 'components/sections/Hero/TopSection'
-import {BottomSection, BottomLeft, BottomRight} from 'components/sections/Hero/BottomSection'
+import {TopSection, TopLeft, TopRight} from 'components/sections/shared/Hero/TopSection'
+import {BottomSection, BottomLeft, BottomRight} from 'components/sections/shared/Hero/BottomSection'
 import {GRID_MAX_WIDTH} from 'components/core/Grid';
 
 interface Props {

@@ -2,7 +2,7 @@ import React from 'react'
 
 import {Badge, FormattedMessage, Paragraph, Icon, Tag, IconText} from 'components/atoms'
 import {colors, spaces} from 'styles'
-import Hero from 'components/sections/Hero'
+import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
 import {AquascapeData} from 'graphql/queries'
 

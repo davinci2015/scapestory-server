@@ -3,7 +3,7 @@ import {useQuery} from '@apollo/react-hooks'
 
 import {Grid, Content} from 'components/core'
 import {Headline, FormattedMessage} from 'components/atoms'
-import AquascapeCardList from 'components/sections/AquascapeCardList'
+import {AquascapeCardList} from 'components/sections/shared'
 
 import HeroSection from 'components/sections/Home/HeroSection'
 import {renderAquascapeCards} from 'utils/render'

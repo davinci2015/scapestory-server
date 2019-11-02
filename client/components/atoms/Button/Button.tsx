@@ -116,7 +116,7 @@ const Button = ({
                 }
 
                 .small {
-                    min-height: 44px;
+                    min-height: 48px;
                     font-size: ${typography.fontSize.fs16};
                 }
 

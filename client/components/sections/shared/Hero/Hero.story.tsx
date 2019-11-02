@@ -1,7 +1,7 @@
 import React from 'react'
 import {storiesOf} from '@storybook/react'
 
-import Hero from 'components/sections/Hero/Hero'
+import {Hero} from 'components/sections/shared'
 import {colors} from 'styles'
 import {Paragraph, IconText, Icon} from 'components/atoms'
 import mock from 'mocks/storybook'

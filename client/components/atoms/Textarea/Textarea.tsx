@@ -11,6 +11,8 @@ export interface TextareaProps extends React.HTMLProps<HTMLTextAreaElement> {
     placeholder: string
     value?: string | number
     error?: boolean
+    rows?: number
+    cols?: number
     errorMessage?: string | React.ReactNode
     endAdornment?: React.ReactNode
 }
@@ -20,6 +22,8 @@ const Textarea = ({
     error,
     placeholder,
     endAdornment,
+    rows = 6,
+    cols = 10,
     ...props
 }: TextareaProps) => (
         <>
@@ -27,8 +31,8 @@ const Textarea = ({
                 <div className="wrapper">
                     <textarea
                         placeholder={placeholder}
-                        rows={6}
-                        cols={10}
+                        rows={rows}
+                        cols={cols}
                         {...props}
                     />
                     {endAdornment}

@@ -2,7 +2,7 @@ import React from 'react'
 
 import {FormattedMessage, Paragraph, Icon, Tag, IconText, Button, IconButton} from 'components/atoms'
 import {colors, spaces} from 'styles'
-import Hero from 'components/sections/Hero'
+import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
 import {AquascapeDetails} from 'containers/AquascapeDetails'
 
@@ -69,7 +69,7 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, toggle
             }
         />
 
-        <style>{`
+        <style jsx>{`
             .icons {
                 margin-left: -${spaces.s12};
             }

@@ -10,7 +10,7 @@ interface Props {
     loadMore?: VoidFunction
 }
 
-const AquascapeCardListSection = ({
+const AquascapeCardList = ({
     children,
     title,
     loadMore,
@@ -79,4 +79,4 @@ const AquascapeCardListSection = ({
         </div>
     )
 
-export default AquascapeCardListSection
+export default AquascapeCardList

@@ -15,7 +15,8 @@ import {LIKE, DISLIKE} from 'graphql/mutations'
 import {AuthContext} from 'context/auth'
 import {ModalContext} from 'context/modal'
 import {AQUASCAPES, AquascapeData} from 'graphql/queries'
-import OtherAquascapesSection from 'components/sections/AquascapeDetails/OtherAquascapesSection';
+import OtherAquascapesSection from 'components/sections/AquascapeDetails/OtherAquascapesSection'
+import CommentsSection from 'components/sections/AquascapeDetails/CommentsSection'
 
 export interface AquascapeDetails {
     id: number
@@ -39,6 +40,7 @@ export interface AquascapeDetails {
 interface AquascapeDetailsQuery {
     aquascapes: AquascapeData[]
     aquascape: AquascapeDetails
+    comments: Object[]
 }
 
 const sections = {
@@ -154,7 +156,11 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                     <FormattedMessage id="aquascape.subnavigation.equipment" defaultMessage="Equipment" />
                 </SubNavigation.Item>
                 <SubNavigation.Item id={sections.COMMENTS}>
-                    <FormattedMessage id="aquascape.subnavigation.comments" defaultMessage="Comments({count})" values={{count: 10}} />
+                    <FormattedMessage
+                        id="aquascape.subnavigation.comments"
+                        defaultMessage="Comments({count})"
+                        values={{count: aquascapeResult.comments.length}}
+                    />
                 </SubNavigation.Item>
             </SubNavigation>
             <Grid>
@@ -190,9 +196,15 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                         <Divider />
                     </>
                 }
+                <Element name={sections.COMMENTS}>
+                    <CommentsSection comments={aquascapeResult.comments} />
+                </Element>
                 {
                     aquascapeResult.aquascapes && Boolean(aquascapeResult.aquascapes.length) &&
-                    <OtherAquascapesSection aquascapes={aquascapeResult.aquascapes} />
+                    <>
+                        <Divider />
+                        <OtherAquascapesSection aquascapes={aquascapeResult.aquascapes} />
+                    </>
                 }
             </Grid>
         </Content>

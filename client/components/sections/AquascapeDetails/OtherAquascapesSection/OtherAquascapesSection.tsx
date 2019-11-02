@@ -2,7 +2,7 @@ import React from 'react'
 
 import {FormattedMessage, Headline} from 'components/atoms'
 import {Grid} from 'components/core'
-import AquascapeCardListSection from 'components/sections/AquascapeCardList'
+import {AquascapeCardList} from 'components/sections/shared'
 import {spaces} from 'styles'
 import {renderAquascapeCards} from 'utils/render'
 import {AquascapeData} from 'graphql/queries'
@@ -14,7 +14,7 @@ interface Props {
 const OtherAquascapesSection: React.FunctionComponent<Props> = ({aquascapes}) => (
     <>
         <div className="section">
-            <AquascapeCardListSection title={(
+            <AquascapeCardList title={(
                 <Headline as="h3" variant="h4">
                     <FormattedMessage
                         id="aquascape.other_aquascapes.title"
@@ -25,7 +25,7 @@ const OtherAquascapesSection: React.FunctionComponent<Props> = ({aquascapes}) =>
                 <Grid.Row>
                     {renderAquascapeCards(aquascapes)}
                 </Grid.Row>
-            </AquascapeCardListSection>
+            </AquascapeCardList>
         </div>
         <style jsx>{`
             .section {
