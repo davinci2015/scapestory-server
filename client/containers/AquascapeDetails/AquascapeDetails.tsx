@@ -140,8 +140,6 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
     const hasEquipment = ['lights', 'filters', 'substrates', 'additives']
         .some(equipment => aquascapeResult.aquascape.hasOwnProperty(equipment) && Boolean(aquascapeResult.aquascape.lights.length)) || aquascapeResult.aquascape.co2
 
-    console.log(aquascapeResult)
-
     return (
         <Content>
             <HeroSection aquascape={aquascapeResult.aquascape} isLiked={aquascapeResult.aquascape.isLikedByMe} toggleLike={toggleLike} />

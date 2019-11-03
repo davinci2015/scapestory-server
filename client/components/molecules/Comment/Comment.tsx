@@ -1,6 +1,8 @@
 import React, {useCallback} from 'react'
+
 import {UserImage} from 'components/atoms'
 import {typography, spaces, colors} from 'styles'
+import {formatDate, dateFormats} from 'utils/date'
 
 const classes = {
     root: 'comment'
@@ -10,7 +12,7 @@ interface Props {
     id: number
     username: string
     content: string
-    createdAt: string
+    createdAt: number
     userImage?: string
     onLike: (id: number) => void
 }
@@ -30,7 +32,7 @@ const Comment: CardInterface = ({id, username, content, createdAt, onLike, userI
                     <span className="username">{username}</span>
                     <span className="content">{content}</span>
                     <div className="bottom">
-                        <span className="date">{createdAt}</span>
+                        <span className="date">{formatDate(createdAt, dateFormats.PRIMARY)}</span>
                         <div className="divider"></div>
                         <span className="action" onClick={onLikeClick}>Like</span>
                     </div>

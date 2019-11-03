@@ -12,6 +12,6 @@ storiesOf('Molecules | Comment', module)
       username={mock.username}
       userImage={mock.userImage}
       content="If I could give you all the applause I would for your perfect rebuttal to a tedious trend of attention grabbing  shallow and uniformed articles by pseudo design talent."
-      createdAt={Date.now().toString()}
+      createdAt={Date.now()}
     />
   ))
