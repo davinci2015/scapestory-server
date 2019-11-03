@@ -2,6 +2,7 @@
 
 type Comment {
     id: Int!
+    createdAt: String!
     content: String!
     parentCommentId: Int
     user: User!

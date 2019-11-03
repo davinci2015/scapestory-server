@@ -4,9 +4,11 @@ import {useIntl} from 'react-intl'
 import {FormattedMessage, Headline, Textarea, InputAdornment, Button, UserImage} from 'components/atoms'
 import {Grid} from 'components/core'
 import {spaces} from 'styles'
+import {AquascapeComment} from 'containers/AquascapeDetails/query'
+import Comment from 'components/molecules/Comment/Comment';
 
 interface Props {
-    comments: Object[]
+    comments: AquascapeComment[]
     userImage?: string
 }
 
@@ -49,7 +51,18 @@ const CommentsSection: React.FunctionComponent<Props> = ({comments}) => {
                 </Grid.Row>
                 <div className="list">
                     <Grid.Row>
-
+                        {comments.map((comment) => (
+                            <Grid.Item key={comment.id} extraSmall={12} medium={6}>
+                                <Comment 
+                                    id={comment.id}
+                                    username={comment.user.name || comment.user.username}
+                                    userImage={comment.user.profileImage}
+                                    createdAt={comment.createdAt}
+                                    content={comment.content}
+                                    onLike={() => {}}
+                                />
+                            </Grid.Item>
+                        ))}
                     </Grid.Row>
                 </div>
             </div>
@@ -66,6 +79,14 @@ const CommentsSection: React.FunctionComponent<Props> = ({comments}) => {
                     display: flex;
                     align-items: center;
                     width: 100%;
+                }
+
+                .section .list {
+                    margin-top: ${spaces.s30};
+                }
+
+                .section :global(.${Comment.classes.root}) {
+                    margin: ${spaces.s30} 0;
                 }
 
                 .section .textarea :global(.${UserImage.classes.root}) {

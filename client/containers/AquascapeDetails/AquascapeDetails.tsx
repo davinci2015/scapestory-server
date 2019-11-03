@@ -5,11 +5,11 @@ import {FormattedMessage} from 'react-intl'
 import {Element} from 'react-scroll'
 import {DataProxy} from 'apollo-cache'
 
-import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetails/query'
+import {AQUASCAPE_DETAILS, AquascapeDetailsQuery} from 'containers/AquascapeDetails/query'
 import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
-import {Plant, Livestock, Hardscape, Light, Filter, Substrate, Additive, Co2, User, LikeEntityType} from 'generated/graphql'
+import {LikeEntityType} from 'generated/graphql'
 import {HeroSection, FloraSection, EquipmentSection, UserAquascapesSection} from 'components/sections/AquascapeDetails'
 import {LIKE, DISLIKE} from 'graphql/mutations'
 import {AuthContext} from 'context/auth'
@@ -17,31 +17,6 @@ import {ModalContext} from 'context/modal'
 import {AQUASCAPES, AquascapeData} from 'graphql/queries'
 import OtherAquascapesSection from 'components/sections/AquascapeDetails/OtherAquascapesSection'
 import CommentsSection from 'components/sections/AquascapeDetails/CommentsSection'
-
-export interface AquascapeDetails {
-    id: number
-    title: string
-    mainImage: string
-    viewsCount: number
-    likesCount: number
-    isLikedByMe: boolean
-    plants: Pick<Plant, 'id' | 'name'>[]
-    livestock: Pick<Livestock, 'id' | 'name'>[]
-    hardscape: Pick<Hardscape, 'id' | 'name'>[]
-    lights: Pick<Light, 'id' | 'brand' | 'model'>[]
-    filters: Pick<Filter, 'id' | 'brand' | 'model'>[]
-    co2: Pick<Co2, 'id' | 'type' | 'bps'>
-    substrates: Pick<Substrate, 'id' | 'brand' | 'name'>[]
-    additives: Pick<Additive, 'id' | 'brand' | 'name'>[]
-    tags: {name: string}[]
-    user: Pick<User, 'id' | 'name' | 'profileImage' | 'username'>
-}
-
-interface AquascapeDetailsQuery {
-    aquascapes: AquascapeData[]
-    aquascape: AquascapeDetails
-    comments: Object[]
-}
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -70,6 +45,8 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         loading
     } = useQuery<AquascapeDetailsQuery>(AQUASCAPE_DETAILS, {variables: {id: Number(id)}})
 
+    console.log(aquascapeResult)
+    
     const updateLikeCache = (isLiked: boolean) => (cache: DataProxy) => {
         const data = cache.readQuery<AquascapeDetailsQuery>({query: AQUASCAPE_DETAILS, variables: {id: Number(id)}})
         if (data) {

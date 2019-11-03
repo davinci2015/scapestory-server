@@ -17,5 +17,4 @@ type User {
     instagramLink: String
     createdAt: String!
     updatedAt: String!
-    aquascapes: [Aquascape!]!
 }

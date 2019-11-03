@@ -27,6 +27,7 @@ import {AquascapeFilter} from 'db/models/manyToMany/AquascapeFilter'
 import {AquascapeLight} from 'db/models/manyToMany/AquascapeLight'
 import {AquascapeSubstrate} from 'db/models/manyToMany/AquascapeSubstrate'
 import {AquascapeAdditive} from 'db/models/manyToMany/AquascapeAdditive'
+import {Comment} from 'db/models/Comment'
 
 const getAquascapeImage = () => {
     const aquascapeImages = [
@@ -42,6 +43,18 @@ const getAquascapeImage = () => {
     return aquascapeImages[Math.floor(Math.random() * aquascapeImages.length)]
 }
 
+const getProfileImage = () => {
+    const profileImages = [
+        'https://content-static.upwork.com/blog/uploads/sites/4/2014/10/27173913/BLOG-Upwork-profile-photo-face.png',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTUYxFX2MYrJvYwZ2NWYNyxJWA5nFi6P4V30Y5XWLj0nkBe-YEC',
+        'https://img2.thejournal.ie/inline/2470754/original/?width=428&version=2470754',
+        'https://cdn.moneymarketing.co.uk/content/uploads/2019/08/29125853/Profile-Carl-Roberts-400x500.jpg',
+        'https://cdn.moneymarketing.co.uk/content/uploads/2019/08/15164737/Profile-Brian-Butcher_cropped-560x500.jpg'
+    ]
+
+    return profileImages[Math.floor(Math.random() * profileImages.length)]
+}
+
 const getRandomIndex = (items: number) => Math.floor(Math.random() * items)
 const getEmptyArray = (items: number) => Array(items).fill('')
 const filterDuplicateKeys = (arr: any[], keys: string[]) => {
@@ -55,6 +68,7 @@ const filterDuplicateKeys = (arr: any[], keys: string[]) => {
 const entriesCount = {
     aquascapes: 40,
     hardscape: 10,
+    comments: 100,
     livestock: 10,
     users: 20,
     lights: 10,
@@ -82,7 +96,7 @@ const users = getEmptyArray(entriesCount.users).map((_, index) => ({
     password: faker.random.uuid(),
     username: faker.internet.userName(),
     name: faker.name.firstName(),
-    profileImage: faker.image.people(),
+    profileImage: getProfileImage(),
     country: faker.address.country(),
     youtubeLink: faker.internet.url(),
     instagramLink: faker.internet.url()
@@ -126,6 +140,13 @@ const images = getEmptyArray(entriesCount.images).map((_, index) => ({
     description: faker.lorem.sentence(),
     url: getAquascapeImage(),
     aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
+}))
+
+const comments = getEmptyArray(entriesCount.comments).map((_, index) => ({
+    _id: index + 1,
+    content: faker.lorem.sentence(),
+    userId: users[getRandomIndex(entriesCount.users)]._id,
+    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id
 }))
 
 const visitors = getEmptyArray(entriesCount.visitors).map((_, index) => ({
@@ -288,6 +309,7 @@ connectToDatabase((database: Database) => {
             await Promise.all(visitors.map((visitor) => Visitor.create(visitor)))
             await Promise.all(likes.map((like) => Like.create(like)))
             await Promise.all(images.map((image) => AquascapeImage.create(image)))
+            await Promise.all(comments.map((comment) => Comment.create(comment)))
 
             await Promise.all(aquascapeTags.map((aquascapeTag) => AquascapeTag.create(aquascapeTag)))
             await Promise.all(aquascapePlants.map((plant) => AquascapePlant.create(plant)))

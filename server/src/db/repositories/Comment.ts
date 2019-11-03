@@ -6,8 +6,8 @@ import {Comment} from 'db/models/Comment'
 import {Includeable} from 'sequelize/types'
 
 export enum CommentEntityType {
-    AQUASCAPE,
-    IMAGE
+    AQUASCAPE = 'AQUASCAPE',
+    IMAGE = 'IMAGE'
 }
 
 export interface AddCommentArgs {
@@ -36,8 +36,10 @@ export class CommentRepository extends BaseRepository<Comment> {
     }
 
     getComments(entityType: CommentEntityType, entityId: number, include?: Includeable[]): Bluebird<Comment[]> {
+        const entity = entityToFieldMapper[entityType]
+
         return this.findAll({
-            [entityToFieldMapper[entityType]]: entityId,
+            where: {[entity]: entityId},
             include
         })
     }

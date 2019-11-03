@@ -12,8 +12,8 @@ interface Props {
     id: number
     username: string
     content: string
-    createdAt: number
-    userImage?: string
+    createdAt: string
+    userImage?: string | null
     onLike: (id: number) => void
 }
 
@@ -23,7 +23,7 @@ type CardInterface = React.FunctionComponent<Props> & {
 
 const Comment: CardInterface = ({id, username, content, createdAt, onLike, userImage}) => {
     const onLikeClick = useCallback(() => onLike(id), [id])
-
+    
     return (
         <>
             <div className={classes.root}>
@@ -32,7 +32,7 @@ const Comment: CardInterface = ({id, username, content, createdAt, onLike, userI
                     <span className="username">{username}</span>
                     <span className="content">{content}</span>
                     <div className="bottom">
-                        <span className="date">{formatDate(createdAt, dateFormats.PRIMARY)}</span>
+                        <span className="date">{formatDate(parseInt(createdAt), dateFormats.PRIMARY)}</span>
                         <div className="divider"></div>
                         <span className="action" onClick={onLikeClick}>Like</span>
                     </div>

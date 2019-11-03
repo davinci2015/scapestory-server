@@ -4,7 +4,7 @@ import {FormattedMessage, Headline, Paragraph} from 'components/atoms'
 import {EquipmentCard} from 'components/molecules'
 import {spaces} from 'styles'
 import {Grid} from 'components/core'
-import {AquascapeDetails} from 'containers/AquascapeDetails'
+import {AquascapeDetails} from 'containers/AquascapeDetails/query'
 
 interface Props {
     lights: AquascapeDetails["lights"]

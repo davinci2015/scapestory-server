@@ -3,7 +3,7 @@ import React from 'react'
 import {FormattedMessage, Headline, Icon} from 'components/atoms'
 import {List} from 'components/molecules'
 import {colors, spaces} from 'styles'
-import {AquascapeDetails} from 'containers/AquascapeDetails'
+import {AquascapeDetails} from 'containers/AquascapeDetails/query'
 
 interface Props {
     plants: AquascapeDetails["plants"]
