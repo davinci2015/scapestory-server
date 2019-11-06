@@ -93,7 +93,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
         if (!comment) return
 
         updateComment(null)
-        
+
         addComment({
             variables: {
                 entity: CommentEntityType.Aquascape,
@@ -128,8 +128,6 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
         // TODO: Return not found page
         return null
     }
-
-    console.log(data.comments)
 
     return (
         <CommentsSection
