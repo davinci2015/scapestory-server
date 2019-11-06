@@ -49,8 +49,8 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
             cache.writeQuery({
                 query: COMMENTS,
                 data: {
-                    comments: cacheData.comments.map((comment) => comment.id === mutationData.like.commentId
-                        ? {...comment, likes: comment.likes.filter((like) => like.id === mutationData.like.id)}
+                    comments: cacheData.comments.map((comment) => comment.id === mutationData.dislike.commentId
+                        ? {...comment, likes: comment.likes.filter((like) => like.id !== mutationData.dislike.id)}
                         : comment
                     )
                 }
@@ -66,11 +66,10 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
             return openModal('login')
         }
 
-        const alreadyLiked = comment.likes.find((like) => like.id === user.id)
-        const mutation = alreadyLiked ? dislike : like
+        const alreadyLiked = comment.likes.some((like) => like.userId === user.id)
         const variables = {entity: LikeEntityType.Comment, entityId: comment.id}
-        
-        mutation({variables})
+
+        alreadyLiked ? dislike({variables}) : like({variables})
     }, [isAuthenticated])
 
     if (loading) {
@@ -90,6 +89,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
 
     return (
         <CommentsSection
+            userId={user ? user.id : undefined}
             userImage={user ? user.profileImage : undefined}
             toggleLike={toggleLike}
             comments={data.comments}

@@ -5,7 +5,9 @@ export interface LikeMutationResult {
     like: Like
 }
 
-export interface DislikeMutationResult extends LikeMutationResult {}
+export interface DislikeMutationResult {
+    dislike: Like
+}
 
 export const LIKE = gql`
     mutation like($entity: LikeEntityType!, $entityId: Int!) {

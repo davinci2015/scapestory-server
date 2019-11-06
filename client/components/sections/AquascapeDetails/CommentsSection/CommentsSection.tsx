@@ -10,10 +10,11 @@ import Comment from 'components/molecules/Comment/Comment'
 interface Props {
     comments: AquascapeComment[]
     userImage?: string
+    userId?: number
     toggleLike: (comment: AquascapeComment) => void
 }
 
-const CommentsSection: React.FunctionComponent<Props> = ({comments, toggleLike, userImage}) => {
+const CommentsSection: React.FunctionComponent<Props> = ({comments, toggleLike, userImage, userId}) => {
     const intl = useIntl()
 
     return (
@@ -55,6 +56,7 @@ const CommentsSection: React.FunctionComponent<Props> = ({comments, toggleLike, 
                         {comments.map((comment) => (
                             <Grid.Item key={comment.id} extraSmall={12} medium={6}>
                                 <Comment
+                                    isLiked={comment.likes.some((like) => like.userId === userId)}
                                     comment={comment}
                                     onLike={toggleLike}
                                 />

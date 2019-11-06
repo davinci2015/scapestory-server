@@ -1,4 +1,5 @@
 import {Injectable} from '@graphql-modules/di'
+import {UserInputError} from 'apollo-server'
 import * as Bluebird from 'bluebird'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
@@ -35,14 +36,19 @@ export class LikeRepository extends BaseRepository<Like> {
             return Promise.resolve(like)
         }
 
-        return this.create({
-            userId,
-            [field]: entityId
-        })
+        return this.create({userId, [field]: entityId})
     }
 
-    dislike(entity: LikeEntityType, entityId: number, userId: number) {
+    async dislike(entity: LikeEntityType, entityId: number, userId: number) {
         const field = entityToFieldMapper[entity]
-        return this.destroy({where: {userId, [field]: entityId}})
+        const like = await this.findOne({where: {userId, [field]: entityId}})
+
+        if (!like) {
+            throw new UserInputError('Like not found')
+        }
+
+        await this.destroy({where: {userId, [field]: entityId}})
+
+        return like
     }
 }

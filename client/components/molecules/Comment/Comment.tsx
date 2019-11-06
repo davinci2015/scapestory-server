@@ -11,6 +11,7 @@ const classes = {
 
 interface Props {
     comment: AquascapeComment
+    isLiked: boolean
     onLike: (comment: AquascapeComment) => void
 }
 
@@ -18,7 +19,7 @@ type CardInterface = React.FunctionComponent<Props> & {
     classes: typeof classes
 }
 
-const Comment: CardInterface = ({comment, onLike}) => {
+const Comment: CardInterface = ({comment, isLiked, onLike}) => {
     const onLikeClick = useCallback(() => onLike(comment), [comment, onLike])
 
     return (
@@ -32,7 +33,11 @@ const Comment: CardInterface = ({comment, onLike}) => {
                         <span className="date">{formatDate(parseInt(comment.createdAt), dateFormats.PRIMARY)}</span>
                         <div className="divider"></div>
                         <span className="action" onClick={onLikeClick}>
-                            <FormattedMessage id="comment.action.like" defaultMessage="Like" />
+                            {
+                                isLiked 
+                                ? <FormattedMessage id="comment.action.like" defaultMessage="Dislike" />
+                                : <FormattedMessage id="comment.action.like" defaultMessage="Like" />
+                            }
                         </span>
                     </div>
                 </div>

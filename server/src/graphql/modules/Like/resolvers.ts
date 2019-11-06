@@ -19,7 +19,7 @@ export const resolvers = {
         },
         async dislike(root, args: LikeArgs, context: ModuleContext & AuthenticationContext) {
             const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
-            return await provider.like(args.entity, args.entityId, context.currentUserId)
+            return await provider.dislike(args.entity, args.entityId, context.currentUserId)
         }
     }
 }
