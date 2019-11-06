@@ -72,9 +72,14 @@ export type Co2 = {
 export type Comment = {
   __typename?: "Comment";
   id: Scalars["Int"];
+  createdAt: Scalars["String"];
   content: Scalars["String"];
   parentCommentId?: Maybe<Scalars["Int"]>;
+  likes: Array<Like>;
   user: User;
+  aquascapeImageId?: Maybe<Scalars["Int"]>;
+  aquascapeId?: Maybe<Scalars["Int"]>;
+  commentId?: Maybe<Scalars["Int"]>;
 };
 
 export enum CommentEntityType {
@@ -141,9 +146,9 @@ export type Like = {
   id: Scalars["Int"];
   user: User;
   userId: Scalars["Int"];
-  aquascapeImageId: Scalars["Int"];
-  aquascapeId: Scalars["Int"];
-  commentId: Scalars["Int"];
+  aquascapeImageId?: Maybe<Scalars["Int"]>;
+  aquascapeId?: Maybe<Scalars["Int"]>;
+  commentId?: Maybe<Scalars["Int"]>;
 };
 
 export enum LikeEntityType {
@@ -253,8 +258,8 @@ export type Query = {
   users: Array<Maybe<User>>;
   usernameExists?: Maybe<Scalars["Boolean"]>;
   follows?: Maybe<Follows>;
-  aquascapes?: Maybe<Array<Maybe<Aquascape>>>;
-  trendingAquascapes?: Maybe<Array<Maybe<Aquascape>>>;
+  aquascapes: Array<Aquascape>;
+  trendingAquascapes: Array<Aquascape>;
   featuredAquascape?: Maybe<Aquascape>;
   aquascape?: Maybe<Aquascape>;
   lights: Array<Maybe<Light>>;
@@ -276,6 +281,7 @@ export type QueryFollowsArgs = {
 export type QueryAquascapesArgs = {
   pagination?: Maybe<Pagination>;
   userId?: Maybe<Scalars["Int"]>;
+  random?: Maybe<Scalars["Boolean"]>;
 };
 
 export type QueryTrendingAquascapesArgs = {
@@ -289,7 +295,7 @@ export type QueryAquascapeArgs = {
 export type QueryCommentsArgs = {
   entity: CommentEntityType;
   entityId: Scalars["Int"];
-  pagination?: Maybe<Pagination>;
+  pagination: Pagination;
 };
 
 export type Substrate = {

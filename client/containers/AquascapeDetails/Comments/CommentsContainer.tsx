@@ -1,12 +1,12 @@
-import React, {useContext, useCallback} from 'react'
+import React, {useContext, useCallback, FormEvent, useState} from 'react'
 import {useQuery, useMutation} from 'react-apollo'
 import {DataProxy} from 'apollo-cache'
 import {FetchResult} from 'apollo-link'
 
 import CommentsSection from 'components/sections/AquascapeDetails/CommentsSection'
-import {COMMENTS, CommentsQuery, AquascapeComment} from 'containers/AquascapeDetails/Comments/query'
+import {COMMENTS, CommentsQuery, AquascapeComment, ADD_COMMENT, AddCommentMutationResult} from 'containers/AquascapeDetails/Comments/query'
 import {LIKE, LikeMutationResult, DislikeMutationResult, DISLIKE} from 'graphql/mutations'
-import {LikeEntityType} from 'generated/graphql'
+import {LikeEntityType, CommentEntityType} from 'generated/graphql'
 import {ModalContext} from 'providers/ModalProvider'
 import {AuthContext} from 'providers/AuthenticationProvider'
 
@@ -15,6 +15,7 @@ interface Props {
 }
 
 const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
+    const [comment, updateComment] = useState<string | null>(null)
     const {isAuthenticated, user} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
 
@@ -24,6 +25,11 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
         loading
     } = useQuery<CommentsQuery>(COMMENTS, {variables: {id: aquascapeId}})
 
+    const handleCommentChange = (e: FormEvent<HTMLTextAreaElement>) => {
+        const value = (e.target as HTMLTextAreaElement).value
+        updateComment(value)
+    }
+
     const updateLikeCache = (cache: DataProxy, mutationResult: FetchResult<LikeMutationResult>) => {
         const cacheData = cache.readQuery<CommentsQuery>({query: COMMENTS, variables: {id: aquascapeId}})
         const mutationData = mutationResult.data
@@ -31,6 +37,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
         if (cacheData && mutationData) {
             cache.writeQuery({
                 query: COMMENTS,
+                variables: {id: aquascapeId},
                 data: {
                     comments: cacheData.comments.map((comment) => comment.id === mutationData.like.commentId
                         ? {...comment, likes: [...comment.likes, mutationData.like]}
@@ -48,6 +55,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
         if (cacheData && mutationData) {
             cache.writeQuery({
                 query: COMMENTS,
+                variables: {id: aquascapeId},
                 data: {
                     comments: cacheData.comments.map((comment) => comment.id === mutationData.dislike.commentId
                         ? {...comment, likes: comment.likes.filter((like) => like.id !== mutationData.dislike.id)}
@@ -58,8 +66,42 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
         }
     }
 
+    const updateCommentsCache = (cache: DataProxy, mutationResult: FetchResult<AddCommentMutationResult>) => {
+        const cacheData = cache.readQuery<CommentsQuery>({query: COMMENTS, variables: {id: aquascapeId}})
+        const mutationData = mutationResult.data
+
+        if (cacheData && mutationData && user) {
+            cache.writeQuery({
+                query: COMMENTS,
+                variables: {id: aquascapeId},
+                data: {
+                    comments: [{
+                        ...mutationData.addComment,
+                        likes: [],
+                        user
+                    }, ...cacheData.comments]
+                }
+            })
+        }
+    }
+
     const [like] = useMutation(LIKE, {update: updateLikeCache})
     const [dislike] = useMutation(DISLIKE, {update: updateDislikeCache})
+    const [addComment] = useMutation(ADD_COMMENT, {update: updateCommentsCache})
+
+    const onSubmit = () => {
+        if (!comment) return
+
+        updateComment(null)
+        
+        addComment({
+            variables: {
+                entity: CommentEntityType.Aquascape,
+                entityId: aquascapeId,
+                content: comment
+            }
+        })
+    }
 
     const toggleLike = useCallback((comment: AquascapeComment) => {
         if (!isAuthenticated || !user) {
@@ -87,12 +129,17 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
         return null
     }
 
+    console.log(data.comments)
+
     return (
         <CommentsSection
             userId={user ? user.id : undefined}
+            enteredComment={comment || ''}
             userImage={user ? user.profileImage : undefined}
             toggleLike={toggleLike}
             comments={data.comments}
+            onCommentChange={handleCommentChange}
+            onSubmit={onSubmit}
         />
     )
 }

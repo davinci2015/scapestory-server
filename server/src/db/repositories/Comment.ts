@@ -40,14 +40,17 @@ export class CommentRepository extends BaseRepository<Comment> {
 
         return this.findAll({
             where: {[entity]: entityId},
-            include
+            include,
+            order: [['createdAt', 'DESC']]
         })
     }
 
     addComment(data: AddCommentArgs) {
+        const entity = entityToFieldMapper[data.entityType]
+
         return this.create({
             userId: data.userId,
-            [entityToFieldMapper[data.entityId]]: data.entityId,
+            [entity]: data.entityId,
             content: data.content,
             parentCommentId: data.parentCommentId
         })

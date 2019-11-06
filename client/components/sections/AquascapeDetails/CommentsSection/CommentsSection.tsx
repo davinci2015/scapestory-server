@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FormEvent} from 'react'
 import {useIntl} from 'react-intl'
 
 import {FormattedMessage, Headline, Textarea, InputAdornment, Button, UserImage} from 'components/atoms'
@@ -11,10 +11,13 @@ interface Props {
     comments: AquascapeComment[]
     userImage?: string
     userId?: number
+    enteredComment: string
+    onCommentChange: (e: FormEvent<HTMLTextAreaElement>) => void
     toggleLike: (comment: AquascapeComment) => void
+    onSubmit: () => void
 }
 
-const CommentsSection: React.FunctionComponent<Props> = ({comments, toggleLike, userImage, userId}) => {
+const CommentsSection: React.FunctionComponent<Props> = ({comments, toggleLike, onCommentChange, enteredComment, onSubmit, userImage, userId}) => {
     const intl = useIntl()
 
     return (
@@ -33,13 +36,15 @@ const CommentsSection: React.FunctionComponent<Props> = ({comments, toggleLike, 
                             <UserImage size="large" image={userImage} />
                             <Textarea
                                 rows={1}
+                                value={enteredComment}
+                                onChange={onCommentChange}
                                 placeholder={intl.formatMessage({
                                     id: 'aquascape.comments.input.placeholder',
                                     defaultMessage: 'Write your comment here'
                                 })}
                                 endAdornment={
                                     <InputAdornment>
-                                        <Button dimensions="small">
+                                        <Button dimensions="small" onClick={onSubmit}>
                                             <FormattedMessage
                                                 id="aquascape.comments.input.submit"
                                                 defaultMessage="Post comment"

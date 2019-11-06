@@ -14,6 +14,10 @@ export interface AquascapeComment {
     user: Pick<User, 'id' | 'name' | 'profileImage' | 'username'>
 }
 
+export interface AddCommentMutationResult {
+    addComment: AquascapeComment
+}
+
 export const COMMENTS = gql`
     query Comments($id: Int!) {
       comments(entity: AQUASCAPE, entityId: $id, pagination: {limit: 8, offset: 0}) {
@@ -32,5 +36,16 @@ export const COMMENTS = gql`
             profileImage
         }
       }
+    }
+`
+
+export const ADD_COMMENT = gql`
+    mutation AddComment($entity: CommentEntityType!, $entityId: Int!, $content: String!, $parentCommentId: Int) {
+        addComment(entity: $entity, entityId: $entityId, content: $content, parentCommentId: $parentCommentId) {
+            id
+            content
+            createdAt
+            parentCommentId
+        }
     }
 `
