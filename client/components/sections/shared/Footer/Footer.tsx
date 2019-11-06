@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import {colors, spaces, media} from 'styles'
 import {Paragraph, FormattedMessage, Icon} from 'components/atoms'
-import {ModalType} from 'context/modal'
+import {ModalType} from 'providers/ModalProvider'
 import routes from 'routes'
 
 interface Props {

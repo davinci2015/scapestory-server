@@ -1,12 +1,12 @@
 import React from 'react'
 
-import {App, Grid} from 'components/core'
+import {Grid} from 'components/core'
 import {Headline, Paragraph} from 'components/atoms'
 import FooterContainer from 'containers/Footer'
 import {spaces} from 'styles'
 
 const Terms = () => (
-    <App>
+    <>
         <Grid>
             <div className="terms">
                 <Headline variant="h2">
@@ -85,7 +85,7 @@ const Terms = () => (
                 margin-bottom: ${spaces.s24};
             }
         `}</style>
-    </App>
+    </>
 )
 
 export default Terms

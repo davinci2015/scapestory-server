@@ -5,7 +5,7 @@ import {ApolloProvider} from 'react-apollo'
 import {IntlProvider} from 'react-intl'
 
 import withApolloClient from 'lib/withApolloClient'
-import {ModalProvider} from 'providers/modal'
+import {GlobalStyles} from 'components/core'
 
 interface Props {
     apolloClient: ApolloClient<NormalizedCacheObject>
@@ -17,10 +17,9 @@ class MyApp extends App<Props>  {
 
         return (
             <IntlProvider locale="en">
+                <GlobalStyles />
                 <ApolloProvider client={apolloClient}>
-                    <ModalProvider>
-                        <Component {...pageProps} />
-                    </ModalProvider>
+                    <Component {...pageProps} />
                 </ApolloProvider>
             </IntlProvider>
         )

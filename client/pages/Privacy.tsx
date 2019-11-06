@@ -1,12 +1,12 @@
 import React from 'react'
 
-import {App, Grid} from 'components/core'
+import {Grid} from 'components/core'
 import {Headline, Paragraph} from 'components/atoms'
 import FooterContainer from 'containers/Footer'
 import {spaces} from 'styles'
 
 const PrivacyPolicy = () => (
-    <App>
+    <>
         <Grid>
             <div className="privacy-policy">
                 <Headline variant="h2">
@@ -85,7 +85,7 @@ const PrivacyPolicy = () => (
                 margin-bottom: ${spaces.s24};
             }
         `}</style>
-    </App>
+    </>
 )
 
 export default PrivacyPolicy

@@ -3,7 +3,6 @@ import Link from 'next/link'
 
 import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
-import {ModalType} from 'context/modal'
 import useScrollPosition from 'hooks/useScrollPosition'
 import {Button, FormattedMessage, Icon, UserImage, Paragraph} from 'components/atoms'
 
@@ -11,8 +10,10 @@ import NavLink from './NavLink'
 
 interface Props {
     isAuthenticated: boolean
-    userImage: string
-    openModal: (modalType: ModalType) => void
+    userImage?: string
+    openLoginModal: () => void
+    openRegisterModal: () => void
+    onCreateAquascape: () => void
 }
 
 export const navigationHeight = {
@@ -24,24 +25,14 @@ const scrollOffset = 80
 
 const Navigation = ({
     isAuthenticated,
-    openModal,
+    openLoginModal,
+    openRegisterModal,
+    onCreateAquascape,
     userImage,
 }: Props) => {
     const position = useScrollPosition()
 
     const isSlim = () => position.y > scrollOffset
-
-    const openLoginModal = () => openModal('login')
-
-    const openRegisterModal = () => openModal('register')
-
-    const onCreateAquascape = () => {
-        if (isAuthenticated) {
-            // TODO: redirect to aquascape creation
-        } else {
-            openLoginModal()
-        }
-    }
 
     return (
         <nav>

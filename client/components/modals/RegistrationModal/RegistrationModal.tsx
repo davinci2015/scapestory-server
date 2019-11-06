@@ -4,20 +4,19 @@ import {Paragraph, FormattedMessage} from 'components/atoms'
 import {RegistrationForm, AuthModal} from 'components/modals'
 
 import {colors} from 'styles'
-import {ModalContext} from 'context/modal'
+import {ModalContext} from 'providers/ModalProvider'
 import auth from 'services/auth'
-import {AuthContext} from 'context/auth'
-
+import {AuthContext} from 'providers/AuthenticationProvider'
 
 const RegistrationModal = () => {
-    const {setIsAuthenticated} = useContext(AuthContext)
+    const {setAuthenticated} = useContext(AuthContext)
     const {openModal, closeModal} = useContext(ModalContext)
 
     const openLoginModal = () => openModal('login')
 
     const handleSuccess = (token: string) => {
         auth.persistToken(token)
-        setIsAuthenticated(true)
+        setAuthenticated(true)
         closeModal()
     } 
 

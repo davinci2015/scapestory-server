@@ -18,6 +18,15 @@ export interface AquascapeData {
   }
 }
 
+export interface UserProfile {
+    id: number
+    email: string
+    username: string
+    name?: string
+    country?: string
+    profileImage?: string
+}
+
 export const fragments = {
   aquascape: gql`
       fragment AquascapeFields on Aquascape {
@@ -43,6 +52,11 @@ export const fragments = {
 export const USER_PROFILE = gql`
     query USER_PROFILE {
       me {
+        id
+        email
+        username
+        name
+        country
         profileImage
       }
     }

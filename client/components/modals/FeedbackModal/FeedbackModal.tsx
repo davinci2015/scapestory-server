@@ -2,7 +2,7 @@ import {useContext} from 'react'
 
 import {Headline, Paragraph, Button, Icon, FormattedMessage, Textarea} from 'components/atoms'
 import {colors, spaces, media} from 'styles'
-import {ModalContext} from 'context/modal'
+import {ModalContext} from 'providers/ModalProvider'
 
 interface Props {}
 

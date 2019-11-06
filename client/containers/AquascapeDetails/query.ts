@@ -21,18 +21,9 @@ export interface AquascapeDetails {
     user: Pick<User, 'id' | 'name' | 'profileImage' | 'username'>
 }
 
-export interface AquascapeComment {
-    id: number
-    content: string
-    createdAt: string
-    parentCommentId?: number
-    user: Pick<User, 'id' | 'name' | 'profileImage' | 'username'>
-}
-
 export interface AquascapeDetailsQuery {
     aquascapes: AquascapeData[]
     aquascape: AquascapeDetails
-    comments: AquascapeComment[]
 }
 
 export const AQUASCAPE_DETAILS = gql`
@@ -105,20 +96,7 @@ export const AQUASCAPE_DETAILS = gql`
             username
         }
       }
-      comments(entity: AQUASCAPE, entityId: $id, pagination: {limit: 8, offset: 0}) {
-        id
-        content
-        createdAt
-        parentCommentId
-        user {
-            id
-            name
-            username
-            profileImage
-        }
-      }
     }
-
     
     ${fragments.aquascape}
 `

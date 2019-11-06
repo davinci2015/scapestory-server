@@ -4,19 +4,19 @@ import {LoginForm, AuthModal} from 'components/modals'
 import {Paragraph, FormattedMessage} from 'components/atoms'
 
 import {colors} from 'styles'
-import {ModalContext} from 'context/modal'
+import {ModalContext} from 'providers/ModalProvider'
 import auth from 'services/auth'
-import {AuthContext} from 'context/auth'
+import {AuthContext} from 'providers/AuthenticationProvider'
 
 const LoginModal = () => {
-    const {setIsAuthenticated} = useContext(AuthContext)
+    const {setAuthenticated} = useContext(AuthContext)
     const {openModal, closeModal} = useContext(ModalContext)
 
     const openRegistrationModal = () => openModal('register')
 
     const handleSuccess = (token: string) => {
         auth.persistToken(token)
-        setIsAuthenticated(true)
+        setAuthenticated(true)
         closeModal()
     } 
 

@@ -5,7 +5,7 @@ import {Headline, Paragraph, FormattedMessage, Bubble, Button, Icon} from 'compo
 import {FacebookProps} from 'components/molecules/FacebookLogin'
 import {GoogleProps} from 'components/molecules/GoogleLogin'
 import {colors, spaces, media} from 'styles'
-import {ModalContext} from 'context/modal'
+import {ModalContext} from 'providers/ModalProvider'
 
 interface Props {
     onSuccess: (token: string) => void

@@ -1,10 +1,12 @@
 # import User from '../User/schema.graphql'
+# import Like from '../Like/schema.graphql'
 
 type Comment {
     id: Int!
     createdAt: String!
     content: String!
     parentCommentId: Int
+    likes: [Like!]!
     user: User!
 }
 

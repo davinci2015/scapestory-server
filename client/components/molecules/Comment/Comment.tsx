@@ -1,40 +1,39 @@
 import React, {useCallback} from 'react'
 
-import {UserImage} from 'components/atoms'
+import {UserImage, FormattedMessage} from 'components/atoms'
 import {typography, spaces, colors} from 'styles'
 import {formatDate, dateFormats} from 'utils/date'
+import {AquascapeComment} from 'containers/AquascapeDetails/Comments/query'
 
 const classes = {
     root: 'comment'
 }
 
 interface Props {
-    id: number
-    username: string
-    content: string
-    createdAt: string
-    userImage?: string | null
-    onLike: (id: number) => void
+    comment: AquascapeComment
+    onLike: (comment: AquascapeComment) => void
 }
 
 type CardInterface = React.FunctionComponent<Props> & {
     classes: typeof classes
 }
 
-const Comment: CardInterface = ({id, username, content, createdAt, onLike, userImage}) => {
-    const onLikeClick = useCallback(() => onLike(id), [id])
-    
+const Comment: CardInterface = ({comment, onLike}) => {
+    const onLikeClick = useCallback(() => onLike(comment), [comment, onLike])
+
     return (
         <>
             <div className={classes.root}>
-                <UserImage size="large" image={userImage} />
+                <UserImage size="large" image={comment.user.profileImage} />
                 <div className="wrapper">
-                    <span className="username">{username}</span>
-                    <span className="content">{content}</span>
+                    <span className="username">{comment.user.username}</span>
+                    <span className="content">{comment.content}</span>
                     <div className="bottom">
-                        <span className="date">{formatDate(parseInt(createdAt), dateFormats.PRIMARY)}</span>
+                        <span className="date">{formatDate(parseInt(comment.createdAt), dateFormats.PRIMARY)}</span>
                         <div className="divider"></div>
-                        <span className="action" onClick={onLikeClick}>Like</span>
+                        <span className="action" onClick={onLikeClick}>
+                            <FormattedMessage id="comment.action.like" defaultMessage="Like" />
+                        </span>
                     </div>
                 </div>
             </div>
@@ -66,9 +65,12 @@ const Comment: CardInterface = ({id, username, content, createdAt, onLike, userI
                     font-size: ${typography.fontSize.fs20};
                 } 
 
-                .bottom .date {
+                .bottom :global(span) {
                     font-weight: ${typography.fontWeight.semibold};
                     color: ${colors.SHADE_DEEP};
+                }
+
+                .bottom .date {
                     margin-right: ${spaces.s16};
                 }
 
@@ -86,7 +88,6 @@ const Comment: CardInterface = ({id, username, content, createdAt, onLike, userI
                 .bottom .action {
                     margin: 0 ${spaces.s16};
                     cursor: pointer;
-                    color: ${colors.SHADE_DEEP};
                     font-weight: ${typography.fontWeight.extraBold};
                     transition: color 80ms linear;
                 }

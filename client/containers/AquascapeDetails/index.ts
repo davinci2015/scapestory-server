@@ -1,2 +1,2 @@
-export {default} from './AquascapeDetails'
-export * from './AquascapeDetails'
+export {default} from './AquascapeDetailsContainer'
+export * from './AquascapeDetailsContainer'

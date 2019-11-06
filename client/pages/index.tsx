@@ -1,17 +1,17 @@
 import React from 'react'
 
-import {App} from 'components/core'
-import withAuth from 'hocs/withAuth'
 import NavigationContainer from 'containers/Navigation'
 import FooterContainer from 'containers/Footer'
 import HomeContainer from 'containers/Home'
+import withAuth from 'hocs/withAuth'
+import ModalProvider from 'providers/ModalProvider'
 
 const Index = () => (
-    <App>
+    <ModalProvider>
         <NavigationContainer />
-        <HomeContainer/>
-        <FooterContainer/>
-    </App>
+        <HomeContainer />
+        <FooterContainer />
+    </ModalProvider>
 )
 
 export default withAuth(Index)

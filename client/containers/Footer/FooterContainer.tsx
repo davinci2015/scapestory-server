@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 
-import {ModalContext} from 'context/modal'
+import {ModalContext} from 'providers/ModalProvider'
 import {Footer} from 'components/sections/shared'
 
 const FooterContainer = () => {

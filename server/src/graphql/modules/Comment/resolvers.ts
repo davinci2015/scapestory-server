@@ -8,6 +8,7 @@ import {User} from 'db/models/User'
 import {authenticate} from 'graphql/guards'
 import {CommentEntityType} from 'db/repositories/Comment'
 import {AuthenticationContext} from 'graphql/context'
+import {Like} from 'db/models/Like'
 
 export type CommentsArgs = {
     entityId: number
@@ -22,7 +23,8 @@ export type MutationAddCommentArgs = {
 }
 
 const modelMapping = {
-    user: User
+    user: User,
+    likes: Like
 }
 
 export const resolvers = {

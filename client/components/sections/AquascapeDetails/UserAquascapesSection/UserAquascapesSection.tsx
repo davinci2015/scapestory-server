@@ -3,7 +3,6 @@ import React from 'react'
 import {FormattedMessage, Headline} from 'components/atoms'
 import {Grid} from 'components/core'
 import {AquascapeCardList} from 'components/sections/shared'
-import {spaces} from 'styles'
 import {renderAquascapeCards} from 'utils/render'
 import {AquascapeData} from 'graphql/queries'
 
@@ -31,7 +30,7 @@ const UserAquascapesSection: React.FunctionComponent<Props> = ({username, aquasc
         </div>
         <style jsx>{`
             .section {
-                padding-bottom: ${spaces.s120}
+                padding-bottom: 45px;   
             }
         `}</style>
     </>

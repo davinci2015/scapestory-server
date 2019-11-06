@@ -1,17 +1,17 @@
 import React from 'react'
 
-import {App} from 'components/core'
 import NavigationContainer from 'containers/Navigation'
 import FooterContainer from 'containers/Footer'
 import AquascapeDetailsContainer from 'containers/AquascapeDetails'
 import withAuth from 'hocs/withAuth'
+import ModalProvider from 'providers/ModalProvider'
 
 const AquascapeDetails = () => (
-    <App>
+    <ModalProvider>
         <NavigationContainer />
         <AquascapeDetailsContainer />
         <FooterContainer />
-    </App>
+    </ModalProvider>
 )
 
 export default withAuth(AquascapeDetails)

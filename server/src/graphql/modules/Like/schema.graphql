@@ -1,9 +1,9 @@
 type Like {
     id: Int!
     userId: Int!
-    aquascapeImageId: Int!
-    aquascapeId: Int!
-    commentId: Int!
+    aquascapeImageId: Int
+    aquascapeId: Int
+    commentId: Int
 }
 
 enum LikeEntityType {

@@ -4,15 +4,16 @@ import {useIntl} from 'react-intl'
 import {FormattedMessage, Headline, Textarea, InputAdornment, Button, UserImage} from 'components/atoms'
 import {Grid} from 'components/core'
 import {spaces} from 'styles'
-import {AquascapeComment} from 'containers/AquascapeDetails/query'
-import Comment from 'components/molecules/Comment/Comment';
+import {AquascapeComment} from 'containers/AquascapeDetails/Comments/query'
+import Comment from 'components/molecules/Comment/Comment'
 
 interface Props {
     comments: AquascapeComment[]
     userImage?: string
+    toggleLike: (comment: AquascapeComment) => void
 }
 
-const CommentsSection: React.FunctionComponent<Props> = ({comments}) => {
+const CommentsSection: React.FunctionComponent<Props> = ({comments, toggleLike, userImage}) => {
     const intl = useIntl()
 
     return (
@@ -28,7 +29,7 @@ const CommentsSection: React.FunctionComponent<Props> = ({comments}) => {
                 <Grid.Row>
                     <Grid.Item extraSmall={12} medium={6}>
                         <div className="textarea">
-                            <UserImage size="large" />
+                            <UserImage size="large" image={userImage} />
                             <Textarea
                                 rows={1}
                                 placeholder={intl.formatMessage({
@@ -53,13 +54,9 @@ const CommentsSection: React.FunctionComponent<Props> = ({comments}) => {
                     <Grid.Row>
                         {comments.map((comment) => (
                             <Grid.Item key={comment.id} extraSmall={12} medium={6}>
-                                <Comment 
-                                    id={comment.id}
-                                    username={comment.user.name || comment.user.username}
-                                    userImage={comment.user.profileImage}
-                                    createdAt={comment.createdAt}
-                                    content={comment.content}
-                                    onLike={() => {}}
+                                <Comment
+                                    comment={comment}
+                                    onLike={toggleLike}
                                 />
                             </Grid.Item>
                         ))}

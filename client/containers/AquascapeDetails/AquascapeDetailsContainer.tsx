@@ -12,11 +12,11 @@ import {SubNavigation} from 'components/molecules'
 import {LikeEntityType} from 'generated/graphql'
 import {HeroSection, FloraSection, EquipmentSection, UserAquascapesSection} from 'components/sections/AquascapeDetails'
 import {LIKE, DISLIKE} from 'graphql/mutations'
-import {AuthContext} from 'context/auth'
-import {ModalContext} from 'context/modal'
+import {ModalContext} from 'providers/ModalProvider'
 import {AQUASCAPES, AquascapeData} from 'graphql/queries'
 import OtherAquascapesSection from 'components/sections/AquascapeDetails/OtherAquascapesSection'
-import CommentsSection from 'components/sections/AquascapeDetails/CommentsSection'
+import CommentsContainer from 'containers/AquascapeDetails/Comments'
+import {AuthContext} from 'providers/AuthenticationProvider'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -44,8 +44,6 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         error,
         loading
     } = useQuery<AquascapeDetailsQuery>(AQUASCAPE_DETAILS, {variables: {id: Number(id)}})
-
-    console.log(aquascapeResult)
     
     const updateLikeCache = (isLiked: boolean) => (cache: DataProxy) => {
         const data = cache.readQuery<AquascapeDetailsQuery>({query: AQUASCAPE_DETAILS, variables: {id: Number(id)}})
@@ -131,11 +129,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                     <FormattedMessage id="aquascape.subnavigation.equipment" defaultMessage="Equipment" />
                 </SubNavigation.Item>
                 <SubNavigation.Item id={sections.COMMENTS}>
-                    <FormattedMessage
-                        id="aquascape.subnavigation.comments"
-                        defaultMessage="Comments({count})"
-                        values={{count: aquascapeResult.comments.length}}
-                    />
+                    <FormattedMessage id="aquascape.subnavigation.comments" defaultMessage="Comments" />
                 </SubNavigation.Item>
             </SubNavigation>
             <Grid>
@@ -172,7 +166,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                     </>
                 }
                 <Element name={sections.COMMENTS}>
-                    <CommentsSection comments={aquascapeResult.comments} />
+                    <CommentsContainer aquascapeId={Number(id)}/>
                 </Element>
                 {
                     aquascapeResult.aquascapes && Boolean(aquascapeResult.aquascapes.length) &&

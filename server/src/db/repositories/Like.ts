@@ -12,7 +12,6 @@ export enum LikeEntityType {
 
 export interface LikeRepositoryInterface extends BaseRepositoryInterface<Like> {
     like(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
-
     dislike(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
 }
 
