@@ -40,7 +40,7 @@ const Navigation = ({
                 <div className="left">
                     <Link href={routes.index}>
                         <a>
-                            <img className="logo" src="/static/logo.svg" />
+                            <img src="/static/logo.svg" />
                         </a>
                     </Link>
                     <NavLink href={routes.index}>
@@ -95,61 +95,61 @@ const Navigation = ({
             </div>
 
             <style jsx>{`
-            nav {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: ${isSlim() ? navigationHeight.SLIM : navigationHeight.DEFAULT};   
+                nav {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: ${isSlim() ? navigationHeight.SLIM : navigationHeight.DEFAULT};   
+                    
+                    z-index: ${styles.zIndex.MEDIUM};
+                    background-color: ${styles.colors.WHITE};
+                    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+                    transition: height 180ms ease-in-out;
+                }
                 
-                z-index: ${styles.zIndex.MEDIUM};
-                background-color: ${styles.colors.WHITE};
-                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-                transition: height 180ms ease-in-out;
-            }
-            
-            .container {
-                height: 100%;
-                margin: 0 auto;
-                padding: 0 24px 0 60px;
-                
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
+                .container {
+                    height: 100%;
+                    margin: 0 auto;
+                    padding: 0 24px 0 60px;
+                    
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
 
-            .logo {
-                padding-right: 60px;
-            }
+                .left :global(img) {
+                    padding-right: 60px;
+                }
 
-            .right, .left {
-                display: flex;
-                align-items: center;
-                height: 100%;
-            }
+                .right, .left {
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+                }
 
-            .right :global(.${UserImage.classes.root}) {
-                flex: 0 0 auto;
-                margin: 0 ${styles.spaces.s36};
-                cursor: pointer;
-            }
+                .right :global(.${UserImage.classes.root}) {
+                    flex: 0 0 auto;
+                    margin: 0 ${styles.spaces.s36};
+                    cursor: pointer;
+                }
 
-            .right .login-btn {
-                flex: 0;
-                margin-right: ${styles.spaces.s24};
-                margin-left: ${styles.spaces.s36};
-            }
+                .right .login-btn {
+                    flex: 0;
+                    margin-right: ${styles.spaces.s24};
+                    margin-left: ${styles.spaces.s36};
+                }
 
-            .right .text {
-                flex: 1 1 100%;
-            }
+                .right .text {
+                    flex: 1 1 100%;
+                }
 
-            .right .text .signup {
-                display: inline;
-                margin-left: ${styles.spaces.s6};
-                cursor: pointer;
-            }
-        `}</style>
+                .right .text .signup {
+                    display: inline;
+                    margin-left: ${styles.spaces.s6};
+                    cursor: pointer;
+                }
+            `}</style>
         </nav>
     )
 }
