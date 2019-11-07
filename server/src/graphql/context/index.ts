@@ -4,6 +4,7 @@ import {Context} from 'apollo-server-core'
 import headers from 'constants/headers'
 import {AuthHelper, JWTTokenPayload} from 'utils/AuthHelper'
 import {SessionInterface} from 'interfaces'
+import {Injector} from '@graphql-modules/di';
 
 export type AuthenticationContext = {
     currentUserId: number
@@ -26,7 +27,7 @@ export const composeContext = (contexts: Array<(
             moduleSessionInfo: SessionInterface
         ) => ModuleContext) => {
             return ({...acc, ...ctx(session, currentContext, moduleSessionInfo)})
-        }, {})
+        }, {} as {[x: string]: any, injector: Injector<any>})
     }
 }
 
@@ -37,6 +38,8 @@ export const attachCurrentUserId = (
 ): {currentUserId: number} | object => {
     const authToken = session.req.headers[headers.AUTH_TOKEN]
 
+    console.log('authToken', authToken)
+    
     if (!authToken || typeof authToken !== 'string') {
         return {}
     }

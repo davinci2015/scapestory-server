@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie'
 import appConstants from 'appConstants'
-import {IncomingMessage} from 'http'
+import {IncomingHttpHeaders} from 'http2';
 
 export default {
     persistToken(token: string) {
@@ -8,9 +8,8 @@ export default {
         cookies.set(appConstants.COOKIE_AUTH, token)
     },
 
-    getToken(req?: IncomingMessage) {
-        let cookieHeader
-        if (req && req.headers) cookieHeader = req.headers.cookie
-        return new Cookies(cookieHeader).get(appConstants.COOKIE_AUTH)
+    getToken(headers?: IncomingHttpHeaders) {
+        const cookies = headers ? new Cookies(headers.cookie) : new Cookies()
+        return cookies.get(appConstants.COOKIE_AUTH)
     }
 }

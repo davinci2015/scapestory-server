@@ -1,5 +1,6 @@
 import React from 'react'
 import Document, {Html, Head, Main, NextScript} from 'next/document'
+import flush from 'styled-jsx/server'
 
 class MyDocument extends Document {
     render() {
@@ -16,6 +17,7 @@ class MyDocument extends Document {
                         href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'
                     />
                     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,800,900&display=swap&subset=latin-ext" rel="stylesheet"/>
+                    {flush()}
                 </Head>
                 <body>
                 <Main/>

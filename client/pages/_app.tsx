@@ -4,21 +4,21 @@ import App from 'next/app'
 import {ApolloProvider} from 'react-apollo'
 import {IntlProvider} from 'react-intl'
 
-import withApolloClient from 'lib/withApolloClient'
 import {GlobalStyles} from 'components/core'
+import withApollo from 'lib/withApollo'
 
 interface Props {
-    apolloClient: ApolloClient<NormalizedCacheObject>
+    apollo: ApolloClient<NormalizedCacheObject>
 }
 
 class MyApp extends App<Props>  {
     render() {
-        const {Component, pageProps, apolloClient} = this.props
+        const {Component, pageProps, apollo} = this.props
 
         return (
             <IntlProvider locale="en">
                 <GlobalStyles />
-                <ApolloProvider client={apolloClient}>
+                <ApolloProvider client={apollo}>
                     <Component {...pageProps} />
                 </ApolloProvider>
             </IntlProvider>
@@ -26,5 +26,4 @@ class MyApp extends App<Props>  {
     }
 }
 
-// @ts-ignore
-export default withApolloClient(MyApp)
+export default withApollo(MyApp)
