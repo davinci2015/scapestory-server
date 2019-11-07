@@ -11,7 +11,8 @@ interface WithAuthProps {
 const withAuth = <P extends Object>(WrappedComponent: NextComponentType) =>
     class extends React.Component<P & WithAuthProps> {
         static async getInitialProps(ctx: NextPageContext) {
-            const token = ctx.req ? auth.getToken(ctx.req.headers) : null
+            const headers = ctx.req && ctx.req.headers
+            const token = auth.getToken(headers)
             const pageProps = WrappedComponent.getInitialProps && await WrappedComponent.getInitialProps(ctx)
             
             return { ...pageProps, isAuthenticated: !!token } 
