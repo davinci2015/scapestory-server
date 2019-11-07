@@ -20,7 +20,10 @@ export class Comment extends Model<Comment> {
     @BelongsTo(() => User)
     user: User
 
-    @HasMany(() => Like)
+    @HasMany(() => Like, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+    })
     likes: Like[]
 
     @ForeignKey(() => Aquascape)

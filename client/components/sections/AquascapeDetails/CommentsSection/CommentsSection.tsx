@@ -4,7 +4,7 @@ import {useIntl} from 'react-intl'
 import {FormattedMessage, Headline, Textarea, InputAdornment, Button, UserImage} from 'components/atoms'
 import {Grid} from 'components/core'
 import {spaces} from 'styles'
-import {AquascapeComment} from 'containers/AquascapeDetails/Comments/query'
+import {AquascapeComment} from 'containers/AquascapeDetails/Comments/queries'
 import Comment from 'components/molecules/Comment/Comment'
 
 interface Props {
@@ -13,11 +13,21 @@ interface Props {
     userId?: number
     enteredComment: string
     onCommentChange: (e: FormEvent<HTMLTextAreaElement>) => void
+    removeComment: (comment: AquascapeComment) => void
     toggleLike: (comment: AquascapeComment) => void
     onSubmit: () => void
 }
 
-const CommentsSection: React.FunctionComponent<Props> = ({comments, toggleLike, onCommentChange, enteredComment, onSubmit, userImage, userId}) => {
+const CommentsSection: React.FunctionComponent<Props> = ({
+    comments,
+    toggleLike,
+    onCommentChange,
+    enteredComment,
+    onSubmit,
+    removeComment,
+    userImage,
+    userId
+}) => {
     const intl = useIntl()
 
     return (
@@ -61,6 +71,7 @@ const CommentsSection: React.FunctionComponent<Props> = ({comments, toggleLike, 
                         {comments.map((comment) => (
                             <Grid.Item key={comment.id} extraSmall={12} medium={6}>
                                 <Comment
+                                    onRemove={comment.user.id === userId ? removeComment : undefined}
                                     isLiked={comment.likes.some((like) => like.userId === userId)}
                                     comment={comment}
                                     onLike={toggleLike}

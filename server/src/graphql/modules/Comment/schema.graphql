@@ -29,4 +29,5 @@ type Query {
 
 type Mutation {
     addComment(entity: CommentEntityType!, entityId: Int!, content: String!, parentCommentId: Int): Comment
+    removeComment(id: Int!): Comment
 }

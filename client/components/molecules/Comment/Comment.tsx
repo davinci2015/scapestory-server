@@ -3,7 +3,7 @@ import React, {useCallback} from 'react'
 import {UserImage, FormattedMessage} from 'components/atoms'
 import {typography, spaces, colors} from 'styles'
 import {formatDate, dateFormats} from 'utils/date'
-import {AquascapeComment} from 'containers/AquascapeDetails/Comments/query'
+import {AquascapeComment} from 'containers/AquascapeDetails/Comments/queries'
 
 const classes = {
     root: 'comment'
@@ -12,6 +12,7 @@ const classes = {
 interface Props {
     comment: AquascapeComment
     isLiked: boolean
+    onRemove?: (comment: AquascapeComment) => void
     onLike: (comment: AquascapeComment) => void
 }
 
@@ -19,8 +20,9 @@ type CardInterface = React.FunctionComponent<Props> & {
     classes: typeof classes
 }
 
-const Comment: CardInterface = ({comment, isLiked, onLike}) => {
+const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
     const onLikeClick = useCallback(() => onLike(comment), [comment, onLike])
+    const onRemoveClick = useCallback(() => onRemove && onRemove(comment), [comment, onRemove])
 
     return (
         <>
@@ -34,11 +36,17 @@ const Comment: CardInterface = ({comment, isLiked, onLike}) => {
                         <div className="divider"></div>
                         <span className="action" onClick={onLikeClick}>
                             {
-                                isLiked 
-                                ? <FormattedMessage id="comment.action.like" defaultMessage="Dislike" />
-                                : <FormattedMessage id="comment.action.like" defaultMessage="Like" />
+                                isLiked
+                                    ? <FormattedMessage id="comment.action.like" defaultMessage="Dislike" />
+                                    : <FormattedMessage id="comment.action.like" defaultMessage="Like" />
                             }
                         </span>
+                        {
+                            Boolean(onRemove) &&
+                            <span className="action" onClick={onRemoveClick}>
+                                <FormattedMessage id="comment.action.remove" defaultMessage="Remove" />
+                            </span>
+                        }
                     </div>
                 </div>
             </div>

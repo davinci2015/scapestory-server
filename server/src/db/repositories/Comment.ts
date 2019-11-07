@@ -4,6 +4,7 @@ import * as Bluebird from 'bluebird'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Comment} from 'db/models/Comment'
 import {Includeable} from 'sequelize/types'
+import {UserInputError} from 'apollo-server';
 
 export enum CommentEntityType {
     AQUASCAPE = 'AQUASCAPE',
@@ -22,6 +23,8 @@ export interface CommentRepositoryInterface extends BaseRepositoryInterface<Comm
     getComments(entityType: CommentEntityType, entityId: number, include?: Includeable[]): Bluebird<Comment[]>
 
     addComment(data: AddCommentArgs): Bluebird<Comment>
+
+    removeComment(id: number, userId: number): Bluebird<Comment>
 }
 
 const entityToFieldMapper = {
@@ -54,5 +57,16 @@ export class CommentRepository extends BaseRepository<Comment> {
             content: data.content,
             parentCommentId: data.parentCommentId
         })
+    }
+
+    async removeComment(id: number, userId: number) {
+        const comment = await this.findOne({where: {id, userId}})
+
+        if (!comment) {
+            throw new UserInputError('Comment not found.')
+        }
+
+        await comment.destroy()
+        return comment
     }
 }

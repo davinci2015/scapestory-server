@@ -10,6 +10,8 @@ export interface CommentProviderInterface {
     getComments(entityType: CommentEntityType, entityId: number, include?: Includeable[]): Bluebird<Comment[]>
 
     addComment(data: AddCommentArgs): Bluebird<Comment>
+
+    removeComment(id: number, userId: number): Bluebird<Comment>
 }
 
 @Injectable()
@@ -25,5 +27,9 @@ export class CommentProvider implements CommentProviderInterface {
 
     addComment(data: AddCommentArgs) {
         return this.commentRepository.addComment(data)
+    }
+
+    removeComment(id: number, userId: number) {
+        return this.commentRepository.removeComment(id, userId)
     }
 }

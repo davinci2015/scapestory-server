@@ -38,8 +38,6 @@ export const attachCurrentUserId = (
 ): {currentUserId: number} | object => {
     const authToken = session.req.headers[headers.AUTH_TOKEN]
 
-    console.log('authToken', authToken)
-    
     if (!authToken || typeof authToken !== 'string') {
         return {}
     }

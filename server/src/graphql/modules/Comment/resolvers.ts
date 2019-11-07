@@ -22,6 +22,10 @@ export type MutationAddCommentArgs = {
     parentCommentId?: number
 }
 
+export type MutationRemoveCommentArgs = {
+    id: number
+}
+
 const modelMapping = {
     user: User,
     likes: Like
@@ -45,10 +49,15 @@ export const resolvers = {
                 content: args.content,
                 parentCommentId: args.parentCommentId
             })
+        },
+        async removeComment(root, args: MutationRemoveCommentArgs, context: ModuleContext & AuthenticationContext) {
+            const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
+            return await provider.removeComment(args.id, context.currentUserId)
         }
     }
 }
 
 export const resolversComposition = {
-    'Mutation.addComment': [authenticate]
+    'Mutation.addComment': [authenticate],
+    'Mutation.removeComment': [authenticate]
 }
