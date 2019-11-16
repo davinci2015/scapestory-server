@@ -17,6 +17,7 @@ import {AQUASCAPES, AquascapeData} from 'graphql/queries'
 import OtherAquascapesSection from 'components/sections/AquascapeDetails/OtherAquascapesSection'
 import CommentsContainer from 'containers/AquascapeDetails/Comments'
 import {AuthContext} from 'providers/AuthenticationProvider'
+import PostsSection from 'components/sections/AquascapeDetails/PostsSection';
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -44,7 +45,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         error,
         loading
     } = useQuery<AquascapeDetailsQuery>(AQUASCAPE_DETAILS, {variables: {id: Number(id)}})
-    
+
     const updateLikeCache = (isLiked: boolean) => (cache: DataProxy) => {
         const data = cache.readQuery<AquascapeDetailsQuery>({query: AQUASCAPE_DETAILS, variables: {id: Number(id)}})
         if (data) {
@@ -133,6 +134,9 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                 </SubNavigation.Item>
             </SubNavigation>
             <Grid>
+                <Element name={sections.PHOTO_POSTS}>
+                    <PostsSection />
+                </Element>
                 <Divider />
                 <Element name={sections.FLORA}>
                     <FloraSection
@@ -166,7 +170,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                     </>
                 }
                 <Element name={sections.COMMENTS}>
-                    <CommentsContainer aquascapeId={Number(id)}/>
+                    <CommentsContainer aquascapeId={Number(id)} />
                 </Element>
                 {
                     aquascapeResult.aquascapes && Boolean(aquascapeResult.aquascapes.length) &&
