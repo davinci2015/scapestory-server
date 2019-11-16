@@ -10,14 +10,19 @@ import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
 import {LikeEntityType} from 'generated/graphql'
-import {HeroSection, FloraSection, EquipmentSection, UserAquascapesSection} from 'components/sections/AquascapeDetails'
 import {LIKE, DISLIKE} from 'graphql/mutations'
 import {ModalContext} from 'providers/ModalProvider'
 import {AQUASCAPES, AquascapeData} from 'graphql/queries'
-import OtherAquascapesSection from 'components/sections/AquascapeDetails/OtherAquascapesSection'
 import CommentsContainer from 'containers/AquascapeDetails/Comments'
 import {AuthContext} from 'providers/AuthenticationProvider'
-import PostsSection from 'components/sections/AquascapeDetails/PostsSection';
+import {
+    HeroSection, 
+    FloraSection, 
+    EquipmentSection, 
+    UserAquascapesSection, 
+    PostsSection, 
+    OtherAquascapesSection
+} from 'components/sections/AquascapeDetails'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -135,7 +140,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
             </SubNavigation>
             <Grid>
                 <Element name={sections.PHOTO_POSTS}>
-                    <PostsSection images={aquascapeResult.aquascape.images}/>
+                    <PostsSection images={aquascapeResult.aquascape.images} />
                 </Element>
                 <Divider />
                 <Element name={sections.FLORA}>
