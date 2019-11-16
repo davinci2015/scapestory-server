@@ -135,7 +135,6 @@ const aquascapes = getEmptyArray(entriesCount.aquascapes).map((_, index) => ({
 
 const images = getEmptyArray(entriesCount.images).map((_, index) => ({
     _id: index + 1,
-    mainImage: faker.random.boolean(),
     title: faker.lorem.word(),
     description: faker.lorem.sentence(),
     url: getAquascapeImage(),
