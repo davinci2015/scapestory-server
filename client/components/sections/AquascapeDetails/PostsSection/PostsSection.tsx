@@ -1,29 +1,27 @@
 import React from 'react'
 import {spaces} from 'styles'
 import {Headline, FormattedMessage} from 'components/atoms'
-import mock from 'mocks/storybook'
 import {PhotoGrid} from 'components/molecules'
+import {AquascapeDetails} from 'containers/AquascapeDetails/query'
 
 interface Props {
-
+    images: AquascapeDetails['images']
 }
 
-const PostsSection: React.FunctionComponent<Props> = ({}) => (
+const PostsSection: React.FunctionComponent<Props> = ({images}) => (
     <>
         <div className="section">
             <Headline as="h2" variant="h3">
                 <FormattedMessage id="aquascape.posts.title" defaultMessage="Photo posts" />
             </Headline>
-
-            <PhotoGrid images={[
-                {src: mock.aquascapeImage, alt: 'Image'},
-                {src: mock.aquascapeImage, alt: 'Image'},
-                {src: mock.aquascapeImage, alt: 'Image'},
-                {src: mock.aquascapeImage, alt: 'Image'},
-                {src: mock.aquascapeImage, alt: 'Image'},
-                {src: mock.aquascapeImage, alt: 'Image'},
-                {src: mock.aquascapeImage, alt: 'Image'}
-            ]} />
+            {
+                !!images.length
+                    ? <PhotoGrid images={images.map((image) => ({
+                        src: image.url,
+                        alt: image.title
+                    }))} />
+                    : <FormattedMessage id="aquascape.posts.no_photos" defaultMessage="No photos uploaded." />
+                }
         </div>
         <style jsx>{`
             .section {

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import {fragments, AquascapeData} from 'graphql/queries'
-import {Plant, Livestock, Hardscape, Light, Filter, Substrate, Additive, Co2, User} from 'generated/graphql'
+import {Plant, Livestock, Hardscape, Light, Filter, Substrate, Additive, Co2, User, AquascapeImage} from 'generated/graphql'
 
 export interface AquascapeDetails {
     id: number
@@ -18,6 +18,7 @@ export interface AquascapeDetails {
     substrates: Pick<Substrate, 'id' | 'brand' | 'name'>[]
     additives: Pick<Additive, 'id' | 'brand' | 'name'>[]
     tags: {name: string}[]
+    images: Pick<AquascapeImage, 'id' | 'url' | 'title'>[]
     user: Pick<User, 'id' | 'name' | 'profileImage' | 'username'>
 }
 
@@ -87,6 +88,12 @@ export const AQUASCAPE_DETAILS = gql`
 
         tags {  
             name
+        }
+
+        images {
+            id
+            title
+            url
         }
 
         user {

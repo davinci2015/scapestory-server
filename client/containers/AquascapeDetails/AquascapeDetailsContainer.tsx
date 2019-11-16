@@ -135,7 +135,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
             </SubNavigation>
             <Grid>
                 <Element name={sections.PHOTO_POSTS}>
-                    <PostsSection />
+                    <PostsSection images={aquascapeResult.aquascape.images}/>
                 </Element>
                 <Divider />
                 <Element name={sections.FLORA}>
