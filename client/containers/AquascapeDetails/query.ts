@@ -19,7 +19,7 @@ export interface AquascapeDetails {
     additives: Pick<Additive, 'id' | 'brand' | 'name'>[]
     tags: {name: string}[]
     images: Pick<AquascapeImage, 'id' | 'url' | 'title'>[]
-    user: Pick<User, 'id' | 'name' | 'profileImage' | 'username' | 'isFollowedBy'>
+    user: Pick<User, 'id' | 'name' | 'profileImage' | 'username' | 'isFollowedByMe'>
 }
 
 export interface AquascapeDetailsQuery {
@@ -101,6 +101,7 @@ export const AQUASCAPE_DETAILS = gql`
             name
             profileImage
             username
+            isFollowedByMe
         }
       }
     }

@@ -133,7 +133,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
             <HeroSection
                 aquascape={aquascapeResult.aquascape}
                 isLiked={aquascapeResult.aquascape.isLikedByMe}
-                isUserFollowed={true}
+                isUserFollowed={aquascapeResult.aquascape.isLikedByMe}
                 toggleFollow={toggleFollow}
                 toggleLike={toggleLike}
             />

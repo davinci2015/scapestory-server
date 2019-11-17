@@ -32,7 +32,6 @@ export type Aquascape = {
   mainImage?: Maybe<Scalars['String']>,
   images?: Maybe<Array<AquascapeImage>>,
   viewsCount: Scalars['Int'],
-  likesCount: Scalars['Int'],
   tags: Array<Tag>,
   plants?: Maybe<Array<Plant>>,
   hardscape?: Maybe<Array<Hardscape>>,
@@ -41,6 +40,7 @@ export type Aquascape = {
   lights?: Maybe<Array<Light>>,
   substrates?: Maybe<Array<Substrate>>,
   additives?: Maybe<Array<Additive>>,
+  likesCount: Scalars['Int'],
   isLikedByMe: Scalars['Boolean'],
 };
 
@@ -104,7 +104,7 @@ export type Follow = {
   followed: User,
   follower: User,
   updatedAt: Scalars['String'],
-  craetedAt: Scalars['String'],
+  createdAt: Scalars['String'],
 };
 
 export type Follows = {
@@ -362,12 +362,7 @@ export type User = {
   instagramLink?: Maybe<Scalars['String']>,
   createdAt: Scalars['String'],
   updatedAt: Scalars['String'],
-  isFollowedBy?: Maybe<Scalars['Boolean']>,
-};
-
-
-export type UserIsFollowedByArgs = {
-  followerId: Scalars['Int']
+  isFollowedByMe: Scalars['Boolean'],
 };
 
 export type Visitor = {
