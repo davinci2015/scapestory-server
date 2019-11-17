@@ -6,7 +6,8 @@ import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 export interface FollowRepositoryInterface extends BaseRepositoryInterface<Follow> {
     followUser: (followerUserId: number, followedUserId: number) => Bluebird<Follow | null>,
     unfollowUser: (followerUserId: number, followedUserId: number) => Bluebird<Follow | null>,
-    getFollows: (userId: number) => Bluebird<{ followers: Follow[], following: Follow[] }>
+    getFollows: (userId: number) => Promise<{ followers: Follow[], following: Follow[] }>
+    isFollowedBy: (followerId: number, followedId: number) => Promise<boolean>
 }
 
 @Injectable()
@@ -21,6 +22,15 @@ export class FollowRepository extends BaseRepository<Follow> {
 
     unfollowUser(followerUserId: number, followedUserId: number) {
         return this.destroy({where: {followerUserId, followedUserId}})
+    }
+
+    async isFollowedBy(followerId: number, followedId: number) {
+        const follow = this.findOne({where: {
+            followerUserId: followerId,
+            followedUserId: followedId
+        }})
+
+        return Boolean(follow)
     }
 
     async getFollows(userId: number) {

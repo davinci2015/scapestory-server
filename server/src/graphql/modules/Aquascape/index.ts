@@ -6,6 +6,7 @@ import {VisitorRepository} from 'db/repositories/Visitor'
 import {LikeRepository} from 'db/repositories/Like'
 import {TagRepository} from 'db/repositories/Tag'
 import {UserRepository} from 'db/repositories/User'
+
 import {UsersProvider} from 'graphql/modules/User/UsersProvider'
 import {LikeProvider} from 'graphql/modules/Like/LikeProvider'
 import {VisitorProvider} from 'graphql/modules/Visitor/VisitorProvider'

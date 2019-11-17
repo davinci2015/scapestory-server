@@ -11,7 +11,6 @@ import {Pagination} from 'interfaces'
 import {Aquascape} from 'db/models/Aquascape'
 import {Tag} from 'db/models/Tag'
 import {Visitor} from 'db/models/Visitor'
-import {Like} from 'db/models/Like'
 import {Plant} from 'db/models/Plant'
 import {Hardscape} from 'db/models/Hardscape'
 import {Livestock} from 'db/models/Livestock'
@@ -43,7 +42,6 @@ export type VisitAquascapeArgs = {
 
 const defaultInclude: Includeable[] = [
     {model: Visitor, attributes: ['id']}, // Include Visitor model for viewsCount
-    {model: Like, attributes: ['id', 'userId', 'aquascapeId']}, // Include Like model for likesCount
 ]
 
 const modelMapping = {
@@ -99,15 +97,8 @@ export const resolvers = {
             const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
             return await provider.findUserById(aquascape.userId)
         },
-        likesCount(aquascape: Aquascape) {
-            return aquascape.likes.length
-        },
         viewsCount(aquascape: Aquascape) {
             return aquascape.visitors.length
-        },
-        isLikedByMe(aquascape: Aquascape, args, context: ModuleContext & AuthenticationContext) {
-            return Boolean(aquascape.likes.find((like) =>
-                like.userId === context.currentUserId && like.aquascapeId === aquascape.id))
         }
     },
     Mutation: {

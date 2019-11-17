@@ -109,7 +109,6 @@ type Aquascape {
     mainImage: String
     images: [AquascapeImage!]
     viewsCount: Int!
-    likesCount: Int!
     tags: [Tag!]!
     plants: [Plant!]
     hardscape: [Hardscape!]
@@ -118,7 +117,6 @@ type Aquascape {
     lights: [Light!]
     substrates: [Substrate!]
     additives: [Additive!]
-    isLikedByMe: Boolean!
 }
 
 input Pagination {

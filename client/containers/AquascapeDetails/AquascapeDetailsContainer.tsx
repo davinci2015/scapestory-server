@@ -16,11 +16,11 @@ import {AQUASCAPES, AquascapeData} from 'graphql/queries'
 import CommentsContainer from 'containers/AquascapeDetails/Comments'
 import {AuthContext} from 'providers/AuthenticationProvider'
 import {
-    HeroSection, 
-    FloraSection, 
-    EquipmentSection, 
-    UserAquascapesSection, 
-    PostsSection, 
+    HeroSection,
+    FloraSection,
+    EquipmentSection,
+    UserAquascapesSection,
+    PhotoSection,
     OtherAquascapesSection
 } from 'components/sections/AquascapeDetails'
 
@@ -94,6 +94,16 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         })
     }
 
+    const toggleFollow = () => {
+        if (!aquascapeResult || !aquascapeResult.aquascape) {
+            return
+        }
+
+        if (!isAuthenticated) {
+            return openModal('login')
+        }
+    }
+
     useEffect(() => {
         aquascapeResult && !getUserAquascapesCalled && getUserAquascapes({
             variables: {
@@ -118,12 +128,15 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         return null
     }
 
-    const hasEquipment = ['lights', 'filters', 'substrates', 'additives']
-        .some(equipment => aquascapeResult.aquascape.hasOwnProperty(equipment) && Boolean(aquascapeResult.aquascape.lights.length)) || aquascapeResult.aquascape.co2
-
     return (
         <Content>
-            <HeroSection aquascape={aquascapeResult.aquascape} isLiked={aquascapeResult.aquascape.isLikedByMe} toggleLike={toggleLike} />
+            <HeroSection
+                aquascape={aquascapeResult.aquascape}
+                isLiked={aquascapeResult.aquascape.isLikedByMe}
+                isUserFollowed={true}
+                toggleFollow={toggleFollow}
+                toggleLike={toggleLike}
+            />
             <SubNavigation>
                 <SubNavigation.Item id={sections.PHOTO_POSTS}>
                     <FormattedMessage id="aquascape.subnavigation.photo" defaultMessage="Photo Posts" />
@@ -140,7 +153,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
             </SubNavigation>
             <Grid>
                 <Element name={sections.PHOTO_POSTS}>
-                    <PostsSection images={aquascapeResult.aquascape.images} />
+                    <PhotoSection images={aquascapeResult.aquascape.images} />
                 </Element>
                 <Divider />
                 <Element name={sections.FLORA}>
@@ -151,21 +164,18 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                     />
                 </Element>
                 <Divider />
+                <Element name={sections.EQUIPMENT}>
+                    <EquipmentSection
+                        lights={aquascapeResult.aquascape.lights}
+                        filters={aquascapeResult.aquascape.filters}
+                        substrates={aquascapeResult.aquascape.substrates}
+                        additives={aquascapeResult.aquascape.additives}
+                        co2={aquascapeResult.aquascape.co2}
+                    />
+                </Element>
+                <Divider />
                 {
-                    hasEquipment &&
-                    <Element name={sections.EQUIPMENT}>
-                        <EquipmentSection
-                            lights={aquascapeResult.aquascape.lights}
-                            filters={aquascapeResult.aquascape.filters}
-                            substrates={aquascapeResult.aquascape.substrates}
-                            additives={aquascapeResult.aquascape.additives}
-                            co2={aquascapeResult.aquascape.co2}
-                        />
-                        <Divider />
-                    </Element>
-                }
-                {
-                    userAquascapesResult &&
+                    userAquascapesResult && userAquascapesResult.aquascapes.length > 1 &&
                     <>
                         <UserAquascapesSection
                             aquascapes={userAquascapesResult.aquascapes.filter((scape: AquascapeData) => scape.id !== aquascapeResult.aquascape.id)}

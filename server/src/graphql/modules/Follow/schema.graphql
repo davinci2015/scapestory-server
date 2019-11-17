@@ -1,5 +1,3 @@
-# import User from '../User/schema.graphql'
-
 type Follow {
     id: Int!
     followedUserId: Int!
@@ -7,7 +5,7 @@ type Follow {
     followed: User!
     follower: User!
     updatedAt: String!
-    craetedAt: String!
+    createdAt: String!
 }
 
 type Follows {
@@ -17,6 +15,10 @@ type Follows {
 
 type Query {
     follows(userId: Int!): Follows
+}
+
+type User {
+    isFollowedByMe: Boolean!
 }
 
 type Mutation {

@@ -14,7 +14,7 @@ const GUTTER = spaces.s16;
 const ALT_PLACEHOLDER = 'Scapostory post'
 
 // No time for masonry 
-const PhotoGrid: React.FunctionComponent<Props> = ({images}) => (
+const PhotoSection: React.FunctionComponent<Props> = ({images}) => (
     <>
         <div className="photo-grid">
             <div className="row">
@@ -95,4 +95,4 @@ const PhotoGrid: React.FunctionComponent<Props> = ({images}) => (
     </>
 )
 
-export default PhotoGrid
+export default PhotoSection

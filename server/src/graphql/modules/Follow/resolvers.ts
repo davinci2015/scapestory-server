@@ -3,6 +3,8 @@ import {ModuleContext} from '@graphql-modules/core'
 import {FollowProviderInterface} from 'graphql/modules/Follow/providers/FollowProvider'
 import {authenticate} from 'graphql/guards'
 import {tokens} from 'di/tokens'
+import {User} from 'db/models/User';
+import {AuthenticationContext} from 'graphql/context'
 
 type FollowUserArgsType = {
     userId: number
@@ -17,6 +19,16 @@ export const followResolvers = {
         async follows(root, args: GetFollowsArgsType, context: ModuleContext) {
             const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
             return await provider.getFollows(args.userId)
+        }
+    },
+    User: {
+        async isFollowedByMe(user: User, args, context: ModuleContext & AuthenticationContext) {
+            if (!context.currentUserId || context.currentUserId === user.id) {
+                return false
+            }
+
+            const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
+            return await provider.isFollowedBy(context.currentUserId, user.id)
         }
     },
     Mutation: {

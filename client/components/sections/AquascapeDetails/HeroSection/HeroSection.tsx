@@ -9,10 +9,12 @@ import {AquascapeDetails} from 'containers/AquascapeDetails/query'
 interface Props {
     aquascape: AquascapeDetails
     isLiked: Boolean
+    isUserFollowed: Boolean
     toggleLike: () => void
+    toggleFollow: () => void
 }
 
-const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, toggleLike}) => (
+const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, isUserFollowed, toggleLike, toggleFollow}) => (
     <>
         <Hero
             variant="cover"
@@ -26,13 +28,32 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, toggle
                             variant="border"
                             image={aquascape.user.profileImage}
                             text={
-                                <Paragraph type="body" color={colors.WHITE}>
-                                    <FormattedMessage
-                                        id="aquascape.hero_section.username"
-                                        defaultMessage="by {username}"
-                                        values={{username: aquascape.user.name || aquascape.user.username}}
-                                    />
-                                </Paragraph>
+                                <div>
+                                    <Paragraph type="body" color={colors.WHITE} weight="bold">
+                                        <FormattedMessage
+                                            id="aquascape.hero_section.username"
+                                            defaultMessage="by {username}"
+                                            values={{username: aquascape.user.name || aquascape.user.username}}
+                                        />
+                                    </Paragraph>
+                                    <div className="follow" onClick={toggleFollow} role="presentation">
+                                        <Paragraph type="s2" color={colors.WHITE} weight="semibold">
+                                            {
+                                                isUserFollowed
+                                                    ?
+                                                    <FormattedMessage
+                                                        id="aquascape.hero_section.unfollow"
+                                                        defaultMessage="Unfollow"
+                                                    />
+                                                    :
+                                                    <FormattedMessage
+                                                        id="aquascape.hero_section.follow"
+                                                        defaultMessage="Follow"
+                                                    />
+                                            }
+                                        </Paragraph>
+                                    </div>
+                                </div>
                             }
                         />
                     </Hero.TopLeft>
@@ -40,14 +61,14 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, toggle
                         <Button
                             onClick={toggleLike}
                             leftIcon={
-                                <Icon 
-                                    d={isLiked ? Icon.HEART : Icon.HEART_OUTLINE} 
-                                    color={isLiked ? colors.SECONDARY : colors.WHITE} 
+                                <Icon
+                                    d={isLiked ? Icon.HEART : Icon.HEART_OUTLINE}
+                                    color={isLiked ? colors.SECONDARY : colors.WHITE}
                                 />
-                            } 
-                            dimensions="extraSmall" 
+                            }
+                            dimensions="extraSmall"
                             color="tertiary">
-                            <FormattedMessage id="aquascape.hero_section.like" defaultMessage="Like"/>
+                            <FormattedMessage id="aquascape.hero_section.like" defaultMessage="Like" />
                         </Button>
                     </Hero.TopRight>
                 </Hero.TopSection>
@@ -72,6 +93,10 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, toggle
         <style jsx>{`
             .icons {
                 margin-left: -${spaces.s12};
+            }
+
+            .follow {
+                cursor: pointer;
             }
         `}</style>
     </>

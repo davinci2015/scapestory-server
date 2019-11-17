@@ -6,6 +6,11 @@ type Like {
     commentId: Int
 }
 
+type Aquascape {
+    likesCount: Int!
+    isLikedByMe: Boolean!
+}
+
 enum LikeEntityType {
     AQUASCAPE
     IMAGE

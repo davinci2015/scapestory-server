@@ -12,6 +12,7 @@ export const FollowModule = new GraphQLModule({
     providers: [
         {provide: tokens.FOLLOW_PROVIDER, useClass: FollowProvider},
         {provide: tokens.FOLLOW_REPOSITORY, useClass: FollowRepository},
+
         {provide: tokens.USER_REPOSITORY, useClass: UserRepository}
     ],
     typeDefs: followDefs,

@@ -7,8 +7,9 @@ import {Like} from 'db/models/Like'
 
 export interface LikeProviderInterface {
     like(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
-
     dislike(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
+    countLikes(entity: LikeEntityType, entityId: number): Promise<number>
+    isLikedBy(userId: number, entity: LikeEntityType, entityId: number): Promise<boolean>
 }
 
 @Injectable()
@@ -24,5 +25,13 @@ export class LikeProvider implements LikeProviderInterface {
 
     dislike(entity: LikeEntityType, entityId: number, userId: number) {
         return this.likeRepository.dislike(entity, entityId, userId)
+    }
+
+    countLikes(entity: LikeEntityType, entityId) {
+        return this.likeRepository.countLikes(entity, entityId)
+    }
+
+    isLikedBy(userId: number, entity: LikeEntityType, entityId: number, ) {
+        return this.likeRepository.isLikedBy(userId, entity, entityId)
     }
 }

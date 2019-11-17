@@ -14,12 +14,12 @@ export interface AquascapeDetails {
     hardscape: Pick<Hardscape, 'id' | 'name'>[]
     lights: Pick<Light, 'id' | 'brand' | 'model'>[]
     filters: Pick<Filter, 'id' | 'brand' | 'model'>[]
-    co2: Pick<Co2, 'id' | 'type' | 'bps'>
+    co2?: Pick<Co2, 'id' | 'type' | 'bps'>
     substrates: Pick<Substrate, 'id' | 'brand' | 'name'>[]
     additives: Pick<Additive, 'id' | 'brand' | 'name'>[]
     tags: {name: string}[]
     images: Pick<AquascapeImage, 'id' | 'url' | 'title'>[]
-    user: Pick<User, 'id' | 'name' | 'profileImage' | 'username'>
+    user: Pick<User, 'id' | 'name' | 'profileImage' | 'username' | 'isFollowedBy'>
 }
 
 export interface AquascapeDetailsQuery {

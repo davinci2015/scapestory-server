@@ -1,6 +1,6 @@
 import React from 'react'
 import {spaces} from 'styles'
-import {Headline, FormattedMessage} from 'components/atoms'
+import {Headline, FormattedMessage, Paragraph} from 'components/atoms'
 import {PhotoGrid} from 'components/molecules'
 import {AquascapeDetails} from 'containers/AquascapeDetails/query'
 
@@ -16,12 +16,16 @@ const PostsSection: React.FunctionComponent<Props> = ({images}) => (
             </Headline>
             {
                 !!images.length
-                    ? <PhotoGrid images={images.map((image) => ({
+                    ?
+                    <PhotoGrid images={images.map((image) => ({
                         src: image.url,
                         alt: image.title
                     }))} />
-                    : <FormattedMessage id="aquascape.posts.no_photos" defaultMessage="No photos uploaded." />
-                }
+                    :
+                    <Paragraph type="body" as="span">
+                        <FormattedMessage id="aquascape.posts.no_photos" defaultMessage="No photos uploaded" />
+                    </Paragraph>
+            }
         </div>
         <style jsx>{`
             .section {
