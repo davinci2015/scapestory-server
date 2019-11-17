@@ -10,7 +10,7 @@ import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
 import {LikeEntityType} from 'generated/graphql'
-import {LIKE, DISLIKE} from 'graphql/mutations'
+import {LIKE, DISLIKE, FOLLOW, UNFOLLOW} from 'graphql/mutations'
 import {ModalContext} from 'providers/ModalProvider'
 import {AQUASCAPES, AquascapeData} from 'graphql/queries'
 import CommentsContainer from 'containers/AquascapeDetails/Comments'
@@ -68,12 +68,39 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         }
     }
 
+    const updateFollowCache = (isFollowed: boolean) => (cache: DataProxy) => {
+        const data = cache.readQuery<AquascapeDetailsQuery>({query: AQUASCAPE_DETAILS, variables: {id: Number(id)}})
+        if (data) {
+            cache.writeQuery({
+                query: AQUASCAPE_DETAILS,
+                data: {
+                    ...data,
+                    aquascape: {
+                        ...data.aquascape,
+                        user: {
+                            ...data.aquascape.user,
+                            isFollowedByMe: isFollowed
+                        }
+                    }
+                }
+            })
+        }
+    }
+
     const [like] = useMutation(LIKE, {
         update: updateLikeCache(true)
     })
 
     const [dislike] = useMutation(DISLIKE, {
         update: updateLikeCache(false)
+    })
+
+    const [follow] = useMutation(FOLLOW, {
+        update: updateFollowCache(true)
+    })
+
+    const [unfollow] = useMutation(UNFOLLOW, {
+        update: updateFollowCache(false)
     })
 
     const toggleLike = () => {
@@ -102,6 +129,9 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         if (!isAuthenticated) {
             return openModal('login')
         }
+
+        const mutateFollow = aquascapeResult.aquascape.user.isFollowedByMe ? unfollow : follow
+        mutateFollow({variables: {userId: aquascapeResult.aquascape.user.id}})
     }
 
     useEffect(() => {
@@ -133,7 +163,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
             <HeroSection
                 aquascape={aquascapeResult.aquascape}
                 isLiked={aquascapeResult.aquascape.isLikedByMe}
-                isUserFollowed={aquascapeResult.aquascape.isLikedByMe}
+                isUserFollowed={aquascapeResult.aquascape.user.isFollowedByMe}
                 toggleFollow={toggleFollow}
                 toggleLike={toggleLike}
             />

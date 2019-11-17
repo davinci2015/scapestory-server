@@ -60,7 +60,7 @@ export class LikeRepository extends BaseRepository<Like> {
 
     async isLikedBy(userId: number, entity: LikeEntityType, entityId: number) {
         const field = entityToFieldMapper[entity]
-        const like = this.findOne({
+        const like = await this.findOne({
             where: {
                 [field]: entityId,
                 userId

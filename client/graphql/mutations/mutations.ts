@@ -32,3 +32,19 @@ export const DISLIKE = gql`
         } 
     }
 `
+
+export const FOLLOW = gql`
+    mutation followUser($userId: Int!) {
+        followUser(userId: $userId) {
+            id
+        }
+    }
+`
+
+export const UNFOLLOW = gql`
+    mutation unfollowUser($userId: Int!) {
+        unfollowUser(userId: $userId) {
+            id
+        }
+    }
+`

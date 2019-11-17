@@ -1,6 +1,6 @@
 import {ModuleContext} from '@graphql-modules/core'
 
-import {FollowProviderInterface} from 'graphql/modules/Follow/providers/FollowProvider'
+import {FollowProviderInterface} from 'graphql/modules/Follow/FollowProvider'
 import {authenticate} from 'graphql/guards'
 import {tokens} from 'di/tokens'
 import {User} from 'db/models/User';
@@ -32,13 +32,13 @@ export const followResolvers = {
         }
     },
     Mutation: {
-        async followUser(root, args: FollowUserArgsType, context: ModuleContext) {
+        async followUser(root, args: FollowUserArgsType, context: ModuleContext & AuthenticationContext) {
             const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
-            return await provider.followUser(args.userId, context.currentUser.id)
+            return await provider.followUser(args.userId, context.currentUserId)
         },
-        async unfollowUser(root, args: FollowUserArgsType, context: ModuleContext) {
+        async unfollowUser(root, args: FollowUserArgsType, context: ModuleContext & AuthenticationContext) {
             const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
-            return await provider.unfollowUser(args.userId, context.currentUser.id)
+            return await provider.unfollowUser(args.userId, context.currentUserId)
         }
     }
 }

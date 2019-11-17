@@ -1,7 +1,7 @@
 import {GraphQLModule} from '@graphql-modules/core'
 import {FollowRepository} from 'db/repositories/Follow'
 import {UserRepository} from 'db/repositories/User'
-import {FollowProvider} from 'graphql/modules/Follow/providers/FollowProvider'
+import {FollowProvider} from 'graphql/modules/Follow/FollowProvider'
 import {followResolvers, followResolversComposition} from 'graphql/modules/Follow/resolvers'
 import {composeContext, attachCurrentUserId} from 'graphql/context'
 import {tokens} from 'di/tokens'
