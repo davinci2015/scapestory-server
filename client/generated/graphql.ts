@@ -363,6 +363,13 @@ export type User = {
   createdAt: Scalars['String'],
   updatedAt: Scalars['String'],
   isFollowedByMe: Scalars['Boolean'],
+  aquascapes: Array<Aquascape>,
+};
+
+
+export type UserAquascapesArgs = {
+  pagination?: Maybe<Pagination>,
+  random?: Maybe<Scalars['Boolean']>
 };
 
 export type Visitor = {

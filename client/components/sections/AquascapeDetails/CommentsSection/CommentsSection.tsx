@@ -4,8 +4,8 @@ import {useIntl} from 'react-intl'
 import {FormattedMessage, Headline, Textarea, InputAdornment, Button, UserImage} from 'components/atoms'
 import {Grid} from 'components/core'
 import {spaces} from 'styles'
-import {AquascapeComment} from 'containers/AquascapeDetails/Comments/queries'
 import Comment from 'components/molecules/Comment/Comment'
+import {AquascapeComment} from 'containers/AquascapeDetails/query'
 
 interface Props {
     comments: AquascapeComment[]

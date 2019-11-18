@@ -1,4 +1,5 @@
-import {ApolloClient, ApolloLink, HttpLink, InMemoryCache} from 'apollo-boost'
+import {ApolloClient, ApolloLink, HttpLink} from 'apollo-boost'
+import {InMemoryCache} from 'apollo-cache-inmemory'
 import appConstants from 'appConstants'
 import {withApollo} from 'next-with-apollo'
 import auth from 'services/auth'

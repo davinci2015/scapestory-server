@@ -9,6 +9,7 @@ import {authenticate} from 'graphql/guards'
 import {CommentEntityType} from 'db/repositories/Comment'
 import {AuthenticationContext} from 'graphql/context'
 import {Like} from 'db/models/Like'
+import {Aquascape} from 'db/models/Aquascape'
 
 export type CommentsArgs = {
     entityId: number
@@ -37,6 +38,13 @@ export const resolvers = {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
             const fields = GraphQLHelper.getIncludeableFields(info, modelMapping)
             return await provider.getComments(args.entity, args.entityId, fields)
+        },
+    },
+    Aquascape: {
+        async comments(aquascape: Aquascape, args: CommentsArgs, context: ModuleContext, info: GraphQLResolveInfo) {
+            const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
+            const fields = GraphQLHelper.getIncludeableFields(info, modelMapping)
+            return await provider.getComments(CommentEntityType.AQUASCAPE, aquascape.id, fields)
         },
     },
     Mutation: {

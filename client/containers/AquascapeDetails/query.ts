@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import {fragments, AquascapeData} from 'graphql/queries'
-import {Plant, Livestock, Hardscape, Light, Filter, Substrate, Additive, Co2, User, AquascapeImage} from 'generated/graphql'
+import {Plant, Livestock, Hardscape, Light, Filter, Substrate, Additive, Co2, User, AquascapeImage, Like} from 'generated/graphql'
 
 export interface AquascapeDetails {
     id: number
@@ -19,7 +19,19 @@ export interface AquascapeDetails {
     additives: Pick<Additive, 'id' | 'brand' | 'name'>[]
     tags: {name: string}[]
     images: Pick<AquascapeImage, 'id' | 'url' | 'title'>[]
-    user: Pick<User, 'id' | 'name' | 'profileImage' | 'username' | 'isFollowedByMe'>
+    user: Pick<User, 'id' | 'name' | 'profileImage' | 'username' | 'isFollowedByMe'> & {
+        aquascapes: AquascapeData[]
+    }
+    comments: AquascapeComment[]
+}
+
+export interface AquascapeComment {
+    id: number
+    content: string
+    createdAt: string
+    parentCommentId?: number
+    likes: Pick<Like, 'id' | 'userId'>[]
+    user: Pick<User, 'id' | 'name' | 'profileImage' | 'username'>
 }
 
 export interface AquascapeDetailsQuery {
@@ -102,6 +114,26 @@ export const AQUASCAPE_DETAILS = gql`
             profileImage
             username
             isFollowedByMe
+            aquascapes(pagination: {limit: 4, offset: 0}, random: true) {
+                ...AquascapeFields
+            }
+        }
+
+        comments {
+            id
+            content
+            createdAt
+            parentCommentId
+            likes {
+                id
+                userId
+            }
+            user {
+                id
+                name
+                username
+                profileImage
+            }
         }
       }
     }

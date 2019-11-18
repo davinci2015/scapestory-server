@@ -8,13 +8,11 @@ import {AquascapeDetails} from 'containers/AquascapeDetails/query'
 
 interface Props {
     aquascape: AquascapeDetails
-    isLiked: Boolean
-    isUserFollowed: Boolean
     toggleLike: () => void
     toggleFollow: () => void
 }
 
-const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, isUserFollowed, toggleLike, toggleFollow}) => (
+const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, toggleFollow}) => (
     <>
         <Hero
             variant="cover"
@@ -39,7 +37,7 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, isUser
                                     <div className="follow" onClick={toggleFollow} role="presentation">
                                         <Paragraph type="s2" color={colors.WHITE} weight="semibold">
                                             {
-                                                isUserFollowed
+                                                aquascape.user.isFollowedByMe
                                                     ?
                                                     <FormattedMessage
                                                         id="aquascape.hero_section.unfollow"
@@ -62,8 +60,8 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, isUser
                             onClick={toggleLike}
                             leftIcon={
                                 <Icon
-                                    d={isLiked ? Icon.HEART : Icon.HEART_OUTLINE}
-                                    color={isLiked ? colors.SECONDARY : colors.WHITE}
+                                    d={aquascape.isLikedByMe ? Icon.HEART : Icon.HEART_OUTLINE}
+                                    color={aquascape.isLikedByMe ? colors.SECONDARY : colors.WHITE}
                                 />
                             }
                             dimensions="extraSmall"
@@ -79,7 +77,7 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, isLiked, isUser
                         <div className="icons">
                             <IconText icon={Icon.EYE_SHOW_FULL} text={aquascape.viewsCount} color={colors.WHITE} />
                             <IconButton onClick={toggleLike}>
-                                <IconText icon={isLiked ? Icon.HEART : Icon.HEART_OUTLINE} text={aquascape.likesCount} color={colors.WHITE} />
+                                <IconText icon={aquascape.isLikedByMe ? Icon.HEART : Icon.HEART_OUTLINE} text={aquascape.likesCount} color={colors.WHITE} />
                             </IconButton>
                         </div>
                     </Hero.BottomLeft>

@@ -95,6 +95,10 @@ type Tank {
     glassThickness: Float
 }
 
+type User {
+    aquascapes(pagination: Pagination, random: Boolean): [Aquascape!]!
+}
+
 type Aquascape {
     id: Int!
     title: String!

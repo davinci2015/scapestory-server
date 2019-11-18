@@ -21,6 +21,7 @@ import {Substrate} from 'db/models/Substrate'
 import {Additive} from 'db/models/Additive'
 import {Tank} from 'db/models/Tank'
 import {AquascapeImage} from 'db/models/AquascapeImage'
+import {User} from 'db/models/User'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
@@ -99,6 +100,17 @@ export const resolvers = {
         },
         viewsCount(aquascape: Aquascape) {
             return aquascape.visitors.length
+        }
+    },
+    User: {
+        async aquascapes(
+            user: User,
+            args: {pagination: Pagination, random: boolean},
+            context: ModuleContext,
+            info: GraphQLResolveInfo
+        ) {
+            const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
+            return await provider.getAquascapes(args.pagination, user.id, args.random, getAquascapeJoinFields(info))
         }
     },
     Mutation: {

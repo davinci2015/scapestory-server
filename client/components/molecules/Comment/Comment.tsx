@@ -3,7 +3,7 @@ import React, {useCallback} from 'react'
 import {UserImage, FormattedMessage} from 'components/atoms'
 import {typography, spaces, colors} from 'styles'
 import {formatDate, dateFormats} from 'utils/date'
-import {AquascapeComment} from 'containers/AquascapeDetails/Comments/queries'
+import {AquascapeComment} from 'containers/AquascapeDetails/query'
 
 const classes = {
     root: 'comment'

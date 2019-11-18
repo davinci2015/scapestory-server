@@ -13,6 +13,10 @@ type Comment {
     commentId: Int
 }
 
+type Aquascape {
+    comments: [Comment!]!
+}
+
 input Pagination {
     limit: Int!
     offset: Int!

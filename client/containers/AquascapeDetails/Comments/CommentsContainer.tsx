@@ -1,98 +1,45 @@
 import React, {useContext, useCallback, FormEvent, useState} from 'react'
-import {useQuery, useMutation} from 'react-apollo'
-import {DataProxy} from 'apollo-cache'
-import {FetchResult} from 'apollo-link'
+import {useMutation} from 'react-apollo'
 
 import CommentsSection from 'components/sections/AquascapeDetails/CommentsSection'
-import {COMMENTS, CommentsQuery, AquascapeComment} from 'containers/AquascapeDetails/Comments/queries'
-import {LIKE, LikeMutationResult, DislikeMutationResult, DISLIKE} from 'graphql/mutations'
+import {LIKE, DISLIKE} from 'graphql/mutations'
 import {LikeEntityType, CommentEntityType} from 'generated/graphql'
 import {ModalContext} from 'providers/ModalProvider'
 import {AuthContext} from 'providers/AuthenticationProvider'
-import {ADD_COMMENT, AddCommentMutationResult, REMOVE_COMMENT, RemoveCommentMutationResult} from 'containers/AquascapeDetails/Comments/mutations'
+import {ADD_COMMENT, REMOVE_COMMENT} from 'containers/AquascapeDetails/Comments/mutations'
+import {AquascapeComment} from 'containers/AquascapeDetails/query'
+import {updateAquascapeDetailsCache, AquascapeDetailsActions} from 'containers/AquascapeDetails/cache'
 
 interface Props {
-    aquascapeId: number
+    aquascapeId: number,
+    comments: AquascapeComment[]
 }
 
-const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
+const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comments}) => {
     const [comment, updateComment] = useState<string | null>(null)
     const {isAuthenticated, user} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
-
-    const {
-        data,
-        error,
-        loading
-    } = useQuery<CommentsQuery>(COMMENTS, {variables: {id: aquascapeId}})
 
     const handleCommentChange = (e: FormEvent<HTMLTextAreaElement>) => {
         const value = (e.target as HTMLTextAreaElement).value
         updateComment(value)
     }
 
-    const readCommentsCache = (cache: DataProxy) => cache.readQuery<CommentsQuery>({query: COMMENTS, variables: {id: aquascapeId}})
-
-    const updateCommentsCache = (comments: AquascapeComment[], cache: DataProxy) => cache.writeQuery({
-        query: COMMENTS,
-        variables: {id: aquascapeId},
-        data: {comments}
+    const [like] = useMutation(LIKE, {
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE_COMMENT, { aquascapeId }) 
+    })
+    
+    const [dislike] = useMutation(DISLIKE, {
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_DISLIKE_COMMENT, { aquascapeId }) 
     })
 
-    const updateLikeCache = (cache: DataProxy, mutationResult: FetchResult<LikeMutationResult>) => {
-        const cacheData = readCommentsCache(cache)
-        const mutationData = mutationResult.data
+    const [addComment] = useMutation(ADD_COMMENT, {
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_ADD_COMMENT, { aquascapeId, user }) 
+    })
 
-        if (cacheData && mutationData) {
-            updateCommentsCache(cacheData.comments.map((comment) => comment.id === mutationData.like.commentId
-                ? {...comment, likes: [...comment.likes, mutationData.like]}
-                : comment
-            ), cache)
-        }
-    }
-
-    const updateDislikeCache = (cache: DataProxy, mutationResult: FetchResult<DislikeMutationResult>) => {
-        const cacheData = readCommentsCache(cache)
-        const mutationData = mutationResult.data
-
-        if (cacheData && mutationData) {
-            updateCommentsCache(cacheData.comments.map((comment) => comment.id === mutationData.dislike.commentId
-                ? {...comment, likes: comment.likes.filter((like) => like.id !== mutationData.dislike.id)}
-                : comment
-            ), cache)
-
-        }
-    }
-
-    const updateAddCommentCache = (cache: DataProxy, mutationResult: FetchResult<AddCommentMutationResult>) => {
-        const cacheData = readCommentsCache(cache)
-        const mutationData = mutationResult.data
-
-        if (cacheData && mutationData && user) {
-            updateCommentsCache([
-                {
-                    ...mutationData.addComment,
-                    likes: [],
-                    user
-                },
-                ...cacheData.comments
-            ], cache)
-        }
-    }
-
-    const updateRemoveCommentCache = (cache: DataProxy, mutationResult: FetchResult<RemoveCommentMutationResult>) => {
-        const cacheData = readCommentsCache(cache)
-        const mutationData = mutationResult.data
-
-        if (cacheData && mutationData && user) {
-            updateCommentsCache(cacheData.comments.filter((comment) => comment.id !== mutationData.removeComment.id), cache)
-        }
-    }
-
-    const [like] = useMutation(LIKE, {update: updateLikeCache})
-    const [dislike] = useMutation(DISLIKE, {update: updateDislikeCache})
-    const [addComment] = useMutation(ADD_COMMENT, {update: updateAddCommentCache})
-    const [removeComment] = useMutation(REMOVE_COMMENT, {update: updateRemoveCommentCache})
+    const [removeComment] = useMutation(REMOVE_COMMENT, {
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_REMOVE_COMMENT, { aquascapeId }) 
+    })
 
     const onSubmit = () => {
         if (!comment) return
@@ -123,28 +70,13 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId}) => {
         removeComment({variables: {id: comment.id}})
     }, [])
 
-    if (loading) {
-        // TODO: Show loader
-        return null
-    }
-
-    if (error) {
-        // TODO: Show error
-        return null
-    }
-
-    if (!data || !data.comments) {
-        // TODO: Return not found page
-        return null
-    }
-
     return (
         <CommentsSection
             userId={user ? user.id : undefined}
             enteredComment={comment || ''}
             userImage={user ? user.profileImage : undefined}
             toggleLike={toggleLike}
-            comments={data.comments}
+            comments={comments}
             onCommentChange={handleCommentChange}
             removeComment={handleRemoveComment}
             onSubmit={onSubmit}

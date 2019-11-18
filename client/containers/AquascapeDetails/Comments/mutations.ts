@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import {AquascapeComment} from 'containers/AquascapeDetails/Comments/queries'
+import {AquascapeComment} from 'containers/AquascapeDetails/query'
 
 export interface AddCommentMutationResult {
     addComment: AquascapeComment

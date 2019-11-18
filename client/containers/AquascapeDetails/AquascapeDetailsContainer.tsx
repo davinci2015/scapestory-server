@@ -1,9 +1,8 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import {useRouter} from 'next/router'
-import {useQuery, useMutation, useLazyQuery} from 'react-apollo'
+import {useQuery, useMutation} from 'react-apollo'
 import {FormattedMessage} from 'react-intl'
 import {Element} from 'react-scroll'
-import {DataProxy} from 'apollo-cache'
 
 import {AQUASCAPE_DETAILS, AquascapeDetailsQuery} from 'containers/AquascapeDetails/query'
 import {Divider} from 'components/atoms'
@@ -12,7 +11,6 @@ import {SubNavigation} from 'components/molecules'
 import {LikeEntityType} from 'generated/graphql'
 import {LIKE, DISLIKE, FOLLOW, UNFOLLOW} from 'graphql/mutations'
 import {ModalContext} from 'providers/ModalProvider'
-import {AQUASCAPES, AquascapeData} from 'graphql/queries'
 import CommentsContainer from 'containers/AquascapeDetails/Comments'
 import {AuthContext} from 'providers/AuthenticationProvider'
 import {
@@ -23,6 +21,7 @@ import {
     PhotoSection,
     OtherAquascapesSection
 } from 'components/sections/AquascapeDetails'
+import {updateAquascapeDetailsCache, AquascapeDetailsActions} from 'containers/AquascapeDetails/cache'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -35,72 +34,28 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
     const router = useRouter()
     const {isAuthenticated} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
-    const id = router.query.id
-
-    const [
-        getUserAquascapes,
-        {
-            called: getUserAquascapesCalled,
-            data: userAquascapesResult,
-        }
-    ] = useLazyQuery(AQUASCAPES)
+    const aquascapeId = Number(router.query.id)
 
     const {
         data: aquascapeResult,
         error,
         loading
-    } = useQuery<AquascapeDetailsQuery>(AQUASCAPE_DETAILS, {variables: {id: Number(id)}})
-
-    const updateLikeCache = (isLiked: boolean) => (cache: DataProxy) => {
-        const data = cache.readQuery<AquascapeDetailsQuery>({query: AQUASCAPE_DETAILS, variables: {id: Number(id)}})
-        if (data) {
-            cache.writeQuery({
-                query: AQUASCAPE_DETAILS,
-                data: {
-                    ...data,
-                    aquascape: {
-                        ...data.aquascape,
-                        likesCount: isLiked ? data.aquascape.likesCount + 1 : data.aquascape.likesCount - 1,
-                        isLikedByMe: isLiked
-                    }
-                }
-            })
-        }
-    }
-
-    const updateFollowCache = (isFollowed: boolean) => (cache: DataProxy) => {
-        const data = cache.readQuery<AquascapeDetailsQuery>({query: AQUASCAPE_DETAILS, variables: {id: Number(id)}})
-        if (data) {
-            cache.writeQuery({
-                query: AQUASCAPE_DETAILS,
-                data: {
-                    ...data,
-                    aquascape: {
-                        ...data.aquascape,
-                        user: {
-                            ...data.aquascape.user,
-                            isFollowedByMe: isFollowed
-                        }
-                    }
-                }
-            })
-        }
-    }
+    } = useQuery<AquascapeDetailsQuery>(AQUASCAPE_DETAILS, {variables: {id: aquascapeId}})
 
     const [like] = useMutation(LIKE, {
-        update: updateLikeCache(true)
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, { aquascapeId, isLiked: true })
     })
 
     const [dislike] = useMutation(DISLIKE, {
-        update: updateLikeCache(false)
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, { aquascapeId, isLiked: false })
     })
 
     const [follow] = useMutation(FOLLOW, {
-        update: updateFollowCache(true)
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_FOLLOW, { aquascapeId, isFollowed: true })
     })
 
     const [unfollow] = useMutation(UNFOLLOW, {
-        update: updateFollowCache(false)
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_FOLLOW, { aquascapeId, isFollowed: false })
     })
 
     const toggleLike = () => {
@@ -134,15 +89,6 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         mutateFollow({variables: {userId: aquascapeResult.aquascape.user.id}})
     }
 
-    useEffect(() => {
-        aquascapeResult && !getUserAquascapesCalled && getUserAquascapes({
-            variables: {
-                pagination: {limit: 4, offset: 0},
-                userId: aquascapeResult.aquascape.user.id
-            }
-        })
-    }, [aquascapeResult])
-
     if (loading) {
         // TODO: Show loader
         return null
@@ -162,8 +108,6 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         <Content>
             <HeroSection
                 aquascape={aquascapeResult.aquascape}
-                isLiked={aquascapeResult.aquascape.isLikedByMe}
-                isUserFollowed={aquascapeResult.aquascape.user.isFollowedByMe}
                 toggleFollow={toggleFollow}
                 toggleLike={toggleLike}
             />
@@ -205,17 +149,17 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                 </Element>
                 <Divider />
                 {
-                    userAquascapesResult && userAquascapesResult.aquascapes.length > 1 &&
+                    aquascapeResult.aquascape.user.aquascapes && aquascapeResult.aquascape.user.aquascapes.length > 1 &&
                     <>
                         <UserAquascapesSection
-                            aquascapes={userAquascapesResult.aquascapes.filter((scape: AquascapeData) => scape.id !== aquascapeResult.aquascape.id)}
+                            aquascapes={aquascapeResult.aquascape.user.aquascapes.filter((scape) => scape.id !== aquascapeResult.aquascape.id)}
                             username={aquascapeResult.aquascape.user.name || aquascapeResult.aquascape.user.username}
                         />
                         <Divider />
                     </>
                 }
                 <Element name={sections.COMMENTS}>
-                    <CommentsContainer aquascapeId={Number(id)} />
+                    <CommentsContainer aquascapeId={aquascapeId} comments={aquascapeResult.aquascape.comments} />
                 </Element>
                 {
                     aquascapeResult.aquascapes && Boolean(aquascapeResult.aquascapes.length) &&
