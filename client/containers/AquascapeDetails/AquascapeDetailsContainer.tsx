@@ -13,6 +13,7 @@ import {LIKE, DISLIKE, FOLLOW, UNFOLLOW} from 'graphql/mutations'
 import {ModalContext} from 'providers/ModalProvider'
 import CommentsContainer from 'containers/AquascapeDetails/Comments'
 import {AuthContext} from 'providers/AuthenticationProvider'
+import {updateAquascapeDetailsCache, AquascapeDetailsActions} from 'containers/AquascapeDetails/cache'
 import {
     HeroSection,
     FloraSection,
@@ -21,7 +22,6 @@ import {
     PhotoSection,
     OtherAquascapesSection
 } from 'components/sections/AquascapeDetails'
-import {updateAquascapeDetailsCache, AquascapeDetailsActions} from 'containers/AquascapeDetails/cache'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -43,19 +43,19 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
     } = useQuery<AquascapeDetailsQuery>(AQUASCAPE_DETAILS, {variables: {id: aquascapeId}})
 
     const [like] = useMutation(LIKE, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, { aquascapeId, isLiked: true })
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, {aquascapeId, isLiked: true})
     })
 
     const [dislike] = useMutation(DISLIKE, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, { aquascapeId, isLiked: false })
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, {aquascapeId, isLiked: false})
     })
 
     const [follow] = useMutation(FOLLOW, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_FOLLOW, { aquascapeId, isFollowed: true })
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW, {aquascapeId, isFollowed: true})
     })
 
     const [unfollow] = useMutation(UNFOLLOW, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_FOLLOW, { aquascapeId, isFollowed: false })
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW, {aquascapeId, isFollowed: false})
     })
 
     const toggleLike = () => {
