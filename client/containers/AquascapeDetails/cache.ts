@@ -1,7 +1,7 @@
 import {DataProxy} from 'apollo-cache'
 import {FetchResult} from 'apollo-link'
 import gql from 'graphql-tag'
-import {AquascapeComment} from 'containers/AquascapeDetails/query';
+import {AquascapeComment} from 'containers/AquascapeDetails/query'
 
 export enum AquascapeDetailsActions {
     AQUASCAPE_LIKE,
@@ -17,106 +17,107 @@ interface Payload {
     [key: string]: any
 }
 
-export const updateAquascapeDetailsCache = (action: AquascapeDetailsActions, payload: Payload) => (cache: DataProxy, mutationResult: FetchResult<any>) => {
-    const mutationData = mutationResult.data
-    let query
-    let data
+export const updateAquascapeDetailsCache = (action: AquascapeDetailsActions, payload: Payload) =>
+    (cache: DataProxy, mutationResult: FetchResult<any>) => {
+        const mutationData = mutationResult.data
+        let query
+        let data
 
-    if (!mutationData) return
+        if (!mutationData) return
 
-    switch (action) {
-        case AquascapeDetailsActions.AQUASCAPE_LIKE:
-            query = gql`query { aquascape(id: ${payload.aquascapeId}) { id isLikedByMe likesCount }}`
-            data = cache.readQuery<any>({query})
+        switch (action) {
+            case AquascapeDetailsActions.AQUASCAPE_LIKE:
+                query = gql`query { aquascape(id: ${payload.aquascapeId}) { id isLikedByMe likesCount }}`
+                data = cache.readQuery<any>({query})
 
-            return cache.writeQuery({
-                query, data: {
-                    aquascape: {
-                        ...data.aquascape,
-                        isLikedByMe: payload.isLiked,
-                        likesCount: payload.isLiked ? data.aquascape.likesCount + 1 : data.aquascape.likesCount - 1,
-                    }
-                }
-            })
-
-        case AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW:
-            query = gql`query { aquascape(id: ${payload.aquascapeId}) { id user { id isFollowedByMe } }}`
-            data = cache.readQuery<any>({query})
-
-            return cache.writeQuery({
-                query, data: {
-                    aquascape: {
-                        ...data.aquascape,
-                        user: {
-                            ...data.aquascape.user,
-                            isFollowedByMe: payload.isFollowed
+                return cache.writeQuery({
+                    query, data: {
+                        aquascape: {
+                            ...data.aquascape,
+                            isLikedByMe: payload.isLiked,
+                            likesCount: payload.isLiked ? data.aquascape.likesCount + 1 : data.aquascape.likesCount - 1,
                         }
                     }
-                }
-            })
+                })
 
-        case AquascapeDetailsActions.AQUASCAPE_LIKE_COMMENT:
-            query = gql`query { aquascape(id: ${payload.aquascapeId}) { id comments { id likes { id userId } } }}`
-            data = cache.readQuery<any>({query})
+            case AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW:
+                query = gql`query { aquascape(id: ${payload.aquascapeId}) { id user { id isFollowedByMe } }}`
+                data = cache.readQuery<any>({query})
 
-            return cache.writeQuery({
-                query, data: {
-                    aquascape: {
-                        ...data.aquascape,
-                        comments: data.aquascape.comments.map((comment: AquascapeComment) => comment.id === mutationData.like.commentId
-                            ? {...comment, likes: [...comment.likes, mutationData.like]}
-                            : comment
-                        )
+                return cache.writeQuery({
+                    query, data: {
+                        aquascape: {
+                            ...data.aquascape,
+                            user: {
+                                ...data.aquascape.user,
+                                isFollowedByMe: payload.isFollowed
+                            }
+                        }
                     }
-                }
-            })
+                })
 
-        case AquascapeDetailsActions.AQUASCAPE_DISLIKE_COMMENT:
-            query = gql`query { aquascape(id: ${payload.aquascapeId}) { id comments { id likes { id userId } } }}`
-            data = cache.readQuery<any>({query})
+            case AquascapeDetailsActions.AQUASCAPE_LIKE_COMMENT:
+                query = gql`query { aquascape(id: ${payload.aquascapeId}) { id comments { id likes { id userId } } }}`
+                data = cache.readQuery<any>({query})
 
-            return cache.writeQuery({
-                query, data: {
-                    aquascape: {
-                        ...data.aquascape,
-                        comments: data.aquascape.comments.map((comment: AquascapeComment) => comment.id === mutationData.dislike.commentId
-                            ? {...comment, likes: comment.likes.filter((like) => like.id !== mutationData.dislike.id)}
-                            : comment
-                        )
+                return cache.writeQuery({
+                    query, data: {
+                        aquascape: {
+                            ...data.aquascape,
+                            comments: data.aquascape.comments.map((comment: AquascapeComment) => comment.id === mutationData.like.commentId
+                                ? {...comment, likes: [...comment.likes, mutationData.like]}
+                                : comment
+                            )
+                        }
                     }
-                }
-            })
+                })
 
-        case AquascapeDetailsActions.AQUASCAPE_ADD_COMMENT:
-            query = gql`query { aquascape(id: ${payload.aquascapeId}) { id comments { id likes { id } user { id } } }}`
-            data = cache.readQuery<any>({query})
+            case AquascapeDetailsActions.AQUASCAPE_DISLIKE_COMMENT:
+                query = gql`query { aquascape(id: ${payload.aquascapeId}) { id comments { id likes { id userId } } }}`
+                data = cache.readQuery<any>({query})
 
-            return cache.writeQuery({
-                query, data: {
-                    aquascape: {
-                        ...data.aquascape,
-                        comments: [
-                            {...mutationData.addComment, likes: [], user: payload.user},
-                            ...data.aquascape.comments
-                        ]
+                return cache.writeQuery({
+                    query, data: {
+                        aquascape: {
+                            ...data.aquascape,
+                            comments: data.aquascape.comments.map((comment: AquascapeComment) => comment.id === mutationData.dislike.commentId
+                                ? {...comment, likes: comment.likes.filter((like) => like.id !== mutationData.dislike.id)}
+                                : comment
+                            )
+                        }
                     }
-                }
-            })
+                })
 
-        case AquascapeDetailsActions.AQUASCAPE_REMOVE_COMMENT:
-            query = gql`query { aquascape(id: ${payload.aquascapeId}) { id comments { id } }}`
-            data = cache.readQuery<any>({query})
+            case AquascapeDetailsActions.AQUASCAPE_ADD_COMMENT:
+                query = gql`query { aquascape(id: ${payload.aquascapeId}) { id comments { id likes { id } user { id } } }}`
+                data = cache.readQuery<any>({query})
 
-            return cache.writeQuery({
-                query, data: {
-                    aquascape: {
-                        ...data.aquascape,
-                        comments: data.aquascape.comments.filter((comment: AquascapeComment) => comment.id !== mutationData.removeComment.id)
+                return cache.writeQuery({
+                    query, data: {
+                        aquascape: {
+                            ...data.aquascape,
+                            comments: [
+                                {...mutationData.addComment, likes: [], user: payload.user},
+                                ...data.aquascape.comments
+                            ]
+                        }
                     }
-                }
-            })
+                })
 
-        default:
-            return null
+            case AquascapeDetailsActions.AQUASCAPE_REMOVE_COMMENT:
+                query = gql`query { aquascape(id: ${payload.aquascapeId}) { id comments { id } }}`
+                data = cache.readQuery<any>({query})
+
+                return cache.writeQuery({
+                    query, data: {
+                        aquascape: {
+                            ...data.aquascape,
+                            comments: data.aquascape.comments.filter((comment: AquascapeComment) => comment.id !== mutationData.removeComment.id)
+                        }
+                    }
+                })
+
+            default:
+                return null
+        }
     }
-}

@@ -26,9 +26,11 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
     return (
         <>
             <div className="section">
-                <Headline as="h2" variant="h3">
-                    <FormattedMessage id="aquascape.equipment.title" defaultMessage="Equipment" />
-                </Headline>
+                <div className="title">
+                    <Headline as="h2" variant="h3">
+                        <FormattedMessage id="aquascape.equipment.title" defaultMessage="Equipment" />
+                    </Headline>
+                </div>
 
                 {
                     hasEquipment
@@ -112,8 +114,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                     padding: ${spaces.s120} 0;
                 }
 
-
-                .section :global(.${Headline.classes.root}) {
+                .section .title :global(.${Headline.classes.root}) {
                     margin-bottom: ${spaces.s60};
                 }
 

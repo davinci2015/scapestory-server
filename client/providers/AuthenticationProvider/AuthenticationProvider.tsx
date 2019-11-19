@@ -23,7 +23,7 @@ interface Props {
 
 const AuthenticationProvider: React.FunctionComponent<Props>  = ({children, initialIsAuthenticated = false}) => {
     const [isAuthenticated, changeIsAuthenticated] = useState(initialIsAuthenticated)
-    const {data, error, refetch} = useQuery(USER_PROFILE)
+    const {data, error, refetch} = useQuery(USER_PROFILE, { errorPolicy: 'ignore' })
     const user = data ? data.me : null
 
     if (error) {
