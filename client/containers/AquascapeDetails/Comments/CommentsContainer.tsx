@@ -56,8 +56,6 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
     }
 
     const toggleLike = useCallback((comment: AquascapeComment) => {
-        console.log(isAuthenticated)
-        console.log(user)
         if (!isAuthenticated || !user) {
             return openModal('login')
         }
