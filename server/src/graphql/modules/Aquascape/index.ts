@@ -2,14 +2,12 @@ import {GraphQLModule} from '@graphql-modules/core'
 
 import {composeContext, attachCurrentUserId} from 'graphql/context'
 import {AquascapeRepository} from 'db/repositories/Aquascape'
-import {VisitorRepository} from 'db/repositories/Visitor'
 import {LikeRepository} from 'db/repositories/Like'
 import {TagRepository} from 'db/repositories/Tag'
 import {UserRepository} from 'db/repositories/User'
 
 import {UsersProvider} from 'graphql/modules/User/UsersProvider'
 import {LikeProvider} from 'graphql/modules/Like/LikeProvider'
-import {VisitorProvider} from 'graphql/modules/Visitor/VisitorProvider'
 import {tokens} from 'di/tokens'
 
 import {AquascapeProvider} from './AquascapeProvider'
@@ -27,9 +25,6 @@ export const AquascapeModule = new GraphQLModule({
 
         {provide: tokens.LIKE_PROVIDER, useClass: LikeProvider},
         {provide: tokens.LIKE_REPOSITORY, useClass: LikeRepository},
-
-        {provide: tokens.VISITOR_PROVIDER, useClass: VisitorProvider},
-        {provide: tokens.VISITOR_REPOSITORY, useClass: VisitorRepository},
 
         {provide: tokens.TAG_REPOSITORY, useClass: TagRepository},
     ],

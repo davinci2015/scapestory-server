@@ -107,6 +107,7 @@ const LoginForm = ({onSuccess}: Props) => {
                 <Input
                     id={inputKeys.email}
                     placeholder={emailLabel}
+                    autoComplete="example@gmail.com"
                     label={emailLabel}
                     value={email}
                     error={dirty[inputKeys.email] && errors[inputKeys.email]}
@@ -119,6 +120,7 @@ const LoginForm = ({onSuccess}: Props) => {
                     id={inputKeys.password}
                     placeholder={passwordLabel}
                     label={passwordLabel}
+                    autoComplete="current-password"
                     value={password}
                     error={dirty[inputKeys.password] && errors[inputKeys.password]}
                     errorMessage={getErrorMessage(inputKeys.password)}

@@ -4,7 +4,10 @@ import {Aquascape} from 'db/models/Aquascape'
 @Table
 export class Visitor extends Model<Visitor> {
     @Column
-    visitorId: string
+    visitorId: number
+
+    @Column
+    unregisteredVisitorId: string
 
     @ForeignKey(() => Aquascape)
     @Column

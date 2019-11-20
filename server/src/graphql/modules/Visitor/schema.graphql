@@ -1,0 +1,3 @@
+type Mutation {
+    visitAquascape(aquascapeId: Int!): Number! | String!
+}

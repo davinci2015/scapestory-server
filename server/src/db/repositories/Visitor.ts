@@ -3,7 +3,8 @@ import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Visitor} from 'db/models/Visitor'
 
 export interface VisitorRepositoryInterface extends BaseRepositoryInterface<Visitor> {
-    addVisitor: (aquascapeId: number, userId: string) => Promise<Visitor>
+    addVisitor: (aquascapeId: number, visitorId: number) => Promise<Visitor>
+    addUnregisteredVisitor: (aquascapeId: number, unregisteredVisitorId?: string) => Promise<Visitor>
 }
 
 @Injectable()
@@ -12,7 +13,11 @@ export class VisitorRepository extends BaseRepository<Visitor> {
         super(Visitor)
     }
 
-    async addVisitor(aquascapeId: number, userId: string) {
-        await this.create({aquascapeId, visitorId: userId})
+    async addVisitor(aquascapeId: number, visitorId: number) {
+        await this.create({aquascapeId, visitorId})
+    }
+
+    async addUnregisteredVisitor(aquascapeId: number, unregisteredVisitorId?: string) {
+        await this.create({aquascapeId, unregisteredVisitorId})
     }
 }

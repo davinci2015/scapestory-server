@@ -117,10 +117,6 @@ export const resolvers = {
         async createAquascape(root, args: CreateAquascapeArgs, context: ModuleContext & AuthenticationContext) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
             return await provider.createAquascape(context.currentUserId, args)
-        },
-        async visitAquascape(root, args: VisitAquascapeArgs, context: ModuleContext & AuthenticationContext) {
-            const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
-            return await provider.visitAquascape(args.aquascapeId, context.currentUserId)
         }
     }
 }

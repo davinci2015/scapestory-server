@@ -30,9 +30,9 @@ const AuthenticationProvider: React.FunctionComponent<Props>  = ({children, init
         logger.error(error)
     }
 
-    const setAuthenticated = (authenticated: boolean) => {
+    const setAuthenticated = async (authenticated: boolean) => {
+        await refetch()
         changeIsAuthenticated(authenticated)
-        refetch()
     }
 
     return (

@@ -1,5 +1,6 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Link from 'next/link'
+import classnames from 'classnames'
 
 import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
@@ -30,12 +31,15 @@ const Navigation = ({
     onCreateAquascape,
     userImage,
 }: Props) => {
-    const position = useScrollPosition()
+    const {position, handleScroll} = useScrollPosition()
+    const isSlim = position.y > scrollOffset
 
-    const isSlim = () => position.y > scrollOffset
-
+    useEffect(() => handleScroll(), [])
+    
     return (
-        <nav>
+        <nav className={classnames('nav', {
+            'nav--slim': isSlim
+        })}>
             <div className="container">
                 <div className="left">
                     <Link href={routes.index}>
@@ -93,19 +97,23 @@ const Navigation = ({
                     }
                 </div>
             </div>
-
+           
             <style jsx>{`
-                nav {
+                .nav {
                     position: fixed;
                     top: 0;
                     left: 0;
                     right: 0;
-                    height: ${isSlim() ? navigationHeight.SLIM : navigationHeight.DEFAULT};   
+                    height: ${navigationHeight.DEFAULT};   
                     
                     z-index: ${styles.zIndex.MEDIUM};
                     background-color: ${styles.colors.WHITE};
                     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
                     transition: height 180ms ease-in-out;
+                }
+
+                .nav--slim {
+                    height: ${navigationHeight.SLIM};   
                 }
                 
                 .container {

@@ -1,10 +1,8 @@
 import {Injectable, Inject} from '@graphql-modules/di'
 import {Includeable} from 'sequelize/types'
-import * as uuid from 'uuid/v4'
 import * as Bluebird from 'bluebird'
 
 import {AquascapeRepositoryInterface} from 'db/repositories/Aquascape'
-import {VisitorRepositoryInterface} from 'db/repositories/Visitor'
 import {Aquascape} from 'db/models/Aquascape'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {tokens} from 'di/tokens'
@@ -28,8 +26,6 @@ export interface AquascapeProviderInterface {
 
     createAquascape: (userId: number, data: CreateAquascapeArgs) => Promise<Aquascape>
 
-    visitAquascape: (aquascapeId: number, userId?: number) => Promise<string | number>,
-
     getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
 }
 
@@ -37,7 +33,6 @@ export interface AquascapeProviderInterface {
 export class AquascapeProvider implements AquascapeProviderInterface {
     constructor(
         @Inject(tokens.AQUASCAPE_REPOSITORY) private aquascapeRepository: AquascapeRepositoryInterface,
-        @Inject(tokens.VISITOR_REPOSITORY) private visitorRepository: VisitorRepositoryInterface,
     ) {
     }
 
@@ -59,13 +54,6 @@ export class AquascapeProvider implements AquascapeProviderInterface {
 
     async createAquascape(userId: number, data: CreateAquascapeArgs) {
         return this.aquascapeRepository.create({userId, ...data})
-    }
-
-    async visitAquascape(aquascapeId: number, userId?: number) {
-        const visitorId = userId || uuid()
-        await this.visitorRepository.addVisitor(aquascapeId, visitorId.toString())
-
-        return visitorId
     }
 
     getAquascapeImages(aquascapeId: number) {

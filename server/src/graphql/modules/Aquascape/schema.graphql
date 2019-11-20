@@ -141,5 +141,4 @@ type Query {
 
 type Mutation {
     createAquascape(title: String!): Aquascape
-    visitAquascape(aquascapeId: Int!): String!
 }
