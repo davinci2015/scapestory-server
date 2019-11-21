@@ -1,14 +1,11 @@
-import {colors} from 'styles';
+import {colors} from 'styles'
 
 interface Props {
     size?: string
     opacity?: number
 }
 
-const Bubble = ({
-    size = '300px',
-    opacity = 0.05
-}: Props) => (
+const Bubble = ({size = '300px', opacity = 0.05}: Props) => (
     <div className="bubble">
         <style jsx>{`
             .bubble {

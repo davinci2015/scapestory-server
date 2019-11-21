@@ -11,16 +11,14 @@ export interface ItemProps {
 }
 
 const Item: React.FunctionComponent<ItemProps> = ({
-    children, 
+    children,
     extraSmall = 12,
     small,
     medium,
-    large
+    large,
 }) => (
     <>
-        <div className="item">
-            {children}
-        </div>
+        <div className="item">{children}</div>
         <style jsx>{`
             .item {
                 display: flex;
@@ -29,25 +27,39 @@ const Item: React.FunctionComponent<ItemProps> = ({
 
             @media ${media.up('extraSmall')} {
                 .item {
-                    flex: 0 1 calc(${(extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
+                    flex: 0 1
+                        calc(${(extraSmall / COLUMNS) * 100}% - ${GUTTER * 2}px);
                 }
             }
 
             @media ${media.up('small')} {
                 .item {
-                    flex: 0 1 calc(${(small || extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
+                    flex: 0 1
+                        calc(
+                            ${((small || extraSmall) / COLUMNS) * 100}% -
+                                ${GUTTER * 2}px
+                        );
                 }
             }
 
             @media ${media.up('medium')} {
                 .item {
-                    flex: 0 1 calc(${(medium || small || extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
+                    flex: 0 1
+                        calc(
+                            ${((medium || small || extraSmall) / COLUMNS) *
+                                    100}% - ${GUTTER * 2}px
+                        );
                 }
             }
 
             @media ${media.up('large')} {
                 .item {
-                    flex: 0 1 calc(${(large || medium || small || extraSmall) / COLUMNS * 100}% - ${GUTTER * 2}px);
+                    flex: 0 1
+                        calc(
+                            ${((large || medium || small || extraSmall) /
+                                    COLUMNS) *
+                                    100}% - ${GUTTER * 2}px
+                        );
                 }
             }
         `}</style>

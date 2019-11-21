@@ -4,7 +4,7 @@ import {colors, typography, borderRadius} from 'styles'
 import {Paragraph, InputAdornment} from 'components/atoms'
 
 const classes = {
-    textarea: 'textarea'
+    textarea: 'textarea',
 }
 
 export interface TextareaProps extends React.HTMLProps<HTMLTextAreaElement> {
@@ -26,82 +26,81 @@ const Textarea = ({
     cols = 10,
     ...props
 }: TextareaProps) => (
-        <>
-            <div className={classes.textarea}>
-                <div className="wrapper">
-                    <textarea
-                        placeholder={placeholder}
-                        rows={rows}
-                        cols={cols}
-                        {...props}
-                    />
-                    {endAdornment}
-                </div>
-                {
-                    error &&
-                    <div className="error-message">
-                        <Paragraph as="span" type="s2" color={colors.ERROR}>
-                            {errorMessage}
-                        </Paragraph>
-                    </div>
-                }
+    <>
+        <div className={classes.textarea}>
+            <div className="wrapper">
+                <textarea
+                    placeholder={placeholder}
+                    rows={rows}
+                    cols={cols}
+                    {...props}
+                />
+                {endAdornment}
             </div>
+            {error && (
+                <div className="error-message">
+                    <Paragraph as="span" type="s2" color={colors.ERROR}>
+                        {errorMessage}
+                    </Paragraph>
+                </div>
+            )}
+        </div>
 
-            <style jsx>{`
-                .${classes.textarea} {
-                    position: relative;
-                    width: 100%;
-                }
+        <style jsx>{`
+            .${classes.textarea} {
+                position: relative;
+                width: 100%;
+            }
 
-                .wrapper {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    width: 100%;
-                    padding-bottom: 0;
+            .wrapper {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                width: 100%;
+                padding-bottom: 0;
 
-                    outline: 0;
-                    background-color: ${colors.WHITE};
-                    border-radius: ${borderRadius.SECONDARY};
-                    border: 2px solid ${colors.SHADE_LIGHT};
-                }
+                outline: 0;
+                background-color: ${colors.WHITE};
+                border-radius: ${borderRadius.SECONDARY};
+                border: 2px solid ${colors.SHADE_LIGHT};
+            }
 
-                .wrapper :global(.${InputAdornment.classes.root}) {
-                    margin: 12px;
-                }
+            .wrapper :global(.${InputAdornment.classes.root}) {
+                margin: 12px;
+            }
 
-                textarea {
-                    width: 100%;
-                    outline: 0;
-                    border: 0;
-                    padding: 28px 32px;
+            textarea {
+                width: 100%;
+                outline: 0;
+                border: 0;
+                padding: 28px 32px;
 
-                    font-family: ${typography.fontFamily.PRIMARY};
-                    font-weight: ${typography.fontWeight.semibold};
+                font-family: ${typography.fontFamily.PRIMARY};
+                font-weight: ${typography.fontWeight.semibold};
 
-                    background-color: transparent;
-                }
+                background-color: transparent;
+            }
 
-                textarea::placeholder {
-                    color: ${colors.GRAY};
-                }
+            textarea::placeholder {
+                color: ${colors.GRAY};
+            }
 
-                textarea:-ms-input-placeholder {
-                    color: ${colors.GRAY};
-                }
+            textarea:-ms-input-placeholder {
+                color: ${colors.GRAY};
+            }
 
-                textarea::-ms-input-placeholder {
-                    color: ${colors.GRAY};
-                }
+            textarea::-ms-input-placeholder {
+                color: ${colors.GRAY};
+            }
 
-                .error-message {
-                    position: absolute;
-                    bottom: -24px;
-                    left: 30px
-                }
-            `}</style>
-        </>
-    )
+            .error-message {
+                position: absolute;
+                bottom: -24px;
+                left: 30px;
+            }
+        `}</style>
+    </>
+)
 
 Textarea.classes = classes
 

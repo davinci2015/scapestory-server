@@ -13,5 +13,5 @@ export default {
     s60: '60px',
     s90: '90px',
     s110: '110px',
-    s120: '120px'
+    s120: '120px',
 }

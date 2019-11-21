@@ -5,5 +5,5 @@ export default {
     info: (message: any) => log.info(message),
     error: (message: any) => log.error(message),
     debug: (message: any) => log.debug(message),
-    trace: (message: any) => log.trace(message)
+    trace: (message: any) => log.trace(message),
 }

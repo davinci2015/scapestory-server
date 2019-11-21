@@ -1,6 +1,14 @@
 import React from 'react'
 
-import {FormattedMessage, Paragraph, Icon, Tag, IconText, Button, IconButton} from 'components/atoms'
+import {
+    FormattedMessage,
+    Paragraph,
+    Icon,
+    Tag,
+    IconText,
+    Button,
+    IconButton,
+} from 'components/atoms'
 import {colors, spaces} from 'styles'
 import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
@@ -12,7 +20,11 @@ interface Props {
     toggleFollow: () => void
 }
 
-const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, toggleFollow}) => (
+const HeroSection: React.FunctionComponent<Props> = ({
+    aquascape,
+    toggleLike,
+    toggleFollow,
+}) => (
     <>
         <Hero
             variant="cover"
@@ -27,28 +39,42 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, tog
                             image={aquascape.user.profileImage}
                             text={
                                 <div>
-                                    <Paragraph type="body" color={colors.WHITE} weight="bold">
+                                    <Paragraph
+                                        type="body"
+                                        color={colors.WHITE}
+                                        weight="bold"
+                                    >
                                         <FormattedMessage
                                             id="aquascape.hero_section.username"
                                             defaultMessage="by {username}"
-                                            values={{username: aquascape.user.name || aquascape.user.username}}
+                                            values={{
+                                                username:
+                                                    aquascape.user.name ||
+                                                    aquascape.user.username,
+                                            }}
                                         />
                                     </Paragraph>
-                                    <div className="follow" onClick={toggleFollow} role="presentation">
-                                        <Paragraph type="s2" color={colors.WHITE} weight="semibold">
-                                            {
-                                                aquascape.user.isFollowedByMe
-                                                    ?
-                                                    <FormattedMessage
-                                                        id="aquascape.hero_section.unfollow"
-                                                        defaultMessage="Unfollow"
-                                                    />
-                                                    :
-                                                    <FormattedMessage
-                                                        id="aquascape.hero_section.follow"
-                                                        defaultMessage="Follow"
-                                                    />
-                                            }
+                                    <div
+                                        className="follow"
+                                        onClick={toggleFollow}
+                                        role="presentation"
+                                    >
+                                        <Paragraph
+                                            type="s2"
+                                            color={colors.WHITE}
+                                            weight="semibold"
+                                        >
+                                            {aquascape.user.isFollowedByMe ? (
+                                                <FormattedMessage
+                                                    id="aquascape.hero_section.unfollow"
+                                                    defaultMessage="Unfollow"
+                                                />
+                                            ) : (
+                                                <FormattedMessage
+                                                    id="aquascape.hero_section.follow"
+                                                    defaultMessage="Follow"
+                                                />
+                                            )}
                                         </Paragraph>
                                     </div>
                                 </div>
@@ -60,13 +86,25 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, tog
                             onClick={toggleLike}
                             leftIcon={
                                 <Icon
-                                    d={aquascape.isLikedByMe ? Icon.HEART : Icon.HEART_OUTLINE}
-                                    color={aquascape.isLikedByMe ? colors.SECONDARY : colors.WHITE}
+                                    d={
+                                        aquascape.isLikedByMe
+                                            ? Icon.HEART
+                                            : Icon.HEART_OUTLINE
+                                    }
+                                    color={
+                                        aquascape.isLikedByMe
+                                            ? colors.SECONDARY
+                                            : colors.WHITE
+                                    }
                                 />
                             }
                             dimensions="extraSmall"
-                            color="tertiary">
-                            <FormattedMessage id="aquascape.hero_section.like" defaultMessage="Like" />
+                            color="tertiary"
+                        >
+                            <FormattedMessage
+                                id="aquascape.hero_section.like"
+                                defaultMessage="Like"
+                            />
                         </Button>
                     </Hero.TopRight>
                 </Hero.TopSection>
@@ -75,14 +113,37 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, tog
                 <Hero.BottomSection>
                     <Hero.BottomLeft>
                         <div className="icons">
-                            <IconText icon={Icon.EYE_SHOW_FULL} text={aquascape.viewsCount === 0 ? 1 : aquascape.viewsCount} color={colors.WHITE} />
+                            <IconText
+                                icon={Icon.EYE_SHOW_FULL}
+                                text={
+                                    aquascape.viewsCount === 0
+                                        ? 1
+                                        : aquascape.viewsCount
+                                }
+                                color={colors.WHITE}
+                            />
                             <IconButton onClick={toggleLike}>
-                                <IconText icon={aquascape.isLikedByMe ? Icon.HEART : Icon.HEART_OUTLINE} text={aquascape.likesCount} color={colors.WHITE} />
+                                <IconText
+                                    icon={
+                                        aquascape.isLikedByMe
+                                            ? Icon.HEART
+                                            : Icon.HEART_OUTLINE
+                                    }
+                                    text={aquascape.likesCount}
+                                    color={colors.WHITE}
+                                />
                             </IconButton>
                         </div>
                     </Hero.BottomLeft>
                     <Hero.BottomRight>
-                        {aquascape.tags.map((tag, index) => <Tag key={index} text={tag.name} variant="primary" size="large" />)}
+                        {aquascape.tags.map((tag, index) => (
+                            <Tag
+                                key={index}
+                                text={tag.name}
+                                variant="primary"
+                                size="large"
+                            />
+                        ))}
                     </Hero.BottomRight>
                 </Hero.BottomSection>
             }

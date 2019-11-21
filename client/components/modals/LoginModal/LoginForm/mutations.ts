@@ -7,7 +7,7 @@ export interface LoginResult {
 }
 
 export interface LoginVariables {
-    email: string,
+    email: string
     password: string
 }
 

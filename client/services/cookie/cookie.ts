@@ -21,10 +21,10 @@ export default {
 
     persistVisitorId(visitorId: string) {
         const cookies = new Cookies()
-        console.log("setting up cookie", visitorId)
+        console.log('setting up cookie', visitorId)
         cookies.set(appConstants.COOKIE_VISITOR_ID, visitorId, {
             expires: addYears(Date.now(), 10),
-            path: '/'
+            path: '/',
         })
-    }
+    },
 }

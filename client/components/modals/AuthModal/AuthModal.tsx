@@ -1,7 +1,14 @@
 import {useContext} from 'react'
 
 import {FacebookLogin, GoogleLogin} from 'components/molecules'
-import {Headline, Paragraph, FormattedMessage, Bubble, Button, Icon} from 'components/atoms'
+import {
+    Headline,
+    Paragraph,
+    FormattedMessage,
+    Bubble,
+    Button,
+    Icon,
+} from 'components/atoms'
 import {FacebookProps} from 'components/molecules/FacebookLogin'
 import {GoogleProps} from 'components/molecules/GoogleLogin'
 import {colors, spaces, media} from 'styles'
@@ -15,13 +22,7 @@ interface Props {
     form: React.ReactNode
 }
 
-const AuthModal = ({
-    title,
-    subtitle,
-    footer,
-    form,
-    onSuccess
-}: Props) => {
+const AuthModal = ({title, subtitle, footer, form, onSuccess}: Props) => {
     const {closeModal} = useContext(ModalContext)
 
     return (
@@ -35,7 +36,11 @@ const AuthModal = ({
                         <Bubble size="334px" />
                     </div>
                     <a onClick={closeModal} className="close-button">
-                        <Icon d={Icon.CLOSE} color={colors.DARK_GRAY} size={26} />
+                        <Icon
+                            d={Icon.CLOSE}
+                            color={colors.DARK_GRAY}
+                            size={26}
+                        />
                     </a>
                     <Headline as="h1" variant="h3">
                         {title}
@@ -45,13 +50,14 @@ const AuthModal = ({
                             {subtitle}
                         </Paragraph>
                     </div>
-                    <div className="form">
-                        {form}
-                    </div>
+                    <div className="form">{form}</div>
                     <div className="social">
                         <div className="social-text">
                             <Paragraph as="span" color={colors.DARK_GRAY}>
-                                <FormattedMessage id="login_social_login_continue" defaultMessage="Or continue with" />
+                                <FormattedMessage
+                                    id="login_social_login_continue"
+                                    defaultMessage="Or continue with"
+                                />
                             </Paragraph>
                         </div>
                         <div className="social-buttons">
@@ -59,7 +65,12 @@ const AuthModal = ({
                                 {(props: GoogleProps) => (
                                     <Button
                                         type="block"
-                                        leftIcon={<img src="/static/icons/icon-google.png" alt="Google Login" />}
+                                        leftIcon={
+                                            <img
+                                                src="/static/icons/icon-google.png"
+                                                alt="Google Login"
+                                            />
+                                        }
                                         color="secondary"
                                         onClick={props.onClick}
                                     >
@@ -73,7 +84,12 @@ const AuthModal = ({
                                 {(props: FacebookProps) => (
                                     <Button
                                         type="block"
-                                        leftIcon={<img src="/static/icons/icon-facebook.png" alt="Facebook Login" />}
+                                        leftIcon={
+                                            <img
+                                                src="/static/icons/icon-facebook.png"
+                                                alt="Facebook Login"
+                                            />
+                                        }
                                         color="secondary"
                                         onClick={props.onClick}
                                     >
@@ -171,7 +187,8 @@ const AuthModal = ({
                     }
                 }
 
-                .social-buttons > :global(.${Button.classes.root}):first-of-type {
+                .social-buttons
+                    > :global(.${Button.classes.root}):first-of-type {
                     margin-right: ${spaces.s30};
                     margin-bottom: ${spaces.s18};
                 }
@@ -181,12 +198,13 @@ const AuthModal = ({
                         flex-direction: row;
                     }
 
-                    .social-buttons > :global(.${Button.classes.root}):first-of-type {
+                    .social-buttons
+                        > :global(.${Button.classes.root}):first-of-type {
                         margin-right: ${spaces.s30};
                         margin-bottom: 0;
                     }
                 }
-                    
+
                 .footer {
                     text-align: center;
                     padding: ${spaces.s24};

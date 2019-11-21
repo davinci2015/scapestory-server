@@ -18,29 +18,25 @@ const colorMapping = {
     primary: '#53bd94',
     secondary: '#4ea099',
     tertiary: '#2f4f6c',
-    quaternary: '#de79ae'
+    quaternary: '#de79ae',
 }
 
 const paragraphTypeMapping: {[T in TagSize]: ParagraphTypes} = {
     default: 't1',
-    large: 's2'
+    large: 's2',
 }
 
 const classes = {
-    root: 'tag'
+    root: 'tag',
 }
 
-const Tag = ({
-    text,
-    variant = 'primary',
-    size = 'default'
-}: Props) => {
-
+const Tag = ({text, variant = 'primary', size = 'default'}: Props) => {
     return (
-        <div className={cx(classes.root, {
-            large: size === 'large'
-        })}>
-
+        <div
+            className={cx(classes.root, {
+                large: size === 'large',
+            })}
+        >
             <Paragraph
                 as="span"
                 type={paragraphTypeMapping[size]}

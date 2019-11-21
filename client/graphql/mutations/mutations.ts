@@ -29,7 +29,7 @@ export const DISLIKE = gql`
             aquascapeImageId
             userId
             commentId
-        } 
+        }
     }
 `
 

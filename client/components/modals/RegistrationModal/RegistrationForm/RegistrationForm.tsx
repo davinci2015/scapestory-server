@@ -3,16 +3,27 @@ import {useIntl, MessageDescriptor} from 'react-intl'
 import {useMutation} from '@apollo/react-hooks'
 import Link from 'next/link'
 
-import {Paragraph, Button, Input, PasswordInput, FormattedMessage, Checkbox} from 'components/atoms'
+import {
+    Paragraph,
+    Button,
+    Input,
+    PasswordInput,
+    FormattedMessage,
+    Checkbox,
+} from 'components/atoms'
 
-import {RegisterResult, RegisterVariables, SIGN_UP_MUTATION} from 'components/modals/RegistrationModal/RegistrationForm/mutations'
+import {
+    RegisterResult,
+    RegisterVariables,
+    SIGN_UP_MUTATION,
+} from 'components/modals/RegistrationModal/RegistrationForm/mutations'
 import validator from 'services/validator'
 import {spaces} from 'styles'
 import routes from 'routes'
 
 const inputKeys = {
     email: 'email',
-    password: 'password'
+    password: 'password',
 }
 
 const PASSWORD_MIN_LENGTH = 6
@@ -26,25 +37,30 @@ const RegistrationForm = ({onSuccess}: Props) => {
 
     const [errors, setError] = useState({
         [inputKeys.email]: true,
-        [inputKeys.password]: true
+        [inputKeys.password]: true,
     })
 
-    const [errorMessages, setErrorMessage] = useState<{[key: string]: MessageDescriptor | null}>({
+    const [errorMessages, setErrorMessage] = useState<{
+        [key: string]: MessageDescriptor | null
+    }>({
         [inputKeys.email]: null,
-        [inputKeys.password]: null
+        [inputKeys.password]: null,
     })
 
     const [dirty, setDirty] = useState({
         [inputKeys.email]: false,
-        [inputKeys.password]: false
+        [inputKeys.password]: false,
     })
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const [register] = useMutation<RegisterResult, RegisterVariables>(SIGN_UP_MUTATION, {
-        refetchQueries: ['USER_PROFILE']
-    })
+    const [register] = useMutation<RegisterResult, RegisterVariables>(
+        SIGN_UP_MUTATION,
+        {
+            refetchQueries: ['USER_PROFILE'],
+        }
+    )
 
     const onSubmit = async () => {
         const {data} = await register({variables: {email, password}})
@@ -58,10 +74,11 @@ const RegistrationForm = ({onSuccess}: Props) => {
 
         if (validator.isEmpty(email)) {
             setErrorMessage({
-                ...errorMessages, [inputKeys.email]: {
+                ...errorMessages,
+                [inputKeys.email]: {
                     id: 'general_error_empty_email',
-                    defaultMessage: 'Please enter your email'
-                }
+                    defaultMessage: 'Please enter your email',
+                },
             })
 
             return setError({...errors, [inputKeys.email]: true})
@@ -69,10 +86,11 @@ const RegistrationForm = ({onSuccess}: Props) => {
 
         if (!validator.isEmailValid(email)) {
             setErrorMessage({
-                ...errorMessages, [inputKeys.email]: {
+                ...errorMessages,
+                [inputKeys.email]: {
                     id: 'general_error_invalid_email',
-                    defaultMessage: 'Please enter valid email'
-                }
+                    defaultMessage: 'Please enter valid email',
+                },
             })
 
             return setError({...errors, [inputKeys.email]: true})
@@ -86,20 +104,23 @@ const RegistrationForm = ({onSuccess}: Props) => {
 
         if (validator.isEmpty(password)) {
             setErrorMessage({
-                ...errorMessages, [inputKeys.password]: {
+                ...errorMessages,
+                [inputKeys.password]: {
                     id: 'general_error_empty_password',
-                    defaultMessage: 'Please enter your password'
-                }
+                    defaultMessage: 'Please enter your password',
+                },
             })
             return setError({...errors, [inputKeys.password]: true})
         }
 
         if (password.length < PASSWORD_MIN_LENGTH) {
             setErrorMessage({
-                ...errorMessages, [inputKeys.password]: {
+                ...errorMessages,
+                [inputKeys.password]: {
                     id: 'general_error_password_length',
-                    defaultMessage: 'Your password must be at least 6 characters'
-                }
+                    defaultMessage:
+                        'Your password must be at least 6 characters',
+                },
             })
             return setError({...errors, [inputKeys.password]: true})
         }
@@ -112,8 +133,14 @@ const RegistrationForm = ({onSuccess}: Props) => {
         return message ? <FormattedMessage {...message} /> : null
     }
 
-    const emailLabel = intl.formatMessage({id: 'registration_input_label_email', defaultMessage: 'Email'})
-    const passwordLabel = intl.formatMessage({id: 'registration_input_label_password', defaultMessage: 'Password'})
+    const emailLabel = intl.formatMessage({
+        id: 'registration_input_label_email',
+        defaultMessage: 'Email',
+    })
+    const passwordLabel = intl.formatMessage({
+        id: 'registration_input_label_password',
+        defaultMessage: 'Password',
+    })
 
     return (
         <>
@@ -125,8 +152,12 @@ const RegistrationForm = ({onSuccess}: Props) => {
                     value={email}
                     error={dirty[inputKeys.email] && errors[inputKeys.email]}
                     errorMessage={getErrorMessage(inputKeys.email)}
-                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validateEmail(e.target.value)}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        validateEmail(e.target.value)
+                    }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setEmail(e.target.value)
+                    }
                 />
 
                 <PasswordInput
@@ -134,43 +165,60 @@ const RegistrationForm = ({onSuccess}: Props) => {
                     placeholder={passwordLabel}
                     label={passwordLabel}
                     value={password}
-                    error={dirty[inputKeys.password] && errors[inputKeys.password]}
+                    error={
+                        dirty[inputKeys.password] && errors[inputKeys.password]
+                    }
                     errorMessage={getErrorMessage(inputKeys.password)}
-                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validatePassword(e.target.value)}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        validatePassword(e.target.value)
+                    }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setPassword(e.target.value)
+                    }
                 />
 
                 <Checkbox id="terms" onChange={setTermsAccepted}>
-                    <FormattedMessage 
-                        id="registration_terms_i_accept" 
-                        defaultMessage="I accept" 
-                    />
-                    {' '}
+                    <FormattedMessage
+                        id="registration_terms_i_accept"
+                        defaultMessage="I accept"
+                    />{' '}
                     <Link href={routes.termsAndConditions}>
                         <a>
-                            <FormattedMessage id="registration_terms_text" defaultMessage="Terms & Conditions" />
+                            <FormattedMessage
+                                id="registration_terms_text"
+                                defaultMessage="Terms & Conditions"
+                            />
                         </a>
-                    </Link>
-                    {' '}
-                    <FormattedMessage 
-                        id="registration_terms_and" 
-                        defaultMessage="and" 
-                    />
-                    {' '}
+                    </Link>{' '}
+                    <FormattedMessage
+                        id="registration_terms_and"
+                        defaultMessage="and"
+                    />{' '}
                     <Link href={routes.privacyPolicy}>
                         <a>
-                            <FormattedMessage id="registration_privacy_text" defaultMessage="Privacy Policy" />
+                            <FormattedMessage
+                                id="registration_privacy_text"
+                                defaultMessage="Privacy Policy"
+                            />
                         </a>
                     </Link>
                 </Checkbox>
 
                 <div className="submit-button">
                     <Button
-                        disabled={errors[inputKeys.email] || errors[inputKeys.password] || !termsAccepted}
+                        disabled={
+                            errors[inputKeys.email] ||
+                            errors[inputKeys.password] ||
+                            !termsAccepted
+                        }
                         type="block"
-                        onClick={onSubmit}>
+                        onClick={onSubmit}
+                    >
                         <Paragraph as="span" weight="bold" color="light">
-                            <FormattedMessage id="registration_submit_button" defaultMessage="Create Account" />
+                            <FormattedMessage
+                                id="registration_submit_button"
+                                defaultMessage="Create Account"
+                            />
                         </Paragraph>
                     </Button>
                 </div>

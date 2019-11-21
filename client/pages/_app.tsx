@@ -11,7 +11,7 @@ interface Props {
     apollo: ApolloClient<NormalizedCacheObject>
 }
 
-class MyApp extends App<Props>  {
+class MyApp extends App<Props> {
     render() {
         const {Component, pageProps, apollo} = this.props
 

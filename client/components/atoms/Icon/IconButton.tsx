@@ -3,14 +3,11 @@ interface Props {
     onClick: (...args: any[]) => void
 }
 
-const IconButton = ({
-    children,
-    onClick
-}: Props) => (
-        <button type="button" className="icon-button" onClick={onClick}>
-            {children}
+const IconButton = ({children, onClick}: Props) => (
+    <button type="button" className="icon-button" onClick={onClick}>
+        {children}
 
-            <style>{`
+        <style>{`
                 .icon-button {
                     cursor: pointer;
                     background: transparent;
@@ -20,8 +17,7 @@ const IconButton = ({
                     outline: 0; 
                 }
             `}</style>
-        </button>
-    )
-
+    </button>
+)
 
 export default IconButton

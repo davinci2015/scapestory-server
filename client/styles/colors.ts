@@ -8,7 +8,7 @@ export default {
     BG: '#fcfcfc',
     WHITE: '#FFF',
     BLACK: '#000',
-    
+
     GRAY: '#c5c7cb',
     MID_GRAY: '#c5c7cb',
     DARK_GRAY: '#91929c',
@@ -22,5 +22,5 @@ export default {
     ERROR: '#e06979',
 
     GOOGLE: '#db4437',
-    FACEBOOK: '#2174f2'
+    FACEBOOK: '#2174f2',
 }

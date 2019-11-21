@@ -4,13 +4,14 @@ import {AquascapeData} from 'graphql/queries'
 
 export const renderAquascapeCards = (aquascapes: AquascapeData[]) =>
     aquascapes.map((scape: AquascapeData) => (
-        <Grid.Item 
-            key={scape.id} 
-            extraSmall={12} 
-            small={6} 
-            medium={4} 
-            large={3}>
-            <AquascapeCard 
+        <Grid.Item
+            key={scape.id}
+            extraSmall={12}
+            small={6}
+            medium={4}
+            large={3}
+        >
+            <AquascapeCard
                 id={scape.id}
                 slug={scape.title}
                 name={scape.user.name || scape.user.username}

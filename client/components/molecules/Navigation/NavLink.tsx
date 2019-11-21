@@ -1,6 +1,6 @@
-import React from "react"
-import Link from "next/link"
-import {withRouter} from "next/router"
+import React from 'react'
+import Link from 'next/link'
+import {withRouter} from 'next/router'
 
 import {colors, spaces, typography} from 'styles'
 import {Router} from 'next/router'
@@ -12,20 +12,23 @@ export interface Props {
     href: string
 }
 
-const NavLink = (({router, children, as, href, ...rest}: Props) => (
+const NavLink = ({router, children, as, href, ...rest}: Props) => (
     <>
         <Link {...rest} href={href} as={as}>
             {React.cloneElement(React.Children.only(children), {
-                className: (router.asPath === href || router.asPath === as) ? 'nav-link active' : 'nav-link'
+                className:
+                    router.asPath === href || router.asPath === as
+                        ? 'nav-link active'
+                        : 'nav-link',
             })}
         </Link>
         <style jsx>{`
             :global(nav a.nav-link) {
                 display: flex;
                 align-items: center;
-                
+
                 height: 100%;
-                padding: ${spaces.s12} ${spaces.s6}; 
+                padding: ${spaces.s12} ${spaces.s6};
                 margin: 0 ${spaces.s36};
 
                 text-decoration: none;
@@ -44,6 +47,6 @@ const NavLink = (({router, children, as, href, ...rest}: Props) => (
             }
         `}</style>
     </>
-))
+)
 
 export default withRouter(NavLink)

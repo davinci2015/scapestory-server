@@ -14,13 +14,11 @@ type GridInterface = React.FunctionComponent & {
 
 const Grid: GridInterface = ({children}) => (
     <>
-        <div className="grid">
-            {children}
-        </div>
+        <div className="grid">{children}</div>
         <style jsx global>{`
             .grid {
                 max-width: ${GRID_MAX_WIDTH};
-                margin: 0 auto; 
+                margin: 0 auto;
                 padding-left: ${spaces.s16};
                 padding-right: ${spaces.s16};
             }

@@ -29,9 +29,9 @@ const Badge = ({icon, children, background = 'plain'}: Props) => (
                 text-transform: lowercase;
 
                 margin-right: ${spaces.s18};
-                height: ${spaces.s36};  
+                height: ${spaces.s36};
                 width: ${spaces.s36};
-                
+
                 border-radius: 50%;
 
                 ${applyStyles(background === 'plain')(`
@@ -41,10 +41,9 @@ const Badge = ({icon, children, background = 'plain'}: Props) => (
                 ${applyStyles(background === 'gradient')(`
                     background-image: linear-gradient(to bottom, ${colors.SECONDARY}, ${colors.SECONDARY_DARK});
                 `)}
-            }  
+            }
         `}</style>
     </>
 )
-
 
 export default Badge

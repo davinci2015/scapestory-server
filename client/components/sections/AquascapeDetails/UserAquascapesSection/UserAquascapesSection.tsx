@@ -11,26 +11,29 @@ interface Props {
     aquascapes: AquascapeData[]
 }
 
-const UserAquascapesSection: React.FunctionComponent<Props> = ({username, aquascapes}) => (
+const UserAquascapesSection: React.FunctionComponent<Props> = ({
+    username,
+    aquascapes,
+}) => (
     <>
         <div className="section">
-            <AquascapeCardList title={(
-                <Headline as="h2" variant="h3">
-                    <FormattedMessage
-                        id="aquascape.user_aquascapes.title"
-                        defaultMessage="{username}'s aquascapes"
-                        values={{username}}
-                    />
-                </Headline>
-            )}>
-                <Grid.Row>
-                    {renderAquascapeCards(aquascapes)}
-                </Grid.Row>
+            <AquascapeCardList
+                title={
+                    <Headline as="h2" variant="h3">
+                        <FormattedMessage
+                            id="aquascape.user_aquascapes.title"
+                            defaultMessage="{username}'s aquascapes"
+                            values={{username}}
+                        />
+                    </Headline>
+                }
+            >
+                <Grid.Row>{renderAquascapeCards(aquascapes)}</Grid.Row>
             </AquascapeCardList>
         </div>
         <style jsx>{`
             .section {
-                padding-bottom: 45px;   
+                padding-bottom: 45px;
             }
         `}</style>
     </>

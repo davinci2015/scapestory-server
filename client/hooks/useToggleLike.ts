@@ -9,7 +9,7 @@ export const useToggleLike = (initiallyLiked: Boolean = false) => {
     const toggleLike = (entity: LikeEntityType, entityId: number) => {
         const handler = initiallyLiked ? dislike : like
         initiallyLiked = !initiallyLiked
-        handler({variables: {entity,entityId}})
+        handler({variables: {entity, entityId}})
     }
 
     return toggleLike

@@ -1,13 +1,13 @@
 export default {
     fontFamily: {
-        PRIMARY: '"Nunito Sans", sans-serif'
+        PRIMARY: '"Nunito Sans", sans-serif',
     },
 
     fontWeight: {
         regular: 500,
         semibold: 600,
         bold: 800,
-        extraBold: 900
+        extraBold: 900,
     },
 
     fontSize: {
@@ -21,7 +21,7 @@ export default {
         fs28: '28px',
         fs38: '38px',
         fs51: '51px',
-        fs67: '67px'
+        fs67: '67px',
     },
 
     lineHeight: {
@@ -32,6 +32,6 @@ export default {
         lh40: '40px',
         lh48: '48px',
         lh66: '66px',
-        lh88: '88px'
-    }
+        lh88: '88px',
+    },
 }

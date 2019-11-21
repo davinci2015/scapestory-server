@@ -4,7 +4,7 @@ import {colors, borderRadius, applyStyles, spaces, typography} from 'styles'
 import {Paragraph, Icon} from 'components/atoms'
 
 const classes = {
-    checkbox: 'checkbox'
+    checkbox: 'checkbox',
 }
 
 export interface Props {
@@ -16,7 +16,14 @@ export interface Props {
     children: React.ReactNode
 }
 
-const Checkbox = ({id, children, onChange, defaultChecked = false, error, errorMessage}: Props) => {
+const Checkbox = ({
+    id,
+    children,
+    onChange,
+    defaultChecked = false,
+    error,
+    errorMessage,
+}: Props) => {
     const [checked, setChecked] = useState(defaultChecked)
 
     const toggleChecked = () => {
@@ -26,21 +33,26 @@ const Checkbox = ({id, children, onChange, defaultChecked = false, error, errorM
 
     return (
         <div className={classes.checkbox}>
-            <input className="input" type="checkbox" id={id} checked={checked} onChange={toggleChecked}/>
+            <input
+                className="input"
+                type="checkbox"
+                id={id}
+                checked={checked}
+                onChange={toggleChecked}
+            />
             <label className="label" htmlFor={id}>
                 <div className="selector">
                     <Icon d={Icon.DONE} color={colors.WHITE} />
                 </div>
                 <div className="content">{children}</div>
             </label>
-            {
-                error &&
+            {error && (
                 <div className="error-message">
                     <Paragraph as="span" type="s2" color={colors.ERROR}>
                         {errorMessage}
                     </Paragraph>
                 </div>
-            }
+            )}
 
             <style jsx>{`
                 .input {

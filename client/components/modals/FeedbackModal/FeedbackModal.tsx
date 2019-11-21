@@ -1,6 +1,13 @@
 import {useContext} from 'react'
 
-import {Headline, Paragraph, Button, Icon, FormattedMessage, Textarea} from 'components/atoms'
+import {
+    Headline,
+    Paragraph,
+    Button,
+    Icon,
+    FormattedMessage,
+    Textarea,
+} from 'components/atoms'
 import {colors, spaces, media} from 'styles'
 import {ModalContext} from 'providers/ModalProvider'
 
@@ -16,17 +23,26 @@ const FeedbackModal = ({}: Props) => {
                     <Icon d={Icon.CLOSE} color={colors.DARK_GRAY} size={26} />
                 </a>
                 <Headline as="h1" variant="h3">
-                    <FormattedMessage id="feedback.title" defaultMessage="Your feedback means a lot!" />
+                    <FormattedMessage
+                        id="feedback.title"
+                        defaultMessage="Your feedback means a lot!"
+                    />
                 </Headline>
                 <div className="subtitle">
                     <Paragraph as="p" color={colors.DARK_GRAY}>
-                        <FormattedMessage id="feedback.subtitle" defaultMessage="To make Scapestory even better place!" />
+                        <FormattedMessage
+                            id="feedback.subtitle"
+                            defaultMessage="To make Scapestory even better place!"
+                        />
                     </Paragraph>
                 </div>
                 <div className="form">
                     <Textarea placeholder="Enter your feedback" />
                     <Button type="block">
-                        <FormattedMessage id="feedback.submit" defaultMessage="Send" />
+                        <FormattedMessage
+                            id="feedback.submit"
+                            defaultMessage="Send"
+                        />
                     </Button>
                 </div>
             </div>
@@ -40,10 +56,10 @@ const FeedbackModal = ({}: Props) => {
                 }
 
                 @media ${media.up('small')} {
-                    :global(.modal) {   
+                    :global(.modal) {
                         bottom: auto;
                         top: 50%;
-                        transform: translate(-50%, -50%); 
+                        transform: translate(-50%, -50%);
                     }
                 }
 
@@ -53,7 +69,7 @@ const FeedbackModal = ({}: Props) => {
 
                 .body :global(.${Button.classes.root}) {
                     margin-top: ${spaces.s36};
-                    margin-bottom: ${spaces.s60};   
+                    margin-bottom: ${spaces.s60};
                 }
 
                 @media ${media.up('small')} {

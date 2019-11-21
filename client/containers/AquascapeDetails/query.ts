@@ -1,6 +1,18 @@
 import gql from 'graphql-tag'
 import {fragments, AquascapeData} from 'graphql/queries'
-import {Plant, Livestock, Hardscape, Light, Filter, Substrate, Additive, Co2, User, AquascapeImage, Like} from 'generated/graphql'
+import {
+    Plant,
+    Livestock,
+    Hardscape,
+    Light,
+    Filter,
+    Substrate,
+    Additive,
+    Co2,
+    User,
+    AquascapeImage,
+    Like,
+} from 'generated/graphql'
 
 export interface AquascapeDetails {
     id: number
@@ -19,7 +31,10 @@ export interface AquascapeDetails {
     additives: Pick<Additive, 'id' | 'brand' | 'name'>[]
     tags: {name: string}[]
     images: Pick<AquascapeImage, 'id' | 'url' | 'title'>[]
-    user: Pick<User, 'id' | 'name' | 'profileImage' | 'username' | 'isFollowedByMe'> & {
+    user: Pick<
+        User,
+        'id' | 'name' | 'profileImage' | 'username' | 'isFollowedByMe'
+    > & {
         aquascapes: AquascapeData[]
     }
     comments: AquascapeComment[]
@@ -41,102 +56,102 @@ export interface AquascapeDetailsQuery {
 
 export const AQUASCAPE_DETAILS = gql`
     query Aquascape($id: Int!) {
-      aquascapes(pagination: {limit: 4, offset: 0}, random: true) {
-        ...AquascapeFields
-      }
-
-      aquascape(id: $id) {
-        id 
-        title
-        mainImage
-        viewsCount
-        likesCount
-        isLikedByMe
-        
-        plants {
-            id
-            name
+        aquascapes(pagination: {limit: 4, offset: 0}, random: true) {
+            ...AquascapeFields
         }
 
-        livestock {
-            id
-            name
-        }
-
-        hardscape {
-            id
-            name
-        }
-
-        lights {
-            id
-            brand
-            model
-        }
-            
-        filters {
-            id
-            brand
-            model
-        }
-            
-        co2 {
-            id
-            type
-            bps
-        }
-            
-        substrates {
-            id
-            brand
-            name
-        }
-            
-        additives {
-            id
-            brand
-            name
-        }
-
-        tags {  
-            name
-        }
-
-        images {
+        aquascape(id: $id) {
             id
             title
-            url
-        }
+            mainImage
+            viewsCount
+            likesCount
+            isLikedByMe
 
-        user {
-            id
-            name
-            profileImage
-            username
-            isFollowedByMe
-            aquascapes(pagination: {limit: 4, offset: 0}, random: true) {
-                ...AquascapeFields
-            }
-        }
-
-        comments {
-            id
-            content
-            createdAt
-            parentCommentId
-            likes {
+            plants {
                 id
-                userId
+                name
             }
+
+            livestock {
+                id
+                name
+            }
+
+            hardscape {
+                id
+                name
+            }
+
+            lights {
+                id
+                brand
+                model
+            }
+
+            filters {
+                id
+                brand
+                model
+            }
+
+            co2 {
+                id
+                type
+                bps
+            }
+
+            substrates {
+                id
+                brand
+                name
+            }
+
+            additives {
+                id
+                brand
+                name
+            }
+
+            tags {
+                name
+            }
+
+            images {
+                id
+                title
+                url
+            }
+
             user {
                 id
                 name
-                username
                 profileImage
+                username
+                isFollowedByMe
+                aquascapes(pagination: {limit: 4, offset: 0}, random: true) {
+                    ...AquascapeFields
+                }
+            }
+
+            comments {
+                id
+                content
+                createdAt
+                parentCommentId
+                likes {
+                    id
+                    userId
+                }
+                user {
+                    id
+                    name
+                    username
+                    profileImage
+                }
             }
         }
-      }
     }
-    
+
     ${fragments.aquascape}
 `

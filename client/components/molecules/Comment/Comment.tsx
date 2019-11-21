@@ -6,7 +6,7 @@ import {formatDate, dateFormats} from 'utils/date'
 import {AquascapeComment} from 'containers/AquascapeDetails/query'
 
 const classes = {
-    root: 'comment'
+    root: 'comment',
 }
 
 interface Props {
@@ -22,7 +22,10 @@ type CardInterface = React.FunctionComponent<Props> & {
 
 const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
     const onLikeClick = useCallback(() => onLike(comment), [comment, onLike])
-    const onRemoveClick = useCallback(() => onRemove && onRemove(comment), [comment, onRemove])
+    const onRemoveClick = useCallback(() => onRemove && onRemove(comment), [
+        comment,
+        onRemove,
+    ])
 
     return (
         <>
@@ -32,21 +35,34 @@ const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
                     <span className="username">{comment.user.username}</span>
                     <span className="content">{comment.content}</span>
                     <div className="bottom">
-                        <span className="date">{formatDate(parseInt(comment.createdAt), dateFormats.PRIMARY)}</span>
+                        <span className="date">
+                            {formatDate(
+                                parseInt(comment.createdAt),
+                                dateFormats.PRIMARY
+                            )}
+                        </span>
                         <div className="divider"></div>
                         <span className="action" onClick={onLikeClick}>
-                            {
-                                isLiked
-                                    ? <FormattedMessage id="comment.action.like" defaultMessage="Dislike" />
-                                    : <FormattedMessage id="comment.action.like" defaultMessage="Like" />
-                            }
+                            {isLiked ? (
+                                <FormattedMessage
+                                    id="comment.action.like"
+                                    defaultMessage="Dislike"
+                                />
+                            ) : (
+                                <FormattedMessage
+                                    id="comment.action.like"
+                                    defaultMessage="Like"
+                                />
+                            )}
                         </span>
-                        {
-                            Boolean(onRemove) &&
+                        {Boolean(onRemove) && (
                             <span className="action" onClick={onRemoveClick}>
-                                <FormattedMessage id="comment.action.remove" defaultMessage="Remove" />
+                                <FormattedMessage
+                                    id="comment.action.remove"
+                                    defaultMessage="Remove"
+                                />
                             </span>
-                        }
+                        )}
                     </div>
                 </div>
             </div>
@@ -76,7 +92,7 @@ const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
                     display: block;
                     margin: ${spaces.s12} 0;
                     font-size: ${typography.fontSize.fs20};
-                } 
+                }
 
                 .bottom :global(span) {
                     font-weight: ${typography.fontWeight.semibold};

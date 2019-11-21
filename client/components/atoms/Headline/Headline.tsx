@@ -6,15 +6,15 @@ import {typography, colors, media} from 'styles'
 type HeadlineVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
 
 interface Props {
-    as?: HeadlineVariant,
-    variant?: HeadlineVariant,
+    as?: HeadlineVariant
+    variant?: HeadlineVariant
     children: React.ReactNode | string
     color?: string
     fontWeight?: number
 }
 
 const classes = {
-    root: 'headline'
+    root: 'headline',
 }
 
 const Headline = ({
@@ -28,7 +28,10 @@ const Headline = ({
     const Component = as
 
     return (
-        <Component className={classnames(classes.root, variant ? variant : as)} {...props}> 
+        <Component
+            className={classnames(classes.root, variant ? variant : as)}
+            {...props}
+        >
             {children}
             <style jsx>{`
                 .${classes.root} {
@@ -36,7 +39,11 @@ const Headline = ({
                     margin: 0;
                 }
 
-                .h1, .h2, .h3, .h4, .h5 {
+                .h1,
+                .h2,
+                .h3,
+                .h4,
+                .h5 {
                     font-weight: ${fontWeight};
                 }
 
@@ -47,7 +54,6 @@ const Headline = ({
 
                 @media ${media.up('medium')} {
                     .h1 {
-
                         font-size: ${typography.fontSize.fs67};
                         line-height: ${typography.lineHeight.lh88};
                     }
@@ -93,7 +99,7 @@ const Headline = ({
                     font-size: ${typography.fontSize.fs16};
                     line-height: ${typography.lineHeight.lh18};
                 }
-                
+
                 @media ${media.up('medium')} {
                     .h5 {
                         font-size: ${typography.fontSize.fs18};
@@ -102,7 +108,6 @@ const Headline = ({
                 }
             `}</style>
         </Component>
-
     )
 }
 

@@ -5,7 +5,7 @@ import {backgroundImage} from 'styles/mixins'
 import {colors} from 'styles'
 
 const classes = {
-    root: 'userImage'
+    root: 'userImage',
 }
 
 interface Props {
@@ -20,16 +20,18 @@ const UserImage = ({
     variant = 'default',
 }: Props) => (
     <>
-        <div className={classnames(classes.root, {
-            large: size === 'large',
-            border: variant === 'border'
-        })}></div>
+        <div
+            className={classnames(classes.root, {
+                large: size === 'large',
+                border: variant === 'border',
+            })}
+        ></div>
         <style jsx>{`
             .${classes.root} {
                 width: 24px;
                 height: 24px;
                 border-radius: 50%;
-                ${backgroundImage(image || '')}       
+                ${backgroundImage(image || '')}
             }
 
             .large {

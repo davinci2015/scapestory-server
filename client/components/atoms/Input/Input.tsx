@@ -4,7 +4,7 @@ import {borderRadius, colors, typography} from 'styles'
 import {Paragraph, InputAdornment} from 'components/atoms'
 
 const classes = {
-    inputContainer: 'inputContainer'
+    inputContainer: 'inputContainer',
 }
 
 export interface InputProps extends React.HTMLProps<HTMLInputElement> {
@@ -26,7 +26,8 @@ const Input = ({
 }: InputProps) => {
     const inputRef = React.createRef<HTMLInputElement>()
 
-    const setFocus = () => inputRef && inputRef.current && inputRef.current.focus()
+    const setFocus = () =>
+        inputRef && inputRef.current && inputRef.current.focus()
 
     return (
         <>
@@ -35,20 +36,22 @@ const Input = ({
                     <div className="root">
                         <input ref={inputRef} {...props} />
                         <label>{label}</label>
-                        <fieldset onClick={setFocus} className="outline"></fieldset>
+                        <fieldset
+                            onClick={setFocus}
+                            className="outline"
+                        ></fieldset>
                         <div className="highlighter"></div>
                     </div>
                     {endAdornment}
                 </div>
 
-                {
-                    error &&
+                {error && (
                     <div className="error-message">
                         <Paragraph as="span" type="s2" color={colors.ERROR}>
                             {errorMessage}
                         </Paragraph>
                     </div>
-                }
+                )}
             </div>
             <style jsx>{`
                 input {
@@ -82,13 +85,14 @@ const Input = ({
                     height: 0;
                     left: 0;
                     top: 50%;
-                    
+
                     background-color: ${colors.PRIMARY};
                     border-top-left-radius: ${borderRadius.SECONDARY};
                     border-bottom-left-radius: ${borderRadius.SECONDARY};
-                    transition: all 230ms ease-in-out; 
+                    transition: all 230ms ease-in-out;
 
-                    ${error && `
+                    ${error &&
+                        `
                         background-color: ${colors.ERROR};
                         opacity: 1;
                         height: 100%;
@@ -140,7 +144,7 @@ const Input = ({
                 label {
                     font-size: ${typography.fontSize.fs14};
                     pointer-events: none;
-                    
+
                     position: absolute;
                     top: 0;
                     left: 0;
@@ -157,7 +161,7 @@ const Input = ({
                 .error-message {
                     position: absolute;
                     bottom: -24px;
-                    left: 30px
+                    left: 30px;
                 }
             `}</style>
         </>

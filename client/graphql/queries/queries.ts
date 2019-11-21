@@ -1,21 +1,23 @@
 import gql from 'graphql-tag'
 
 export interface AquascapeData {
-  id: number
-  title: string
-  slug: string
-  mainImage: string
-  viewsCount: number
-  likesCount: number
-  tags: [{
-      name: string
-  }]
-  user: {
-      id: number
-      name?: string
-      profileImage?: string
-      username: string
-  }
+    id: number
+    title: string
+    slug: string
+    mainImage: string
+    viewsCount: number
+    likesCount: number
+    tags: [
+        {
+            name: string
+        }
+    ]
+    user: {
+        id: number
+        name?: string
+        profileImage?: string
+        username: string
+    }
 }
 
 export interface UserProfile {
@@ -28,37 +30,37 @@ export interface UserProfile {
 }
 
 export const fragments = {
-  aquascape: gql`
-      fragment AquascapeFields on Aquascape {
-          id 
-          title
-          mainImage
-          viewsCount
-          likesCount
-          tags {  
-              name
-          }
+    aquascape: gql`
+        fragment AquascapeFields on Aquascape {
+            id
+            title
+            mainImage
+            viewsCount
+            likesCount
+            tags {
+                name
+            }
 
-          user {
-              id
-              name
-              profileImage
-              username
-          }
-      }
-  `
+            user {
+                id
+                name
+                profileImage
+                username
+            }
+        }
+    `,
 }
 
 export const USER_PROFILE = gql`
     query USER_PROFILE {
-      me {
-        id
-        email
-        username
-        name
-        country
-        profileImage
-      }
+        me {
+            id
+            email
+            username
+            name
+            country
+            profileImage
+        }
     }
 `
 
@@ -72,19 +74,19 @@ export const AQUASCAPES = gql`
 `
 
 export const FEATURED_AQUASCAPE = gql`
-  query FeaturedAquascapes {
-      featured: featuredAquascape {
-          ...AquascapeFields
-      }
-  }
-  ${fragments.aquascape}
+    query FeaturedAquascapes {
+        featured: featuredAquascape {
+            ...AquascapeFields
+        }
+    }
+    ${fragments.aquascape}
 `
 
 export const TRENDING_AQUASCAPES = gql`
-  query TrendingAquascapes($pagination: Pagination!) {
-      trending: trendingAquascapes(pagination: $pagination) {
-          ...AquascapeFields
-      }
-  }
-  ${fragments.aquascape}
+    query TrendingAquascapes($pagination: Pagination!) {
+        trending: trendingAquascapes(pagination: $pagination) {
+            ...AquascapeFields
+        }
+    }
+    ${fragments.aquascape}
 `

@@ -8,5 +8,5 @@ export default {
     BELOW: -1,
     DOWN_BELOW: -9000,
     MARIANA_TRENCH: -9999,
-    NODE_MODULES: -9999999
+    NODE_MODULES: -9999999,
 }

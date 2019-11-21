@@ -20,7 +20,7 @@ const BottomSection: React.FunctionComponent = ({children}) => (
 
             .section :global(.${IconText.classes.root}) {
                 margin-left: ${spaces.s12};
-                margin-right: ${spaces.s12}
+                margin-right: ${spaces.s12};
             }
         `}</style>
     </div>
@@ -33,15 +33,13 @@ const BottomLeft: React.FunctionComponent = ({children}) => (
             .left {
                 display: flex;
                 align-items: center;
-            }  
+            }
         `}</style>
     </div>
 )
 
-const BottomRight: React.FunctionComponent = ({children}) => <div>{children}</div>
+const BottomRight: React.FunctionComponent = ({children}) => (
+    <div>{children}</div>
+)
 
-export {
-    BottomSection,
-    BottomLeft,
-    BottomRight
-}
+export {BottomSection, BottomLeft, BottomRight}

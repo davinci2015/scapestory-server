@@ -10,8 +10,18 @@ export interface RemoveCommentMutationResult {
 }
 
 export const ADD_COMMENT = gql`
-    mutation AddComment($entity: CommentEntityType!, $entityId: Int!, $content: String!, $parentCommentId: Int) {
-        addComment(entity: $entity, entityId: $entityId, content: $content, parentCommentId: $parentCommentId) {
+    mutation AddComment(
+        $entity: CommentEntityType!
+        $entityId: Int!
+        $content: String!
+        $parentCommentId: Int
+    ) {
+        addComment(
+            entity: $entity
+            entityId: $entityId
+            content: $content
+            parentCommentId: $parentCommentId
+        ) {
             id
             content
             createdAt

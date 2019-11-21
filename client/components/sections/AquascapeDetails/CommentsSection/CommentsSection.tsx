@@ -1,7 +1,14 @@
 import React, {FormEvent} from 'react'
 import {useIntl} from 'react-intl'
 
-import {FormattedMessage, Headline, Textarea, InputAdornment, Button, UserImage} from 'components/atoms'
+import {
+    FormattedMessage,
+    Headline,
+    Textarea,
+    InputAdornment,
+    Button,
+    UserImage,
+} from 'components/atoms'
 import {Grid} from 'components/core'
 import {spaces} from 'styles'
 import Comment from 'components/molecules/Comment/Comment'
@@ -26,7 +33,7 @@ const CommentsSection: React.FunctionComponent<Props> = ({
     onSubmit,
     removeComment,
     userImage,
-    userId
+    userId,
 }) => {
     const intl = useIntl()
 
@@ -50,11 +57,14 @@ const CommentsSection: React.FunctionComponent<Props> = ({
                                 onChange={onCommentChange}
                                 placeholder={intl.formatMessage({
                                     id: 'aquascape.comments.input.placeholder',
-                                    defaultMessage: 'Write your comment here'
+                                    defaultMessage: 'Write your comment here',
                                 })}
                                 endAdornment={
                                     <InputAdornment>
-                                        <Button dimensions="small" onClick={onSubmit}>
+                                        <Button
+                                            dimensions="small"
+                                            onClick={onSubmit}
+                                        >
                                             <FormattedMessage
                                                 id="aquascape.comments.input.submit"
                                                 defaultMessage="Post comment"
@@ -68,11 +78,21 @@ const CommentsSection: React.FunctionComponent<Props> = ({
                 </Grid.Row>
                 <div className="list">
                     <Grid.Row>
-                        {comments.map((comment) => (
-                            <Grid.Item key={comment.id} extraSmall={12} medium={6}>
+                        {comments.map(comment => (
+                            <Grid.Item
+                                key={comment.id}
+                                extraSmall={12}
+                                medium={6}
+                            >
                                 <Comment
-                                    onRemove={comment.user.id === userId ? removeComment : undefined}
-                                    isLiked={comment.likes.some((like) => like.userId === userId)}
+                                    onRemove={
+                                        comment.user.id === userId
+                                            ? removeComment
+                                            : undefined
+                                    }
+                                    isLiked={comment.likes.some(
+                                        like => like.userId === userId
+                                    )}
                                     comment={comment}
                                     onLike={toggleLike}
                                 />

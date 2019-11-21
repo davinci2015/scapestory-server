@@ -12,8 +12,8 @@ export type ModalType = 'login' | 'register' | 'feedback'
 
 export interface ModalContextInterface {
     openModal: (type: ModalType, props?: Object) => void
-    modalType: ModalType | null,
-    modalProps: Object,
+    modalType: ModalType | null
+    modalProps: Object
     closeModal: VoidFunction
 }
 
@@ -21,13 +21,13 @@ export const ModalContext = React.createContext<ModalContextInterface>({
     openModal: () => new Error('openModal is not implemented'),
     closeModal: () => new Error('closeModal is not implemented'),
     modalProps: {},
-    modalType: null
+    modalType: null,
 })
 
 const modalMapping = {
     login: LoginModal,
     register: RegistrationModal,
-    feedback: FeedbackModal
+    feedback: FeedbackModal,
 }
 
 const ModalProvider = ({children}: Props) => {
@@ -48,17 +48,23 @@ const ModalProvider = ({children}: Props) => {
 
     const closeModal = () => setModalVisibility(null)
 
-    useEffect(() => Router.events.on('routeChangeStart', () => {
-        closeModal()
-    }), [])
+    useEffect(
+        () =>
+            Router.events.on('routeChangeStart', () => {
+                closeModal()
+            }),
+        []
+    )
 
     return (
-        <ModalContext.Provider value={{
-            openModal,
-            closeModal,
-            modalProps,
-            modalType
-        }}>
+        <ModalContext.Provider
+            value={{
+                openModal,
+                closeModal,
+                modalProps,
+                modalType,
+            }}
+        >
             {children}
             <Modal isOpen={!!modalType} onRequestClose={closeModal}>
                 {getComponent()}

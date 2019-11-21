@@ -11,12 +11,24 @@ export interface SubNavigationItemProps {
 
 const SUBNAVIGATION_HEIGHT = '72px'
 
-const offset = -(pxToNumber(SUBNAVIGATION_HEIGHT) + pxToNumber(navigationHeight.SLIM))
+const offset = -(
+    pxToNumber(SUBNAVIGATION_HEIGHT) + pxToNumber(navigationHeight.SLIM)
+)
 
-const Item: React.FunctionComponent<SubNavigationItemProps> = ({children, id}) => (
+const Item: React.FunctionComponent<SubNavigationItemProps> = ({
+    children,
+    id,
+}) => (
     <>
         <li>
-            <Link activeClass="active" to={id} spy smooth duration={500} offset={offset}>
+            <Link
+                activeClass="active"
+                to={id}
+                spy
+                smooth
+                duration={500}
+                offset={offset}
+            >
                 {children}
             </Link>
         </li>
@@ -41,15 +53,15 @@ const Item: React.FunctionComponent<SubNavigationItemProps> = ({children, id}) =
             }
 
             li::after {
-                    content: '';
-                    position: absolute;
-                    width: 4px;
-                    height: 4px;
-                    border-radius: 50%;
-                    background-color: ${colors.DARK_GRAY};
-                    right: -${spaces.s24};
-                    top: calc(50% - 2px);
-                }
+                content: '';
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background-color: ${colors.DARK_GRAY};
+                right: -${spaces.s24};
+                top: calc(50% - 2px);
+            }
         `}</style>
     </>
 )

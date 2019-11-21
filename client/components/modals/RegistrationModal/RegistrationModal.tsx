@@ -18,25 +18,44 @@ const RegistrationModal = () => {
         cookie.persistAuthToken(token)
         setAuthenticated(true)
         closeModal()
-    } 
+    }
 
     return (
         <AuthModal
             onSuccess={handleSuccess}
-            form={<RegistrationForm onSuccess={handleSuccess}/>}
-            title={<FormattedMessage id="registration_title" defaultMessage="Don’t be shy! Sign up to share your scapestory." />}
-            subtitle={<FormattedMessage id="registration_subtitle" defaultMessage="Create account to get the full Scapestory experience." />}
-            footer={(
+            form={<RegistrationForm onSuccess={handleSuccess} />}
+            title={
+                <FormattedMessage
+                    id="registration_title"
+                    defaultMessage="Don’t be shy! Sign up to share your scapestory."
+                />
+            }
+            subtitle={
+                <FormattedMessage
+                    id="registration_subtitle"
+                    defaultMessage="Create account to get the full Scapestory experience."
+                />
+            }
+            footer={
                 <Paragraph as="span" color={colors.SHADE_DEEP}>
-                    <FormattedMessage id="registration_footer_not_member" defaultMessage="Already have an account?" />
-                    {' '}
+                    <FormattedMessage
+                        id="registration_footer_not_member"
+                        defaultMessage="Already have an account?"
+                    />{' '}
                     <a onClick={openLoginModal}>
-                        <Paragraph as="span" color={colors.PRIMARY} weight="bold">
-                            <FormattedMessage id="registration_footer_sign_up" defaultMessage="Login" />
+                        <Paragraph
+                            as="span"
+                            color={colors.PRIMARY}
+                            weight="bold"
+                        >
+                            <FormattedMessage
+                                id="registration_footer_sign_up"
+                                defaultMessage="Login"
+                            />
                         </Paragraph>
                     </a>
                 </Paragraph>
-            )}
+            }
         />
     )
 }

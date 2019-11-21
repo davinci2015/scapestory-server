@@ -8,10 +8,16 @@ interface ScrollPosition {
     y: number
 }
 
-const useScrollPosition = (): {position: ScrollPosition, handleScroll: () => void} => {
+const useScrollPosition = (): {
+    position: ScrollPosition
+    handleScroll: () => void
+} => {
     const [position, setPosition] = useState({x: 0, y: 0})
 
-    const handleScroll = throttle(() => setPosition({x: window.pageXOffset, y: window.pageYOffset}), throttleTime)
+    const handleScroll = throttle(
+        () => setPosition({x: window.pageXOffset, y: window.pageYOffset}),
+        throttleTime
+    )
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll)

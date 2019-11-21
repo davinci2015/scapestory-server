@@ -13,7 +13,7 @@ interface AuthContextInterface {
 export const AuthContext = React.createContext<AuthContextInterface>({
     isAuthenticated: false,
     user: null,
-    setAuthenticated: () => new Error('setAuthenticated is not implemented')
+    setAuthenticated: () => new Error('setAuthenticated is not implemented'),
 })
 
 interface Props {
@@ -21,9 +21,16 @@ interface Props {
     children: React.ReactNode
 }
 
-const AuthenticationProvider: React.FunctionComponent<Props>  = ({children, initialIsAuthenticated = false}) => {
-    const [isAuthenticated, changeIsAuthenticated] = useState(initialIsAuthenticated)
-    const {data, error, refetch} = useQuery(USER_PROFILE, { errorPolicy: 'ignore' })
+const AuthenticationProvider: React.FunctionComponent<Props> = ({
+    children,
+    initialIsAuthenticated = false,
+}) => {
+    const [isAuthenticated, changeIsAuthenticated] = useState(
+        initialIsAuthenticated
+    )
+    const {data, error, refetch} = useQuery(USER_PROFILE, {
+        errorPolicy: 'ignore',
+    })
     const user = data ? data.me : null
 
     if (error) {
@@ -36,11 +43,13 @@ const AuthenticationProvider: React.FunctionComponent<Props>  = ({children, init
     }
 
     return (
-        <AuthContext.Provider value={{
-            isAuthenticated,
-            setAuthenticated,
-            user
-        }}>
+        <AuthContext.Provider
+            value={{
+                isAuthenticated,
+                setAuthenticated,
+                user,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     )

@@ -5,15 +5,15 @@ import cx from 'classnames'
 export type ParagraphTypes = 't1' | 's1' | 's2' | 'body'
 
 interface Props {
-    as?: 'p' | 'span',
-    type?: ParagraphTypes,
-    color?: string,
+    as?: 'p' | 'span'
+    type?: ParagraphTypes
+    color?: string
     children: React.ReactNode | string
     weight?: 'regular' | 'bold' | 'semibold'
 }
 
 const classes = {
-    root: 'paragraph'
+    root: 'paragraph',
 }
 
 const Paragraph = ({
@@ -27,8 +27,7 @@ const Paragraph = ({
     const Component = as
 
     return (
-        <Component className={cx(classes.root, type, weight)} {...props}> 
-
+        <Component className={cx(classes.root, type, weight)} {...props}>
             {children}
 
             <style jsx>{`
@@ -38,7 +37,7 @@ const Paragraph = ({
                 }
 
                 .regular {
-                    font-weight: ${typography.fontWeight.regular}; 
+                    font-weight: ${typography.fontWeight.regular};
                 }
 
                 .semibold {
@@ -70,7 +69,6 @@ const Paragraph = ({
                 }
             `}</style>
         </Component>
-
     )
 }
 

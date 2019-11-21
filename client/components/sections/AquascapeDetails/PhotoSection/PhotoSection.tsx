@@ -12,20 +12,26 @@ const PostsSection: React.FunctionComponent<Props> = ({images}) => (
     <>
         <div className="section">
             <Headline as="h2" variant="h3">
-                <FormattedMessage id="aquascape.posts.title" defaultMessage="Photo posts" />
+                <FormattedMessage
+                    id="aquascape.posts.title"
+                    defaultMessage="Photo posts"
+                />
             </Headline>
-            {
-                !!images.length
-                    ?
-                    <PhotoGrid images={images.map((image) => ({
+            {!!images.length ? (
+                <PhotoGrid
+                    images={images.map(image => ({
                         src: image.url,
-                        alt: image.title
-                    }))} />
-                    :
-                    <Paragraph type="body" as="span">
-                        <FormattedMessage id="aquascape.posts.no_photos" defaultMessage="No photos uploaded" />
-                    </Paragraph>
-            }
+                        alt: image.title,
+                    }))}
+                />
+            ) : (
+                <Paragraph type="body" as="span">
+                    <FormattedMessage
+                        id="aquascape.posts.no_photos"
+                        defaultMessage="No photos uploaded"
+                    />
+                </Paragraph>
+            )}
         </div>
         <style jsx>{`
             .section {

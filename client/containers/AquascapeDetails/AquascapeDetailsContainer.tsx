@@ -4,7 +4,10 @@ import {useQuery, useMutation} from 'react-apollo'
 import {FormattedMessage} from 'react-intl'
 import {Element} from 'react-scroll'
 
-import {AQUASCAPE_DETAILS, AquascapeDetailsQuery} from 'containers/AquascapeDetails/query'
+import {
+    AQUASCAPE_DETAILS,
+    AquascapeDetailsQuery,
+} from 'containers/AquascapeDetails/query'
 import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
@@ -13,14 +16,17 @@ import {LIKE, DISLIKE, FOLLOW, UNFOLLOW, VISIT} from 'graphql/mutations'
 import {ModalContext} from 'providers/ModalProvider'
 import CommentsContainer from 'containers/AquascapeDetails/Comments'
 import {AuthContext} from 'providers/AuthenticationProvider'
-import {updateAquascapeDetailsCache, AquascapeDetailsActions} from 'containers/AquascapeDetails/cache'
+import {
+    updateAquascapeDetailsCache,
+    AquascapeDetailsActions,
+} from 'containers/AquascapeDetails/cache'
 import {
     HeroSection,
     FloraSection,
     EquipmentSection,
     UserAquascapesSection,
     PhotoSection,
-    OtherAquascapesSection
+    OtherAquascapesSection,
 } from 'components/sections/AquascapeDetails'
 import cookie from 'services/cookie'
 
@@ -28,7 +34,7 @@ const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
     FLORA: 'FLORA',
     EQUIPMENT: 'EQUIPMENT',
-    COMMENTS: 'COMMENTS'
+    COMMENTS: 'COMMENTS',
 }
 
 const AquascapeDetailsContainer: React.FunctionComponent = () => {
@@ -39,39 +45,49 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
 
     if (!aquascapeId) return null
 
-    const {
-        data: aquascapeResult,
-        error,
-        loading
-    } = useQuery<AquascapeDetailsQuery>(AQUASCAPE_DETAILS, {variables: {id: aquascapeId}})
+    const {data: aquascapeResult, error, loading} = useQuery<
+        AquascapeDetailsQuery
+    >(AQUASCAPE_DETAILS, {variables: {id: aquascapeId}})
 
     const [like] = useMutation(LIKE, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, {aquascapeId, isLiked: true})
+        update: updateAquascapeDetailsCache(
+            AquascapeDetailsActions.AQUASCAPE_LIKE,
+            {aquascapeId, isLiked: true}
+        ),
     })
 
     const [dislike] = useMutation(DISLIKE, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, {aquascapeId, isLiked: false})
+        update: updateAquascapeDetailsCache(
+            AquascapeDetailsActions.AQUASCAPE_LIKE,
+            {aquascapeId, isLiked: false}
+        ),
     })
 
     const [follow] = useMutation(FOLLOW, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW, {aquascapeId, isFollowed: true})
+        update: updateAquascapeDetailsCache(
+            AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW,
+            {aquascapeId, isFollowed: true}
+        ),
     })
 
     const [unfollow] = useMutation(UNFOLLOW, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW, {aquascapeId, isFollowed: false})
+        update: updateAquascapeDetailsCache(
+            AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW,
+            {aquascapeId, isFollowed: false}
+        ),
     })
 
     const [visit] = useMutation(VISIT, {variables: {aquascapeId}})
 
     useEffect(() => {
         const visitAquascape = async () => {
-            const { data } = await visit({variables: {aquascapeId}})
+            const {data} = await visit({variables: {aquascapeId}})
 
             if (data.visitAquascape && !cookie.getVisitorId()) {
                 cookie.persistVisitorId(data.visitAquascape.visitor.visitorId)
             }
         }
-        
+
         visitAquascape()
     }, [aquascapeId])
 
@@ -84,12 +100,14 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
             return openModal('login')
         }
 
-        const mutateLike = aquascapeResult.aquascape.isLikedByMe ? dislike : like
+        const mutateLike = aquascapeResult.aquascape.isLikedByMe
+            ? dislike
+            : like
         mutateLike({
             variables: {
                 entity: LikeEntityType.Aquascape,
-                entityId: aquascapeResult.aquascape.id
-            }
+                entityId: aquascapeResult.aquascape.id,
+            },
         })
     }
 
@@ -102,7 +120,9 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
             return openModal('login')
         }
 
-        const mutateFollow = aquascapeResult.aquascape.user.isFollowedByMe ? unfollow : follow
+        const mutateFollow = aquascapeResult.aquascape.user.isFollowedByMe
+            ? unfollow
+            : follow
         mutateFollow({variables: {userId: aquascapeResult.aquascape.user.id}})
     }
 
@@ -130,16 +150,28 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
             />
             <SubNavigation>
                 <SubNavigation.Item id={sections.PHOTO_POSTS}>
-                    <FormattedMessage id="aquascape.subnavigation.photo" defaultMessage="Photo Posts" />
+                    <FormattedMessage
+                        id="aquascape.subnavigation.photo"
+                        defaultMessage="Photo Posts"
+                    />
                 </SubNavigation.Item>
                 <SubNavigation.Item id={sections.FLORA}>
-                    <FormattedMessage id="aquascape.subnavigation.flora" defaultMessage="Flora & Fauna" />
+                    <FormattedMessage
+                        id="aquascape.subnavigation.flora"
+                        defaultMessage="Flora & Fauna"
+                    />
                 </SubNavigation.Item>
                 <SubNavigation.Item id={sections.EQUIPMENT}>
-                    <FormattedMessage id="aquascape.subnavigation.equipment" defaultMessage="Equipment" />
+                    <FormattedMessage
+                        id="aquascape.subnavigation.equipment"
+                        defaultMessage="Equipment"
+                    />
                 </SubNavigation.Item>
                 <SubNavigation.Item id={sections.COMMENTS}>
-                    <FormattedMessage id="aquascape.subnavigation.comments" defaultMessage="Comments" />
+                    <FormattedMessage
+                        id="aquascape.subnavigation.comments"
+                        defaultMessage="Comments"
+                    />
                 </SubNavigation.Item>
             </SubNavigation>
             <Grid>
@@ -165,26 +197,38 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                     />
                 </Element>
                 <Divider />
-                {
-                    aquascapeResult.aquascape.user.aquascapes && aquascapeResult.aquascape.user.aquascapes.length > 1 &&
-                    <>
-                        <UserAquascapesSection
-                            aquascapes={aquascapeResult.aquascape.user.aquascapes.filter((scape) => scape.id !== aquascapeResult.aquascape.id)}
-                            username={aquascapeResult.aquascape.user.name || aquascapeResult.aquascape.user.username}
-                        />
-                        <Divider />
-                    </>
-                }
+                {aquascapeResult.aquascape.user.aquascapes &&
+                    aquascapeResult.aquascape.user.aquascapes.length > 1 && (
+                        <>
+                            <UserAquascapesSection
+                                aquascapes={aquascapeResult.aquascape.user.aquascapes.filter(
+                                    scape =>
+                                        scape.id !==
+                                        aquascapeResult.aquascape.id
+                                )}
+                                username={
+                                    aquascapeResult.aquascape.user.name ||
+                                    aquascapeResult.aquascape.user.username
+                                }
+                            />
+                            <Divider />
+                        </>
+                    )}
                 <Element name={sections.COMMENTS}>
-                    <CommentsContainer aquascapeId={aquascapeId} comments={aquascapeResult.aquascape.comments} />
+                    <CommentsContainer
+                        aquascapeId={aquascapeId}
+                        comments={aquascapeResult.aquascape.comments}
+                    />
                 </Element>
-                {
-                    aquascapeResult.aquascapes && Boolean(aquascapeResult.aquascapes.length) &&
-                    <>
-                        <Divider />
-                        <OtherAquascapesSection aquascapes={aquascapeResult.aquascapes} />
-                    </>
-                }
+                {aquascapeResult.aquascapes &&
+                    Boolean(aquascapeResult.aquascapes.length) && (
+                        <>
+                            <Divider />
+                            <OtherAquascapesSection
+                                aquascapes={aquascapeResult.aquascapes}
+                            />
+                        </>
+                    )}
             </Grid>
         </Content>
     )

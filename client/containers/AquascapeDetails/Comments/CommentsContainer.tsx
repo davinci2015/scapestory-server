@@ -6,16 +6,25 @@ import {LIKE, DISLIKE} from 'graphql/mutations'
 import {LikeEntityType, CommentEntityType} from 'generated/graphql'
 import {ModalContext} from 'providers/ModalProvider'
 import {AuthContext} from 'providers/AuthenticationProvider'
-import {ADD_COMMENT, REMOVE_COMMENT} from 'containers/AquascapeDetails/Comments/mutations'
+import {
+    ADD_COMMENT,
+    REMOVE_COMMENT,
+} from 'containers/AquascapeDetails/Comments/mutations'
 import {AquascapeComment} from 'containers/AquascapeDetails/query'
-import {updateAquascapeDetailsCache, AquascapeDetailsActions} from 'containers/AquascapeDetails/cache'
+import {
+    updateAquascapeDetailsCache,
+    AquascapeDetailsActions,
+} from 'containers/AquascapeDetails/cache'
 
 interface Props {
-    aquascapeId: number,
+    aquascapeId: number
     comments: AquascapeComment[]
 }
 
-const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comments}) => {
+const CommentsContainer: React.FunctionComponent<Props> = ({
+    aquascapeId,
+    comments,
+}) => {
     const [comment, updateComment] = useState<string | null>(null)
     const {isAuthenticated, user} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
@@ -26,19 +35,31 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
     }
 
     const [like] = useMutation(LIKE, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE_COMMENT, { aquascapeId }) 
+        update: updateAquascapeDetailsCache(
+            AquascapeDetailsActions.AQUASCAPE_LIKE_COMMENT,
+            {aquascapeId}
+        ),
     })
-    
+
     const [dislike] = useMutation(DISLIKE, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_DISLIKE_COMMENT, { aquascapeId }) 
+        update: updateAquascapeDetailsCache(
+            AquascapeDetailsActions.AQUASCAPE_DISLIKE_COMMENT,
+            {aquascapeId}
+        ),
     })
 
     const [addComment] = useMutation(ADD_COMMENT, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_ADD_COMMENT, { aquascapeId, user }) 
+        update: updateAquascapeDetailsCache(
+            AquascapeDetailsActions.AQUASCAPE_ADD_COMMENT,
+            {aquascapeId, user}
+        ),
     })
 
     const [removeComment] = useMutation(REMOVE_COMMENT, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_REMOVE_COMMENT, { aquascapeId }) 
+        update: updateAquascapeDetailsCache(
+            AquascapeDetailsActions.AQUASCAPE_REMOVE_COMMENT,
+            {aquascapeId}
+        ),
     })
 
     const onSubmit = () => {
@@ -50,21 +71,29 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
             variables: {
                 entity: CommentEntityType.Aquascape,
                 entityId: aquascapeId,
-                content: comment
-            }
+                content: comment,
+            },
         })
     }
 
-    const toggleLike = useCallback((comment: AquascapeComment) => {
-        if (!isAuthenticated || !user) {
-            return openModal('login')
-        }
+    const toggleLike = useCallback(
+        (comment: AquascapeComment) => {
+            if (!isAuthenticated || !user) {
+                return openModal('login')
+            }
 
-        const alreadyLiked = comment.likes.some((like) => like.userId === user.id)
-        const variables = {entity: LikeEntityType.Comment, entityId: comment.id}
+            const alreadyLiked = comment.likes.some(
+                like => like.userId === user.id
+            )
+            const variables = {
+                entity: LikeEntityType.Comment,
+                entityId: comment.id,
+            }
 
-        alreadyLiked ? dislike({variables}) : like({variables})
-    }, [isAuthenticated])
+            alreadyLiked ? dislike({variables}) : like({variables})
+        },
+        [isAuthenticated]
+    )
 
     const handleRemoveComment = useCallback((comment: AquascapeComment) => {
         removeComment({variables: {id: comment.id}})

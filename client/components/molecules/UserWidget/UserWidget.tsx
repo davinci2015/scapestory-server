@@ -16,22 +16,24 @@ interface Props {
 }
 
 const classNames = {
-    root: 'user-widget'
+    root: 'user-widget',
 }
 
 const UserWidget = ({
     image,
     size = 'default',
     variant = 'default',
-    text
+    text,
 }: Props) => (
-    <div className={classnames(classNames.root, {
-        large: size === 'large'
-    })}>
-        <UserImage variant={variant} size={size} image={image}/>
+    <div
+        className={classnames(classNames.root, {
+            large: size === 'large',
+        })}
+    >
+        <UserImage variant={variant} size={size} image={image} />
 
         {text}
-        
+
         <style jsx>{`
             .user-widget {
                 display: flex;

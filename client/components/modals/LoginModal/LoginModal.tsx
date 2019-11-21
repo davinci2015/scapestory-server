@@ -18,25 +18,44 @@ const LoginModal = () => {
         cookie.persistAuthToken(token)
         setAuthenticated(true)
         closeModal()
-    } 
+    }
 
     return (
         <AuthModal
             onSuccess={handleSuccess}
-            form={<LoginForm onSuccess={handleSuccess}/>}
-            title={<FormattedMessage id="login_title" defaultMessage="Welcome back! Your scapestory is waiting." />}
-            subtitle={<FormattedMessage id="login_subtitle" defaultMessage="Login and continue exploring aquascapes." />}
-            footer={(
+            form={<LoginForm onSuccess={handleSuccess} />}
+            title={
+                <FormattedMessage
+                    id="login_title"
+                    defaultMessage="Welcome back! Your scapestory is waiting."
+                />
+            }
+            subtitle={
+                <FormattedMessage
+                    id="login_subtitle"
+                    defaultMessage="Login and continue exploring aquascapes."
+                />
+            }
+            footer={
                 <Paragraph as="span" color={colors.SHADE_DEEP}>
-                    <FormattedMessage id="login_footer_not_member" defaultMessage="Not a member yet?" />
-                    {' '}
+                    <FormattedMessage
+                        id="login_footer_not_member"
+                        defaultMessage="Not a member yet?"
+                    />{' '}
                     <a onClick={openRegistrationModal}>
-                        <Paragraph as="span" color={colors.PRIMARY} weight="bold">
-                            <FormattedMessage id="login_footer_sign_up" defaultMessage="Sign up" />
+                        <Paragraph
+                            as="span"
+                            color={colors.PRIMARY}
+                            weight="bold"
+                        >
+                            <FormattedMessage
+                                id="login_footer_sign_up"
+                                defaultMessage="Sign up"
+                            />
                         </Paragraph>
                     </a>
                 </Paragraph>
-            )}
+            }
         />
     )
 }

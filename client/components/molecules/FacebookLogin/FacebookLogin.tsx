@@ -1,7 +1,10 @@
 import gql from 'graphql-tag'
 import React from 'react'
 import {Mutation, MutationResult} from 'react-apollo'
-import {ReactFacebookFailureResponse, ReactFacebookLoginInfo} from 'react-facebook-login'
+import {
+    ReactFacebookFailureResponse,
+    ReactFacebookLoginInfo,
+} from 'react-facebook-login'
 import config from 'config'
 import logger from 'services/logger'
 // @ts-ignore
@@ -35,20 +38,23 @@ interface Data {
 }
 
 const Login = ({children, onSuccess}: Props) => {
-    const responseFacebook = (login: (props: { variables: Variables }) => Promise<void | MutationResult<Data>>) =>
-        async (response: ReactFacebookLoginInfo) => {
-            const res = await login({variables: {token: response.accessToken}})
-            if (res && res.data) {
-                onSuccess(res.data.fbRegister.token)
-            }
+    const responseFacebook = (
+        login: (props: {
+            variables: Variables
+        }) => Promise<void | MutationResult<Data>>
+    ) => async (response: ReactFacebookLoginInfo) => {
+        const res = await login({variables: {token: response.accessToken}})
+        if (res && res.data) {
+            onSuccess(res.data.fbRegister.token)
         }
+    }
 
     const onFailure = (response: ReactFacebookFailureResponse) =>
         logger.warn(`Failed to login with FB with status ${response.status}`)
 
     return (
         <Mutation<Data, Variables> mutation={LOGIN}>
-            {(login) => (
+            {login => (
                 <FacebookLogin
                     appId={config.FACEBOOK_APP_ID}
                     // @ts-ignore

@@ -10,7 +10,7 @@ const TopSection: React.FunctionComponent = ({children}) => (
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                width: 100%;            
+                width: 100%;
 
                 z-index: ${zIndex.DEFAULT};
             }
@@ -22,8 +22,4 @@ const TopLeft: React.FunctionComponent = ({children}) => <div>{children}</div>
 
 const TopRight: React.FunctionComponent = ({children}) => <div>{children}</div>
 
-export {
-    TopSection,
-    TopLeft,
-    TopRight
-}
+export {TopSection, TopLeft, TopRight}

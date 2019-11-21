@@ -2,16 +2,26 @@ import React, {useState} from 'react'
 import {useMutation, useLazyQuery} from '@apollo/react-hooks'
 import {MessageDescriptor, useIntl} from 'react-intl'
 
-import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
+import {
+    Paragraph,
+    Button,
+    Input,
+    PasswordInput,
+    FormattedMessage,
+} from 'components/atoms'
 
 import validator from 'services/validator'
 import {spaces} from 'styles'
-import {LOGIN_MUTATION, LoginResult, LoginVariables} from 'components/modals/LoginModal/LoginForm/mutations'
+import {
+    LOGIN_MUTATION,
+    LoginResult,
+    LoginVariables,
+} from 'components/modals/LoginModal/LoginForm/mutations'
 import {USER_PROFILE} from 'graphql/queries'
 
 const inputKeys = {
     email: 'email',
-    password: 'password'
+    password: 'password',
 }
 
 interface Props {
@@ -25,17 +35,19 @@ const LoginForm = ({onSuccess}: Props) => {
 
     const [errors, setError] = useState({
         [inputKeys.email]: true,
-        [inputKeys.password]: true
+        [inputKeys.password]: true,
     })
 
-    const [errorMessages, setErrorMessage] = useState<{[key: string]: MessageDescriptor | null}>({
+    const [errorMessages, setErrorMessage] = useState<{
+        [key: string]: MessageDescriptor | null
+    }>({
         [inputKeys.email]: null,
-        [inputKeys.password]: null
+        [inputKeys.password]: null,
     })
 
     const [dirty, setDirty] = useState({
         [inputKeys.email]: false,
-        [inputKeys.password]: false
+        [inputKeys.password]: false,
     })
 
     const [email, setEmail] = useState('')
@@ -54,10 +66,11 @@ const LoginForm = ({onSuccess}: Props) => {
 
         if (validator.isEmpty(email)) {
             setErrorMessage({
-                ...errorMessages, [inputKeys.email]: {
+                ...errorMessages,
+                [inputKeys.email]: {
                     id: 'general_error_empty_email',
-                    defaultMessage: 'Please enter your email'
-                }
+                    defaultMessage: 'Please enter your email',
+                },
             })
 
             return setError({...errors, [inputKeys.email]: true})
@@ -65,10 +78,11 @@ const LoginForm = ({onSuccess}: Props) => {
 
         if (!validator.isEmailValid(email)) {
             setErrorMessage({
-                ...errorMessages, [inputKeys.email]: {
+                ...errorMessages,
+                [inputKeys.email]: {
                     id: 'general_error_invalid_email',
-                    defaultMessage: 'Please enter valid email'
-                }
+                    defaultMessage: 'Please enter valid email',
+                },
             })
 
             return setError({...errors, [inputKeys.email]: true})
@@ -82,10 +96,11 @@ const LoginForm = ({onSuccess}: Props) => {
 
         if (validator.isEmpty(password)) {
             setErrorMessage({
-                ...errorMessages, [inputKeys.password]: {
+                ...errorMessages,
+                [inputKeys.password]: {
                     id: 'general_error_empty_password',
-                    defaultMessage: 'Please enter your password'
-                }
+                    defaultMessage: 'Please enter your password',
+                },
             })
             return setError({...errors, [inputKeys.password]: true})
         }
@@ -98,8 +113,14 @@ const LoginForm = ({onSuccess}: Props) => {
         return message ? <FormattedMessage {...message} /> : null
     }
 
-    const emailLabel = intl.formatMessage({id: 'login_input_label_email', defaultMessage: 'Email'})
-    const passwordLabel = intl.formatMessage({id: 'login_input_label_password', defaultMessage: 'Password'})
+    const emailLabel = intl.formatMessage({
+        id: 'login_input_label_email',
+        defaultMessage: 'Email',
+    })
+    const passwordLabel = intl.formatMessage({
+        id: 'login_input_label_password',
+        defaultMessage: 'Password',
+    })
 
     return (
         <>
@@ -112,8 +133,12 @@ const LoginForm = ({onSuccess}: Props) => {
                     value={email}
                     error={dirty[inputKeys.email] && errors[inputKeys.email]}
                     errorMessage={getErrorMessage(inputKeys.email)}
-                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validateEmail(e.target.value)}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        validateEmail(e.target.value)
+                    }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setEmail(e.target.value)
+                    }
                 />
 
                 <PasswordInput
@@ -122,16 +147,25 @@ const LoginForm = ({onSuccess}: Props) => {
                     label={passwordLabel}
                     autoComplete="current-password"
                     value={password}
-                    error={dirty[inputKeys.password] && errors[inputKeys.password]}
+                    error={
+                        dirty[inputKeys.password] && errors[inputKeys.password]
+                    }
                     errorMessage={getErrorMessage(inputKeys.password)}
-                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) => validatePassword(e.target.value)}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        validatePassword(e.target.value)
+                    }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setPassword(e.target.value)
+                    }
                 />
 
                 <div className="login-button">
                     <Button onClick={onSubmit} type="block">
                         <Paragraph as="span" weight="bold" color="light">
-                            <FormattedMessage id="login_submit_button" defaultMessage="Login" />
+                            <FormattedMessage
+                                id="login_submit_button"
+                                defaultMessage="Login"
+                            />
                         </Paragraph>
                     </Button>
                 </div>

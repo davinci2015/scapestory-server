@@ -5,10 +5,8 @@ import {Footer} from 'components/sections/shared'
 
 const FooterContainer = () => {
     const {openModal} = useContext(ModalContext)
-    
-    return (
-        <Footer openModal={openModal}/>
-    )
+
+    return <Footer openModal={openModal} />
 }
 
 export default FooterContainer

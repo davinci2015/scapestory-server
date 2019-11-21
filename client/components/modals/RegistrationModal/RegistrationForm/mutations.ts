@@ -7,7 +7,7 @@ export interface RegisterResult {
 }
 
 export interface RegisterVariables {
-    email: string,
+    email: string
     password: string
 }
 

@@ -14,7 +14,7 @@ interface Props extends React.HTMLProps<HTMLButtonElement> {
 }
 
 const classes = {
-    root: 'button'
+    root: 'button',
 }
 
 const Button = ({
@@ -26,113 +26,113 @@ const Button = ({
     leftIcon,
     ...rest
 }: Props) => (
-        <button
-            // @ts-ignore
-            type="button"
-            className={cx(classes.root, {
-                outlined: variant === 'outlined',
-                primary: color === 'primary',
-                secondary: color === 'secondary',
-                tertiary: color === 'tertiary',
-                small: dimensions === 'small',
-                extraSmall: dimensions === 'extraSmall',
-                block: type === 'block'
-            })}
-            {...rest}>
+    <button
+        // @ts-ignore
+        type="button"
+        className={cx(classes.root, {
+            outlined: variant === 'outlined',
+            primary: color === 'primary',
+            secondary: color === 'secondary',
+            tertiary: color === 'tertiary',
+            small: dimensions === 'small',
+            extraSmall: dimensions === 'extraSmall',
+            block: type === 'block',
+        })}
+        {...rest}
+    >
+        {leftIcon}
 
-            {leftIcon}
+        {children}
 
-            {children}
+        <style jsx>{`
+            .button {
+                box-sizing: border-box;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                white-space: nowrap;
 
-            <style jsx>{`
-                .button {
-                    box-sizing: border-box;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    white-space: nowrap;
-                    
-                    padding: 0 ${spaces.s24};
-                    min-height: 60px;
+                padding: 0 ${spaces.s24};
+                min-height: 60px;
 
-                    font-weight: ${typography.fontWeight.extraBold};
-                    font-size: ${typography.fontSize.fs20};
+                font-weight: ${typography.fontWeight.extraBold};
+                font-size: ${typography.fontSize.fs20};
 
-                    outline: 0;
-                    border: 0;
-                    border-radius: ${borderRadius.SECONDARY};
-                    cursor: pointer;
-                    transition: all 120ms ease-in-out;
+                outline: 0;
+                border: 0;
+                border-radius: ${borderRadius.SECONDARY};
+                cursor: pointer;
+                transition: all 120ms ease-in-out;
 
-                    ${leftIcon && `
+                ${leftIcon &&
+                    `
                         padding-left: ${spaces.s18};
                     `}
-                }
+            }
 
-                button :global(svg),
-                button :global(img) {
-                    margin-right: ${spaces.s12};
-                    width: ${spaces.s24};
-                    height: ${spaces.s24};
-                }
+            button :global(svg),
+            button :global(img) {
+                margin-right: ${spaces.s12};
+                width: ${spaces.s24};
+                height: ${spaces.s24};
+            }
 
-                button:disabled {
-                    pointer-events: none;
-                    opacity: 0.4;
-                }
+            button:disabled {
+                pointer-events: none;
+                opacity: 0.4;
+            }
 
-                .primary {
-                    color: ${colors.WHITE};
-                    background-color: ${colors.PRIMARY};
-                }
+            .primary {
+                color: ${colors.WHITE};
+                background-color: ${colors.PRIMARY};
+            }
 
-                .primary:hover {
-                    background-color: ${colors.PRIMARY_DARK};
-                }
+            .primary:hover {
+                background-color: ${colors.PRIMARY_DARK};
+            }
 
-                .secondary {
-                    color: ${colors.BLACK};
-                    background-color: ${colors.WHITE};
-                    border: 2px solid ${colors.SHADE_LIGHT}
-                }
+            .secondary {
+                color: ${colors.BLACK};
+                background-color: ${colors.WHITE};
+                border: 2px solid ${colors.SHADE_LIGHT};
+            }
 
-                .tertiary {
-                    color: ${colors.WHITE};
-                    background-color: rgba(0, 0, 0, .3);
-                }
+            .tertiary {
+                color: ${colors.WHITE};
+                background-color: rgba(0, 0, 0, 0.3);
+            }
 
-                .tertiary:hover {
-                    background-color: rgba(0, 0, 0, .5);
-                }
+            .tertiary:hover {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
 
-                .outlined {
-                    color: ${colors.PRIMARY};
-                    background-color: transparent;
-                    border: 2px solid ${colors.PRIMARY};
-                }
+            .outlined {
+                color: ${colors.PRIMARY};
+                background-color: transparent;
+                border: 2px solid ${colors.PRIMARY};
+            }
 
-                .outlined:hover {
-                    background-color: transparent;
-                }
+            .outlined:hover {
+                background-color: transparent;
+            }
 
-                .small {
-                    min-height: 48px;
-                    font-size: ${typography.fontSize.fs16};
-                }
+            .small {
+                min-height: 48px;
+                font-size: ${typography.fontSize.fs16};
+            }
 
-                .extraSmall {
-                    min-height: 36px;
-                    font-size: ${typography.fontSize.fs13};
-                    font-weight: ${typography.fontWeight.semibold};
-                }
+            .extraSmall {
+                min-height: 36px;
+                font-size: ${typography.fontSize.fs13};
+                font-weight: ${typography.fontWeight.semibold};
+            }
 
-                .block {
-                    width: 100%;
-                }
-            
-            `}</style>
-        </button>
-    )
+            .block {
+                width: 100%;
+            }
+        `}</style>
+    </button>
+)
 
 Button.classes = classes
 

@@ -1,7 +1,10 @@
 import React from 'react'
 
 import {colors, boxShadow, zIndex} from 'styles'
-import {SubNavigationItemProps, Item} from 'components/molecules/SubNavigation/Item'
+import {
+    SubNavigationItemProps,
+    Item,
+} from 'components/molecules/SubNavigation/Item'
 import {navigationHeight} from 'components/molecules/Navigation'
 import {Grid} from 'components/core'
 
@@ -14,9 +17,7 @@ const SubNavigation: SubNavigationInterface = ({children}) => (
         <div className="subnav">
             <div className="wrapper">
                 <Grid>
-                    <ul>
-                        {children}
-                    </ul>
+                    <ul>{children}</ul>
                 </Grid>
             </div>
         </div>
@@ -38,7 +39,7 @@ const SubNavigation: SubNavigationInterface = ({children}) => (
             .subnav .wrapper {
                 width: 100%;
             }
-            
+
             .subnav ul {
                 width: 100%;
                 list-style: none;
@@ -57,7 +58,6 @@ const SubNavigation: SubNavigationInterface = ({children}) => (
         `}</style>
     </>
 )
-
 
 SubNavigation.Item = Item
 

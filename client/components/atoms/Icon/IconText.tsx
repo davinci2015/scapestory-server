@@ -9,24 +9,18 @@ interface Props {
 }
 
 const classes = {
-    root: 'icon-text'
+    root: 'icon-text',
 }
 
 const iconSizeMapping = {
     default: 20,
-    small: 14
+    small: 14,
 }
 
-const IconText = ({
-    icon,
-    text,
-    color,
-    size = 'default'
-}: Props) => (
-        <div className={classes.root}>
-
-            <Icon d={icon} color={color} size={iconSizeMapping[size]}/>
-            <p className="paragraph">{text}</p>
+const IconText = ({icon, text, color, size = 'default'}: Props) => (
+    <div className={classes.root}>
+        <Icon d={icon} color={color} size={iconSizeMapping[size]} />
+        <p className="paragraph">{text}</p>
 
         <style jsx>{`
             .icon-text {
@@ -54,8 +48,8 @@ const IconText = ({
                 `)}
             }
         `}</style>
-        </div>
-    )
+    </div>
+)
 
 IconText.classes = classes
 

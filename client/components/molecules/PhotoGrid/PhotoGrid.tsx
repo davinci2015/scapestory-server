@@ -10,45 +10,56 @@ interface Props {
     images: Image[]
 }
 
-const GUTTER = spaces.s16;
+const GUTTER = spaces.s16
 const ALT_PLACEHOLDER = 'Scapostory post'
 
-// No time for masonry 
+// No time for masonry
 const PhotoSection: React.FunctionComponent<Props> = ({images}) => (
     <>
         <div className="photo-grid">
             <div className="row">
-                {
-                    images[0] &&
+                {images[0] && (
                     <div className="image image--main">
-                        <img src={images[0].src} alt={images[0].alt || ALT_PLACEHOLDER} />
+                        <img
+                            src={images[0].src}
+                            alt={images[0].alt || ALT_PLACEHOLDER}
+                        />
                     </div>
-                }
-                {
-                    images[1] &&
+                )}
+                {images[1] && (
                     <div className="image image--half">
-                        <img src={images[1].src} alt={images[1].alt || ALT_PLACEHOLDER} />
+                        <img
+                            src={images[1].src}
+                            alt={images[1].alt || ALT_PLACEHOLDER}
+                        />
                     </div>
-                }
+                )}
                 <div className="column">
-                    {
-                        images[2] &&
+                    {images[2] && (
                         <div className="image">
-                            <img src={images[2].src} alt={images[2].alt || ALT_PLACEHOLDER} />
+                            <img
+                                src={images[2].src}
+                                alt={images[2].alt || ALT_PLACEHOLDER}
+                            />
                         </div>
-                    }
-                    {
-                        images[3] &&
+                    )}
+                    {images[3] && (
                         <div className="image">
-                            <img src={images[3].src} alt={images[3].alt || ALT_PLACEHOLDER} />
+                            <img
+                                src={images[3].src}
+                                alt={images[3].alt || ALT_PLACEHOLDER}
+                            />
                         </div>
-                    }
+                    )}
                 </div>
             </div>
             <div className="row">
-                {images.slice(4, -1).map((image) => (
+                {images.slice(4, -1).map(image => (
                     <div className="image">
-                        <img src={image.src} alt={image.alt || ALT_PLACEHOLDER} />
+                        <img
+                            src={image.src}
+                            alt={image.alt || ALT_PLACEHOLDER}
+                        />
                     </div>
                 ))}
             </div>

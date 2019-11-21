@@ -13,14 +13,18 @@ const withAuth = <P extends Object>(WrappedComponent: NextComponentType) =>
         static async getInitialProps(ctx: NextPageContext) {
             const headers = ctx.req && ctx.req.headers
             const token = cookie.getAuthToken(headers)
-            const pageProps = WrappedComponent.getInitialProps && await WrappedComponent.getInitialProps(ctx)
-            
-            return { ...pageProps, isAuthenticated: !!token } 
+            const pageProps =
+                WrappedComponent.getInitialProps &&
+                (await WrappedComponent.getInitialProps(ctx))
+
+            return {...pageProps, isAuthenticated: !!token}
         }
-        
+
         render() {
             return (
-                <AuthenticationProvider initialIsAuthenticated={this.props.isAuthenticated}>
+                <AuthenticationProvider
+                    initialIsAuthenticated={this.props.isAuthenticated}
+                >
                     <WrappedComponent {...this.props} />
                 </AuthenticationProvider>
             )

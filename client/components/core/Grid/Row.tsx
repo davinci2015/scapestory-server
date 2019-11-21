@@ -3,9 +3,7 @@ import {GUTTER} from 'components/core/Grid'
 
 const Row: React.FunctionComponent = ({children}) => (
     <>
-        <div className="row">
-            {children}
-        </div>
+        <div className="row">{children}</div>
         <style jsx>{`
             .row {
                 display: flex;

@@ -8,10 +8,7 @@ interface Props extends ReactModal.Props {
     children: React.ReactNode
 }
 
-const CustomModal = ({
-    children,
-    ...rest
-}: Props) => {
+const CustomModal = ({children, ...rest}: Props) => {
     useEffect(() => {
         Modal.setAppElement('#__next')
     }, [])
@@ -19,9 +16,7 @@ const CustomModal = ({
     return (
         <>
             <Modal className="modal" overlayClassName="modal-overlay" {...rest}>
-                <ScrollLock>
-                    {children}
-                </ScrollLock>
+                <ScrollLock>{children}</ScrollLock>
             </Modal>
 
             <style jsx>{`
@@ -46,7 +41,7 @@ const CustomModal = ({
                         top: 40px;
                         bottom: 40px;
                         left: 50%;
-                        
+
                         border-radius: 16px;
                         border: 1px solid ${colors.SHADE_LIGHT};
                         transform: translateX(-50%);
@@ -59,7 +54,7 @@ const CustomModal = ({
                     left: 0px;
                     right: 0px;
                     bottom: 0px;
-                    background-color: rgba(0, 0, 0, .7);
+                    background-color: rgba(0, 0, 0, 0.7);
                     z-index: ${zIndex.HIGHEST};
                 }
             `}</style>
