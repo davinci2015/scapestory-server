@@ -4,7 +4,7 @@ import {Context} from 'apollo-server-core'
 import headers from 'constants/headers'
 import {AuthHelper, JWTTokenPayload} from 'utils/AuthHelper'
 import {SessionInterface} from 'interfaces'
-import {Injector} from '@graphql-modules/di';
+import {Injector} from '@graphql-modules/di'
 
 export type AuthenticationContext = {
     currentUserId: number

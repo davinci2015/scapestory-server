@@ -4,7 +4,7 @@ import * as Bluebird from 'bluebird'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Comment} from 'db/models/Comment'
 import {Includeable} from 'sequelize/types'
-import {UserInputError} from 'apollo-server';
+import {UserInputError} from 'apollo-server'
 
 export enum CommentEntityType {
     AQUASCAPE = 'AQUASCAPE',

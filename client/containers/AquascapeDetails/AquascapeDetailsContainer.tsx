@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {useQuery, useMutation} from 'react-apollo'
 import {FormattedMessage} from 'react-intl'
@@ -9,7 +9,7 @@ import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
 import {LikeEntityType} from 'generated/graphql'
-import {LIKE, DISLIKE, FOLLOW, UNFOLLOW} from 'graphql/mutations'
+import {LIKE, DISLIKE, FOLLOW, UNFOLLOW, VISIT} from 'graphql/mutations'
 import {ModalContext} from 'providers/ModalProvider'
 import CommentsContainer from 'containers/AquascapeDetails/Comments'
 import {AuthContext} from 'providers/AuthenticationProvider'
@@ -22,6 +22,7 @@ import {
     PhotoSection,
     OtherAquascapesSection
 } from 'components/sections/AquascapeDetails'
+import cookie from 'services/cookie'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -35,6 +36,8 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
     const {isAuthenticated} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
     const aquascapeId = Number(router.query.id)
+
+    if (!aquascapeId) return null
 
     const {
         data: aquascapeResult,
@@ -57,6 +60,21 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
     const [unfollow] = useMutation(UNFOLLOW, {
         update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW, {aquascapeId, isFollowed: false})
     })
+
+    const [visit] = useMutation(VISIT, {variables: {aquascapeId}})
+
+    useEffect(() => {
+        const visitAquascape = async () => {
+            const { data } = await visit({variables: {aquascapeId}})
+
+            if (data.visitAquascape && !cookie.getVisitorId()) {
+                console.log(data.visitAquascape)
+                cookie.persistVisitorId(data.visitAquascape.visitor.visitorId)
+            }
+        }
+        
+        visitAquascape()
+    }, [aquascapeId])
 
     const toggleLike = () => {
         if (!aquascapeResult || !aquascapeResult.aquascape) {

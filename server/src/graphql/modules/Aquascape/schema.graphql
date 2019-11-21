@@ -8,11 +8,6 @@ type CO2 {
     bps: Int
 }
 
-type Visitor {
-    id: Int!
-    visitorId: String! 
-}
-
 type Like {
     id: Int!
     user: User!

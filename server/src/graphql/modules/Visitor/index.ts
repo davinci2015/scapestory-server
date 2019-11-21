@@ -1,12 +1,13 @@
 import {GraphQLModule} from '@graphql-modules/core'
 
-import {resolvers, resolversComposition} from 'graphql/modules/User/resolvers'
-import {VisitorProvider} from 'graphql/modules/Visitor/VisitorProvider'
 import {VisitorRepository} from 'db/repositories/Visitor'
 
-import {composeContext, attachCurrentUserId} from 'graphql/context'
-import * as typeDefs from 'graphql/modules/User/schema.graphql'
+import {composeContext, attachSession} from 'graphql/context'
 import {tokens} from 'di/tokens'
+
+import {resolvers, resolversComposition} from './resolvers'
+import {VisitorProvider} from './VisitorProvider'
+import * as typeDefs from './schema.graphql'
 
 // @ts-ignore
 export const VisitorModule = new GraphQLModule({
@@ -18,6 +19,6 @@ export const VisitorModule = new GraphQLModule({
     resolvers,
     resolversComposition,
     context: composeContext([
-        attachCurrentUserId
+        attachSession
     ])
 })

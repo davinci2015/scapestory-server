@@ -1,3 +1,16 @@
+type Visitor {
+    id: Int!
+    visitorId: String! 
+    aquascapeId: Int!
+}
+
+
+type VisitAquascapeResult {
+    visitor: Visitor!
+    created: Boolean
+}
+
+
 type Mutation {
-    visitAquascape(aquascapeId: Int!): Number! | String!
+    visitAquascape(aquascapeId: Int!): VisitAquascapeResult!
 }

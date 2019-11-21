@@ -5,7 +5,7 @@ import {Paragraph, FormattedMessage} from 'components/atoms'
 
 import {colors} from 'styles'
 import {ModalContext} from 'providers/ModalProvider'
-import auth from 'services/auth'
+import cookie from 'services/cookie'
 import {AuthContext} from 'providers/AuthenticationProvider'
 
 const LoginModal = () => {
@@ -15,7 +15,7 @@ const LoginModal = () => {
     const openRegistrationModal = () => openModal('register')
 
     const handleSuccess = (token: string) => {
-        auth.persistToken(token)
+        cookie.persistAuthToken(token)
         setAuthenticated(true)
         closeModal()
     } 

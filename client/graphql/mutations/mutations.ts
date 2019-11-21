@@ -48,3 +48,15 @@ export const UNFOLLOW = gql`
         }
     }
 `
+
+export const VISIT = gql`
+    mutation visitAquascape($aquascapeId: Int!) {
+        visitAquascape(aquascapeId: $aquascapeId) {
+            visitor {
+                id
+                visitorId
+            }
+            created
+        }
+    }
+`

@@ -75,7 +75,7 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, tog
                 <Hero.BottomSection>
                     <Hero.BottomLeft>
                         <div className="icons">
-                            <IconText icon={Icon.EYE_SHOW_FULL} text={aquascape.viewsCount} color={colors.WHITE} />
+                            <IconText icon={Icon.EYE_SHOW_FULL} text={aquascape.viewsCount === 0 ? 1 : aquascape.viewsCount} color={colors.WHITE} />
                             <IconButton onClick={toggleLike}>
                                 <IconText icon={aquascape.isLikedByMe ? Icon.HEART : Icon.HEART_OUTLINE} text={aquascape.likesCount} color={colors.WHITE} />
                             </IconButton>

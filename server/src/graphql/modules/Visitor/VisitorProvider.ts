@@ -1,11 +1,12 @@
 import {Injectable, Inject} from '@graphql-modules/di'
-import * as uuid from 'uuid/v4'
+import * as Bluebird from 'bluebird'
 
 import {tokens} from 'di/tokens'
+import {Visitor} from 'db/models/Visitor'
 import {VisitorRepositoryInterface} from 'db/repositories/Visitor'
 
 export interface VisitorProviderInterface {
-    visitAquascape(aquascapeId: number, userId?: number): Promise<number | string>
+    visitAquascape(aquascapeId: number, visitorId?: string): Bluebird<[Visitor, boolean]>
 }
 
 @Injectable()
@@ -15,14 +16,7 @@ export class VisitorProvider implements VisitorProviderInterface {
     ) {
     }
 
-    async visitAquascape(aquascapeId: number, userId?: number) {
-        if (userId) {
-            await this.visitorRepository.addVisitor(aquascapeId, userId)
-            return userId
-        } else {
-            const unregisteredVisitorId = uuid()
-            await this.visitorRepository.addUnregisteredVisitor(aquascapeId, unregisteredVisitorId)
-            return unregisteredVisitorId
-        }
+    visitAquascape(aquascapeId: number, visitorId?: string) {
+        return this.visitorRepository.addVisitor(aquascapeId, visitorId)
     }
 }

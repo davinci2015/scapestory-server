@@ -1,23 +1,21 @@
 import {Injectable} from '@graphql-modules/di'
+import * as uuid from 'uuid/v4'
+import * as Bluebird from 'bluebird'
+
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Visitor} from 'db/models/Visitor'
 
 export interface VisitorRepositoryInterface extends BaseRepositoryInterface<Visitor> {
-    addVisitor: (aquascapeId: number, visitorId: number) => Promise<Visitor>
-    addUnregisteredVisitor: (aquascapeId: number, unregisteredVisitorId?: string) => Promise<Visitor>
+    addVisitor: (aquascapeId: number, visitorId?: string) => Bluebird<[Visitor, boolean]>
 }
 
 @Injectable()
-export class VisitorRepository extends BaseRepository<Visitor> {
+export class VisitorRepository extends BaseRepository<Visitor> implements VisitorRepositoryInterface {
     constructor() {
         super(Visitor)
     }
 
-    async addVisitor(aquascapeId: number, visitorId: number) {
-        await this.create({aquascapeId, visitorId})
-    }
-
-    async addUnregisteredVisitor(aquascapeId: number, unregisteredVisitorId?: string) {
-        await this.create({aquascapeId, unregisteredVisitorId})
+    addVisitor(aquascapeId: number, visitorId?: string) {
+        return this.findOrCreate({where: {visitorId: visitorId || uuid(), aquascapeId}})
     }
 }

@@ -9,7 +9,8 @@ export enum AquascapeDetailsActions {
     AQUASCAPE_LIKE_COMMENT,
     AQUASCAPE_DISLIKE_COMMENT,
     AQUASCAPE_ADD_COMMENT,
-    AQUASCAPE_REMOVE_COMMENT
+    AQUASCAPE_REMOVE_COMMENT,
+    AQUASCAPE_VISIT
 }
 
 interface Payload {
@@ -116,6 +117,24 @@ export const updateAquascapeDetailsCache = (action: AquascapeDetailsActions, pay
                         }
                     }
                 })
+
+            case AquascapeDetailsActions.AQUASCAPE_VISIT:
+                query = gql`query { aquascape(id: ${payload.aquascapeId}) { id viewsCount }}`
+                data = cache.readQuery<any>({query})
+
+                console.log(mutationData)
+                if (mutationData && mutationData.visitAquascape && mutationData.visitAquascape.created) {
+                     cache.writeQuery({
+                        query, data: {
+                            aquascape: {
+                                ...data.aquascape,
+                                viewsCount: data.aquascape.viewsCount + 1
+                            }
+                        }
+                    })
+                }
+
+                return 
 
             default:
                 return null

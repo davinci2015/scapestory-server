@@ -2,14 +2,15 @@ import {ApolloClient, ApolloLink, HttpLink} from 'apollo-boost'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import appConstants from 'appConstants'
 import {withApollo} from 'next-with-apollo'
-import auth from 'services/auth'
+import cookie from 'services/cookie'
 
 export default withApollo(
     ({headers, initialState}) => {
-        const authMiddleware = new ApolloLink((operation, forward) => {
+        const headersMiddleware = new ApolloLink((operation, forward) => {
             operation.setContext({
                 headers: {
-                    [appConstants.HEADER_AUTH_TOKEN]: auth.getToken(headers)
+                    [appConstants.HEADER_AUTH_TOKEN]: cookie.getAuthToken(headers),
+                    [appConstants.HEADER_VISITOR_ID]: cookie.getVisitorId(headers)
                 }
             })
 
@@ -26,7 +27,7 @@ export default withApollo(
         return new ApolloClient({
             connectToDevTools: process.browser,
             ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
-            link: ApolloLink.from([authMiddleware, httpLink]),
+            link: ApolloLink.from([headersMiddleware, httpLink]),
             cache: new InMemoryCache().restore(initialState || {})
         })
     })

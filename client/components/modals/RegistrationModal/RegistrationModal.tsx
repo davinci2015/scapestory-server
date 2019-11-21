@@ -5,7 +5,7 @@ import {RegistrationForm, AuthModal} from 'components/modals'
 
 import {colors} from 'styles'
 import {ModalContext} from 'providers/ModalProvider'
-import auth from 'services/auth'
+import cookie from 'services/cookie'
 import {AuthContext} from 'providers/AuthenticationProvider'
 
 const RegistrationModal = () => {
@@ -15,7 +15,7 @@ const RegistrationModal = () => {
     const openLoginModal = () => openModal('login')
 
     const handleSuccess = (token: string) => {
-        auth.persistToken(token)
+        cookie.persistAuthToken(token)
         setAuthenticated(true)
         closeModal()
     } 
