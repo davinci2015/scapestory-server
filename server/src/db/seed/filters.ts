@@ -9,8 +9,8 @@ export default [
             'ES-300',
             'ES-600',
             'ES-600EX',
-            'ES-600EX2'
-        ]
+            'ES-600EX2',
+        ],
     },
     {
         brand: 'Aqua Design Amano',
@@ -25,8 +25,8 @@ export default [
             'ES-300',
             'ES-600',
             'ES-600EX',
-            'ES-600EX'
-        ]
+            'ES-600EX',
+        ],
     },
     {
         brand: 'Aqueon',
@@ -46,8 +46,8 @@ export default [
             'QuietFlow LED Pro 20',
             'QuietFlow LED Pro 30',
             'QuietFlow LED Pro 50',
-            'QuietFlow LED Pro 75'
-        ]
+            'QuietFlow LED Pro 75',
+        ],
     },
     {
         brand: 'Azoo',
@@ -84,8 +84,8 @@ export default [
             'Submersible Filter 1800',
             'Submersible Filter 2500 ',
             'Submersible Filter 60',
-            'Submersible Filter 600'
-        ]
+            'Submersible Filter 600',
+        ],
     },
     {
         brand: 'Eheim',
@@ -109,8 +109,8 @@ export default [
             'Professionel 4e 250T',
             'Professionel 4e 350',
             'Professionel 4e 350T',
-            'Professionel 4e 600'
-        ]
+            'Professionel 4e 600',
+        ],
     },
     {
         brand: 'Fluval',
@@ -130,8 +130,8 @@ export default [
             'U1',
             'U2',
             'U3',
-            'U4'
-        ]
+            'U4',
+        ],
     },
     {
         brand: 'Hydor',
@@ -147,8 +147,8 @@ export default [
             'Professional 450',
             'Professional 600',
             'Slim-Skim Nano 135.35',
-            'Slim-Skim Nano 250.65'
-        ]
+            'Slim-Skim Nano 250.65',
+        ],
     },
     {
         brand: 'Marinelandd',
@@ -163,8 +163,8 @@ export default [
             'Penguin 150',
             'Penguin 200',
             'Penguin 350',
-            'Penguin 75'
-        ]
+            'Penguin 75',
+        ],
     },
     {
         brand: 'Shiruba',
@@ -186,8 +186,8 @@ export default [
             'XB-308',
             'XB-310',
             'XB-3101',
-            'XB-312'
-        ]
+            'XB-312',
+        ],
     },
     {
         brand: 'SunSun',
@@ -228,8 +228,8 @@ export default [
             'JP-085',
             'JP-092',
             'JP-093',
-            'JP-094'
-        ]
+            'JP-094',
+        ],
     },
     {
         brand: 'Tetra',
@@ -246,7 +246,7 @@ export default [
             'Whisper PF 20',
             'Whisper PF 30',
             'Whisper PF 40',
-            'Whisper PF 60'
-        ]
-    }
+            'Whisper PF 60',
+        ],
+    },
 ]

@@ -12,12 +12,10 @@ import {tokens} from 'di/tokens'
 export const UserModule = new GraphQLModule({
     providers: [
         {provide: tokens.USER_PROVIDER, useClass: UsersProvider},
-        {provide: tokens.USER_REPOSITORY, useClass: UserRepository}
+        {provide: tokens.USER_REPOSITORY, useClass: UserRepository},
     ],
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([
-        attachCurrentUserId
-    ])
+    context: composeContext([attachCurrentUserId]),
 })

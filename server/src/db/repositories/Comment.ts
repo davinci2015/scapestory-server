@@ -8,7 +8,7 @@ import {UserInputError} from 'apollo-server'
 
 export enum CommentEntityType {
     AQUASCAPE = 'AQUASCAPE',
-    IMAGE = 'IMAGE'
+    IMAGE = 'IMAGE',
 }
 
 export interface AddCommentArgs {
@@ -19,8 +19,13 @@ export interface AddCommentArgs {
     parentCommentId?: number
 }
 
-export interface CommentRepositoryInterface extends BaseRepositoryInterface<Comment> {
-    getComments(entityType: CommentEntityType, entityId: number, include?: Includeable[]): Bluebird<Comment[]>
+export interface CommentRepositoryInterface
+    extends BaseRepositoryInterface<Comment> {
+    getComments(
+        entityType: CommentEntityType,
+        entityId: number,
+        include?: Includeable[]
+    ): Bluebird<Comment[]>
 
     addComment(data: AddCommentArgs): Bluebird<Comment>
 
@@ -38,13 +43,17 @@ export class CommentRepository extends BaseRepository<Comment> {
         super(Comment)
     }
 
-    getComments(entityType: CommentEntityType, entityId: number, include?: Includeable[]): Bluebird<Comment[]> {
+    getComments(
+        entityType: CommentEntityType,
+        entityId: number,
+        include?: Includeable[]
+    ): Bluebird<Comment[]> {
         const entity = entityToFieldMapper[entityType]
 
         return this.findAll({
             where: {[entity]: entityId},
             include,
-            order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC']],
         })
     }
 
@@ -55,7 +64,7 @@ export class CommentRepository extends BaseRepository<Comment> {
             userId: data.userId,
             [entity]: data.entityId,
             content: data.content,
-            parentCommentId: data.parentCommentId
+            parentCommentId: data.parentCommentId,
         })
     }
 

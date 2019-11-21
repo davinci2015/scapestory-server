@@ -15,8 +15,11 @@ export const connectToDatabase = (onConnect?: (db: Database) => void) => {
         database: process.env.DB_NAME || '',
     })
 
-    database.testConnection()
-        .then(() => console.log(`🚀 Connected to ${process.env.DB_NAME} database`))
+    database
+        .testConnection()
+        .then(() =>
+            console.log(`🚀 Connected to ${process.env.DB_NAME} database`)
+        )
         .then(() => onConnect && onConnect(database))
         .catch(() => console.log('⚠️ Failed to connect to the database!'))
 }

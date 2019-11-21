@@ -17,7 +17,5 @@ export const CommentModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([
-        attachCurrentUserId
-    ])
+    context: composeContext([attachCurrentUserId]),
 })

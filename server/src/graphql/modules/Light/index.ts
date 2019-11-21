@@ -11,8 +11,8 @@ import {resolvers} from './resolvers'
 export const LightModule = new GraphQLModule({
     providers: [
         {provide: tokens.LIGHT_PROVIDER, useClass: LightProvider},
-        {provide: tokens.LIGHT_REPOSITORY, useClass: LightRepository}
+        {provide: tokens.LIGHT_REPOSITORY, useClass: LightRepository},
     ],
     typeDefs,
-    resolvers
+    resolvers,
 })

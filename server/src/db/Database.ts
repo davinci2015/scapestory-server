@@ -10,7 +10,7 @@ export interface DatabaseConnectionParams {
 }
 
 export interface DatabaseInterface {
-    connect: (params: DatabaseConnectionParams) => void,
+    connect: (params: DatabaseConnectionParams) => void
 
     testConnection: () => Bluebird<void>
 }

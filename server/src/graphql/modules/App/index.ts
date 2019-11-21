@@ -17,6 +17,6 @@ export const AppModule = new GraphQLModule({
         LightModule,
         CommentModule,
         LikeModule,
-        VisitorModule
-    ]
+        VisitorModule,
+    ],
 })

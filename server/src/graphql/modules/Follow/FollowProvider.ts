@@ -8,22 +8,28 @@ import {tokens} from 'di/tokens'
 import {UserInputError} from 'apollo-server'
 
 export interface FollowProviderInterface {
-    followUser: (followerId: number, followedId: number) => Promise<User>,
-    unfollowUser: (followerId: number, followedId: number) => Promise<User>,
-    isFollowedBy: (followerId: number, followedId: number) => Promise<boolean>,
-    getFollows: (userId: number) => Promise<{followers: Follow[], following: Follow[]}>
+    followUser: (followerId: number, followedId: number) => Promise<User>
+    unfollowUser: (followerId: number, followedId: number) => Promise<User>
+    isFollowedBy: (followerId: number, followedId: number) => Promise<boolean>
+    getFollows: (
+        userId: number
+    ) => Promise<{followers: Follow[]; following: Follow[]}>
 }
 
 @Injectable()
 export class FollowProvider implements FollowProviderInterface {
     constructor(
-        @Inject(tokens.FOLLOW_REPOSITORY) private followRepository: FollowRepositoryInterface,
-        @Inject(tokens.USER_REPOSITORY) private userRepository: UserRepositoryInterface
-    ) {
-    }
+        @Inject(tokens.FOLLOW_REPOSITORY)
+        private followRepository: FollowRepositoryInterface,
+        @Inject(tokens.USER_REPOSITORY)
+        private userRepository: UserRepositoryInterface
+    ) {}
 
     async followUser(followerId: number, followedId: number) {
-        const [follower, followed] = await this.findUsers(followerId, followedId)
+        const [follower, followed] = await this.findUsers(
+            followerId,
+            followedId
+        )
 
         if (!follower || !followed) {
             throw new UserInputError('User does not exist')
@@ -35,7 +41,10 @@ export class FollowProvider implements FollowProviderInterface {
     }
 
     async unfollowUser(followerId: number, followedId: number) {
-        const [follower, followed] = await this.findUsers(followerId, followedId)
+        const [follower, followed] = await this.findUsers(
+            followerId,
+            followedId
+        )
 
         if (!follower || !followed) {
             throw new UserInputError('User does not exist')
@@ -57,7 +66,7 @@ export class FollowProvider implements FollowProviderInterface {
     private async findUsers(followerId: number, followedId: number) {
         return await Promise.all([
             this.userRepository.findOne({where: {id: followerId}}),
-            this.userRepository.findOne({where: {id: followedId}})
+            this.userRepository.findOne({where: {id: followedId}}),
         ])
     }
 }

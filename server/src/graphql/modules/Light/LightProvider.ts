@@ -11,9 +11,9 @@ export interface LightProviderInterface {
 @Injectable()
 export class LightProvider implements LightProviderInterface {
     constructor(
-        @Inject(tokens.LIGHT_REPOSITORY) private lightRepository: LightRepositoryInterface
-    ) {
-    }
+        @Inject(tokens.LIGHT_REPOSITORY)
+        private lightRepository: LightRepositoryInterface
+    ) {}
 
     async getLights() {
         return await this.lightRepository.findAll()

@@ -329,5 +329,5 @@ export default [
     'Vallisneria Nana',
     'Vallisneria Spiralis',
     'Vallisneria Torta',
-    'Weeping Moss'
+    'Weeping Moss',
 ]

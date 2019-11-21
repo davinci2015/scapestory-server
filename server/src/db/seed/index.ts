@@ -37,7 +37,7 @@ const getAquascapeImage = () => {
         'http://cdn.powered-by-nitrosell.com/store_images/11/2575/customcontent/1160/picholder.jpg',
         'https://23pxcp3u31lgiybw92v8rma1-wpengine.netdna-ssl.com/wp-content/uploads/2019/07/Nature_style_aquascape-1-600x293.png',
         'https://image.shutterstock.com/image-photo/aquascape-wood-rock-260nw-738632542.jpg',
-        'https://i.pinimg.com/originals/95/fd/11/95fd11bf394b5c252948da10368c9aef.jpg'
+        'https://i.pinimg.com/originals/95/fd/11/95fd11bf394b5c252948da10368c9aef.jpg',
     ]
 
     return aquascapeImages[Math.floor(Math.random() * aquascapeImages.length)]
@@ -49,7 +49,7 @@ const getProfileImage = () => {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTUYxFX2MYrJvYwZ2NWYNyxJWA5nFi6P4V30Y5XWLj0nkBe-YEC',
         'https://img2.thejournal.ie/inline/2470754/original/?width=428&version=2470754',
         'https://cdn.moneymarketing.co.uk/content/uploads/2019/08/29125853/Profile-Carl-Roberts-400x500.jpg',
-        'https://cdn.moneymarketing.co.uk/content/uploads/2019/08/15164737/Profile-Brian-Butcher_cropped-560x500.jpg'
+        'https://cdn.moneymarketing.co.uk/content/uploads/2019/08/15164737/Profile-Brian-Butcher_cropped-560x500.jpg',
     ]
 
     return profileImages[Math.floor(Math.random() * profileImages.length)]
@@ -58,9 +58,12 @@ const getProfileImage = () => {
 const getRandomIndex = (items: number) => Math.floor(Math.random() * items)
 const getEmptyArray = (items: number) => Array(items).fill('')
 const filterDuplicateKeys = (arr: any[], keys: string[]) => {
-    return arr.filter((itemFilter) => {
-        return !arr.find((itemFind) => {
-            return itemFilter._id !== itemFind._id && keys.every((key) => itemFilter[key] === itemFind[key])
+    return arr.filter(itemFilter => {
+        return !arr.find(itemFind => {
+            return (
+                itemFilter._id !== itemFind._id &&
+                keys.every(key => itemFilter[key] === itemFind[key])
+            )
         })
     })
 }
@@ -87,7 +90,7 @@ const entriesCount = {
     aquascapeAdditives: 50,
     visitors: 100,
     likes: 300,
-    images: 50
+    images: 50,
 }
 
 const users = getEmptyArray(entriesCount.users).map((_, index) => ({
@@ -99,13 +102,13 @@ const users = getEmptyArray(entriesCount.users).map((_, index) => ({
     profileImage: getProfileImage(),
     country: faker.address.country(),
     youtubeLink: faker.internet.url(),
-    instagramLink: faker.internet.url()
+    instagramLink: faker.internet.url(),
 }))
 
 const co2 = getEmptyArray(entriesCount.co2).map((_, index) => ({
     _id: index + 1,
     type: faker.random.word(),
-    bps: faker.random.number({min: 1, max: 10})
+    bps: faker.random.number({min: 1, max: 10}),
 }))
 
 const tanks = getEmptyArray(entriesCount.tanks).map((_, index) => ({
@@ -116,7 +119,7 @@ const tanks = getEmptyArray(entriesCount.tanks).map((_, index) => ({
     width: faker.random.number(),
     height: faker.random.number(),
     depth: faker.random.number(),
-    glassThickness: faker.random.number()
+    glassThickness: faker.random.number(),
 }))
 
 const aquascapes = getEmptyArray(entriesCount.aquascapes).map((_, index) => ({
@@ -130,7 +133,7 @@ const aquascapes = getEmptyArray(entriesCount.aquascapes).map((_, index) => ({
     description: faker.lorem.sentence(),
     userId: users[getRandomIndex(entriesCount.users)]._id,
     co2Id: co2[getRandomIndex(entriesCount.co2)]._id,
-    tankId: tanks[getRandomIndex(entriesCount.tanks)]._id
+    tankId: tanks[getRandomIndex(entriesCount.tanks)]._id,
 }))
 
 const images = getEmptyArray(entriesCount.images).map((_, index) => ({
@@ -145,7 +148,7 @@ const comments = getEmptyArray(entriesCount.comments).map((_, index) => ({
     _id: index + 1,
     content: faker.lorem.sentence(),
     userId: users[getRandomIndex(entriesCount.users)]._id,
-    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id
+    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
 }))
 
 const visitors = getEmptyArray(entriesCount.visitors).map((_, index) => ({
@@ -163,20 +166,23 @@ const likes = getEmptyArray(entriesCount.likes).map((_, index) => ({
 const tags = getEmptyArray(entriesCount.tags).map((_, index) => ({
     _id: index + 1,
     predefined: faker.random.boolean(),
-    name: faker.lorem.word()
+    name: faker.lorem.word(),
 }))
 
-const aquascapeTags = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapeTags).map((_, index) => ({
-    _id: index + 1,
-    tagId: tags[getRandomIndex(entriesCount.tags)]._id,
-    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id
-})), ['tagId', 'aquascapeId'])
+const aquascapeTags = filterDuplicateKeys(
+    getEmptyArray(entriesCount.aquascapeTags).map((_, index) => ({
+        _id: index + 1,
+        tagId: tags[getRandomIndex(entriesCount.tags)]._id,
+        aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
+    })),
+    ['tagId', 'aquascapeId']
+)
 
 const hardscape = getEmptyArray(entriesCount.hardscape).map((_, index) => ({
     _id: index + 1,
     name: faker.commerce.productMaterial(),
     description: faker.lorem.words(),
-    image: faker.image.imageUrl()
+    image: faker.image.imageUrl(),
 }))
 
 const substrate = getEmptyArray(entriesCount.substrate).map((_, index) => ({
@@ -184,7 +190,7 @@ const substrate = getEmptyArray(entriesCount.substrate).map((_, index) => ({
     brand: faker.company.companyName(),
     name: faker.commerce.productMaterial(),
     description: faker.lorem.words(),
-    image: faker.image.imageUrl()
+    image: faker.image.imageUrl(),
 }))
 
 const additives = getEmptyArray(entriesCount.additives).map((_, index) => ({
@@ -192,14 +198,14 @@ const additives = getEmptyArray(entriesCount.additives).map((_, index) => ({
     brand: faker.company.companyName(),
     name: faker.commerce.productMaterial(),
     description: faker.lorem.words(),
-    image: faker.image.imageUrl()
+    image: faker.image.imageUrl(),
 }))
 
 const livestock = getEmptyArray(entriesCount.livestock).map((_, index) => ({
     _id: index + 1,
     name: faker.commerce.productName(),
     description: faker.lorem.words(),
-    image: faker.image.animals()
+    image: faker.image.animals(),
 }))
 
 const lights = getEmptyArray(entriesCount.lights).map((_, index) => ({
@@ -217,7 +223,7 @@ const lights = getEmptyArray(entriesCount.lights).map((_, index) => ({
     kelvinMax: faker.random.number(),
     dimmable: faker.random.boolean(),
     description: faker.lorem.words(),
-    image: faker.image.technics()
+    image: faker.image.technics(),
 }))
 
 const plants = realPlants.map((name, index) => ({
@@ -232,93 +238,142 @@ const plants = realPlants.map((name, index) => ({
     position: 'front',
     luminosity: 'high',
     growthSpeed: 'fast',
-    difficulty: 'easy'
+    difficulty: 'easy',
 }))
 
 let filterIdIncrement = 1
 const filters = realFilters.reduce((acc, filter, index) => {
-    return [...acc, ...filter.models.map((model, modelIndex) => ({
-        _id: filterIdIncrement++,
-        brand: filter.brand,
-        predefined: true,
-        description: faker.lorem.words(),
-        image: faker.image.imageUrl(),
-        model
-    }))]
+    return [
+        ...acc,
+        ...filter.models.map((model, modelIndex) => ({
+            _id: filterIdIncrement++,
+            brand: filter.brand,
+            predefined: true,
+            description: faker.lorem.words(),
+            image: faker.image.imageUrl(),
+            model,
+        })),
+    ]
 }, [])
 
-const aquascapePlants = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapePlants).map((_, index) => ({
-    _id: index + 1,
-    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
-    plantId: plants[getRandomIndex(realPlants.length)]._id
-})), ['aquascapeId', 'plantId'])
+const aquascapePlants = filterDuplicateKeys(
+    getEmptyArray(entriesCount.aquascapePlants).map((_, index) => ({
+        _id: index + 1,
+        aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
+        plantId: plants[getRandomIndex(realPlants.length)]._id,
+    })),
+    ['aquascapeId', 'plantId']
+)
 
-const aquascapeHardscape = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapeHardscape).map((_, index) => ({
-    _id: index + 1,
-    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
-    hardscapeId: hardscape[getRandomIndex(entriesCount.hardscape)]._id
-})), ['aquascapeId', 'hardscapeId'])
+const aquascapeHardscape = filterDuplicateKeys(
+    getEmptyArray(entriesCount.aquascapeHardscape).map((_, index) => ({
+        _id: index + 1,
+        aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
+        hardscapeId: hardscape[getRandomIndex(entriesCount.hardscape)]._id,
+    })),
+    ['aquascapeId', 'hardscapeId']
+)
 
-const aquascapeLivestock = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapeLivestock).map((_, index) => ({
-    _id: index + 1,
-    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
-    livestockId: livestock[getRandomIndex(entriesCount.livestock)]._id
-})), ['aquascapeId', 'livestockId'])
+const aquascapeLivestock = filterDuplicateKeys(
+    getEmptyArray(entriesCount.aquascapeLivestock).map((_, index) => ({
+        _id: index + 1,
+        aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
+        livestockId: livestock[getRandomIndex(entriesCount.livestock)]._id,
+    })),
+    ['aquascapeId', 'livestockId']
+)
 
-const aquascapeFilter = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapeFilters).map((_, index) => ({
-    _id: index + 1,
-    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
-    filterId: filters[getRandomIndex(filters.length)]._id
-})), ['aquascapeId', 'filterId'])
+const aquascapeFilter = filterDuplicateKeys(
+    getEmptyArray(entriesCount.aquascapeFilters).map((_, index) => ({
+        _id: index + 1,
+        aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
+        filterId: filters[getRandomIndex(filters.length)]._id,
+    })),
+    ['aquascapeId', 'filterId']
+)
 
-const aquascapeLights = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapeLights).map((_, index) => ({
-    _id: index + 1,
-    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
-    lightId: lights[getRandomIndex(entriesCount.lights)]._id
-})), ['aquascapeId', 'lightId'])
+const aquascapeLights = filterDuplicateKeys(
+    getEmptyArray(entriesCount.aquascapeLights).map((_, index) => ({
+        _id: index + 1,
+        aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
+        lightId: lights[getRandomIndex(entriesCount.lights)]._id,
+    })),
+    ['aquascapeId', 'lightId']
+)
 
-const aquascapeSubstrate = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapeSubstrate).map((_, index) => ({
-    _id: index + 1,
-    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
-    substrateId: lights[getRandomIndex(entriesCount.lights)]._id
-})), ['aquascapeId', 'substrateId'])
+const aquascapeSubstrate = filterDuplicateKeys(
+    getEmptyArray(entriesCount.aquascapeSubstrate).map((_, index) => ({
+        _id: index + 1,
+        aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
+        substrateId: lights[getRandomIndex(entriesCount.lights)]._id,
+    })),
+    ['aquascapeId', 'substrateId']
+)
 
-const aquascapeAdditives = filterDuplicateKeys(getEmptyArray(entriesCount.aquascapeAdditives).map((_, index) => ({
-    _id: index + 1,
-    aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
-    additiveId: additives[getRandomIndex(entriesCount.additives)]._id
-})), ['aquascapeId', 'additiveId'])
+const aquascapeAdditives = filterDuplicateKeys(
+    getEmptyArray(entriesCount.aquascapeAdditives).map((_, index) => ({
+        _id: index + 1,
+        aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
+        additiveId: additives[getRandomIndex(entriesCount.additives)]._id,
+    })),
+    ['aquascapeId', 'additiveId']
+)
 
 connectToDatabase((database: Database) => {
-    database.sync({force: true})
+    database
+        .sync({force: true})
         .then(async () => {
-            await Promise.all(tanks.map((tank) => Tank.create(tank)))
-            await Promise.all(co2.map((item) => CO2.create(item)))
+            await Promise.all(tanks.map(tank => Tank.create(tank)))
+            await Promise.all(co2.map(item => CO2.create(item)))
 
-            await Promise.all(lights.map((light) => Light.create(light)))
-            await Promise.all(plants.map((plant) => Plant.create(plant)))
-            await Promise.all(hardscape.map((hard) => Hardscape.create(hard)))
-            await Promise.all(livestock.map((animal) => Livestock.create(animal)))
-            await Promise.all(substrate.map((sub) => Substrate.create(sub)))
-            await Promise.all(filters.map((filter) => Filter.create(filter)))
-            await Promise.all(additives.map((additive) => Additive.create(additive)))
-            await Promise.all(users.map((user) => User.create(user)))
-            await Promise.all(tags.map((tag) => Tag.create(tag)))
-            await Promise.all(aquascapes.map((scape) => Aquascape.create(scape)))
-            await Promise.all(visitors.map((visitor) => Visitor.create(visitor)))
-            await Promise.all(likes.map((like) => Like.create(like)))
-            await Promise.all(images.map((image) => AquascapeImage.create(image)))
-            await Promise.all(comments.map((comment) => Comment.create(comment)))
+            await Promise.all(lights.map(light => Light.create(light)))
+            await Promise.all(plants.map(plant => Plant.create(plant)))
+            await Promise.all(hardscape.map(hard => Hardscape.create(hard)))
+            await Promise.all(livestock.map(animal => Livestock.create(animal)))
+            await Promise.all(substrate.map(sub => Substrate.create(sub)))
+            await Promise.all(filters.map(filter => Filter.create(filter)))
+            await Promise.all(
+                additives.map(additive => Additive.create(additive))
+            )
+            await Promise.all(users.map(user => User.create(user)))
+            await Promise.all(tags.map(tag => Tag.create(tag)))
+            await Promise.all(aquascapes.map(scape => Aquascape.create(scape)))
+            await Promise.all(visitors.map(visitor => Visitor.create(visitor)))
+            await Promise.all(likes.map(like => Like.create(like)))
+            await Promise.all(images.map(image => AquascapeImage.create(image)))
+            await Promise.all(comments.map(comment => Comment.create(comment)))
 
-            await Promise.all(aquascapeTags.map((aquascapeTag) => AquascapeTag.create(aquascapeTag)))
-            await Promise.all(aquascapePlants.map((plant) => AquascapePlant.create(plant)))
-            await Promise.all(aquascapeHardscape.map((hard) => AquascapeHardscape.create(hard)))
-            await Promise.all(aquascapeLivestock.map((animal) => AquascapeLivestock.create(animal)))
-            await Promise.all(aquascapeFilter.map((filter) => AquascapeFilter.create(filter)))
-            await Promise.all(aquascapeLights.map((light) => AquascapeLight.create(light)))
-            await Promise.all(aquascapeSubstrate.map((sub) => AquascapeSubstrate.create(sub)))
-            await Promise.all(aquascapeAdditives.map((additive) => AquascapeAdditive.create(additive)))
+            await Promise.all(
+                aquascapeTags.map(aquascapeTag =>
+                    AquascapeTag.create(aquascapeTag)
+                )
+            )
+            await Promise.all(
+                aquascapePlants.map(plant => AquascapePlant.create(plant))
+            )
+            await Promise.all(
+                aquascapeHardscape.map(hard => AquascapeHardscape.create(hard))
+            )
+            await Promise.all(
+                aquascapeLivestock.map(animal =>
+                    AquascapeLivestock.create(animal)
+                )
+            )
+            await Promise.all(
+                aquascapeFilter.map(filter => AquascapeFilter.create(filter))
+            )
+            await Promise.all(
+                aquascapeLights.map(light => AquascapeLight.create(light))
+            )
+            await Promise.all(
+                aquascapeSubstrate.map(sub => AquascapeSubstrate.create(sub))
+            )
+            await Promise.all(
+                aquascapeAdditives.map(additive =>
+                    AquascapeAdditive.create(additive)
+                )
+            )
         })
         .then(() => console.log('Database synced'))
-        .catch((e) => console.log('Failed to sync database', e))
+        .catch(e => console.log('Failed to sync database', e))
 })

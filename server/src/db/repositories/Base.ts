@@ -10,38 +10,46 @@ import {
     FindOptions,
     FindOrCreateOptions,
     Promise,
-    UpdateOptions
+    UpdateOptions,
 } from 'sequelize'
 
 type StaticMembers = NonAbstract<typeof Model>
-type Constructor<T> = (new () => T)
+type Constructor<T> = new () => T
 type ModelType<T> = Constructor<T> & StaticMembers
 
 export interface BaseRepositoryInterface<T> {
-    create(values: object, options?: CreateOptions & { returning: boolean }): Bluebird<T>,
+    create(
+        values: object,
+        options?: CreateOptions & {returning: boolean}
+    ): Bluebird<T>
 
-    findOne(options: FindOptions): Bluebird<T | null>,
+    findOne(options: FindOptions): Bluebird<T | null>
 
-    findAll(options?: FindOptions): Promise<T[]>,
+    findAll(options?: FindOptions): Promise<T[]>
 
-    update(values: object, options: UpdateOptions): Promise<[number, T[]]>,
+    update(values: object, options: UpdateOptions): Promise<[number, T[]]>
 
-    destroy(options?: DestroyOptions): Promise<number>,
+    destroy(options?: DestroyOptions): Promise<number>
 
-    bulkCreate(records: object[], options?: BulkCreateOptions): Promise<T[]>,
+    bulkCreate(records: object[], options?: BulkCreateOptions): Promise<T[]>
 
-    findAndCountAll(options?: FindAndCountOptions): Promise<{ rows: T[]; count: number }>,
+    findAndCountAll(
+        options?: FindAndCountOptions
+    ): Promise<{rows: T[]; count: number}>
 
-    findOrCreate(options: FindOrCreateOptions): Promise<[T, boolean]>,
+    findOrCreate(options: FindOrCreateOptions): Promise<[T, boolean]>
 
-    count(options?: CountOptions): Promise<number>,
+    count(options?: CountOptions): Promise<number>
 }
 
-export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterface<T> {
-    constructor(private relation: ModelType<T>) {
-    }
+export class BaseRepository<T extends Model<T>>
+    implements BaseRepositoryInterface<T> {
+    constructor(private relation: ModelType<T>) {}
 
-    create(values: object, options?: CreateOptions & { returning: boolean }): Bluebird<T> {
+    create(
+        values: object,
+        options?: CreateOptions & {returning: boolean}
+    ): Bluebird<T> {
         return this.relation.create<T>(values, options)
     }
 
@@ -53,7 +61,9 @@ export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterfa
         return this.relation.findAll(options)
     }
 
-    findAndCountAll(options?: FindAndCountOptions): Promise<{ rows: T[]; count: number }> {
+    findAndCountAll(
+        options?: FindAndCountOptions
+    ): Promise<{rows: T[]; count: number}> {
         return this.relation.findAndCountAll(options)
     }
 

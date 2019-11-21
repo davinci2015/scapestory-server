@@ -9,20 +9,32 @@ import {Like} from 'db/models/Like'
 export enum LikeEntityType {
     AQUASCAPE = 'AQUASCAPE',
     IMAGE = 'IMAGE',
-    COMMENT = 'COMMENT'
+    COMMENT = 'COMMENT',
 }
 
 export interface LikeRepositoryInterface extends BaseRepositoryInterface<Like> {
-    like(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
-    dislike(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
+    like(
+        entity: LikeEntityType,
+        entityId: number,
+        userId: number
+    ): Bluebird<Like>
+    dislike(
+        entity: LikeEntityType,
+        entityId: number,
+        userId: number
+    ): Bluebird<Like>
     countLikes(entity: LikeEntityType, entityId: number): Promise<number>
-    isLikedBy(userId: number, entity: LikeEntityType, entityId: number): Promise<boolean>
+    isLikedBy(
+        userId: number,
+        entity: LikeEntityType,
+        entityId: number
+    ): Promise<boolean>
 }
 
 const entityToFieldMapper = {
     [LikeEntityType.AQUASCAPE]: 'aquascapeId',
     [LikeEntityType.IMAGE]: 'aquascapeImageId',
-    [LikeEntityType.COMMENT]: 'commentId'
+    [LikeEntityType.COMMENT]: 'commentId',
 }
 
 @Injectable()
@@ -31,7 +43,9 @@ export class LikeRepository extends BaseRepository<Like> {
 
     constructor() {
         super(Like)
-        this.aquascapeLikesLoader = new DataLoader(this.batchCountAquascapeLikes)
+        this.aquascapeLikesLoader = new DataLoader(
+            this.batchCountAquascapeLikes
+        )
     }
 
     async like(entity: LikeEntityType, entityId: number, userId: number) {
@@ -63,8 +77,8 @@ export class LikeRepository extends BaseRepository<Like> {
         const like = await this.findOne({
             where: {
                 [field]: entityId,
-                userId
-            }
+                userId,
+            },
         })
 
         return Boolean(like)
@@ -83,13 +97,15 @@ export class LikeRepository extends BaseRepository<Like> {
 
     private batchCountAquascapeLikes = async (ids: number[]) => {
         const likes = await this.findAll({
-            where: {[entityToFieldMapper[LikeEntityType.AQUASCAPE]]: ids}
+            where: {[entityToFieldMapper[LikeEntityType.AQUASCAPE]]: ids},
         })
 
-        return ids.map((id) =>
-            likes.reduce((acc, currentLike) => currentLike.aquascapeId === id
-                ? (acc + 1)
-                : acc, 0
-            ))
+        return ids.map(id =>
+            likes.reduce(
+                (acc, currentLike) =>
+                    currentLike.aquascapeId === id ? acc + 1 : acc,
+                0
+            )
+        )
     }
 }

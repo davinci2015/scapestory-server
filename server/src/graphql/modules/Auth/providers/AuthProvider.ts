@@ -5,7 +5,10 @@ import slugify from 'slugify'
 
 import {User} from 'db/models/User'
 import {UserRepositoryInterface} from 'db/repositories/User'
-import {authenticateFacebook, authenticateGoogle} from 'graphql/modules/Auth/passport'
+import {
+    authenticateFacebook,
+    authenticateGoogle,
+} from 'graphql/modules/Auth/passport'
 import {AuthHelper} from 'utils/AuthHelper'
 import {tokens} from 'di/tokens'
 import {SocialLoginRepositoryInterface} from 'db/repositories/SocialLogin'
@@ -13,15 +16,23 @@ import socialProviders from 'constants/socialProviders'
 import {SocialLogin} from 'db/models/SocialLogin'
 
 export type AuthPayload = {
-    token: string,
+    token: string
     user: User
 }
 
 export interface AuthProviderInterface {
     login: (email: string, password: string) => Promise<AuthPayload>
     register: (email: string, password: string) => Promise<AuthPayload>
-    facebookRegister: (token: string, req: Request, res: Response) => Promise<AuthPayload | undefined>
-    googleRegister: (token: string, req: Request, res: Response) => Promise<AuthPayload | undefined>
+    facebookRegister: (
+        token: string,
+        req: Request,
+        res: Response
+    ) => Promise<AuthPayload | undefined>
+    googleRegister: (
+        token: string,
+        req: Request,
+        res: Response
+    ) => Promise<AuthPayload | undefined>
     usernameExists: (username: string) => Promise<boolean>
 }
 
@@ -36,10 +47,11 @@ interface SocialLoginData {
 @Injectable()
 export class AuthProvider implements AuthProviderInterface {
     constructor(
-        @Inject(tokens.USER_REPOSITORY) private userRepository: UserRepositoryInterface,
-        @Inject(tokens.SOCIAL_LOGIN_REPOSITORY) private socialLoginRepository: SocialLoginRepositoryInterface,
-    ) {
-    }
+        @Inject(tokens.USER_REPOSITORY)
+        private userRepository: UserRepositoryInterface,
+        @Inject(tokens.SOCIAL_LOGIN_REPOSITORY)
+        private socialLoginRepository: SocialLoginRepositoryInterface
+    ) {}
 
     async usernameExists(username: string) {
         return Boolean(await this.userRepository.findUserByUsername(username))
@@ -50,7 +62,10 @@ export class AuthProvider implements AuthProviderInterface {
     }
 
     async login(email: string, password: string) {
-        const user = await this.userRepository.findOne({where: {email}, raw: true})
+        const user = await this.userRepository.findOne({
+            where: {email},
+            raw: true,
+        })
 
         if (!user) {
             throw new AuthenticationError('Unauthorized')
@@ -68,12 +83,14 @@ export class AuthProvider implements AuthProviderInterface {
             throw new UserInputError('User with provided email already exists')
         }
 
-        let username = this.slugifyUsername(email.substring(0, email.lastIndexOf('@')))
+        let username = this.slugifyUsername(
+            email.substring(0, email.lastIndexOf('@'))
+        )
 
         const usernameExists = await this.usernameExists(username)
 
         if (usernameExists) {
-           username = await this.generateUniqueUsername(username)
+            username = await this.generateUniqueUsername(username)
         }
 
         const hashedPassword = AuthHelper.cryptPassword(password)
@@ -81,7 +98,7 @@ export class AuthProvider implements AuthProviderInterface {
         const user = await this.userRepository.create({
             email,
             username,
-            password: hashedPassword
+            password: hashedPassword,
         })
 
         return {token: AuthHelper.createJWTToken(user.id), user}
@@ -98,7 +115,7 @@ export class AuthProvider implements AuthProviderInterface {
                 username: data.profile.displayName,
                 profileImage: data.profile.photos[0].value,
                 provider: socialProviders.FACEBOOK,
-                socialProfileId: data.profile.id
+                socialProfileId: data.profile.id,
             })
         }
     }
@@ -114,7 +131,7 @@ export class AuthProvider implements AuthProviderInterface {
                 username: data.profile.displayName,
                 profileImage: data.profile._json.picture,
                 provider: socialProviders.GOOGLE,
-                socialProfileId: data.profile.id
+                socialProfileId: data.profile.id,
             })
         }
     }
@@ -122,11 +139,13 @@ export class AuthProvider implements AuthProviderInterface {
     private async generateUniqueUsername(base: string): Promise<string> {
         let uniqueUsername
 
-        return new Promise(async (resolve) => {
+        return new Promise(async resolve => {
             while (!uniqueUsername) {
-                const randomNumber =  Math.floor((Math.random() * 10000) + 1)
+                const randomNumber = Math.floor(Math.random() * 10000 + 1)
                 const possibleUsername = `${base}${randomNumber}`
-                const usernameExists = await this.usernameExists(possibleUsername)
+                const usernameExists = await this.usernameExists(
+                    possibleUsername
+                )
 
                 if (!usernameExists) {
                     uniqueUsername = possibleUsername
@@ -155,10 +174,12 @@ export class AuthProvider implements AuthProviderInterface {
         const userToCreate = {
             email: data.email,
             username: this.slugifyUsername(username),
-            profileImage: data.profileImage
+            profileImage: data.profileImage,
         }
 
-        social = await this.socialLoginRepository.findSocialLogin(data.socialProfileId)
+        social = await this.socialLoginRepository.findSocialLogin(
+            data.socialProfileId
+        )
 
         if (social) {
             user = await this.userRepository.findUserById(social.userId)
@@ -178,7 +199,7 @@ export class AuthProvider implements AuthProviderInterface {
             await this.socialLoginRepository.create({
                 userId: user.id,
                 socialId: data.socialProfileId,
-                provider: data.provider
+                provider: data.provider,
             })
 
             return {user, token: AuthHelper.createJWTToken(user.id)}

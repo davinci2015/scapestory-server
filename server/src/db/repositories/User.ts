@@ -10,7 +10,8 @@ export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
 }
 
 @Injectable()
-export class UserRepository extends BaseRepository<User> implements UserRepositoryInterface {
+export class UserRepository extends BaseRepository<User>
+    implements UserRepositoryInterface {
     dataLoader: DataLoader<number, User>
 
     constructor() {

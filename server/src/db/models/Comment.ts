@@ -1,4 +1,11 @@
-import {Table, Column, Model, ForeignKey, BelongsTo, HasMany} from 'sequelize-typescript'
+import {
+    Table,
+    Column,
+    Model,
+    ForeignKey,
+    BelongsTo,
+    HasMany,
+} from 'sequelize-typescript'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {Aquascape} from 'db/models/Aquascape'
 import {User} from 'db/models/User'
@@ -22,7 +29,7 @@ export class Comment extends Model<Comment> {
 
     @HasMany(() => Like, {
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
     })
     likes: Like[]
 

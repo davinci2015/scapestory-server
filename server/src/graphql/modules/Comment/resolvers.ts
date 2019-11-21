@@ -18,7 +18,7 @@ export type CommentsArgs = {
 
 export type MutationAddCommentArgs = {
     entityId: number
-    entity: CommentEntityType,
+    entity: CommentEntityType
     content: string
     parentCommentId?: number
 }
@@ -29,43 +29,83 @@ export type MutationRemoveCommentArgs = {
 
 const modelMapping = {
     user: User,
-    likes: Like
+    likes: Like,
 }
 
 export const resolvers = {
     Query: {
-        async comments(root, args: CommentsArgs, context: ModuleContext, info: GraphQLResolveInfo) {
-            const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
-            const fields = GraphQLHelper.getIncludeableFields(info, modelMapping)
-            return await provider.getComments(args.entity, args.entityId, fields)
+        async comments(
+            root,
+            args: CommentsArgs,
+            context: ModuleContext,
+            info: GraphQLResolveInfo
+        ) {
+            const provider: CommentProviderInterface = context.injector.get(
+                tokens.COMMENT_PROVIDER
+            )
+            const fields = GraphQLHelper.getIncludeableFields(
+                info,
+                modelMapping
+            )
+            return await provider.getComments(
+                args.entity,
+                args.entityId,
+                fields
+            )
         },
     },
     Aquascape: {
-        async comments(aquascape: Aquascape, args: CommentsArgs, context: ModuleContext, info: GraphQLResolveInfo) {
-            const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
-            const fields = GraphQLHelper.getIncludeableFields(info, modelMapping)
-            return await provider.getComments(CommentEntityType.AQUASCAPE, aquascape.id, fields)
+        async comments(
+            aquascape: Aquascape,
+            args: CommentsArgs,
+            context: ModuleContext,
+            info: GraphQLResolveInfo
+        ) {
+            const provider: CommentProviderInterface = context.injector.get(
+                tokens.COMMENT_PROVIDER
+            )
+            const fields = GraphQLHelper.getIncludeableFields(
+                info,
+                modelMapping
+            )
+            return await provider.getComments(
+                CommentEntityType.AQUASCAPE,
+                aquascape.id,
+                fields
+            )
         },
     },
     Mutation: {
-        async addComment(root, args: MutationAddCommentArgs, context: ModuleContext & AuthenticationContext) {
-            const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
+        async addComment(
+            root,
+            args: MutationAddCommentArgs,
+            context: ModuleContext & AuthenticationContext
+        ) {
+            const provider: CommentProviderInterface = context.injector.get(
+                tokens.COMMENT_PROVIDER
+            )
             return await provider.addComment({
                 entityType: args.entity,
                 entityId: args.entityId,
                 userId: context.currentUserId,
                 content: args.content,
-                parentCommentId: args.parentCommentId
+                parentCommentId: args.parentCommentId,
             })
         },
-        async removeComment(root, args: MutationRemoveCommentArgs, context: ModuleContext & AuthenticationContext) {
-            const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
+        async removeComment(
+            root,
+            args: MutationRemoveCommentArgs,
+            context: ModuleContext & AuthenticationContext
+        ) {
+            const provider: CommentProviderInterface = context.injector.get(
+                tokens.COMMENT_PROVIDER
+            )
             return await provider.removeComment(args.id, context.currentUserId)
-        }
-    }
+        },
+    },
 }
 
 export const resolversComposition = {
     'Mutation.addComment': [authenticate],
-    'Mutation.removeComment': [authenticate]
+    'Mutation.removeComment': [authenticate],
 }

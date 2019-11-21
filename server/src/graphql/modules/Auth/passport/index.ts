@@ -16,7 +16,7 @@ export interface GoogleProfile {
     id: string
     displayName: string
     name: {
-        familyName: string,
+        familyName: string
         givenName: string
     }
     emails: Array<{value: string}>
@@ -41,56 +41,82 @@ export interface FacebookInfo {
     [key: string]: string
 }
 
-export const authenticateFacebook =
-    (req: Request, res: Response): Promise<{data?: FacebookAuthData, info?: FacebookInfo}> => {
-        return new Promise((resolve, reject) => {
-            passport.authenticate(
-                'facebook-token',
-                {session: false},
-                (err, data?: FacebookAuthData, info?: FacebookInfo) => {
-                    if (err) {
-                        reject(err)
-                    }
-
-                    resolve({data, info})
-                })(req, res)
-        })
-    }
-
-export const authenticateGoogle =  (req: Request, res: Response): Promise<{data: GoogleAuthData}> => {
+export const authenticateFacebook = (
+    req: Request,
+    res: Response
+): Promise<{data?: FacebookAuthData; info?: FacebookInfo}> => {
     return new Promise((resolve, reject) => {
         passport.authenticate(
-            'google-token',
-            (err, data: GoogleAuthData) => {
+            'facebook-token',
+            {session: false},
+            (err, data?: FacebookAuthData, info?: FacebookInfo) => {
                 if (err) {
                     reject(err)
                 }
 
-                resolve({data})
-            })(req, res)
+                resolve({data, info})
+            }
+        )(req, res)
+    })
+}
+
+export const authenticateGoogle = (
+    req: Request,
+    res: Response
+): Promise<{data: GoogleAuthData}> => {
+    return new Promise((resolve, reject) => {
+        passport.authenticate('google-token', (err, data: GoogleAuthData) => {
+            if (err) {
+                reject(err)
+            }
+
+            resolve({data})
+        })(req, res)
     })
 }
 
 export const initPassport = () => {
-    const FacebookTokenStrategyCallback: VerifyFunction = (accessToken, refreshToken, profile, done) => done(null, {
+    const FacebookTokenStrategyCallback: VerifyFunction = (
         accessToken,
         refreshToken,
-        profile
-    })
+        profile,
+        done
+    ) =>
+        done(null, {
+            accessToken,
+            refreshToken,
+            profile,
+        })
 
-    const GoogleTokenStrategyCallback = (accessToken: string, refreshToken: string, profile, done) => done(null, {
-        accessToken,
-        refreshToken,
-        profile
-    })
+    const GoogleTokenStrategyCallback = (
+        accessToken: string,
+        refreshToken: string,
+        profile,
+        done
+    ) =>
+        done(null, {
+            accessToken,
+            refreshToken,
+            profile,
+        })
 
-    passport.use(new FacebookTokenStrategy({
-        clientID: environment.FACEBOOK_CLIENT_ID,
-        clientSecret: environment.FACEBOOK_SECRET
-    }, FacebookTokenStrategyCallback))
+    passport.use(
+        new FacebookTokenStrategy(
+            {
+                clientID: environment.FACEBOOK_CLIENT_ID,
+                clientSecret: environment.FACEBOOK_SECRET,
+            },
+            FacebookTokenStrategyCallback
+        )
+    )
 
-    passport.use(new GoogleTokenStrategy.Strategy({
-        clientID: environment.GOOGLE_CLIENT_ID,
-        clientSecret: environment.GOOGLE_SECRET
-    }, GoogleTokenStrategyCallback))
+    passport.use(
+        new GoogleTokenStrategy.Strategy(
+            {
+                clientID: environment.GOOGLE_CLIENT_ID,
+                clientSecret: environment.GOOGLE_SECRET,
+            },
+            GoogleTokenStrategyCallback
+        )
+    )
 }

@@ -17,7 +17,5 @@ export const LikeModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([
-        attachCurrentUserId
-    ])
+    context: composeContext([attachCurrentUserId]),
 })

@@ -4,10 +4,18 @@ import * as Bluebird from 'bluebird'
 
 import {Comment} from 'db/models/Comment'
 import {tokens} from 'di/tokens'
-import {CommentRepositoryInterface, AddCommentArgs, CommentEntityType} from 'db/repositories/Comment'
+import {
+    CommentRepositoryInterface,
+    AddCommentArgs,
+    CommentEntityType,
+} from 'db/repositories/Comment'
 
 export interface CommentProviderInterface {
-    getComments(entityType: CommentEntityType, entityId: number, include?: Includeable[]): Bluebird<Comment[]>
+    getComments(
+        entityType: CommentEntityType,
+        entityId: number,
+        include?: Includeable[]
+    ): Bluebird<Comment[]>
 
     addComment(data: AddCommentArgs): Bluebird<Comment>
 
@@ -17,11 +25,15 @@ export interface CommentProviderInterface {
 @Injectable()
 export class CommentProvider implements CommentProviderInterface {
     constructor(
-        @Inject(tokens.COMMENT_REPOSITORY) private commentRepository: CommentRepositoryInterface
-    ) {
-    }
+        @Inject(tokens.COMMENT_REPOSITORY)
+        private commentRepository: CommentRepositoryInterface
+    ) {}
 
-    getComments(entityType: CommentEntityType, entityId: number, include?: Includeable[]) {
+    getComments(
+        entityType: CommentEntityType,
+        entityId: number,
+        include?: Includeable[]
+    ) {
         return this.commentRepository.getComments(entityType, entityId, include)
     }
 

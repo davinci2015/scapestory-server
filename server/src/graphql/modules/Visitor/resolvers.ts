@@ -7,8 +7,14 @@ import headers from 'constants/headers'
 
 export const resolvers = {
     Mutation: {
-        async visitAquascape(root, args: {aquascapeId: number}, context: ModuleContext & SessionContext) {
-            const provider: VisitorProviderInterface = context.injector.get(tokens.VISITOR_PROVIDER)
+        async visitAquascape(
+            root,
+            args: {aquascapeId: number},
+            context: ModuleContext & SessionContext
+        ) {
+            const provider: VisitorProviderInterface = context.injector.get(
+                tokens.VISITOR_PROVIDER
+            )
             let visitorId = context.req.headers[headers.VISITOR_TOKEN]
 
             // Cookie can be string 'undefined' or an array
@@ -16,10 +22,13 @@ export const resolvers = {
                 visitorId = undefined
             }
 
-            const [visitor, created] = await provider.visitAquascape(args.aquascapeId, visitorId)
+            const [visitor, created] = await provider.visitAquascape(
+                args.aquascapeId,
+                visitorId
+            )
             return {visitor, created}
-        }
-    }
+        },
+    },
 }
 
 export const resolversComposition = {}

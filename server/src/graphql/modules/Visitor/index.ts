@@ -13,12 +13,10 @@ import * as typeDefs from './schema.graphql'
 export const VisitorModule = new GraphQLModule({
     providers: [
         {provide: tokens.VISITOR_PROVIDER, useClass: VisitorProvider},
-        {provide: tokens.VISITOR_REPOSITORY, useClass: VisitorRepository}
+        {provide: tokens.VISITOR_REPOSITORY, useClass: VisitorRepository},
     ],
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([
-        attachSession
-    ])
+    context: composeContext([attachSession]),
 })

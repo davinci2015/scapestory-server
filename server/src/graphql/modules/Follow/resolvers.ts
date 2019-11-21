@@ -3,7 +3,7 @@ import {ModuleContext} from '@graphql-modules/core'
 import {FollowProviderInterface} from 'graphql/modules/Follow/FollowProvider'
 import {authenticate} from 'graphql/guards'
 import {tokens} from 'di/tokens'
-import {User} from 'db/models/User';
+import {User} from 'db/models/User'
 import {AuthenticationContext} from 'graphql/context'
 
 type FollowUserArgsType = {
@@ -17,33 +17,56 @@ type GetFollowsArgsType = {
 export const followResolvers = {
     Query: {
         async follows(root, args: GetFollowsArgsType, context: ModuleContext) {
-            const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
+            const provider: FollowProviderInterface = context.injector.get(
+                tokens.FOLLOW_PROVIDER
+            )
             return await provider.getFollows(args.userId)
-        }
+        },
     },
     User: {
-        async isFollowedByMe(user: User, args, context: ModuleContext & AuthenticationContext) {
+        async isFollowedByMe(
+            user: User,
+            args,
+            context: ModuleContext & AuthenticationContext
+        ) {
             if (!context.currentUserId || context.currentUserId === user.id) {
                 return false
             }
 
-            const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
+            const provider: FollowProviderInterface = context.injector.get(
+                tokens.FOLLOW_PROVIDER
+            )
             return await provider.isFollowedBy(context.currentUserId, user.id)
-        }
+        },
     },
     Mutation: {
-        async followUser(root, args: FollowUserArgsType, context: ModuleContext & AuthenticationContext) {
-            const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
+        async followUser(
+            root,
+            args: FollowUserArgsType,
+            context: ModuleContext & AuthenticationContext
+        ) {
+            const provider: FollowProviderInterface = context.injector.get(
+                tokens.FOLLOW_PROVIDER
+            )
             return await provider.followUser(args.userId, context.currentUserId)
         },
-        async unfollowUser(root, args: FollowUserArgsType, context: ModuleContext & AuthenticationContext) {
-            const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
-            return await provider.unfollowUser(args.userId, context.currentUserId)
-        }
-    }
+        async unfollowUser(
+            root,
+            args: FollowUserArgsType,
+            context: ModuleContext & AuthenticationContext
+        ) {
+            const provider: FollowProviderInterface = context.injector.get(
+                tokens.FOLLOW_PROVIDER
+            )
+            return await provider.unfollowUser(
+                args.userId,
+                context.currentUserId
+            )
+        },
+    },
 }
 
 export const followResolversComposition = {
     'Mutation.followUser': [authenticate],
-    'Mutation.unfollowUser': [authenticate]
+    'Mutation.unfollowUser': [authenticate],
 }

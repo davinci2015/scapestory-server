@@ -3,10 +3,19 @@ import * as Bluebird from 'bluebird'
 import {Follow} from 'db/models/Follow'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 
-export interface FollowRepositoryInterface extends BaseRepositoryInterface<Follow> {
-    followUser: (followerUserId: number, followedUserId: number) => Bluebird<Follow | null>,
-    unfollowUser: (followerUserId: number, followedUserId: number) => Bluebird<Follow | null>,
-    getFollows: (userId: number) => Promise<{ followers: Follow[], following: Follow[] }>
+export interface FollowRepositoryInterface
+    extends BaseRepositoryInterface<Follow> {
+    followUser: (
+        followerUserId: number,
+        followedUserId: number
+    ) => Bluebird<Follow | null>
+    unfollowUser: (
+        followerUserId: number,
+        followedUserId: number
+    ) => Bluebird<Follow | null>
+    getFollows: (
+        userId: number
+    ) => Promise<{followers: Follow[]; following: Follow[]}>
     isFollowedBy: (followerId: number, followedId: number) => Promise<boolean>
 }
 
@@ -25,10 +34,12 @@ export class FollowRepository extends BaseRepository<Follow> {
     }
 
     async isFollowedBy(followerId: number, followedId: number) {
-        const follow = this.findOne({where: {
-            followerUserId: followerId,
-            followedUserId: followedId
-        }})
+        const follow = this.findOne({
+            where: {
+                followerUserId: followerId,
+                followedUserId: followedId,
+            },
+        })
 
         return Boolean(follow)
     }
@@ -36,12 +47,12 @@ export class FollowRepository extends BaseRepository<Follow> {
     async getFollows(userId: number) {
         const [followers, following] = await Promise.all([
             this.findAll({where: {followedUserId: userId}}),
-            this.findAll({where: {followerUserId: userId}})
+            this.findAll({where: {followerUserId: userId}}),
         ])
 
         return {
             followers,
-            following
+            following,
         }
     }
 }

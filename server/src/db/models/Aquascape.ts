@@ -6,7 +6,7 @@ import {
     BelongsTo,
     HasMany,
     BelongsToMany,
-    Default
+    Default,
 } from 'sequelize-typescript'
 import {User} from 'db/models/User'
 import {AquascapeLight} from 'db/models/manyToMany/AquascapeLight'
@@ -91,27 +91,51 @@ export class Aquascape extends Model<Aquascape> {
     @HasMany(() => Like)
     likes: Like[]
 
-    @BelongsToMany(() => Filter, () => AquascapeFilter)
+    @BelongsToMany(
+        () => Filter,
+        () => AquascapeFilter
+    )
     filters: Filter[]
 
-    @BelongsToMany(() => Light, () => AquascapeLight)
+    @BelongsToMany(
+        () => Light,
+        () => AquascapeLight
+    )
     lights: Light[]
 
-    @BelongsToMany(() => Substrate, () => AquascapeSubstrate)
+    @BelongsToMany(
+        () => Substrate,
+        () => AquascapeSubstrate
+    )
     substrates: Substrate[]
 
-    @BelongsToMany(() => Additive, () => AquascapeAdditive)
+    @BelongsToMany(
+        () => Additive,
+        () => AquascapeAdditive
+    )
     additives: Additive[]
 
-    @BelongsToMany(() => Hardscape, () => AquascapeHardscape)
+    @BelongsToMany(
+        () => Hardscape,
+        () => AquascapeHardscape
+    )
     hardscape: Hardscape[]
 
-    @BelongsToMany(() => Tag, () => AquascapeTag)
+    @BelongsToMany(
+        () => Tag,
+        () => AquascapeTag
+    )
     tags: Tag[]
 
-    @BelongsToMany(() => Plant, () => AquascapePlant)
+    @BelongsToMany(
+        () => Plant,
+        () => AquascapePlant
+    )
     plants: Plant[]
 
-    @BelongsToMany(() => Livestock, () => AquascapeLivestock)
+    @BelongsToMany(
+        () => Livestock,
+        () => AquascapeLivestock
+    )
     livestock: Livestock[]
 }

@@ -31,7 +31,5 @@ export const AquascapeModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([
-        attachCurrentUserId
-    ])
+    context: composeContext([attachCurrentUserId]),
 })

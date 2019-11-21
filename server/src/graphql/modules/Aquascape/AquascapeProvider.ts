@@ -18,13 +18,24 @@ export interface AquascapeProviderInterface {
         include?: Includeable[]
     ) => Bluebird<Aquascape[]>
 
-    getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape | null>
+    getFeaturedAquascape: (
+        include?: Includeable[]
+    ) => Bluebird<Aquascape | null>
 
-    getTrendingAquascapes: (pagination: Pagination, include?: Includeable[]) => Bluebird<Aquascape>
+    getTrendingAquascapes: (
+        pagination: Pagination,
+        include?: Includeable[]
+    ) => Bluebird<Aquascape>
 
-    getAquascapeById: (id: number, include?: Includeable[]) => Bluebird<Aquascape | null>
+    getAquascapeById: (
+        id: number,
+        include?: Includeable[]
+    ) => Bluebird<Aquascape | null>
 
-    createAquascape: (userId: number, data: CreateAquascapeArgs) => Promise<Aquascape>
+    createAquascape: (
+        userId: number,
+        data: CreateAquascapeArgs
+    ) => Promise<Aquascape>
 
     getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
 }
@@ -32,12 +43,22 @@ export interface AquascapeProviderInterface {
 @Injectable()
 export class AquascapeProvider implements AquascapeProviderInterface {
     constructor(
-        @Inject(tokens.AQUASCAPE_REPOSITORY) private aquascapeRepository: AquascapeRepositoryInterface,
-    ) {
-    }
+        @Inject(tokens.AQUASCAPE_REPOSITORY)
+        private aquascapeRepository: AquascapeRepositoryInterface
+    ) {}
 
-    getAquascapes(pagination: Pagination, userId?: number, random?: boolean, include?: Includeable[]) {
-        return this.aquascapeRepository.getAquascapes(pagination, userId, random, include)
+    getAquascapes(
+        pagination: Pagination,
+        userId?: number,
+        random?: boolean,
+        include?: Includeable[]
+    ) {
+        return this.aquascapeRepository.getAquascapes(
+            pagination,
+            userId,
+            random,
+            include
+        )
     }
 
     getFeaturedAquascape(include?: Includeable[]) {
@@ -45,7 +66,10 @@ export class AquascapeProvider implements AquascapeProviderInterface {
     }
 
     getTrendingAquascapes(pagination: Pagination, include?: Includeable[]) {
-        return this.aquascapeRepository.getTrendingAquascapes(pagination, include)
+        return this.aquascapeRepository.getTrendingAquascapes(
+            pagination,
+            include
+        )
     }
 
     getAquascapeById(id: number, include?: Includeable[]) {

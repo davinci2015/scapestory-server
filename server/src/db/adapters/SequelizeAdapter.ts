@@ -5,7 +5,7 @@ import {DatabaseConnectionParams} from 'db/Database'
 import {SyncOptions} from 'sequelize/types'
 
 export interface DatabaseAdapter {
-    connect: (params: DatabaseConnectionParams) => void,
+    connect: (params: DatabaseConnectionParams) => void
 
     testConnection: () => Bluebird<void>
 
@@ -25,7 +25,7 @@ export class SequelizeAdapter implements DatabaseAdapter {
             modelPaths: [
                 path.join(__dirname, '../models'),
                 path.join(__dirname, '../models/manyToMany'),
-            ]
+            ],
         })
     }
 

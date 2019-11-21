@@ -12,20 +12,26 @@ type UserArgsType = {
 export const resolvers = {
     Query: {
         async me(root, args, context: ModuleContext & AuthenticationContext) {
-            const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
+            const provider: UsersProviderInterface = context.injector.get(
+                tokens.USER_PROVIDER
+            )
             return await provider.findUserById(context.currentUserId)
         },
         async user(root, args: UserArgsType, {injector}: ModuleContext) {
-            const provider: UsersProviderInterface = injector.get(tokens.USER_PROVIDER)
+            const provider: UsersProviderInterface = injector.get(
+                tokens.USER_PROVIDER
+            )
             return await provider.findUserById(args.id)
         },
         async users(root, args, {injector}: ModuleContext) {
-            const provider: UsersProviderInterface = injector.get(tokens.USER_PROVIDER)
+            const provider: UsersProviderInterface = injector.get(
+                tokens.USER_PROVIDER
+            )
             return await provider.getAllUsers()
-        }
-    }
+        },
+    },
 }
 
 export const resolversComposition = {
-    'Query.me': [authenticate]
+    'Query.me': [authenticate],
 }

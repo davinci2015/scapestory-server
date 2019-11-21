@@ -3,7 +3,10 @@ import {Includeable} from 'sequelize/types'
 import {GraphQLResolveInfo} from 'graphql'
 
 export class GraphQLHelper {
-    static getIncludeableFields(info: GraphQLResolveInfo, modelMapping: {[key: string]: any}) {
+    static getIncludeableFields(
+        info: GraphQLResolveInfo,
+        modelMapping: {[key: string]: any}
+    ) {
         // @ts-ignore
         const fields = graphqlFields(info)
         const include: Includeable[] = []

@@ -12,7 +12,8 @@ export interface AquascapeFilter {
     trending: boolean
 }
 
-export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aquascape> {
+export interface AquascapeRepositoryInterface
+    extends BaseRepositoryInterface<Aquascape> {
     getAquascapes: (
         pagination: Pagination,
         userId?: number,
@@ -20,22 +21,36 @@ export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aq
         include?: Includeable[]
     ) => Bluebird<Aquascape[]>
 
-    getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape>
+    getFeaturedAquascape: (
+        include?: Includeable[]
+    ) => Bluebird<Aquascape | null>
 
-    getTrendingAquascapes: (pagination: Pagination, include?: Includeable[]) => Bluebird<Aquascape>
+    getTrendingAquascapes: (
+        pagination: Pagination,
+        include?: Includeable[]
+    ) => Bluebird<Aquascape[]>
 
-    getAquascapeById: (id: number, include?: Includeable[]) => Bluebird<Aquascape | null>
+    getAquascapeById: (
+        id: number,
+        include?: Includeable[]
+    ) => Bluebird<Aquascape | null>
 
     getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
 }
 
 @Injectable()
-export class AquascapeRepository extends BaseRepository<Aquascape> {
+export class AquascapeRepository extends BaseRepository<Aquascape>
+    implements AquascapeRepositoryInterface {
     constructor() {
         super(Aquascape)
     }
 
-    getAquascapes(pagination: Pagination, userId?: number, random?: boolean, include?: Includeable[]) {
+    getAquascapes(
+        pagination: Pagination,
+        userId?: number,
+        random?: boolean,
+        include?: Includeable[]
+    ) {
         const where: {[key: string]: number} = {}
         const defaultOrder: Order = [['createdAt', 'DESC']]
         const randomOrder: Order = literal('random()')
@@ -49,17 +64,17 @@ export class AquascapeRepository extends BaseRepository<Aquascape> {
             include,
             order: random ? randomOrder : defaultOrder,
             limit: pagination.limit,
-            offset: pagination.offset
+            offset: pagination.offset,
         })
     }
 
-    async getTrendingAquascapes(pagination: Pagination, include?: Includeable[]) {
+    getTrendingAquascapes(pagination: Pagination, include?: Includeable[]) {
         return this.findAll({
             where: {trending: true},
             include,
             order: [['createdAt', 'DESC']],
             limit: pagination.limit,
-            offset: pagination.offset
+            offset: pagination.offset,
         })
     }
 

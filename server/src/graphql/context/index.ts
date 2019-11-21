@@ -12,22 +12,36 @@ export type AuthenticationContext = {
 
 export type SessionContext = SessionInterface
 
-export const composeContext = (contexts: Array<(
-    session: SessionInterface,
-    currentContext: ModuleContext,
-    moduleSessionInfo: SessionInterface
-) => Promise<Context> | Context>) => {
-    return (session: SessionInterface,
-            currentContext: ModuleContext,
-            moduleSessionInfo: SessionInterface
-    ) => {
-        return contexts.reduce((acc: ModuleContext, ctx: (
+export const composeContext = (
+    contexts: Array<
+        (
             session: SessionInterface,
             currentContext: ModuleContext,
             moduleSessionInfo: SessionInterface
-        ) => ModuleContext) => {
-            return ({...acc, ...ctx(session, currentContext, moduleSessionInfo)})
-        }, {} as {[x: string]: any, injector: Injector<any>})
+        ) => Promise<Context> | Context
+    >
+) => {
+    return (
+        session: SessionInterface,
+        currentContext: ModuleContext,
+        moduleSessionInfo: SessionInterface
+    ) => {
+        return contexts.reduce(
+            (
+                acc: ModuleContext,
+                ctx: (
+                    session: SessionInterface,
+                    currentContext: ModuleContext,
+                    moduleSessionInfo: SessionInterface
+                ) => ModuleContext
+            ) => {
+                return {
+                    ...acc,
+                    ...ctx(session, currentContext, moduleSessionInfo),
+                }
+            },
+            {} as {[x: string]: any; injector: Injector<any>}
+        )
     }
 }
 
@@ -60,5 +74,5 @@ export const attachCurrentUserId = (
 
 export const attachSession = (session: SessionInterface): SessionContext => ({
     req: session.req,
-    res: session.res
+    res: session.res,
 })

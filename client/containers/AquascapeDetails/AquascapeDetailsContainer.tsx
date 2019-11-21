@@ -68,7 +68,6 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
             const { data } = await visit({variables: {aquascapeId}})
 
             if (data.visitAquascape && !cookie.getVisitorId()) {
-                console.log(data.visitAquascape)
                 cookie.persistVisitorId(data.visitAquascape.visitor.visitorId)
             }
         }

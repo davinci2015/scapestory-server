@@ -14,7 +14,7 @@ const environment = {
     FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
     FACEBOOK_SECRET: process.env.FACEBOOK_SECRET,
     GOOGLE_SECRET: process.env.GOOGLE_SECRET,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
 } as Readonly<{[key: string]: string}>
 
 const checkVariables = (variables: {[key: string]: string | undefined}) => {

@@ -12,12 +12,13 @@ export const AuthModule = new GraphQLModule({
     providers: [
         {provide: tokens.AUTH_PROVIDER, useClass: AuthProvider},
         {provide: tokens.USER_REPOSITORY, useClass: UserRepository},
-        {provide: tokens.SOCIAL_LOGIN_REPOSITORY, useClass: SocialLoginRepository},
+        {
+            provide: tokens.SOCIAL_LOGIN_REPOSITORY,
+            useClass: SocialLoginRepository,
+        },
     ],
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([
-        attachSession
-    ])
+    context: composeContext([attachSession]),
 })

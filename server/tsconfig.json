@@ -1,35 +1,24 @@
 {
-  "compilerOptions": {
-    "baseUrl": "src",
-    "experimentalDecorators": true,
-    "module": "commonjs",
-    "target": "es6",
-    "lib": [
-      "es6",
-      "esnext",
-      "es2015",
-      "dom"
-    ],
-    "noUnusedLocals": true,
-    "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "sourceMap": true,
-    "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "files": [
-    "src/main.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
-  "paths": {
-    "graphql/*": ["./src/graphql/*"]
-  }
+    "compilerOptions": {
+        "baseUrl": "src",
+        "experimentalDecorators": true,
+        "module": "commonjs",
+        "target": "es6",
+        "lib": ["es6", "esnext", "es2015", "dom"],
+        "noUnusedLocals": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "sourceMap": true,
+        "declaration": true,
+        "outDir": "./dist",
+        "rootDir": "./src"
+    },
+    "include": ["src/**/*"],
+    "files": ["src/main.ts"],
+    "exclude": ["node_modules"],
+    "paths": {
+        "graphql/*": ["./src/graphql/*"]
+    }
 }

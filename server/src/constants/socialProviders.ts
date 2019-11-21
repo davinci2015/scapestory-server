@@ -1,4 +1,4 @@
 export default {
     FACEBOOK: 'Facebook',
-    GOOGLE: 'Google'
+    GOOGLE: 'Google',
 }
