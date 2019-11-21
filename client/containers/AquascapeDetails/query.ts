@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import {fragments, AquascapeData} from 'graphql/queries'
+import {fragments, AquascapesResult} from 'graphql/queries'
 import {
     Plant,
     Livestock,
@@ -31,12 +31,8 @@ export interface AquascapeDetails {
     additives: Pick<Additive, 'id' | 'brand' | 'name'>[]
     tags: {name: string}[]
     images: Pick<AquascapeImage, 'id' | 'url' | 'title'>[]
-    user: Pick<
-        User,
-        'id' | 'name' | 'profileImage' | 'username' | 'isFollowedByMe'
-    > & {
-        aquascapes: AquascapeData[]
-    }
+    user: Pick<User, 'id' | 'name' | 'profileImage' | 'username' | 'isFollowedByMe'> &
+        AquascapesResult
     comments: AquascapeComment[]
 }
 
@@ -49,15 +45,16 @@ export interface AquascapeComment {
     user: Pick<User, 'id' | 'name' | 'profileImage' | 'username'>
 }
 
-export interface AquascapeDetailsQuery {
-    aquascapes: AquascapeData[]
+export interface AquascapeDetailsQuery extends AquascapesResult {
     aquascape: AquascapeDetails
 }
 
 export const AQUASCAPE_DETAILS = gql`
     query Aquascape($id: Int!) {
         aquascapes(pagination: {limit: 4}, random: true) {
-            ...AquascapeFields
+            rows {
+                ...AquascapeFields
+            }
         }
 
         aquascape(id: $id) {
@@ -130,7 +127,9 @@ export const AQUASCAPE_DETAILS = gql`
                 username
                 isFollowedByMe
                 aquascapes(pagination: {limit: 4}, random: true) {
-                    ...AquascapeFields
+                    rows {
+                        ...AquascapeFields
+                    }
                 }
             }
 

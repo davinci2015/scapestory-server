@@ -91,7 +91,7 @@ type Tank {
 }
 
 type User {
-    aquascapes(pagination: Pagination, random: Boolean): [Aquascape!]!
+    aquascapes(pagination: Pagination, random: Boolean): AquascapesResult
 }
 
 type Aquascape {
@@ -135,11 +135,7 @@ type AquascapesResult {
 }
 
 type Query {
-    aquascapes(
-        pagination: Pagination
-        userId: Int
-        random: Boolean
-    ): AquascapesResult
+    aquascapes(pagination: Pagination, userId: Int, random: Boolean): AquascapesResult
     trendingAquascapes(pagination: Pagination): [Aquascape!]!
     featuredAquascape: Aquascape
     aquascape(id: Int!): Aquascape
