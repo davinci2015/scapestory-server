@@ -20,6 +20,14 @@ export interface AquascapeData {
     }
 }
 
+export interface AquascapesResult {
+    aquascapes: {
+        rows: AquascapeData[]
+        count: number
+        __typename?: string
+    }
+}
+
 export interface UserProfile {
     id: number
     email: string
@@ -33,6 +41,7 @@ export const fragments = {
     aquascape: gql`
         fragment AquascapeFields on Aquascape {
             id
+            createdAt
             title
             mainImage
             viewsCount
@@ -67,7 +76,10 @@ export const USER_PROFILE = gql`
 export const AQUASCAPES = gql`
     query Aquascapes($pagination: Pagination!, $userId: Int) {
         aquascapes(pagination: $pagination, userId: $userId) {
-            ...AquascapeFields
+            count
+            rows {
+                ...AquascapeFields
+            }
         }
     }
     ${fragments.aquascape}

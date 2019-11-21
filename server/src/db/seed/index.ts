@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as faker from 'faker'
 import realPlants from './plants'
 import realFilters from './filters'
@@ -57,16 +58,9 @@ const getProfileImage = () => {
 
 const getRandomIndex = (items: number) => Math.floor(Math.random() * items)
 const getEmptyArray = (items: number) => Array(items).fill('')
-const filterDuplicateKeys = (arr: any[], keys: string[]) => {
-    return arr.filter(itemFilter => {
-        return !arr.find(itemFind => {
-            return (
-                itemFilter._id !== itemFind._id &&
-                keys.every(key => itemFilter[key] === itemFind[key])
-            )
-        })
-    })
-}
+const filterDuplicateKeys = (arr: any[], keys: string[]) => arr.filter(itemFilter => !arr.find(itemFind => (
+    itemFilter._id !== itemFind._id && keys.every(key => itemFilter[key] === itemFind[key])
+)))
 
 const entriesCount = {
     aquascapes: 40,
@@ -242,19 +236,17 @@ const plants = realPlants.map((name, index) => ({
 }))
 
 let filterIdIncrement = 1
-const filters = realFilters.reduce((acc, filter, index) => {
-    return [
-        ...acc,
-        ...filter.models.map((model, modelIndex) => ({
-            _id: filterIdIncrement++,
-            brand: filter.brand,
-            predefined: true,
-            description: faker.lorem.words(),
-            image: faker.image.imageUrl(),
-            model,
-        })),
-    ]
-}, [])
+const filters = realFilters.reduce((acc, filter, index) => [
+    ...acc,
+    ...filter.models.map((model, modelIndex) => ({
+        _id: filterIdIncrement++,
+        brand: filter.brand,
+        predefined: true,
+        description: faker.lorem.words(),
+        image: faker.image.imageUrl(),
+        model,
+    })),
+], [])
 
 const aquascapePlants = filterDuplicateKeys(
     getEmptyArray(entriesCount.aquascapePlants).map((_, index) => ({

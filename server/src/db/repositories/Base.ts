@@ -35,7 +35,7 @@ export interface BaseRepositoryInterface<T> {
 
     findAndCountAll(
         options?: FindAndCountOptions
-    ): Promise<{rows: T[]; count: number}>
+    ): Promise<{rows: T[], count: number}>
 
     findOrCreate(options: FindOrCreateOptions): Promise<[T, boolean]>
 
@@ -43,7 +43,7 @@ export interface BaseRepositoryInterface<T> {
 }
 
 export class BaseRepository<T extends Model<T>>
-    implements BaseRepositoryInterface<T> {
+implements BaseRepositoryInterface<T> {
     constructor(private relation: ModelType<T>) {}
 
     create(
@@ -63,7 +63,7 @@ export class BaseRepository<T extends Model<T>>
 
     findAndCountAll(
         options?: FindAndCountOptions
-    ): Promise<{rows: T[]; count: number}> {
+    ): Promise<{rows: T[], count: number}> {
         return this.relation.findAndCountAll(options)
     }
 

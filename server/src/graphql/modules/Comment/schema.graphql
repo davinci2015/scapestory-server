@@ -1,5 +1,6 @@
 # import User from '../User/schema.graphql'
 # import Like from '../Like/schema.graphql'
+# import Pagination from '../Aquascape/schema.graphql'
 
 type Comment {
     id: Int!
@@ -17,21 +18,25 @@ type Aquascape {
     comments: [Comment!]!
 }
 
-input Pagination {
-    limit: Int!
-    offset: Int!
-}
-
 enum CommentEntityType {
     AQUASCAPE
     IMAGE
 }
 
 type Query {
-    comments(entity: CommentEntityType!, entityId: Int!, pagination: Pagination!): [Comment!]!
+    comments(
+        entity: CommentEntityType!
+        entityId: Int!
+        pagination: Pagination!
+    ): [Comment!]!
 }
 
 type Mutation {
-    addComment(entity: CommentEntityType!, entityId: Int!, content: String!, parentCommentId: Int): Comment
+    addComment(
+        entity: CommentEntityType!
+        entityId: Int!
+        content: String!
+        parentCommentId: Int
+    ): Comment
     removeComment(id: Int!): Comment
 }

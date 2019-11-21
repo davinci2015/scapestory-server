@@ -1,6 +1,7 @@
 import {Injectable} from '@graphql-modules/di'
-import {Includeable, Order} from 'sequelize/types'
+import {Includeable, Order, WhereOptions} from 'sequelize/types'
 import {literal} from 'sequelize'
+import {Op} from 'sequelize'
 import * as Bluebird from 'bluebird'
 
 import {Aquascape} from 'db/models/Aquascape'
@@ -19,7 +20,7 @@ export interface AquascapeRepositoryInterface
         userId?: number,
         random?: boolean,
         include?: Includeable[]
-    ) => Bluebird<Aquascape[]>
+    ) => Promise<{rows: Aquascape[], count: number}>
 
     getFeaturedAquascape: (
         include?: Includeable[]
@@ -45,13 +46,13 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
         super(Aquascape)
     }
 
-    getAquascapes(
+    async getAquascapes(
         pagination: Pagination,
         userId?: number,
         random?: boolean,
         include?: Includeable[]
     ) {
-        const where: {[key: string]: number} = {}
+        const where: WhereOptions = {}
         const defaultOrder: Order = [['createdAt', 'DESC']]
         const randomOrder: Order = literal('random()')
 
@@ -59,22 +60,38 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
             where.userId = userId
         }
 
-        return this.findAll({
+        const count = await this.count({where})
+
+        if (pagination.cursor) {
+            where.createdAt = {
+                [Op.lt]: new Date(Number(pagination.cursor))
+            }
+        }
+
+        const rows = await this.findAll({
             where,
             include,
             order: random ? randomOrder : defaultOrder,
-            limit: pagination.limit,
-            offset: pagination.offset,
+            limit: pagination.limit
         })
+
+        return {rows, count}
     }
 
     getTrendingAquascapes(pagination: Pagination, include?: Includeable[]) {
+        const where: WhereOptions = { trending: true }
+
+        if (pagination.cursor) {
+            where.createdAt = {
+                [Op.lt]: new Date(Number(pagination.cursor))
+            }
+        }
+
         return this.findAll({
-            where: {trending: true},
+            where,
             include,
             order: [['createdAt', 'DESC']],
             limit: pagination.limit,
-            offset: pagination.offset,
         })
     }
 

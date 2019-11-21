@@ -25,7 +25,7 @@ type Substrate {
     brand: String
     name: String!
     description: String
-    image: String 
+    image: String
 }
 
 type Additive {
@@ -68,7 +68,7 @@ type Livestock {
     id: Int!
     name: String!
     description: String
-    image: String   
+    image: String
 }
 
 type Filter {
@@ -96,6 +96,8 @@ type User {
 
 type Aquascape {
     id: Int!
+    createdAt: String!
+    updatedAt: String!
     title: String!
     featured: Boolean!
     trending: Boolean!
@@ -120,15 +122,24 @@ type Aquascape {
 
 input Pagination {
     limit: Int!
-    offset: Int!
+    cursor: String
 }
 
 input AquascapesFilter {
     trending: Boolean
 }
 
+type AquascapesResult {
+    rows: [Aquascape!]!
+    count: Int!
+}
+
 type Query {
-    aquascapes(pagination: Pagination, userId: Int, random: Boolean): [Aquascape!]!
+    aquascapes(
+        pagination: Pagination
+        userId: Int
+        random: Boolean
+    ): AquascapesResult
     trendingAquascapes(pagination: Pagination): [Aquascape!]!
     featuredAquascape: Aquascape
     aquascape(id: Int!): Aquascape

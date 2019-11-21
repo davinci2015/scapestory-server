@@ -56,7 +56,7 @@ export interface AquascapeDetailsQuery {
 
 export const AQUASCAPE_DETAILS = gql`
     query Aquascape($id: Int!) {
-        aquascapes(pagination: {limit: 4, offset: 0}, random: true) {
+        aquascapes(pagination: {limit: 4}, random: true) {
             ...AquascapeFields
         }
 
@@ -129,7 +129,7 @@ export const AQUASCAPE_DETAILS = gql`
                 profileImage
                 username
                 isFollowedByMe
-                aquascapes(pagination: {limit: 4, offset: 0}, random: true) {
+                aquascapes(pagination: {limit: 4}, random: true) {
                     ...AquascapeFields
                 }
             }

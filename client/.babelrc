@@ -1,10 +1,12 @@
 {
-    "presets": [
-        "next/babel"
-    ],
+    "presets": ["next/babel"],
     "plugins": [
-        ["module-resolver", {
-            "root": ["./"]
-        }]
+        "@babel/plugin-proposal-optional-chaining",
+        [
+            "module-resolver",
+            {
+                "root": ["./"]
+            }
+        ]
     ]
 }

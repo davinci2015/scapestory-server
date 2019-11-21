@@ -7,5 +7,5 @@ export interface SessionInterface {
 
 export interface Pagination {
     limit: number
-    offset: number
+    cursor?: string
 }

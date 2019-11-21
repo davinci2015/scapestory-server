@@ -16,7 +16,7 @@ export interface AquascapeProviderInterface {
         userId?: number,
         random?: boolean,
         include?: Includeable[]
-    ) => Bluebird<Aquascape[]>
+    ) => Promise<{rows: Aquascape[], count: number}>
 
     getFeaturedAquascape: (
         include?: Includeable[]

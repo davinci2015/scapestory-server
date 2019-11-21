@@ -68,13 +68,14 @@ export const resolvers = {
     Query: {
         async aquascapes(
             root,
-            args: {pagination: Pagination; userId?: number; random?: boolean},
+            args: {pagination: Pagination, userId?: number, random?: boolean},
             context: ModuleContext,
             info: GraphQLResolveInfo
         ) {
             const provider: AquascapeProviderInterface = context.injector.get(
                 tokens.AQUASCAPE_PROVIDER
             )
+
             return await provider.getAquascapes(
                 args.pagination,
                 args.userId,
@@ -138,7 +139,7 @@ export const resolvers = {
     User: {
         async aquascapes(
             user: User,
-            args: {pagination: Pagination; random: boolean},
+            args: {pagination: Pagination, random: boolean},
             context: ModuleContext,
             info: GraphQLResolveInfo
         ) {
