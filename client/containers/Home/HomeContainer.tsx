@@ -67,8 +67,6 @@ const HomeContainer = () => {
         }
     }, [recent])
 
-    console.log(recent && recent.data)
-
     return (
         <Content>
             <Grid>

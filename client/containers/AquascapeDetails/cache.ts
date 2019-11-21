@@ -18,10 +18,10 @@ interface Payload {
     [key: string]: any
 }
 
-export const updateAquascapeDetailsCache = (
-    action: AquascapeDetailsActions,
-    payload: Payload
-) => (cache: DataProxy, mutationResult: FetchResult<any>) => {
+export const updateAquascapeDetailsCache = (action: AquascapeDetailsActions, payload: Payload) => (
+    cache: DataProxy,
+    mutationResult: FetchResult<any>
+) => {
     const mutationData = mutationResult.data
     let query
     let data
@@ -72,17 +72,13 @@ export const updateAquascapeDetailsCache = (
                 data: {
                     aquascape: {
                         ...data.aquascape,
-                        comments: data.aquascape.comments.map(
-                            (comment: AquascapeComment) =>
-                                comment.id === mutationData.like.commentId
-                                    ? {
-                                          ...comment,
-                                          likes: [
-                                              ...comment.likes,
-                                              mutationData.like,
-                                          ],
-                                      }
-                                    : comment
+                        comments: data.aquascape.comments.map((comment: AquascapeComment) =>
+                            comment.id === mutationData.like.commentId
+                                ? {
+                                      ...comment,
+                                      likes: [...comment.likes, mutationData.like],
+                                  }
+                                : comment
                         ),
                     },
                 },
@@ -97,18 +93,15 @@ export const updateAquascapeDetailsCache = (
                 data: {
                     aquascape: {
                         ...data.aquascape,
-                        comments: data.aquascape.comments.map(
-                            (comment: AquascapeComment) =>
-                                comment.id === mutationData.dislike.commentId
-                                    ? {
-                                          ...comment,
-                                          likes: comment.likes.filter(
-                                              like =>
-                                                  like.id !==
-                                                  mutationData.dislike.id
-                                          ),
-                                      }
-                                    : comment
+                        comments: data.aquascape.comments.map((comment: AquascapeComment) =>
+                            comment.id === mutationData.dislike.commentId
+                                ? {
+                                      ...comment,
+                                      likes: comment.likes.filter(
+                                          like => like.id !== mutationData.dislike.id
+                                      ),
+                                  }
+                                : comment
                         ),
                     },
                 },
@@ -156,7 +149,6 @@ export const updateAquascapeDetailsCache = (
             query = gql`query { aquascape(id: ${payload.aquascapeId}) { id viewsCount }}`
             data = cache.readQuery<any>({query})
 
-            console.log(mutationData)
             if (
                 mutationData &&
                 mutationData.visitAquascape &&
