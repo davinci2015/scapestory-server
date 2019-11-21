@@ -25,7 +25,7 @@ export interface AquascapeProviderInterface {
     getTrendingAquascapes: (
         pagination: Pagination,
         include?: Includeable[]
-    ) => Bluebird<Aquascape>
+    ) => Bluebird<Aquascape[]>
 
     getAquascapeById: (
         id: number,
