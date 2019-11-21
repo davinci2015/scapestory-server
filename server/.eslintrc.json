@@ -78,18 +78,6 @@
         "eol-last": "off",
         "eqeqeq": ["error", "smart"],
         "guard-for-in": "error",
-        "id-blacklist": [
-            "error",
-            "any",
-            "Number",
-            "number",
-            "String",
-            "string",
-            "Boolean",
-            "boolean",
-            "Undefined",
-            "undefined"
-        ],
         "id-match": "error",
         "import/order": "off",
         "max-classes-per-file": ["error", 1],
@@ -127,7 +115,6 @@
         "no-var": "error",
         "object-shorthand": "error",
         "one-var": ["error", "never"],
-        "prefer-arrow/prefer-arrow-functions": "error",
         "prefer-const": "error",
         "quote-props": ["error", "consistent-as-needed"],
         "radix": "error",
@@ -141,33 +128,6 @@
         ],
         "spaced-comment": "error",
         "use-isnan": "error",
-        "valid-typeof": "off",
-        "@typescript-eslint/tslint/config": [
-            "error",
-            {
-                "rules": {
-                    "import-spacing": true,
-                    "jsdoc-format": true,
-                    "no-reference-import": true,
-                    "one-line": [
-                        true,
-                        "check-catch",
-                        "check-else",
-                        "check-finally",
-                        "check-open-brace",
-                        "check-whitespace"
-                    ],
-                    "whitespace": [
-                        true,
-                        "check-branch",
-                        "check-decl",
-                        "check-operator",
-                        "check-separator",
-                        "check-type",
-                        "check-typecast"
-                    ]
-                }
-            }
-        ]
+        "valid-typeof": "off"
     }
 }
