@@ -461,7 +461,8 @@ export type AquascapeDetailsQuery = (
 );
 
 export type UserBySlugQueryVariables = {
-  slug: Scalars['String']
+  slug: Scalars['String'],
+  pagination: Pagination
 };
 
 
@@ -470,6 +471,14 @@ export type UserBySlugQuery = (
   & { user: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'profileImage' | 'youtubeLink' | 'instagramLink' | 'followersCount' | 'followingCount' | 'isFollowedByMe'>
+    & { aquascapes: (
+      { __typename?: 'AquascapesResult' }
+      & Pick<AquascapesResult, 'count'>
+      & { rows: Array<(
+        { __typename?: 'Aquascape' }
+        & AquascapeFieldsFragment
+      )> }
+    ) }
   )> }
 );
 

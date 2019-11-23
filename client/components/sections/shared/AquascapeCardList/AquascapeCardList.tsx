@@ -11,22 +11,24 @@ interface Props {
 }
 
 const AquascapeCardList = ({children, title, loadMore}: Props) => (
-    <div className="section">
-        <div className="title">{title}</div>
-        {children}
-        {loadMore && (
-            <div className="load-more" onClick={loadMore}>
-                <div className="load-more-button">
-                    <Headline as="h5" variant="h5" color={colors.PRIMARY}>
-                        <FormattedMessage
-                            id="card_list.load_more"
-                            defaultMessage="Load more aquascapes"
-                        />
-                    </Headline>
-                    <Icon d={Icon.ARROW_DOWN} color={colors.PRIMARY} />
+    <>
+        <div className="section">
+            <div className="title">{title}</div>
+            {children}
+            {loadMore && (
+                <div className="load-more" onClick={loadMore}>
+                    <div className="load-more-button">
+                        <Headline as="h5" variant="h5" color={colors.PRIMARY}>
+                            <FormattedMessage
+                                id="card_list.load_more"
+                                defaultMessage="Load more aquascapes"
+                            />
+                        </Headline>
+                        <Icon d={Icon.ARROW_DOWN} color={colors.PRIMARY} />
+                    </div>
                 </div>
-            </div>
-        )}
+            )}
+        </div>
         <style jsx>{`
             .section {
                 display: block;
@@ -72,7 +74,7 @@ const AquascapeCardList = ({children, title, loadMore}: Props) => (
                 margin-left: ${spaces.s12};
             }
         `}</style>
-    </div>
+    </>
 )
 
 export default AquascapeCardList

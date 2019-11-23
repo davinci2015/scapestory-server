@@ -11,93 +11,97 @@ interface Props {
 }
 
 const Footer = ({openModal}: Props) => (
-    <div className="footer">
-        <div className="top">
-            <div>
-                <img className="logo" src="/static/logo.svg" />
+    <>
+        <div className="footer">
+            <div className="top">
+                <div>
+                    <img className="logo" src="/static/logo.svg" />
+                </div>
+                <div>
+                    <ul>
+                        <li>
+                            <Link href={routes.index}>
+                                <a>
+                                    <Paragraph weight="bold">
+                                        <FormattedMessage
+                                            id="footer.discover"
+                                            defaultMessage="Discover"
+                                        />
+                                    </Paragraph>
+                                </a>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={routes.news}>
+                                <a>
+                                    <Paragraph weight="bold">
+                                        <FormattedMessage
+                                            id="footer.newsfeed"
+                                            defaultMessage="Newsfeed"
+                                        />
+                                    </Paragraph>
+                                </a>
+                            </Link>
+                        </li>
+                        <li>
+                            <a onClick={() => openModal('feedback')}>
+                                <Paragraph weight="bold">
+                                    <FormattedMessage
+                                        id="footer.feedback"
+                                        defaultMessage="Feedback"
+                                    />
+                                </Paragraph>
+                            </a>
+                        </li>
+                        <li>
+                            <Link href={routes.privacyPolicy}>
+                                <a>
+                                    <Paragraph weight="bold">
+                                        <FormattedMessage
+                                            id="footer.privacy_policy"
+                                            defaultMessage="Privacy Policy"
+                                        />
+                                    </Paragraph>
+                                </a>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={routes.termsAndConditions}>
+                                <a>
+                                    <Paragraph weight="bold">
+                                        <FormattedMessage
+                                            id="footer.terms_and_conditions"
+                                            defaultMessage="Terms & Conditions"
+                                        />
+                                    </Paragraph>
+                                </a>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+                <div className="social-icons">
+                    <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer">
+                        <Icon d={Icon.FACEBOOK} viewBox="0 0 48 48" size={24} />
+                    </a>
+                    <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer">
+                        <Icon d={Icon.INSTAGRAM} viewBox="0 0 48 48" size={24} />
+                    </a>
+                </div>
             </div>
-            <div>
-                <ul>
-                    <li>
-                        <Link href={routes.index}>
-                            <a>
-                                <Paragraph weight="bold">
-                                    <FormattedMessage
-                                        id="footer.discover"
-                                        defaultMessage="Discover"
-                                    />
-                                </Paragraph>
-                            </a>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href={routes.news}>
-                            <a>
-                                <Paragraph weight="bold">
-                                    <FormattedMessage
-                                        id="footer.newsfeed"
-                                        defaultMessage="Newsfeed"
-                                    />
-                                </Paragraph>
-                            </a>
-                        </Link>
-                    </li>
-                    <li>
-                        <a onClick={() => openModal('feedback')}>
-                            <Paragraph weight="bold">
-                                <FormattedMessage id="footer.feedback" defaultMessage="Feedback" />
-                            </Paragraph>
-                        </a>
-                    </li>
-                    <li>
-                        <Link href={routes.privacyPolicy}>
-                            <a>
-                                <Paragraph weight="bold">
-                                    <FormattedMessage
-                                        id="footer.privacy_policy"
-                                        defaultMessage="Privacy Policy"
-                                    />
-                                </Paragraph>
-                            </a>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href={routes.termsAndConditions}>
-                            <a>
-                                <Paragraph weight="bold">
-                                    <FormattedMessage
-                                        id="footer.terms_and_conditions"
-                                        defaultMessage="Terms & Conditions"
-                                    />
-                                </Paragraph>
-                            </a>
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-            <div className="social-icons">
-                <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer">
-                    <Icon d={Icon.FACEBOOK} viewBox="0 0 48 48" size={24} />
-                </a>
-                <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer">
-                    <Icon d={Icon.INSTAGRAM} viewBox="0 0 48 48" size={24} />
-                </a>
+
+            <div className="bottom">
+                <div>
+                    <Paragraph type="s1" color={colors.SHADE_DEEP}>
+                        Made with ❤️ in Osijek
+                    </Paragraph>
+                </div>
+                <div>
+                    <Paragraph type="s1" color={colors.SHADE_DEEP}>
+                        © Scapestory {new Date().getFullYear()}
+                    </Paragraph>
+                </div>
             </div>
         </div>
-
-        <div className="bottom">
-            <div>
-                <Paragraph type="s1" color={colors.SHADE_DEEP}>
-                    Made with ❤️ in Osijek
-                </Paragraph>
-            </div>
-            <div>
-                <Paragraph type="s1" color={colors.SHADE_DEEP}>
-                    © Scapestory {new Date().getFullYear()}
-                </Paragraph>
-            </div>
-        </div>
-
         <style jsx>{`
             .footer {
                 background-color: ${colors.WHITE};
@@ -192,7 +196,7 @@ const Footer = ({openModal}: Props) => (
                 fill: ${colors.PRIMARY};
             }
         `}</style>
-    </div>
+    </>
 )
 
 export default Footer

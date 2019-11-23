@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import Link from 'next/link'
 import classnames from 'classnames'
 
@@ -32,10 +32,8 @@ const Navigation = ({
     openRegisterModal,
     onCreateAquascape,
 }: Props) => {
-    const {position, handleScroll} = useScrollPosition()
+    const {position} = useScrollPosition()
     const isSlim = position.y > scrollOffset
-
-    useEffect(() => handleScroll(), [])
 
     return (
         <nav

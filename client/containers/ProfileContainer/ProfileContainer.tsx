@@ -13,7 +13,11 @@ import {updateProfileCache, ProfileActions} from 'containers/ProfileContainer/ca
 import {FOLLOW, UNFOLLOW} from 'graphql/mutations'
 import {AuthContext} from 'providers/AuthenticationProvider'
 import {ModalContext} from 'providers/ModalProvider'
-import {Headline, Button} from 'components/atoms'
+import {Content, Grid} from 'components/core'
+import ProfileSection from 'components/sections/Profile/ProfileSection'
+import {AquascapeCardList} from 'components/sections/shared'
+import {Headline, FormattedMessage} from 'components/atoms'
+import {renderAquascapeCards} from 'utils/render'
 
 const ProfileContainer = () => {
     const router = useRouter()
@@ -23,12 +27,9 @@ const ProfileContainer = () => {
 
     if (!slug) return null
 
-    const {data, error, loading} = useQuery<UserBySlugQuery, UserBySlugQueryVariables>(
+    const {data: userResult, error, loading} = useQuery<UserBySlugQuery, UserBySlugQueryVariables>(
         USER_BY_SLUG,
-        {
-            variables: {slug},
-            fetchPolicy: 'network-only',
-        }
+        {variables: {slug, pagination: {limit: 8, cursor: null}}, fetchPolicy: 'cache-and-network'}
     )
 
     const [follow] = useMutation<FollowUserMutation, FollowUserMutationVariables>(FOLLOW, {
@@ -40,7 +41,7 @@ const ProfileContainer = () => {
     })
 
     const toggleFollow = () => {
-        if (!data || !data.user) {
+        if (!userResult || !userResult.user) {
             return
         }
 
@@ -48,13 +49,8 @@ const ProfileContainer = () => {
             return openModal('login')
         }
 
-        const mutateFollow = data.user.isFollowedByMe ? unfollow : follow
-        mutateFollow({variables: {userId: data.user.id}})
-    }
-
-    if (error) {
-        // TODO: handle error properly
-        return null
+        const mutateFollow = userResult.user.isFollowedByMe ? unfollow : follow
+        mutateFollow({variables: {userId: userResult.user.id}})
     }
 
     if (loading) {
@@ -62,21 +58,35 @@ const ProfileContainer = () => {
         return null
     }
 
-    if (!data || !data.user) {
+    if (error) {
+        // TODO: handle error properly
+        return null
+    }
+
+    if (!userResult || !userResult.user) {
         // TODO: handle not found user
         return null
     }
 
-    console.log(data)
-
     return (
-        <div style={{paddingTop: 120}}>
-            <Headline>{data.user.name}</Headline>
-            <Button onClick={toggleFollow}>
-                {data.user.isFollowedByMe ? 'Unfollow' : 'follow'}
-            </Button>
-            <Headline>{data.user.followersCount}</Headline>
-        </div>
+        <Content>
+            <Grid>
+                <ProfileSection toggleFollow={toggleFollow} user={userResult.user} />
+                <AquascapeCardList
+                    title={
+                        <Headline as="h2" variant="h4">
+                            <FormattedMessage
+                                id="home_list_title_explore"
+                                defaultMessage="{name}'s aquascapes"
+                                values={{name: userResult.user.name}}
+                            />
+                        </Headline>
+                    }
+                >
+                    <Grid.Row>{renderAquascapeCards(userResult.user.aquascapes.rows)}</Grid.Row>
+                </AquascapeCardList>
+            </Grid>
+        </Content>
     )
 }
 
