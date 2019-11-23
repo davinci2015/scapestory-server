@@ -4,6 +4,7 @@ import {UserImage, FormattedMessage} from 'components/atoms'
 import {typography, spaces, colors} from 'styles'
 import {formatDate, dateFormats} from 'utils/date'
 import {CommentFieldsFragment} from 'graphql/generated/queries'
+import {ProfileLink} from 'components/core'
 
 const classes = {
     root: 'comment',
@@ -27,9 +28,13 @@ const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
     return (
         <>
             <div className={classes.root}>
-                <UserImage size="large" image={comment.user.profileImage} />
+                <ProfileLink slug={comment.user.slug}>
+                    <UserImage size="large" image={comment.user.profileImage} />
+                </ProfileLink>
                 <div className="wrapper">
-                    <span className="username">{comment.user.name}</span>
+                    <ProfileLink slug={comment.user.slug}>
+                        <span className="username">{comment.user.name}</span>
+                    </ProfileLink>
                     <span className="content">{comment.content}</span>
                     <div className="bottom">
                         <span className="date">
@@ -75,6 +80,7 @@ const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
 
                 .comment .username {
                     display: block;
+                    color: ${colors.BLACK};
                     font-size: ${typography.fontSize.fs20};
                     font-weight: ${typography.fontWeight.extraBold};
                 }

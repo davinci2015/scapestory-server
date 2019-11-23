@@ -1,20 +1,18 @@
 import React from 'react'
 import numeral from 'numeral'
-import Link from 'next/link'
 
 import {Headline, Tag, IconText, Icon, Paragraph} from 'components/atoms'
 import {colors, spaces, borderRadius, media} from 'styles'
 import UserWidget from 'components/molecules/UserWidget'
 import {Tag as TagInterface} from 'graphql/generated/types'
-import routes, {createDynamicPath} from 'routes'
+import {AquascapeDetailsLink, ProfileLink} from 'components/core'
 
 interface Props {
     id: number
-    slug: string
     profileSlug?: string
     image?: string | null
     userImage?: string | null
-    title: React.ReactNode
+    title: string
     name: React.ReactNode
     viewsCount: number
     likesCount: number
@@ -33,7 +31,6 @@ const AquascapeCard = ({
     userImage,
     name,
     title,
-    slug,
     profileSlug = '',
     viewsCount = 0,
     likesCount = 0,
@@ -41,15 +38,8 @@ const AquascapeCard = ({
 }: Props) => (
     <>
         <div className={classes.root}>
-            <Link
-                key={id}
-                href={routes.aquascapeDetails}
-                as={createDynamicPath(routes.aquascapeDetails, {
-                    id: id.toString(),
-                    title: slug,
-                })}
-            >
-                <a className="header">
+            <AquascapeDetailsLink id={id} title={title}>
+                <div className="header">
                     <img
                         className="header-image"
                         src={image || IMAGE_PLACEHOLDER}
@@ -70,8 +60,8 @@ const AquascapeCard = ({
                             size="small"
                         />
                     </div>
-                </a>
-            </Link>
+                </div>
+            </AquascapeDetailsLink>
             <div className="body">
                 <div className="headline">
                     <Headline as="h2" variant="h5">
@@ -79,21 +69,16 @@ const AquascapeCard = ({
                     </Headline>
                 </div>
                 <div className="footer">
-                    <Link
-                        href={routes.profile}
-                        as={createDynamicPath(routes.profile, {slug: profileSlug})}
-                    >
-                        <a className="user-link">
-                            <UserWidget
-                                image={userImage}
-                                text={
-                                    <Paragraph type="t1" color={colors.SHADE_DEEP}>
-                                        {name}
-                                    </Paragraph>
-                                }
-                            />
-                        </a>
-                    </Link>
+                    <ProfileLink slug={profileSlug}>
+                        <UserWidget
+                            image={userImage}
+                            text={
+                                <Paragraph type="t1" color={colors.SHADE_DEEP}>
+                                    {name}
+                                </Paragraph>
+                            }
+                        />
+                    </ProfileLink>
                     <div className="tags">
                         {tags.map((tag, index) => (
                             <Tag key={index} text={tag.name} variant="primary" />

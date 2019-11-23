@@ -2,7 +2,6 @@ import {AquascapeCard} from 'components/molecules'
 import {Grid} from 'components/core'
 import {AquascapeFieldsFragment} from 'graphql/generated/queries'
 import {getUserName} from 'utils/mappers'
-import {getAquascapeDetailsSlug} from 'routes'
 
 // TODO: Find out how to define type for aquascapes
 export const renderAquascapeCards = (aquascapes: AquascapeFieldsFragment[]) =>
@@ -10,7 +9,6 @@ export const renderAquascapeCards = (aquascapes: AquascapeFieldsFragment[]) =>
         <Grid.Item key={scape.id} extraSmall={12} small={6} medium={4} large={3}>
             <AquascapeCard
                 id={scape.id}
-                slug={getAquascapeDetailsSlug(scape.title)}
                 profileSlug={scape.user?.slug}
                 name={getUserName(scape.user)}
                 title={scape.title}

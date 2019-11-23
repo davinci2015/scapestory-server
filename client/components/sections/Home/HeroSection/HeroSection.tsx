@@ -6,8 +6,7 @@ import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
 import {FeaturedAquascapesQuery} from 'graphql/generated/queries'
 import {getUserName} from 'utils/mappers'
-import routes, {createDynamicPath} from 'routes'
-import Link from 'next/link'
+import {AquascapeDetailsLink, ProfileLink} from 'components/core'
 
 interface Props {
     aquascape: FeaturedAquascapesQuery['featured']
@@ -19,100 +18,77 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
     return (
         <>
             <div className="section">
-                <Link
-                    key={aquascape.id}
-                    href={routes.aquascapeDetails}
-                    as={createDynamicPath(routes.aquascapeDetails, {
-                        id: aquascape.id.toString(),
-                        title: aquascape.title,
-                    })}
-                >
-                    <a>
-                        <Hero
-                            title={aquascape.title}
-                            image={aquascape.mainImage}
-                            topSection={
-                                <Hero.TopSection>
-                                    <Hero.TopLeft>
-                                        <Badge
-                                            background="gradient"
-                                            icon={<Icon d={Icon.FIRE} color={colors.WHITE} />}
-                                        >
-                                            <Paragraph
-                                                type="body"
-                                                color={colors.WHITE}
-                                                weight="bold"
-                                            >
-                                                <FormattedMessage
-                                                    id="hero_section.editor_choice"
-                                                    defaultMessage="Editor's Choice"
-                                                />
-                                            </Paragraph>
-                                        </Badge>
-                                    </Hero.TopLeft>
-                                </Hero.TopSection>
-                            }
-                            bottomSection={
-                                <Hero.BottomSection>
-                                    <Hero.BottomLeft>
-                                        {aquascape.user && (
-                                            <Link
-                                                href={routes.profile}
-                                                as={createDynamicPath(routes.profile, {
-                                                    slug: aquascape.user.slug,
-                                                })}
-                                            >
-                                                <a>
-                                                    <UserWidget
-                                                        size="large"
-                                                        variant="border"
-                                                        image={aquascape.user.profileImage}
-                                                        text={
-                                                            <Paragraph
-                                                                type="body"
-                                                                color={colors.WHITE}
-                                                            >
-                                                                <FormattedMessage
-                                                                    id="hero_section.aquascape_author"
-                                                                    defaultMessage="by {username}"
-                                                                    values={{
-                                                                        username: getUserName(
-                                                                            aquascape.user
-                                                                        ),
-                                                                    }}
-                                                                />
-                                                            </Paragraph>
-                                                        }
-                                                    />
-                                                </a>
-                                            </Link>
-                                        )}
-                                        <IconText
-                                            icon={Icon.EYE_SHOW_FULL}
-                                            text={aquascape.viewsCount}
-                                            color={colors.WHITE}
-                                        />
-                                        <IconText
-                                            icon={Icon.HEART}
-                                            text={aquascape.likesCount}
-                                            color={colors.WHITE}
-                                        />
-                                    </Hero.BottomLeft>
-                                    <Hero.BottomRight>
-                                        {aquascape.tags.map((tag, index) => (
-                                            <Tag
-                                                key={index}
-                                                text={tag.name}
-                                                variant="primary"
-                                                size="large"
+                <AquascapeDetailsLink id={aquascape.id} title={aquascape.title}>
+                    <Hero
+                        title={aquascape.title}
+                        image={aquascape.mainImage}
+                        topSection={
+                            <Hero.TopSection>
+                                <Hero.TopLeft>
+                                    <Badge
+                                        background="gradient"
+                                        icon={<Icon d={Icon.FIRE} color={colors.WHITE} />}
+                                    >
+                                        <Paragraph type="body" color={colors.WHITE} weight="bold">
+                                            <FormattedMessage
+                                                id="hero_section.editor_choice"
+                                                defaultMessage="Editor's Choice"
                                             />
-                                        ))}
-                                    </Hero.BottomRight>
-                                </Hero.BottomSection>
-                            }
-                        />
-                    </a>
-                </Link>
+                                        </Paragraph>
+                                    </Badge>
+                                </Hero.TopLeft>
+                            </Hero.TopSection>
+                        }
+                        bottomSection={
+                            <Hero.BottomSection>
+                                <Hero.BottomLeft>
+                                    {aquascape.user && (
+                                        <ProfileLink slug={aquascape.user.slug}>
+                                            <UserWidget
+                                                size="large"
+                                                variant="border"
+                                                image={aquascape.user.profileImage}
+                                                text={
+                                                    <Paragraph type="body" color={colors.WHITE}>
+                                                        <FormattedMessage
+                                                            id="hero_section.aquascape_author"
+                                                            defaultMessage="by {username}"
+                                                            values={{
+                                                                username: getUserName(
+                                                                    aquascape.user
+                                                                ),
+                                                            }}
+                                                        />
+                                                    </Paragraph>
+                                                }
+                                            />
+                                        </ProfileLink>
+                                    )}
+                                    <IconText
+                                        icon={Icon.EYE_SHOW_FULL}
+                                        text={aquascape.viewsCount}
+                                        color={colors.WHITE}
+                                    />
+                                    <IconText
+                                        icon={Icon.HEART}
+                                        text={aquascape.likesCount}
+                                        color={colors.WHITE}
+                                    />
+                                </Hero.BottomLeft>
+                                <Hero.BottomRight>
+                                    {aquascape.tags.map((tag, index) => (
+                                        <Tag
+                                            key={index}
+                                            text={tag.name}
+                                            variant="primary"
+                                            size="large"
+                                        />
+                                    ))}
+                                </Hero.BottomRight>
+                            </Hero.BottomSection>
+                        }
+                    />
+                </AquascapeDetailsLink>
             </div>
 
             <style jsx>{`

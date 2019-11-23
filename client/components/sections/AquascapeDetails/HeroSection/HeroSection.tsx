@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {SyntheticEvent} from 'react'
 
 import {
     FormattedMessage,
@@ -14,6 +14,7 @@ import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
 import {AquascapeDetailsQuery} from 'graphql/generated/queries'
 import {getUserName} from 'utils/mappers'
+import {ProfileLink} from 'components/core'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -22,7 +23,7 @@ interface Props {
 }
 
 const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, toggleFollow}) => {
-    if (!aquascape) return null
+    if (!aquascape || !aquascape.user) return null
 
     return (
         <>
@@ -33,45 +34,54 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, tog
                 topSection={
                     <Hero.TopSection>
                         <Hero.TopLeft>
-                            <UserWidget
-                                size="large"
-                                variant="border"
-                                image={aquascape.user?.profileImage}
-                                text={
-                                    <div>
-                                        <Paragraph type="body" color={colors.WHITE} weight="bold">
-                                            <FormattedMessage
-                                                id="aquascape.hero_section.username"
-                                                defaultMessage="by {username}"
-                                                values={{username: getUserName(aquascape.user)}}
-                                            />
-                                        </Paragraph>
-                                        <div
-                                            className="follow"
-                                            onClick={toggleFollow}
-                                            role="presentation"
-                                        >
+                            <ProfileLink slug={aquascape.user.slug}>
+                                <UserWidget
+                                    size="large"
+                                    variant="border"
+                                    image={aquascape.user.profileImage}
+                                    text={
+                                        <div>
                                             <Paragraph
-                                                type="s2"
+                                                type="body"
                                                 color={colors.WHITE}
-                                                weight="semibold"
+                                                weight="bold"
                                             >
-                                                {aquascape.user?.isFollowedByMe ? (
-                                                    <FormattedMessage
-                                                        id="aquascape.hero_section.unfollow"
-                                                        defaultMessage="Unfollow"
-                                                    />
-                                                ) : (
-                                                    <FormattedMessage
-                                                        id="aquascape.hero_section.follow"
-                                                        defaultMessage="Follow"
-                                                    />
-                                                )}
+                                                <FormattedMessage
+                                                    id="aquascape.hero_section.username"
+                                                    defaultMessage="by {username}"
+                                                    values={{username: getUserName(aquascape.user)}}
+                                                />
                                             </Paragraph>
+                                            <div
+                                                className="follow"
+                                                onClick={(event: SyntheticEvent) => {
+                                                    event.preventDefault()
+                                                    toggleFollow()
+                                                }}
+                                                role="presentation"
+                                            >
+                                                <Paragraph
+                                                    type="s2"
+                                                    color={colors.WHITE}
+                                                    weight="semibold"
+                                                >
+                                                    {aquascape.user?.isFollowedByMe ? (
+                                                        <FormattedMessage
+                                                            id="aquascape.hero_section.unfollow"
+                                                            defaultMessage="Unfollow"
+                                                        />
+                                                    ) : (
+                                                        <FormattedMessage
+                                                            id="aquascape.hero_section.follow"
+                                                            defaultMessage="Follow"
+                                                        />
+                                                    )}
+                                                </Paragraph>
+                                            </div>
                                         </div>
-                                    </div>
-                                }
-                            />
+                                    }
+                                />
+                            </ProfileLink>
                         </Hero.TopLeft>
                         <Hero.TopRight>
                             <Button
