@@ -6,7 +6,10 @@ import {addYears} from 'date-fns'
 export default {
     persistAuthToken(token: string) {
         const cookies = new Cookies()
-        cookies.set(appConstants.COOKIE_AUTH, token)
+        cookies.set(appConstants.COOKIE_AUTH, token, {
+            expires: addYears(Date.now(), 10),
+            path: '/',
+        })
     },
 
     getAuthToken(headers?: IncomingHttpHeaders) {
