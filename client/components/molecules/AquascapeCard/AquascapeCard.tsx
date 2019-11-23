@@ -5,7 +5,7 @@ import Link from 'next/link'
 import {Headline, Tag, IconText, Icon, Paragraph} from 'components/atoms'
 import {colors, spaces, borderRadius, media} from 'styles'
 import UserWidget from 'components/molecules/UserWidget'
-import {TagInterface} from 'interfaces'
+import {Tag as TagInterface} from 'graphql/generated/types'
 
 interface Props {
     id: number
