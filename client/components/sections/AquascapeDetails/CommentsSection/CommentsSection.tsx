@@ -12,16 +12,16 @@ import {
 import {Grid} from 'components/core'
 import {spaces} from 'styles'
 import Comment from 'components/molecules/Comment/Comment'
-import {Comment as AquascapeComment} from 'graphql/generated/types'
+import {CommentFieldsFragment} from 'graphql/generated/queries'
 
 interface Props {
-    comments: AquascapeComment[]
-    userImage?: string
+    comments: CommentFieldsFragment[]
+    userImage?: string | null
     userId?: number
     enteredComment: string
     onCommentChange: (e: FormEvent<HTMLTextAreaElement>) => void
-    removeComment: (comment: AquascapeComment) => void
-    toggleLike: (comment: AquascapeComment) => void
+    removeComment: (comment: CommentFieldsFragment) => void
+    toggleLike: (comment: CommentFieldsFragment) => void
     onSubmit: () => void
 }
 

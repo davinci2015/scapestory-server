@@ -3,7 +3,7 @@ import {useMutation} from 'react-apollo'
 
 import CommentsSection from 'components/sections/AquascapeDetails/CommentsSection'
 import {LIKE, DISLIKE} from 'graphql/mutations'
-import {LikeEntityType, CommentEntityType, Comment} from 'graphql/generated/types'
+import {LikeEntityType, CommentEntityType} from 'graphql/generated/types'
 import {ModalContext} from 'providers/ModalProvider'
 import {AuthContext} from 'providers/AuthenticationProvider'
 import {ADD_COMMENT, REMOVE_COMMENT} from 'containers/AquascapeDetails/Comments/mutations'
@@ -81,7 +81,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
     }
 
     const toggleLike = useCallback(
-        (comment: Comment) => {
+        (comment: CommentFieldsFragment) => {
             if (!isAuthenticated || !user) {
                 return openModal('login')
             }
@@ -97,7 +97,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
         [isAuthenticated]
     )
 
-    const handleRemoveComment = useCallback((comment: Comment) => {
+    const handleRemoveComment = useCallback((comment: CommentFieldsFragment) => {
         removeComment({variables: {id: comment.id}})
     }, [])
 

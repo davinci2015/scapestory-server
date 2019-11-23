@@ -175,7 +175,8 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                 <SubNavigation.Item id={sections.COMMENTS}>
                     <FormattedMessage
                         id="aquascape.subnavigation.comments"
-                        defaultMessage="Comments"
+                        defaultMessage="Comments ({count})"
+                        values={{count: aquascapeResult.aquascape.comments.length}}
                     />
                 </SubNavigation.Item>
             </SubNavigation>

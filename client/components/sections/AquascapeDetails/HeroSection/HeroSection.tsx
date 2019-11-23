@@ -13,6 +13,7 @@ import {colors, spaces} from 'styles'
 import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
 import {AquascapeDetailsQuery} from 'graphql/generated/queries'
+import {getUserName} from 'utils/mappers'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -35,18 +36,14 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, tog
                             <UserWidget
                                 size="large"
                                 variant="border"
-                                image={aquascape.user.profileImage}
+                                image={aquascape.user?.profileImage}
                                 text={
                                     <div>
                                         <Paragraph type="body" color={colors.WHITE} weight="bold">
                                             <FormattedMessage
                                                 id="aquascape.hero_section.username"
                                                 defaultMessage="by {username}"
-                                                values={{
-                                                    username:
-                                                        aquascape.user.name ||
-                                                        aquascape.user.username,
-                                                }}
+                                                values={{username: getUserName(aquascape.user)}}
                                             />
                                         </Paragraph>
                                         <div
@@ -59,7 +56,7 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, tog
                                                 color={colors.WHITE}
                                                 weight="semibold"
                                             >
-                                                {aquascape.user.isFollowedByMe ? (
+                                                {aquascape.user?.isFollowedByMe ? (
                                                     <FormattedMessage
                                                         id="aquascape.hero_section.unfollow"
                                                         defaultMessage="Unfollow"

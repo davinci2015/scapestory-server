@@ -3,17 +3,17 @@ import React, {useCallback} from 'react'
 import {UserImage, FormattedMessage} from 'components/atoms'
 import {typography, spaces, colors} from 'styles'
 import {formatDate, dateFormats} from 'utils/date'
-import {Comment as AquascapeComment} from 'graphql/generated/types'
+import {CommentFieldsFragment} from 'graphql/generated/queries'
 
 const classes = {
     root: 'comment',
 }
 
 interface Props {
-    comment: AquascapeComment
+    comment: CommentFieldsFragment
     isLiked: boolean
-    onRemove?: (comment: AquascapeComment) => void
-    onLike: (comment: AquascapeComment) => void
+    onRemove?: (comment: CommentFieldsFragment) => void
+    onLike: (comment: CommentFieldsFragment) => void
 }
 
 type CardInterface = React.FunctionComponent<Props> & {

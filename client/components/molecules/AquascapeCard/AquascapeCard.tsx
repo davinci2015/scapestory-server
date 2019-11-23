@@ -16,7 +16,7 @@ interface Props {
     name: React.ReactNode
     viewsCount: number
     likesCount: number
-    tags: TagInterface[]
+    tags: Pick<TagInterface, 'name'>[]
 }
 
 const classes = {
