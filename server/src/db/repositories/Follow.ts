@@ -41,12 +41,6 @@ export class FollowRepository extends BaseRepository<Follow> {
             },
         })
 
-
-        console.log('Follower::::::')
-        console.log(followerId)
-        console.log(followedId)
-        console.log(follow)
-
         return Boolean(follow)
     }
 
