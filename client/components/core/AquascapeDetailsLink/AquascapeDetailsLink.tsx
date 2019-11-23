@@ -8,7 +8,15 @@ interface Props {
     title: string
 }
 
-const AquascapeDetailsLink: React.FunctionComponent<Props> = ({children, id, title}) => (
+const classes = {
+    link: 'details-link',
+}
+
+type AquascapeDetailsLinkInterface = React.FunctionComponent<Props> & {
+    classes: typeof classes
+}
+
+const AquascapeDetailsLink: AquascapeDetailsLinkInterface = ({children, id, title}) => (
     <>
         <Link
             href={routes.aquascapeDetails}
@@ -17,7 +25,7 @@ const AquascapeDetailsLink: React.FunctionComponent<Props> = ({children, id, tit
                 title: getAquascapeDetailsSlug(title),
             })}
         >
-            <a>{children}</a>
+            <a className={classes.link}>{children}</a>
         </Link>
         <style jsx>{`
             a {
@@ -26,5 +34,7 @@ const AquascapeDetailsLink: React.FunctionComponent<Props> = ({children, id, tit
         `}</style>
     </>
 )
+
+AquascapeDetailsLink.classes = classes
 
 export default AquascapeDetailsLink

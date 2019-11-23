@@ -285,7 +285,6 @@ export type Query = {
   userBySlug?: Maybe<User>,
   users: Array<Maybe<User>>,
   userProfileSlugExists?: Maybe<Scalars['Boolean']>,
-  follows?: Maybe<Follows>,
   aquascapes: AquascapesResult,
   trendingAquascapes: Array<Aquascape>,
   featuredAquascape?: Maybe<Aquascape>,
@@ -307,11 +306,6 @@ export type QueryUserBySlugArgs = {
 
 export type QueryUserProfileSlugExistsArgs = {
   slug: Scalars['String']
-};
-
-
-export type QueryFollowsArgs = {
-  userId: Scalars['Int']
 };
 
 
@@ -378,6 +372,8 @@ export type User = {
   instagramLink?: Maybe<Scalars['String']>,
   createdAt: Scalars['String'],
   updatedAt: Scalars['String'],
+  followersCount: Scalars['Int'],
+  followingCount: Scalars['Int'],
   isFollowedByMe: Scalars['Boolean'],
   aquascapes: AquascapesResult,
 };

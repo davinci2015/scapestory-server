@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback, SyntheticEvent} from 'react'
 
 import {Badge, FormattedMessage, Paragraph, Icon, Tag, IconText} from 'components/atoms'
 import {colors, spaces} from 'styles'
@@ -6,14 +6,26 @@ import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
 import {FeaturedAquascapesQuery} from 'graphql/generated/queries'
 import {getUserName} from 'utils/mappers'
-import {AquascapeDetailsLink, ProfileLink} from 'components/core'
+import {AquascapeDetailsLink} from 'components/core'
+import {useRouter} from 'next/router'
+import routes, {createDynamicPath} from 'routes'
 
 interface Props {
     aquascape: FeaturedAquascapesQuery['featured']
 }
 
 const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
+    const router = useRouter()
     if (!aquascape) return null
+
+    const redirectToProfile = useCallback(
+        (event: SyntheticEvent) => {
+            if (!aquascape.user) return
+            event.preventDefault()
+            router.push(createDynamicPath(routes.profile, {slug: aquascape.user.slug}))
+        },
+        [aquascape]
+    )
 
     return (
         <>
@@ -43,26 +55,23 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
                             <Hero.BottomSection>
                                 <Hero.BottomLeft>
                                     {aquascape.user && (
-                                        <ProfileLink slug={aquascape.user.slug}>
-                                            <UserWidget
-                                                size="large"
-                                                variant="border"
-                                                image={aquascape.user.profileImage}
-                                                text={
-                                                    <Paragraph type="body" color={colors.WHITE}>
-                                                        <FormattedMessage
-                                                            id="hero_section.aquascape_author"
-                                                            defaultMessage="by {username}"
-                                                            values={{
-                                                                username: getUserName(
-                                                                    aquascape.user
-                                                                ),
-                                                            }}
-                                                        />
-                                                    </Paragraph>
-                                                }
-                                            />
-                                        </ProfileLink>
+                                        <UserWidget
+                                            onClick={redirectToProfile}
+                                            size="large"
+                                            variant="border"
+                                            image={aquascape.user.profileImage}
+                                            text={
+                                                <Paragraph type="body" color={colors.WHITE}>
+                                                    <FormattedMessage
+                                                        id="hero_section.aquascape_author"
+                                                        defaultMessage="by {username}"
+                                                        values={{
+                                                            username: getUserName(aquascape.user),
+                                                        }}
+                                                    />
+                                                </Paragraph>
+                                            }
+                                        />
                                     )}
                                     <IconText
                                         icon={Icon.EYE_SHOW_FULL}

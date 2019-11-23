@@ -48,7 +48,7 @@ export class AuthProvider implements AuthProviderInterface {
     ) {}
 
     async userProfileSlugExists(slug: string) {
-        return Boolean(await this.userRepository.findBySlug(slug))
+        return Boolean(await this.userRepository.findUserBySlug(slug))
     }
 
     async emailExists(email: string) {

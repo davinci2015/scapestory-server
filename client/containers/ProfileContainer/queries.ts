@@ -11,6 +11,9 @@ export const USER_BY_SLUG = gql`
             profileImage
             youtubeLink
             instagramLink
+            followersCount
+            followingCount
+            isFollowedByMe
         }
     }
 `

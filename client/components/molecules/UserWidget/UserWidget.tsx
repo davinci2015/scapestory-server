@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {SyntheticEvent} from 'react'
 import classnames from 'classnames'
 
 import {UserImage} from 'components/atoms'
@@ -13,19 +13,16 @@ interface Props {
     text: React.ReactNode
     size?: UserWidgetSize
     variant?: UserWidgetVariant
+    onClick?: (event: SyntheticEvent) => void
 }
 
 const classNames = {
     root: 'user-widget',
 }
 
-const UserWidget = ({
-    image,
-    size = 'default',
-    variant = 'default',
-    text,
-}: Props) => (
+const UserWidget = ({image, onClick, size = 'default', variant = 'default', text}: Props) => (
     <div
+        onClick={onClick}
         className={classnames(classNames.root, {
             large: size === 'large',
         })}

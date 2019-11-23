@@ -7,9 +7,14 @@ const ProfileContainer = () => {
     const router = useRouter()
     const slug = router.query.slug
 
+    if (!slug) return null
+
     const {data, error, loading} = useQuery<UserBySlugQuery, UserBySlugQueryVariables>(
         USER_BY_SLUG,
-        {variables: {slug: slug.toString()}}
+        {
+            variables: {slug: slug.toString()},
+            fetchPolicy: 'network-only',
+        }
     )
 
     if (error) {
