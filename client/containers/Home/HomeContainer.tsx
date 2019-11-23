@@ -7,12 +7,12 @@ import {AquascapeCardList} from 'components/sections/shared'
 
 import HeroSection from 'components/sections/Home/HeroSection'
 import {renderAquascapeCards} from 'utils/render'
+import {AQUASCAPES, TRENDING_AQUASCAPES, FEATURED_AQUASCAPE} from 'graphql/queries'
 import {
-    AQUASCAPES,
-    TRENDING_AQUASCAPES,
-    FEATURED_AQUASCAPE,
-    AquascapesResult,
-} from 'graphql/queries'
+    AquascapesQuery,
+    TrendingAquascapesQuery,
+    FeaturedAquascapesQuery,
+} from 'graphql/generated/queries'
 
 const RECENT_AQUASCAPES_PER_LOAD = 12
 const RECENT_AQUASCAPES_LIMIT = 12
@@ -21,19 +21,19 @@ const TRENDING_AQUASCAPES_LIMIT = 8
 const HomeContainer = () => {
     const [allRecentLoaded, setAllRecentLoaded] = useState(false)
 
-    const recent = useQuery(AQUASCAPES, {
+    const recent = useQuery<AquascapesQuery>(AQUASCAPES, {
         variables: {
             pagination: {limit: RECENT_AQUASCAPES_LIMIT, cursor: null},
         },
     })
 
-    const trending = useQuery(TRENDING_AQUASCAPES, {
+    const trending = useQuery<TrendingAquascapesQuery>(TRENDING_AQUASCAPES, {
         variables: {
             pagination: {limit: TRENDING_AQUASCAPES_LIMIT},
         },
     })
 
-    const featured = useQuery(FEATURED_AQUASCAPE)
+    const featured = useQuery<FeaturedAquascapesQuery>(FEATURED_AQUASCAPE)
 
     const loadMore = () => {
         recent.fetchMore({
@@ -41,11 +41,11 @@ const HomeContainer = () => {
                 pagination: {
                     limit: RECENT_AQUASCAPES_PER_LOAD,
                     cursor:
-                        recent.data?.aquascapes.rows[recent.data.aquascapes.rows.length - 1]
+                        recent?.data?.aquascapes.rows[recent.data.aquascapes.rows.length - 1]
                             ?.createdAt,
                 },
             },
-            updateQuery: (prev: AquascapesResult, options) => {
+            updateQuery: (prev, options) => {
                 if (!options.fetchMoreResult) return prev
 
                 return {

@@ -4,11 +4,11 @@ import {useQuery, useMutation} from 'react-apollo'
 import {FormattedMessage} from 'react-intl'
 import {Element} from 'react-scroll'
 
-import {AQUASCAPE_DETAILS, AquascapeDetailsQuery} from 'containers/AquascapeDetails/query'
+import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetails/queries'
 import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
-import {LikeEntityType} from 'generated/graphql'
+import {LikeEntityType} from 'graphql/generated/types'
 import {LIKE, DISLIKE, FOLLOW, UNFOLLOW, VISIT} from 'graphql/mutations'
 import {ModalContext} from 'providers/ModalProvider'
 import CommentsContainer from 'containers/AquascapeDetails/Comments'
@@ -26,6 +26,17 @@ import {
     OtherAquascapesSection,
 } from 'components/sections/AquascapeDetails'
 import cookie from 'services/cookie'
+import {AquascapeDetailsQuery, AquascapeDetailsQueryVariables} from 'graphql/generated/queries'
+import {
+    LikeMutation,
+    LikeMutationVariables,
+    DislikeMutation,
+    DislikeMutationVariables,
+    FollowUserMutation,
+    FollowUserMutationVariables,
+    UnfollowUserMutation,
+    UnfollowUserMutationVariables,
+} from 'graphql/generated/mutations'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -42,33 +53,33 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
 
     if (!aquascapeId) return null
 
-    const {data: aquascapeResult, error, loading} = useQuery<AquascapeDetailsQuery>(
-        AQUASCAPE_DETAILS,
-        {variables: {id: aquascapeId}}
-    )
+    const {data: aquascapeResult, error, loading} = useQuery<
+        AquascapeDetailsQuery,
+        AquascapeDetailsQueryVariables
+    >(AQUASCAPE_DETAILS, {variables: {id: aquascapeId}})
 
-    const [like] = useMutation(LIKE, {
+    const [like] = useMutation<LikeMutation, LikeMutationVariables>(LIKE, {
         update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, {
             aquascapeId,
             isLiked: true,
         }),
     })
 
-    const [dislike] = useMutation(DISLIKE, {
+    const [dislike] = useMutation<DislikeMutation, DislikeMutationVariables>(DISLIKE, {
         update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, {
             aquascapeId,
             isLiked: false,
         }),
     })
 
-    const [follow] = useMutation(FOLLOW, {
+    const [follow] = useMutation<FollowUserMutation, FollowUserMutationVariables>(FOLLOW, {
         update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW, {
             aquascapeId,
             isFollowed: true,
         }),
     })
 
-    const [unfollow] = useMutation(UNFOLLOW, {
+    const [unfollow] = useMutation<UnfollowUserMutation, UnfollowUserMutationVariables>(UNFOLLOW, {
         update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW, {
             aquascapeId,
             isFollowed: false,
@@ -108,7 +119,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
     }
 
     const toggleFollow = () => {
-        if (!aquascapeResult || !aquascapeResult.aquascape) {
+        if (!aquascapeResult || !aquascapeResult.aquascape || !aquascapeResult.aquascape.user) {
             return
         }
 
@@ -191,12 +202,12 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                     />
                 </Element>
                 <Divider />
-                {aquascapeResult.aquascape.user.aquascapes &&
+                {aquascapeResult?.aquascape?.user?.aquascapes?.rows &&
                     aquascapeResult.aquascape.user.aquascapes.rows.length > 1 && (
                         <>
                             <UserAquascapesSection
                                 aquascapes={aquascapeResult.aquascape.user.aquascapes.rows.filter(
-                                    scape => scape.id !== aquascapeResult.aquascape.id
+                                    scape => scape.id !== aquascapeResult.aquascape?.id
                                 )}
                                 username={
                                     aquascapeResult.aquascape.user.name ||

@@ -3,28 +3,32 @@ import {useMutation} from 'react-apollo'
 
 import CommentsSection from 'components/sections/AquascapeDetails/CommentsSection'
 import {LIKE, DISLIKE} from 'graphql/mutations'
-import {LikeEntityType, CommentEntityType} from 'generated/graphql'
+import {LikeEntityType, CommentEntityType, Comment} from 'graphql/generated/types'
 import {ModalContext} from 'providers/ModalProvider'
 import {AuthContext} from 'providers/AuthenticationProvider'
-import {
-    ADD_COMMENT,
-    REMOVE_COMMENT,
-} from 'containers/AquascapeDetails/Comments/mutations'
-import {AquascapeComment} from 'containers/AquascapeDetails/query'
+import {ADD_COMMENT, REMOVE_COMMENT} from 'containers/AquascapeDetails/Comments/mutations'
 import {
     updateAquascapeDetailsCache,
     AquascapeDetailsActions,
 } from 'containers/AquascapeDetails/cache'
+import {
+    LikeMutation,
+    DislikeMutation,
+    AddCommentMutation,
+    AddCommentMutationVariables,
+    DislikeMutationVariables,
+    LikeMutationVariables,
+    RemoveCommentMutation,
+    RemoveCommentMutationVariables,
+} from 'graphql/generated/mutations'
+import {CommentFieldsFragment} from 'graphql/generated/queries'
 
 interface Props {
     aquascapeId: number
-    comments: AquascapeComment[]
+    comments: CommentFieldsFragment[]
 }
 
-const CommentsContainer: React.FunctionComponent<Props> = ({
-    aquascapeId,
-    comments,
-}) => {
+const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comments}) => {
     const [comment, updateComment] = useState<string | null>(null)
     const {isAuthenticated, user} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
@@ -34,33 +38,33 @@ const CommentsContainer: React.FunctionComponent<Props> = ({
         updateComment(value)
     }
 
-    const [like] = useMutation(LIKE, {
-        update: updateAquascapeDetailsCache(
-            AquascapeDetailsActions.AQUASCAPE_LIKE_COMMENT,
-            {aquascapeId}
-        ),
+    const [like] = useMutation<LikeMutation, LikeMutationVariables>(LIKE, {
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE_COMMENT, {
+            aquascapeId,
+        }),
     })
 
-    const [dislike] = useMutation(DISLIKE, {
-        update: updateAquascapeDetailsCache(
-            AquascapeDetailsActions.AQUASCAPE_DISLIKE_COMMENT,
-            {aquascapeId}
-        ),
+    const [dislike] = useMutation<DislikeMutation, DislikeMutationVariables>(DISLIKE, {
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_DISLIKE_COMMENT, {
+            aquascapeId,
+        }),
     })
 
-    const [addComment] = useMutation(ADD_COMMENT, {
-        update: updateAquascapeDetailsCache(
-            AquascapeDetailsActions.AQUASCAPE_ADD_COMMENT,
-            {aquascapeId, user}
-        ),
+    const [addComment] = useMutation<AddCommentMutation, AddCommentMutationVariables>(ADD_COMMENT, {
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_ADD_COMMENT, {
+            aquascapeId,
+            user,
+        }),
     })
 
-    const [removeComment] = useMutation(REMOVE_COMMENT, {
-        update: updateAquascapeDetailsCache(
-            AquascapeDetailsActions.AQUASCAPE_REMOVE_COMMENT,
-            {aquascapeId}
-        ),
-    })
+    const [removeComment] = useMutation<RemoveCommentMutation, RemoveCommentMutationVariables>(
+        REMOVE_COMMENT,
+        {
+            update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_REMOVE_COMMENT, {
+                aquascapeId,
+            }),
+        }
+    )
 
     const onSubmit = () => {
         if (!comment) return
@@ -77,14 +81,12 @@ const CommentsContainer: React.FunctionComponent<Props> = ({
     }
 
     const toggleLike = useCallback(
-        (comment: AquascapeComment) => {
+        (comment: Comment) => {
             if (!isAuthenticated || !user) {
                 return openModal('login')
             }
 
-            const alreadyLiked = comment.likes.some(
-                like => like.userId === user.id
-            )
+            const alreadyLiked = comment.likes.some(like => like.userId === user.id)
             const variables = {
                 entity: LikeEntityType.Comment,
                 entityId: comment.id,
@@ -95,7 +97,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({
         [isAuthenticated]
     )
 
-    const handleRemoveComment = useCallback((comment: AquascapeComment) => {
+    const handleRemoveComment = useCallback((comment: Comment) => {
         removeComment({variables: {id: comment.id}})
     }, [])
 

@@ -4,14 +4,14 @@ import {FormattedMessage, Headline, Paragraph} from 'components/atoms'
 import {EquipmentCard} from 'components/molecules'
 import {spaces} from 'styles'
 import {Grid} from 'components/core'
-import {AquascapeDetails} from 'containers/AquascapeDetails/query'
+import {Light, Filter, Substrate, Additive, Co2} from 'graphql/generated/types'
 
 interface Props {
-    lights: AquascapeDetails['lights']
-    filters: AquascapeDetails['filters']
-    substrates: AquascapeDetails['substrates']
-    additives: AquascapeDetails['additives']
-    co2: AquascapeDetails['co2']
+    lights: Pick<Light, 'id' | 'brand' | 'model'>[]
+    filters: Filter[]
+    substrates: Substrate[]
+    additives: Additive[]
+    co2: Pick<Co2, 'id' | 'type' | 'bps'> | null
 }
 
 const EquipmentSection: React.FunctionComponent<Props> = ({
@@ -22,9 +22,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
     co2,
 }) => {
     const hasEquipment =
-        [lights, filters, substrates, additives].some(
-            equipment => !!equipment.length
-        ) || co2
+        [lights, filters, substrates, additives].some(equipment => !!equipment.length) || co2
 
     return (
         <>
@@ -51,10 +49,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                                             />
                                         }
                                         image={
-                                            <img
-                                                src="/static/equipment/filter.png"
-                                                alt="Filter"
-                                            />
+                                            <img src="/static/equipment/filter.png" alt="Filter" />
                                         }
                                     >
                                         {lights.map(light => (
@@ -75,10 +70,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                                             />
                                         }
                                         image={
-                                            <img
-                                                src="/static/equipment/filter.png"
-                                                alt="Filter"
-                                            />
+                                            <img src="/static/equipment/filter.png" alt="Filter" />
                                         }
                                     >
                                         {filters.map(filter => (
@@ -99,10 +91,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                                             />
                                         }
                                         image={
-                                            <img
-                                                src="/static/equipment/filter.png"
-                                                alt="Filter"
-                                            />
+                                            <img src="/static/equipment/filter.png" alt="Filter" />
                                         }
                                     >
                                         <Paragraph>
@@ -134,16 +123,12 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                                             />
                                         }
                                         image={
-                                            <img
-                                                src="/static/equipment/filter.png"
-                                                alt="Filter"
-                                            />
+                                            <img src="/static/equipment/filter.png" alt="Filter" />
                                         }
                                     >
                                         {substrates.map(substrate => (
                                             <Paragraph key={substrate.id}>
-                                                {substrate.brand}{' '}
-                                                {substrate.name}
+                                                {substrate.brand} {substrate.name}
                                             </Paragraph>
                                         ))}
                                     </EquipmentCard>
@@ -159,10 +144,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                                             />
                                         }
                                         image={
-                                            <img
-                                                src="/static/equipment/filter.png"
-                                                alt="Filter"
-                                            />
+                                            <img src="/static/equipment/filter.png" alt="Filter" />
                                         }
                                     >
                                         {additives.map(additive => (

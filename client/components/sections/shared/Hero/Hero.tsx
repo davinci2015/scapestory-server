@@ -3,39 +3,27 @@ import cx from 'classnames'
 
 import {borderRadius, spaces, colors, zIndex, media} from 'styles'
 import {Headline} from 'components/atoms'
-import {
-    TopSection,
-    TopLeft,
-    TopRight,
-} from 'components/sections/shared/Hero/TopSection'
-import {
-    BottomSection,
-    BottomLeft,
-    BottomRight,
-} from 'components/sections/shared/Hero/BottomSection'
+import {TopSection, TopLeft, TopRight} from 'components/sections/shared/Hero/TopSection'
+import {BottomSection, BottomLeft, BottomRight} from 'components/sections/shared/Hero/BottomSection'
 import {GRID_MAX_WIDTH} from 'components/core/Grid'
 
 interface Props {
-    image: string
+    image?: string | null
     title: string
     topSection?: React.ReactNode
     bottomSection?: React.ReactNode
     variant?: 'default' | 'cover'
 }
 
-const Hero = ({
-    image,
-    title,
-    topSection,
-    bottomSection,
-    variant = 'default',
-}: Props) => (
+const IMAGE_PLACEHOLDER = ''
+
+const Hero = ({image, title, topSection, bottomSection, variant = 'default'}: Props) => (
     <div className="container">
         <img
             className={cx('container-image', {
                 radius: variant === 'default',
             })}
-            src={image}
+            src={image || IMAGE_PLACEHOLDER}
             alt={title}
         />
 
@@ -96,21 +84,13 @@ const Hero = ({
             .gradient--top {
                 top: 0;
                 height: 120px;
-                background-image: linear-gradient(
-                    to bottom,
-                    ${colors.BLACK},
-                    rgba(0, 0, 0, 0)
-                );
+                background-image: linear-gradient(to bottom, ${colors.BLACK}, rgba(0, 0, 0, 0));
             }
 
             .gradient--bottom {
                 bottom: 0;
                 height: 200px;
-                background-image: linear-gradient(
-                    to top,
-                    ${colors.BLACK},
-                    rgba(0, 0, 0, 0)
-                );
+                background-image: linear-gradient(to top, ${colors.BLACK}, rgba(0, 0, 0, 0));
             }
 
             .container-image {

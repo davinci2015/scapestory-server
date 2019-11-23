@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/main.ts",
+        "dev": "nodemon --exec ts-node -r tsconfig-paths/register --transpile-only src/main.ts",
         "seed": "ts-node -r tsconfig-paths/register src/db/seed/index.ts",
         "build": "tsc",
         "start": "node dist/index.js",
@@ -21,6 +21,7 @@
     "license": "ISC",
     "homepage": "https://bitbucket.org/scapestory/scapestory#readme",
     "devDependencies": {
+        "@graphql-codegen/add": "^1.8.3",
         "@graphql-codegen/cli": "^1.8.3",
         "@graphql-codegen/introspection": "1.4.0",
         "@graphql-codegen/typescript": "1.4.0",

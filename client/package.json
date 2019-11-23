@@ -10,6 +10,7 @@
         "start": "next start",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
+        "codegen": "graphql-codegen --config codegen.json",
         "pretty": "prettier --write \"./**/*.{ts,tsx,json}\""
     },
     "author": "",
@@ -47,6 +48,9 @@
     "devDependencies": {
         "@babel/core": "^7.7.2",
         "@babel/plugin-proposal-optional-chaining": "^7.6.0",
+        "@graphql-codegen/cli": "^1.8.3",
+        "@graphql-codegen/typescript": "^1.8.3",
+        "@graphql-codegen/typescript-operations": "^1.8.3",
         "@storybook/addon-actions": "^5.2.5",
         "@storybook/addon-info": "^5.2.5",
         "@storybook/addon-links": "^5.2.5",

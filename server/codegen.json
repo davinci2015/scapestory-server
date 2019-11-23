@@ -3,7 +3,11 @@
     "schema": "http://localhost:8080",
     "documents": null,
     "generates": {
-        "../client/generated/graphql.ts": {"plugins": ["typescript"]},
-        "./graphql.schema.json": {"plugins": ["introspection"]}
+        "./src/graphql/generated/types.ts": {
+            "plugins": [{"add": "/* eslint-disable */"}, "typescript", "typescript-resolvers"],
+            "config": {
+                "defaultMapper": "Partial<{T}>"
+            }
+        }
     }
 }

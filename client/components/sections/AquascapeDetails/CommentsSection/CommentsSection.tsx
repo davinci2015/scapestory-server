@@ -12,7 +12,7 @@ import {
 import {Grid} from 'components/core'
 import {spaces} from 'styles'
 import Comment from 'components/molecules/Comment/Comment'
-import {AquascapeComment} from 'containers/AquascapeDetails/query'
+import {Comment as AquascapeComment} from 'graphql/generated/types'
 
 interface Props {
     comments: AquascapeComment[]
@@ -61,10 +61,7 @@ const CommentsSection: React.FunctionComponent<Props> = ({
                                 })}
                                 endAdornment={
                                     <InputAdornment>
-                                        <Button
-                                            dimensions="small"
-                                            onClick={onSubmit}
-                                        >
+                                        <Button dimensions="small" onClick={onSubmit}>
                                             <FormattedMessage
                                                 id="aquascape.comments.input.submit"
                                                 defaultMessage="Post comment"
@@ -79,20 +76,12 @@ const CommentsSection: React.FunctionComponent<Props> = ({
                 <div className="list">
                     <Grid.Row>
                         {comments.map(comment => (
-                            <Grid.Item
-                                key={comment.id}
-                                extraSmall={12}
-                                medium={6}
-                            >
+                            <Grid.Item key={comment.id} extraSmall={12} medium={6}>
                                 <Comment
                                     onRemove={
-                                        comment.user.id === userId
-                                            ? removeComment
-                                            : undefined
+                                        comment.user.id === userId ? removeComment : undefined
                                     }
-                                    isLiked={comment.likes.some(
-                                        like => like.userId === userId
-                                    )}
+                                    isLiked={comment.likes.some(like => like.userId === userId)}
                                     comment={comment}
                                     onLike={toggleLike}
                                 />

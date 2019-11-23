@@ -1,12 +1,13 @@
 import React, {useState} from 'react'
 import {useQuery} from 'react-apollo'
 
-import {USER_PROFILE, UserProfile} from 'graphql/queries'
+import {USER_PROFILE} from 'graphql/queries'
 import logger from 'services/logger'
+import {User_ProfileQuery} from 'graphql/generated/queries'
 
 interface AuthContextInterface {
     isAuthenticated: boolean
-    user: UserProfile | null
+    user: User_ProfileQuery['me'] | null
     setAuthenticated: (authenticated: boolean) => void
 }
 
@@ -25,9 +26,7 @@ const AuthenticationProvider: React.FunctionComponent<Props> = ({
     children,
     initialIsAuthenticated = false,
 }) => {
-    const [isAuthenticated, changeIsAuthenticated] = useState(
-        initialIsAuthenticated
-    )
+    const [isAuthenticated, changeIsAuthenticated] = useState(initialIsAuthenticated)
     const {data, error, refetch} = useQuery(USER_PROFILE, {
         errorPolicy: 'ignore',
     })

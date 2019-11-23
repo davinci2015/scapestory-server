@@ -1,0 +1,23 @@
+{
+    "overwrite": true,
+    "schema": "http://localhost:8080",
+    "documents": null,
+    "generates": {
+        "./graphql/generated/types.ts": {"plugins": ["typescript"]},
+        "./graphql/generated/queries.ts": {
+            "plugins": ["typescript", "typescript-operations"],
+            "documents": [
+                "./graphql/queries/queries.ts",
+                "./containers/AquascapeDetails/queries.ts"
+            ],
+            "config": ["flattenGeneratedTypes"]
+        },
+        "./graphql/generated/mutations.ts": {
+            "plugins": ["typescript", "typescript-operations"],
+            "documents": [
+                "./graphql/mutations/mutations.ts",
+                "./containers/AquascapeDetails/Comments/mutations.ts"
+            ]
+        }
+    }
+}

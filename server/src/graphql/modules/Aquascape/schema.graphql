@@ -91,7 +91,7 @@ type Tank {
 }
 
 type User {
-    aquascapes(pagination: Pagination, random: Boolean): AquascapesResult
+    aquascapes(pagination: Pagination!, random: Boolean): AquascapesResult!
 }
 
 type Aquascape {
@@ -103,6 +103,7 @@ type Aquascape {
     trending: Boolean!
     slug: String!
     description: String
+    userId: Int!
     user: User
     co2: CO2
     tank: Tank
@@ -111,13 +112,13 @@ type Aquascape {
     images: [AquascapeImage!]
     viewsCount: Int!
     tags: [Tag!]!
-    plants: [Plant!]
-    hardscape: [Hardscape!]
-    livestock: [Livestock!]
-    filters: [Filter!]
-    lights: [Light!]
-    substrates: [Substrate!]
-    additives: [Additive!]
+    plants: [Plant!]!
+    hardscape: [Hardscape!]!
+    livestock: [Livestock!]!
+    filters: [Filter!]!
+    lights: [Light!]!
+    substrates: [Substrate!]!
+    additives: [Additive!]!
 }
 
 input Pagination {
@@ -135,12 +136,12 @@ type AquascapesResult {
 }
 
 type Query {
-    aquascapes(pagination: Pagination, userId: Int, random: Boolean): AquascapesResult
-    trendingAquascapes(pagination: Pagination): [Aquascape!]!
+    aquascapes(pagination: Pagination!, userId: Int, random: Boolean): AquascapesResult!
+    trendingAquascapes(pagination: Pagination!): [Aquascape!]!
     featuredAquascape: Aquascape
     aquascape(id: Int!): Aquascape
 }
 
 type Mutation {
-    createAquascape(title: String!): Aquascape
+    createAquascape(title: String!): Aquascape!
 }

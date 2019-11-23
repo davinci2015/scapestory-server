@@ -3,12 +3,12 @@ import React from 'react'
 import {FormattedMessage, Headline, Icon} from 'components/atoms'
 import {List} from 'components/molecules'
 import {colors, spaces} from 'styles'
-import {AquascapeDetails} from 'containers/AquascapeDetails/query'
+import {Plant, Livestock, Hardscape} from 'graphql/generated/types'
 
 interface Props {
-    plants: AquascapeDetails['plants']
-    livestock: AquascapeDetails['livestock']
-    hardscape: AquascapeDetails['hardscape']
+    plants: Pick<Plant, 'id' | 'name'>[]
+    livestock: Pick<Livestock, 'id' | 'name'>[]
+    hardscape: Pick<Hardscape, 'id' | 'name'>[]
 }
 
 const FloraSection: React.FunctionComponent<Props> = ({
@@ -27,12 +27,7 @@ const FloraSection: React.FunctionComponent<Props> = ({
             <div className="list">
                 <List
                     icon={
-                        <Icon
-                            d={Icon.PLANT}
-                            color={colors.WHITE}
-                            size={48}
-                            viewBox="0 0 48 48"
-                        />
+                        <Icon d={Icon.PLANT} color={colors.WHITE} size={48} viewBox="0 0 48 48" />
                     }
                     title={
                         <FormattedMessage
@@ -42,9 +37,7 @@ const FloraSection: React.FunctionComponent<Props> = ({
                     }
                 >
                     {plants.length ? (
-                        plants.map(plant => (
-                            <List.Item key={plant.id}>{plant.name}</List.Item>
-                        ))
+                        plants.map(plant => <List.Item key={plant.id}>{plant.name}</List.Item>)
                     ) : (
                         <List.Item>
                             <FormattedMessage
@@ -55,14 +48,7 @@ const FloraSection: React.FunctionComponent<Props> = ({
                     )}
                 </List>
                 <List
-                    icon={
-                        <Icon
-                            d={Icon.FISH}
-                            color={colors.WHITE}
-                            size={48}
-                            viewBox="0 0 48 48"
-                        />
-                    }
+                    icon={<Icon d={Icon.FISH} color={colors.WHITE} size={48} viewBox="0 0 48 48" />}
                     title={
                         <FormattedMessage
                             id="aquascape.flora_and_fauna.livestock"
@@ -71,9 +57,7 @@ const FloraSection: React.FunctionComponent<Props> = ({
                     }
                 >
                     {livestock.length ? (
-                        livestock.map(stock => (
-                            <List.Item key={stock.id}>{stock.name}</List.Item>
-                        ))
+                        livestock.map(stock => <List.Item key={stock.id}>{stock.name}</List.Item>)
                     ) : (
                         <List.Item>
                             <FormattedMessage
@@ -85,12 +69,7 @@ const FloraSection: React.FunctionComponent<Props> = ({
                 </List>
                 <List
                     icon={
-                        <Icon
-                            d={Icon.STONE}
-                            color={colors.WHITE}
-                            size={48}
-                            viewBox="0 0 48 48"
-                        />
+                        <Icon d={Icon.STONE} color={colors.WHITE} size={48} viewBox="0 0 48 48" />
                     }
                     title={
                         <FormattedMessage
@@ -100,9 +79,7 @@ const FloraSection: React.FunctionComponent<Props> = ({
                     }
                 >
                     {hardscape.length ? (
-                        hardscape.map(hard => (
-                            <List.Item key={hard.id}>{hard.name}</List.Item>
-                        ))
+                        hardscape.map(hard => <List.Item key={hard.id}>{hard.name}</List.Item>)
                     ) : (
                         <List.Item>
                             <FormattedMessage

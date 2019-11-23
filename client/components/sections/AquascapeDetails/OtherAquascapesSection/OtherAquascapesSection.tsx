@@ -5,15 +5,13 @@ import {Grid} from 'components/core'
 import {AquascapeCardList} from 'components/sections/shared'
 import {spaces} from 'styles'
 import {renderAquascapeCards} from 'utils/render'
-import {AquascapeData} from 'graphql/queries'
+import {AquascapeFieldsFragment} from 'graphql/generated/queries'
 
 interface Props {
-    aquascapes: AquascapeData[]
+    aquascapes: AquascapeFieldsFragment[]
 }
 
-const OtherAquascapesSection: React.FunctionComponent<Props> = ({
-    aquascapes,
-}) => (
+const OtherAquascapesSection: React.FunctionComponent<Props> = ({aquascapes}) => (
     <>
         <div className="section">
             <AquascapeCardList

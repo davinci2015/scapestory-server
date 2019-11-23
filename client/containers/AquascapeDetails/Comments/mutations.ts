@@ -1,13 +1,4 @@
 import gql from 'graphql-tag'
-import {AquascapeComment} from 'containers/AquascapeDetails/query'
-
-export interface AddCommentMutationResult {
-    addComment: AquascapeComment
-}
-
-export interface RemoveCommentMutationResult {
-    removeComment: AquascapeComment
-}
 
 export const ADD_COMMENT = gql`
     mutation AddComment(

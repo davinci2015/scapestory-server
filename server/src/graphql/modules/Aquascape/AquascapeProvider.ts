@@ -6,15 +6,15 @@ import {AquascapeRepositoryInterface} from 'db/repositories/Aquascape'
 import {Aquascape} from 'db/models/Aquascape'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {tokens} from 'di/tokens'
-import {Pagination} from 'interfaces'
 
 import {CreateAquascapeArgs} from './resolvers'
+import {Pagination} from 'graphql/generated/types'
 
 export interface AquascapeProviderInterface {
     getAquascapes: (
         pagination: Pagination,
-        userId?: number,
-        random?: boolean,
+        userId?: number | null,
+        random?: boolean | null,
         include?: Includeable[]
     ) => Promise<{rows: Aquascape[], count: number}>
 

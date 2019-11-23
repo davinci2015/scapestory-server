@@ -1,7 +1,7 @@
 import {DataProxy} from 'apollo-cache'
 import {FetchResult} from 'apollo-link'
 import gql from 'graphql-tag'
-import {AquascapeComment} from 'containers/AquascapeDetails/query'
+import {Comment} from 'graphql/generated/types'
 
 export enum AquascapeDetailsActions {
     AQUASCAPE_LIKE,
@@ -72,7 +72,7 @@ export const updateAquascapeDetailsCache = (action: AquascapeDetailsActions, pay
                 data: {
                     aquascape: {
                         ...data.aquascape,
-                        comments: data.aquascape.comments.map((comment: AquascapeComment) =>
+                        comments: data.aquascape.comments.map((comment: Comment) =>
                             comment.id === mutationData.like.commentId
                                 ? {
                                       ...comment,
@@ -93,7 +93,7 @@ export const updateAquascapeDetailsCache = (action: AquascapeDetailsActions, pay
                 data: {
                     aquascape: {
                         ...data.aquascape,
-                        comments: data.aquascape.comments.map((comment: AquascapeComment) =>
+                        comments: data.aquascape.comments.map((comment: Comment) =>
                             comment.id === mutationData.dislike.commentId
                                 ? {
                                       ...comment,
@@ -138,8 +138,7 @@ export const updateAquascapeDetailsCache = (action: AquascapeDetailsActions, pay
                     aquascape: {
                         ...data.aquascape,
                         comments: data.aquascape.comments.filter(
-                            (comment: AquascapeComment) =>
-                                comment.id !== mutationData.removeComment.id
+                            (comment: Comment) => comment.id !== mutationData.removeComment.id
                         ),
                     },
                 },

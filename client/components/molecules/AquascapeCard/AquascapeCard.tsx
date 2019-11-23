@@ -9,9 +9,9 @@ import {TagInterface} from 'interfaces'
 
 interface Props {
     id: number
-    image: string
     slug: string
-    userImage?: string
+    image?: string | null
+    userImage?: string | null
     title: React.ReactNode
     name: React.ReactNode
     viewsCount: number
@@ -22,6 +22,8 @@ interface Props {
 const classes = {
     root: 'aquascape-card',
 }
+
+const IMAGE_PLACEHOLDER = ''
 
 const AquascapeCard = ({
     id,
@@ -36,13 +38,13 @@ const AquascapeCard = ({
 }: Props) => (
     <>
         <div className={classes.root}>
-            <Link
-                key={id}
-                href="/aquascape/[title]/[id]"
-                as={`/aquascape/${slug}/${id}`}
-            >
+            <Link key={id} href="/aquascape/[title]/[id]" as={`/aquascape/${slug}/${id}`}>
                 <a className="header">
-                    <img className="header-image" src={image} alt="Aquascape" />
+                    <img
+                        className="header-image"
+                        src={image || IMAGE_PLACEHOLDER}
+                        alt="Aquascape"
+                    />
                     <div className="header-gradient"></div>
                     <div className="icons">
                         <IconText
@@ -77,11 +79,7 @@ const AquascapeCard = ({
                     />
                     <div className="tags">
                         {tags.map((tag, index) => (
-                            <Tag
-                                key={index}
-                                text={tag.name}
-                                variant="primary"
-                            />
+                            <Tag key={index} text={tag.name} variant="primary" />
                         ))}
                     </div>
                 </div>
@@ -151,11 +149,7 @@ const AquascapeCard = ({
                 bottom: 0;
                 right: 0;
                 height: 72px;
-                background: linear-gradient(
-                    to bottom,
-                    ${colors.BLACK},
-                    rgba(0, 0, 0, 0)
-                );
+                background: linear-gradient(to bottom, ${colors.BLACK}, rgba(0, 0, 0, 0));
             }
 
             .header > .icons {

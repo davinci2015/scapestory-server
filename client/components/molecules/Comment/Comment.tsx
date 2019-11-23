@@ -3,7 +3,7 @@ import React, {useCallback} from 'react'
 import {UserImage, FormattedMessage} from 'components/atoms'
 import {typography, spaces, colors} from 'styles'
 import {formatDate, dateFormats} from 'utils/date'
-import {AquascapeComment} from 'containers/AquascapeDetails/query'
+import {Comment as AquascapeComment} from 'graphql/generated/types'
 
 const classes = {
     root: 'comment',
@@ -22,10 +22,7 @@ type CardInterface = React.FunctionComponent<Props> & {
 
 const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
     const onLikeClick = useCallback(() => onLike(comment), [comment, onLike])
-    const onRemoveClick = useCallback(() => onRemove && onRemove(comment), [
-        comment,
-        onRemove,
-    ])
+    const onRemoveClick = useCallback(() => onRemove && onRemove(comment), [comment, onRemove])
 
     return (
         <>
@@ -36,10 +33,7 @@ const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
                     <span className="content">{comment.content}</span>
                     <div className="bottom">
                         <span className="date">
-                            {formatDate(
-                                parseInt(comment.createdAt),
-                                dateFormats.PRIMARY
-                            )}
+                            {formatDate(parseInt(comment.createdAt), dateFormats.PRIMARY)}
                         </span>
                         <div className="divider"></div>
                         <span className="action" onClick={onLikeClick}>
@@ -49,10 +43,7 @@ const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
                                     defaultMessage="Dislike"
                                 />
                             ) : (
-                                <FormattedMessage
-                                    id="comment.action.like"
-                                    defaultMessage="Like"
-                                />
+                                <FormattedMessage id="comment.action.like" defaultMessage="Like" />
                             )}
                         </span>
                         {Boolean(onRemove) && (

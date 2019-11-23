@@ -7,7 +7,7 @@ import * as Bluebird from 'bluebird'
 import {Aquascape} from 'db/models/Aquascape'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {AquascapeImage} from 'db/models/AquascapeImage'
-import {Pagination} from 'interfaces'
+import {Pagination} from 'graphql/generated/types'
 
 export interface AquascapeFilter {
     trending: boolean

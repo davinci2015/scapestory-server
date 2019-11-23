@@ -1,42 +1,5 @@
 import gql from 'graphql-tag'
 
-export interface AquascapeData {
-    id: number
-    title: string
-    slug: string
-    mainImage: string
-    viewsCount: number
-    likesCount: number
-    tags: [
-        {
-            name: string
-        }
-    ]
-    user: {
-        id: number
-        name?: string
-        profileImage?: string
-        username: string
-    }
-}
-
-export interface AquascapesResult {
-    aquascapes: {
-        rows: AquascapeData[]
-        count: number
-        __typename?: string
-    }
-}
-
-export interface UserProfile {
-    id: number
-    email: string
-    username: string
-    name?: string
-    country?: string
-    profileImage?: string
-}
-
 export const fragments = {
     aquascape: gql`
         fragment AquascapeFields on Aquascape {
@@ -55,6 +18,24 @@ export const fragments = {
                 name
                 profileImage
                 username
+            }
+        }
+    `,
+    comments: gql`
+        fragment CommentFields on Comment {
+            id
+            content
+            createdAt
+            parentCommentId
+            likes {
+                id
+                userId
+            }
+            user {
+                id
+                name
+                username
+                profileImage
             }
         }
     `,

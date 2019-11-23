@@ -4,17 +4,14 @@ import {FormattedMessage, Headline} from 'components/atoms'
 import {Grid} from 'components/core'
 import {AquascapeCardList} from 'components/sections/shared'
 import {renderAquascapeCards} from 'utils/render'
-import {AquascapeData} from 'graphql/queries'
+import {AquascapeFieldsFragment} from 'graphql/generated/queries'
 
 interface Props {
     username: string
-    aquascapes: AquascapeData[]
+    aquascapes: AquascapeFieldsFragment[]
 }
 
-const UserAquascapesSection: React.FunctionComponent<Props> = ({
-    username,
-    aquascapes,
-}) => (
+const UserAquascapesSection: React.FunctionComponent<Props> = ({username, aquascapes}) => (
     <>
         <div className="section">
             <AquascapeCardList

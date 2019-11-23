@@ -1,5 +1,4 @@
 import {GraphQLResolveInfo} from 'graphql'
-import {ModuleContext} from '@graphql-modules/core'
 import {Includeable} from 'sequelize/types'
 
 import {AquascapeFilter} from 'db/repositories/Aquascape'
@@ -8,7 +7,6 @@ import {UsersProviderInterface} from 'graphql/modules/User/UsersProvider'
 import {tokens} from 'di/tokens'
 import {Pagination} from 'interfaces'
 
-import {Aquascape} from 'db/models/Aquascape'
 import {Tag} from 'db/models/Tag'
 import {Visitor} from 'db/models/Visitor'
 import {Plant} from 'db/models/Plant'
@@ -21,11 +19,16 @@ import {Substrate} from 'db/models/Substrate'
 import {Additive} from 'db/models/Additive'
 import {Tank} from 'db/models/Tank'
 import {AquascapeImage} from 'db/models/AquascapeImage'
-import {User} from 'db/models/User'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
-import {AuthenticationContext} from 'graphql/context'
+import {
+    Aquascape,
+    QueryAquascapesArgs,
+    QueryTrendingAquascapesArgs,
+    QueryAquascapeArgs,
+    MutationCreateAquascapeArgs,
+} from 'graphql/generated/types'
 
 export type CreateAquascapeArgs = {
     title: string
@@ -66,12 +69,7 @@ export const getAquascapeJoinFields = (info: GraphQLResolveInfo) => [
 
 export const resolvers = {
     Query: {
-        async aquascapes(
-            root,
-            args: {pagination: Pagination, userId?: number, random?: boolean},
-            context: ModuleContext,
-            info: GraphQLResolveInfo
-        ) {
+        async aquascapes(root, args: QueryAquascapesArgs, context, info) {
             const provider: AquascapeProviderInterface = context.injector.get(
                 tokens.AQUASCAPE_PROVIDER
             )
@@ -83,12 +81,7 @@ export const resolvers = {
                 getAquascapeJoinFields(info)
             )
         },
-        async trendingAquascapes(
-            root,
-            args: {pagination: Pagination},
-            context: ModuleContext,
-            info: GraphQLResolveInfo
-        ) {
+        async trendingAquascapes(root, args: QueryTrendingAquascapesArgs, context, info) {
             const provider: AquascapeProviderInterface = context.injector.get(
                 tokens.AQUASCAPE_PROVIDER
             )
@@ -97,52 +90,33 @@ export const resolvers = {
                 getAquascapeJoinFields(info)
             )
         },
-        async featuredAquascape(
-            root,
-            args,
-            context: ModuleContext,
-            info: GraphQLResolveInfo
-        ) {
+        async featuredAquascape(root, args, context, info) {
             const provider: AquascapeProviderInterface = context.injector.get(
                 tokens.AQUASCAPE_PROVIDER
             )
-            return await provider.getFeaturedAquascape(
-                getAquascapeJoinFields(info)
-            )
+            return await provider.getFeaturedAquascape(getAquascapeJoinFields(info))
         },
-        async aquascape(
-            root,
-            args: {id: number},
-            context: ModuleContext,
-            info: GraphQLResolveInfo
-        ) {
+        async aquascape(root, args: QueryAquascapeArgs, context, info) {
             const provider: AquascapeProviderInterface = context.injector.get(
                 tokens.AQUASCAPE_PROVIDER
             )
-            return await provider.getAquascapeById(
+            return ((await provider.getAquascapeById(
                 args.id,
                 getAquascapeJoinFields(info)
-            )
+            )) as unknown) as Promise<Aquascape>
         },
     },
     Aquascape: {
-        async user(aquascape: Aquascape, args, context: ModuleContext) {
-            const provider: UsersProviderInterface = context.injector.get(
-                tokens.USER_PROVIDER
-            )
+        async user(aquascape, args, context) {
+            const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
             return await provider.findUserById(aquascape.userId)
         },
-        viewsCount(aquascape: Aquascape) {
+        viewsCount(aquascape) {
             return aquascape.visitors.length
         },
     },
     User: {
-        async aquascapes(
-            user: User,
-            args: {pagination: Pagination, random: boolean},
-            context: ModuleContext,
-            info: GraphQLResolveInfo
-        ) {
+        async aquascapes(user, args, context, info) {
             const provider: AquascapeProviderInterface = context.injector.get(
                 tokens.AQUASCAPE_PROVIDER
             )
@@ -155,11 +129,7 @@ export const resolvers = {
         },
     },
     Mutation: {
-        async createAquascape(
-            root,
-            args: CreateAquascapeArgs,
-            context: ModuleContext & AuthenticationContext
-        ) {
+        async createAquascape(root, args: MutationCreateAquascapeArgs, context) {
             const provider: AquascapeProviderInterface = context.injector.get(
                 tokens.AQUASCAPE_PROVIDER
             )

@@ -5,19 +5,13 @@ import classnames from 'classnames'
 import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
 import useScrollPosition from 'hooks/useScrollPosition'
-import {
-    Button,
-    FormattedMessage,
-    Icon,
-    UserImage,
-    Paragraph,
-} from 'components/atoms'
+import {Button, FormattedMessage, Icon, UserImage, Paragraph} from 'components/atoms'
 
 import NavLink from './NavLink'
 
 interface Props {
     isAuthenticated: boolean
-    userImage?: string
+    userImage?: string | null
     openLoginModal: () => void
     openRegisterModal: () => void
     onCreateAquascape: () => void
@@ -57,18 +51,12 @@ const Navigation = ({
                     </Link>
                     <NavLink href={routes.index}>
                         <a>
-                            <FormattedMessage
-                                id="navigation_discover"
-                                defaultMessage="Discover"
-                            />
+                            <FormattedMessage id="navigation_discover" defaultMessage="Discover" />
                         </a>
                     </NavLink>
                     <NavLink href={routes.news}>
                         <a>
-                            <FormattedMessage
-                                id="navigation_newsfeed"
-                                defaultMessage="Newsfeed"
-                            />
+                            <FormattedMessage id="navigation_newsfeed" defaultMessage="Newsfeed" />
                         </a>
                     </NavLink>
                 </div>
@@ -76,19 +64,13 @@ const Navigation = ({
                     {!isAuthenticated && (
                         <>
                             <div className="text">
-                                <Paragraph
-                                    as="span"
-                                    color={styles.colors.SHADE_DEEP}
-                                >
+                                <Paragraph as="span" color={styles.colors.SHADE_DEEP}>
                                     <FormattedMessage
                                         id="navigation_not_member_yet"
                                         defaultMessage="Not a member yet?"
                                     />
                                 </Paragraph>
-                                <div
-                                    className="signup"
-                                    onClick={openRegisterModal}
-                                >
+                                <div className="signup" onClick={openRegisterModal}>
                                     <Paragraph
                                         as="span"
                                         color={styles.colors.PRIMARY}
