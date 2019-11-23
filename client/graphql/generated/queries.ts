@@ -467,9 +467,9 @@ export type UserBySlugQueryVariables = {
 
 export type UserBySlugQuery = (
   { __typename?: 'Query' }
-  & { userBySlug: Maybe<(
+  & { user: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'profileImage' | 'youtubeLink' | 'instagramLink'>
+    & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'profileImage' | 'youtubeLink' | 'instagramLink' | 'followersCount' | 'followingCount' | 'isFollowedByMe'>
   )> }
 );
 
