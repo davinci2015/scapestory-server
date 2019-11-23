@@ -71,10 +71,11 @@ const ProfileContainer = () => {
 
     return (
         <div style={{paddingTop: 120}}>
-            <Headline>{data?.user.name}</Headline>
+            <Headline>{data.user.name}</Headline>
             <Button onClick={toggleFollow}>
                 {data.user.isFollowedByMe ? 'Unfollow' : 'follow'}
             </Button>
+            <Headline>{data.user.followersCount}</Headline>
         </div>
     )
 }

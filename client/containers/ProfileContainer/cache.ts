@@ -24,7 +24,7 @@ export const updateProfileCache = (action: ProfileActions, payload: Payload) => 
 
     switch (action) {
         case ProfileActions.FOLLOW:
-            query = gql`query { userBySlug(slug: "${payload.slug}") { id isFollowedByMe }}`
+            query = gql`query { userBySlug(slug: "${payload.slug}") { id isFollowedByMe followersCount}}`
             data = cache.readQuery<any>({query})
 
             return cache.writeQuery({
@@ -33,12 +33,13 @@ export const updateProfileCache = (action: ProfileActions, payload: Payload) => 
                     userBySlug: {
                         ...data.userBySlug,
                         isFollowedByMe: true,
+                        followersCount: data.userBySlug.followersCount + 1,
                     },
                 },
             })
 
         case ProfileActions.UNFOLLOW:
-            query = gql`query { userBySlug(slug: "${payload.slug}") { id isFollowedByMe }}`
+            query = gql`query { userBySlug(slug: "${payload.slug}") { id isFollowedByMe followersCount }}`
             data = cache.readQuery<any>({query})
 
             return cache.writeQuery({
@@ -47,6 +48,7 @@ export const updateProfileCache = (action: ProfileActions, payload: Payload) => 
                     userBySlug: {
                         ...data.userBySlug,
                         isFollowedByMe: false,
+                        followersCount: data.userBySlug.followersCount - 1,
                     },
                 },
             })
