@@ -1,7 +1,7 @@
 import React from 'react'
 
-import NavigationContainer from 'containers/Navigation'
-import FooterContainer from 'containers/Footer'
+import NavigationContainer from 'containers/NavigationContainer'
+import FooterContainer from 'containers/FooterContainer'
 import HomeContainer from 'containers/Home'
 import withAuth from 'hocs/withAuth'
 import ModalProvider from 'providers/ModalProvider'

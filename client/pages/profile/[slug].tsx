@@ -1,14 +1,14 @@
 import React from 'react'
 import withAuth from 'hocs/withAuth'
 import ModalProvider from 'providers/ModalProvider'
-import NavigationContainer from 'containers/Navigation'
-import FooterContainer from 'containers/Footer'
-import {Headline} from 'components/atoms'
+import NavigationContainer from 'containers/NavigationContainer'
+import FooterContainer from 'containers/FooterContainer'
+import ProfileContainer from 'containers/ProfileContainer'
 
 const UserProfile = () => (
     <ModalProvider>
         <NavigationContainer />
-        <Headline>My profile</Headline>
+        <ProfileContainer />
         <FooterContainer />
     </ModalProvider>
 )

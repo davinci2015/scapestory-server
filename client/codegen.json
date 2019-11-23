@@ -8,7 +8,8 @@
             "plugins": ["typescript", "typescript-operations"],
             "documents": [
                 "./graphql/queries/queries.ts",
-                "./containers/AquascapeDetails/queries.ts"
+                "./containers/AquascapeDetailsContainer/queries.ts",
+                "./containers/ProfileContainer/queries.ts"
             ],
             "config": ["flattenGeneratedTypes"]
         },
@@ -16,7 +17,7 @@
             "plugins": ["typescript", "typescript-operations"],
             "documents": [
                 "./graphql/mutations/mutations.ts",
-                "./containers/AquascapeDetails/Comments/mutations.ts"
+                "./containers/AquascapeDetailsContainer/CommentsContainer/mutations.ts"
             ]
         }
     }

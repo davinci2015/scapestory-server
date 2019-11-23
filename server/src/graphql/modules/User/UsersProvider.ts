@@ -6,6 +6,7 @@ import * as Bluebird from 'bluebird'
 
 export interface UsersProviderInterface {
     findUserById: (id: number) => Promise<User | null>
+    findUserBySlug: (slug: string) => Promise<User | null>
     getAllUsers: () => Bluebird<User[]>
 }
 
@@ -18,6 +19,10 @@ export class UsersProvider implements UsersProviderInterface {
 
     findUserById(id: number) {
         return this.userRepository.findUserById(id)
+    }
+
+    findUserBySlug(slug: string) {
+        return this.userRepository.findUserBySlug(slug)
     }
 
     getAllUsers() {

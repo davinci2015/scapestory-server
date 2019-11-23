@@ -285,6 +285,7 @@ export type Query = {
   __typename?: 'Query',
   me: User,
   user?: Maybe<User>,
+  userBySlug?: Maybe<User>,
   users: Array<Maybe<User>>,
   userProfileSlugExists?: Maybe<Scalars['Boolean']>,
   follows?: Maybe<Follows>,
@@ -299,6 +300,11 @@ export type Query = {
 
 export type QueryUserArgs = {
   id: Scalars['Int']
+};
+
+
+export type QueryUserBySlugArgs = {
+  slug: Scalars['String']
 };
 
 
@@ -368,7 +374,7 @@ export type User = {
   id: Scalars['Int'],
   email: Scalars['String'],
   slug: Scalars['String'],
-  name?: Maybe<Scalars['String']>,
+  name: Scalars['String'],
   profileImage?: Maybe<Scalars['String']>,
   country?: Maybe<Scalars['String']>,
   youtubeLink?: Maybe<Scalars['String']>,
@@ -698,6 +704,7 @@ export type PlantResolvers<ContextType = any, ParentType = ResolversParentTypes[
 export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes['Query']> = {
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, QueryUserArgs>,
+  userBySlug?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, QueryUserBySlugArgs>,
   users?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>,
   userProfileSlugExists?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, QueryUserProfileSlugExistsArgs>,
   follows?: Resolver<Maybe<ResolversTypes['Follows']>, ParentType, ContextType, QueryFollowsArgs>,
@@ -738,7 +745,7 @@ export type UserResolvers<ContextType = any, ParentType = ResolversParentTypes['
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   slug?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   profileImage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   youtubeLink?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,

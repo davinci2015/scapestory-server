@@ -4,19 +4,19 @@ import {useQuery, useMutation} from 'react-apollo'
 import {FormattedMessage} from 'react-intl'
 import {Element} from 'react-scroll'
 
-import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetails/queries'
+import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetailsContainer/queries'
 import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
 import {LikeEntityType} from 'graphql/generated/types'
 import {LIKE, DISLIKE, FOLLOW, UNFOLLOW, VISIT} from 'graphql/mutations'
 import {ModalContext} from 'providers/ModalProvider'
-import CommentsContainer from 'containers/AquascapeDetails/Comments'
+import CommentsContainer from 'containers/AquascapeDetailsContainer/CommentsContainer'
 import {AuthContext} from 'providers/AuthenticationProvider'
 import {
     updateAquascapeDetailsCache,
     AquascapeDetailsActions,
-} from 'containers/AquascapeDetails/cache'
+} from 'containers/AquascapeDetailsContainer/cache'
 import {
     HeroSection,
     FloraSection,

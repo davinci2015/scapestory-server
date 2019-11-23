@@ -282,6 +282,7 @@ export type Query = {
    __typename?: 'Query',
   me: User,
   user?: Maybe<User>,
+  userBySlug?: Maybe<User>,
   users: Array<Maybe<User>>,
   userProfileSlugExists?: Maybe<Scalars['Boolean']>,
   follows?: Maybe<Follows>,
@@ -296,6 +297,11 @@ export type Query = {
 
 export type QueryUserArgs = {
   id: Scalars['Int']
+};
+
+
+export type QueryUserBySlugArgs = {
+  slug: Scalars['String']
 };
 
 
@@ -455,6 +461,19 @@ export type AquascapeDetailsQuery = (
       { __typename?: 'Comment' }
       & CommentFieldsFragment
     )> }
+  )> }
+);
+
+export type UserBySlugQueryVariables = {
+  slug: Scalars['String']
+};
+
+
+export type UserBySlugQuery = (
+  { __typename?: 'Query' }
+  & { userBySlug: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'profileImage' | 'youtubeLink' | 'instagramLink'>
   )> }
 );
 

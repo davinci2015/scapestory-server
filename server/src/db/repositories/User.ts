@@ -6,7 +6,7 @@ import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
     findUserById(id: number): Promise<User | null>
     findUserByEmail(email: string): Promise<User | null>
-    findBySlug(slug: string): Promise<User | null>
+    findUserBySlug(slug: string): Promise<User | null>
 }
 
 @Injectable()
@@ -27,7 +27,7 @@ export class UserRepository extends BaseRepository<User>
         return this.findOne({where: {email}})
     }
 
-    findBySlug(slug: string): Promise<User | null> {
+    findUserBySlug(slug: string): Promise<User | null> {
         return this.findOne({where: {slug}})
     }
 

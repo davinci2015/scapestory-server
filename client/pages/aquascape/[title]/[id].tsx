@@ -1,8 +1,8 @@
 import React from 'react'
 
-import NavigationContainer from 'containers/Navigation'
-import FooterContainer from 'containers/Footer'
-import AquascapeDetailsContainer from 'containers/AquascapeDetails'
+import NavigationContainer from 'containers/NavigationContainer'
+import FooterContainer from 'containers/FooterContainer'
+import AquascapeDetailsContainer from 'containers/AquascapeDetailsContainer'
 import withAuth from 'hocs/withAuth'
 import ModalProvider from 'providers/ModalProvider'
 
