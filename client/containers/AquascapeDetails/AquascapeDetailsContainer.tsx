@@ -210,10 +210,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                                 aquascapes={aquascapeResult.aquascape.user.aquascapes.rows.filter(
                                     scape => scape.id !== aquascapeResult.aquascape?.id
                                 )}
-                                username={
-                                    aquascapeResult.aquascape.user.name ||
-                                    aquascapeResult.aquascape.user.username
-                                }
+                                username={aquascapeResult.aquascape.user.name}
                             />
                             <Divider />
                         </>

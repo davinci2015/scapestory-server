@@ -35,7 +35,7 @@ type UsernameExistsArgsType = {
 
 export const resolvers = {
     Query: {
-        async usernameExists(
+        async userProfileSlugExists(
             root,
             args: UsernameExistsArgsType,
             {injector}: ModuleContext
@@ -43,7 +43,7 @@ export const resolvers = {
             const provider: AuthProviderInterface = injector.get(
                 tokens.AUTH_PROVIDER
             )
-            return await provider.usernameExists(args.username)
+            return await provider.userProfileSlugExists(args.username)
         },
     },
     Mutation: {

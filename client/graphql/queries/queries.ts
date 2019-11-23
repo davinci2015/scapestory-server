@@ -17,7 +17,7 @@ export const fragments = {
                 id
                 name
                 profileImage
-                username
+                slug
             }
         }
     `,
@@ -34,7 +34,7 @@ export const fragments = {
             user {
                 id
                 name
-                username
+                slug
                 profileImage
             }
         }
@@ -46,7 +46,7 @@ export const USER_PROFILE = gql`
         me {
             id
             email
-            username
+            slug
             name
             country
             profileImage

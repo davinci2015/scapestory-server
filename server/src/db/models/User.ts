@@ -14,7 +14,7 @@ export class User extends Model<User> {
 
     @Unique
     @Column
-    username: string
+    slug: string
 
     @Column
     name: string

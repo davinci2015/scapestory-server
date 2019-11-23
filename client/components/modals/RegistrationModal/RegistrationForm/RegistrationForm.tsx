@@ -2,16 +2,7 @@ import React, {useState} from 'react'
 import {useIntl, MessageDescriptor} from 'react-intl'
 import {useMutation} from '@apollo/react-hooks'
 import Link from 'next/link'
-
-import {
-    Paragraph,
-    Button,
-    Input,
-    PasswordInput,
-    FormattedMessage,
-    Checkbox,
-} from 'components/atoms'
-
+import {Paragraph, Button, Input, PasswordInput, FormattedMessage, Checkbox} from 'components/atoms'
 import {
     RegisterResult,
     RegisterVariables,
@@ -55,12 +46,9 @@ const RegistrationForm = ({onSuccess}: Props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const [register] = useMutation<RegisterResult, RegisterVariables>(
-        SIGN_UP_MUTATION,
-        {
-            refetchQueries: ['USER_PROFILE'],
-        }
-    )
+    const [register] = useMutation<RegisterResult, RegisterVariables>(SIGN_UP_MUTATION, {
+        refetchQueries: ['USER_PROFILE'],
+    })
 
     const onSubmit = async () => {
         const {data} = await register({variables: {email, password}})
@@ -118,8 +106,7 @@ const RegistrationForm = ({onSuccess}: Props) => {
                 ...errorMessages,
                 [inputKeys.password]: {
                     id: 'general_error_password_length',
-                    defaultMessage:
-                        'Your password must be at least 6 characters',
+                    defaultMessage: 'Your password must be at least 6 characters',
                 },
             })
             return setError({...errors, [inputKeys.password]: true})
@@ -155,9 +142,7 @@ const RegistrationForm = ({onSuccess}: Props) => {
                     onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
                         validateEmail(e.target.value)
                     }
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setEmail(e.target.value)
-                    }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 />
 
                 <PasswordInput
@@ -165,9 +150,7 @@ const RegistrationForm = ({onSuccess}: Props) => {
                     placeholder={passwordLabel}
                     label={passwordLabel}
                     value={password}
-                    error={
-                        dirty[inputKeys.password] && errors[inputKeys.password]
-                    }
+                    error={dirty[inputKeys.password] && errors[inputKeys.password]}
                     errorMessage={getErrorMessage(inputKeys.password)}
                     onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
                         validatePassword(e.target.value)
@@ -178,10 +161,7 @@ const RegistrationForm = ({onSuccess}: Props) => {
                 />
 
                 <Checkbox id="terms" onChange={setTermsAccepted}>
-                    <FormattedMessage
-                        id="registration_terms_i_accept"
-                        defaultMessage="I accept"
-                    />{' '}
+                    <FormattedMessage id="registration_terms_i_accept" defaultMessage="I accept" />{' '}
                     <Link href={routes.termsAndConditions}>
                         <a>
                             <FormattedMessage
@@ -190,10 +170,7 @@ const RegistrationForm = ({onSuccess}: Props) => {
                             />
                         </a>
                     </Link>{' '}
-                    <FormattedMessage
-                        id="registration_terms_and"
-                        defaultMessage="and"
-                    />{' '}
+                    <FormattedMessage id="registration_terms_and" defaultMessage="and" />{' '}
                     <Link href={routes.privacyPolicy}>
                         <a>
                             <FormattedMessage
@@ -207,9 +184,7 @@ const RegistrationForm = ({onSuccess}: Props) => {
                 <div className="submit-button">
                     <Button
                         disabled={
-                            errors[inputKeys.email] ||
-                            errors[inputKeys.password] ||
-                            !termsAccepted
+                            errors[inputKeys.email] || errors[inputKeys.password] || !termsAccepted
                         }
                         type="block"
                         onClick={onSubmit}

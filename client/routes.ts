@@ -1,3 +1,5 @@
+import slugify from 'slugify'
+
 export default {
     index: '/',
     signUp: '/signup',
@@ -6,11 +8,21 @@ export default {
     news: '/news',
     privacyPolicy: '/privacy',
     termsAndConditions: '/terms',
+    aquascapeDetails: '/aquascape/[title]/[id]',
+    profile: '/profile/[slug]',
 }
 
-export const routeMapping = {
-    user: {
-        as: (username: string) => `/user/${username}`,
-        href: (username: string) => `/user?username=${username}`,
-    },
+export const getAquascapeDetailsSlug = (title: string) =>
+    slugify(title, {
+        lower: true,
+    })
+
+export const createDynamicPath = (path: string, values: {[key: string]: string}) => {
+    for (const property in values) {
+        if (values.hasOwnProperty(property)) {
+            path = path.replace(`[${property}]`, values[property])
+        }
+    }
+
+    return path
 }

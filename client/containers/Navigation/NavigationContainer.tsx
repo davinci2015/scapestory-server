@@ -20,7 +20,7 @@ const NavigationContainer = () => {
 
     return (
         <Navigation
-            userImage={user?.profileImage}
+            user={user}
             isAuthenticated={isAuthenticated}
             openLoginModal={openLoginModal}
             openRegisterModal={openRegisterModal}

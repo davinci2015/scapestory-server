@@ -283,7 +283,7 @@ export type Query = {
   me: User,
   user?: Maybe<User>,
   users: Array<Maybe<User>>,
-  usernameExists?: Maybe<Scalars['Boolean']>,
+  userProfileSlugExists?: Maybe<Scalars['Boolean']>,
   follows?: Maybe<Follows>,
   aquascapes: AquascapesResult,
   trendingAquascapes: Array<Aquascape>,
@@ -299,8 +299,8 @@ export type QueryUserArgs = {
 };
 
 
-export type QueryUsernameExistsArgs = {
-  username: Scalars['String']
+export type QueryUserProfileSlugExistsArgs = {
+  slug: Scalars['String']
 };
 
 
@@ -364,8 +364,8 @@ export type User = {
    __typename?: 'User',
   id: Scalars['Int'],
   email: Scalars['String'],
-  username: Scalars['String'],
-  name?: Maybe<Scalars['String']>,
+  slug: Scalars['String'],
+  name: Scalars['String'],
   profileImage?: Maybe<Scalars['String']>,
   country?: Maybe<Scalars['String']>,
   youtubeLink?: Maybe<Scalars['String']>,

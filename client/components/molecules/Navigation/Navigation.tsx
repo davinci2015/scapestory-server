@@ -2,16 +2,17 @@ import React, {useEffect} from 'react'
 import Link from 'next/link'
 import classnames from 'classnames'
 
-import routes, {routeMapping} from 'routes'
 import * as styles from 'styles'
 import useScrollPosition from 'hooks/useScrollPosition'
 import {Button, FormattedMessage, Icon, UserImage, Paragraph} from 'components/atoms'
 
 import NavLink from './NavLink'
+import routes, {createDynamicPath} from 'routes'
+import {User_ProfileQuery} from 'graphql/generated/queries'
 
 interface Props {
+    user: User_ProfileQuery['me'] | null
     isAuthenticated: boolean
-    userImage?: string | null
     openLoginModal: () => void
     openRegisterModal: () => void
     onCreateAquascape: () => void
@@ -25,11 +26,11 @@ export const navigationHeight = {
 const scrollOffset = 80
 
 const Navigation = ({
+    user,
     isAuthenticated,
     openLoginModal,
     openRegisterModal,
     onCreateAquascape,
-    userImage,
 }: Props) => {
     const {position, handleScroll} = useScrollPosition()
     const isSlim = position.y > scrollOffset
@@ -114,13 +115,13 @@ const Navigation = ({
                             defaultMessage="Add your aquascape"
                         />
                     </Button>
-                    {isAuthenticated && (
+                    {isAuthenticated && user && (
                         <NavLink
-                            as={routeMapping.user.as('test')}
-                            href={routeMapping.user.href('test')}
+                            as={createDynamicPath(routes.profile, {slug: user.slug})}
+                            href={routes.profile}
                         >
                             <div>
-                                <UserImage size="large" image={userImage} />
+                                <UserImage size="large" image={user.profileImage} />
                             </div>
                         </NavLink>
                     )}

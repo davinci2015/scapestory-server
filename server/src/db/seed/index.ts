@@ -91,7 +91,7 @@ const users = getEmptyArray(entriesCount.users).map((_, index) => ({
     _id: index + 1,
     email: faker.internet.email(),
     password: faker.random.uuid(),
-    username: faker.internet.userName(),
+    slug: faker.internet.userName(),
     name: faker.name.firstName(),
     profileImage: getProfileImage(),
     country: faker.address.country(),

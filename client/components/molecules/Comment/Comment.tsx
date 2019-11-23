@@ -29,7 +29,7 @@ const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
             <div className={classes.root}>
                 <UserImage size="large" image={comment.user.profileImage} />
                 <div className="wrapper">
-                    <span className="username">{comment.user.username}</span>
+                    <span className="username">{comment.user.name}</span>
                     <span className="content">{comment.content}</span>
                     <div className="bottom">
                         <span className="date">

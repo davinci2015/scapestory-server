@@ -6,10 +6,12 @@ import {Headline, Tag, IconText, Icon, Paragraph} from 'components/atoms'
 import {colors, spaces, borderRadius, media} from 'styles'
 import UserWidget from 'components/molecules/UserWidget'
 import {Tag as TagInterface} from 'graphql/generated/types'
+import routes, {createDynamicPath} from 'routes'
 
 interface Props {
     id: number
     slug: string
+    profileSlug?: string
     image?: string | null
     userImage?: string | null
     title: React.ReactNode
@@ -32,13 +34,21 @@ const AquascapeCard = ({
     name,
     title,
     slug,
+    profileSlug = '',
     viewsCount = 0,
     likesCount = 0,
     tags = [],
 }: Props) => (
     <>
         <div className={classes.root}>
-            <Link key={id} href="/aquascape/[title]/[id]" as={`/aquascape/${slug}/${id}`}>
+            <Link
+                key={id}
+                href={routes.aquascapeDetails}
+                as={createDynamicPath(routes.aquascapeDetails, {
+                    id: id.toString(),
+                    title: slug,
+                })}
+            >
                 <a className="header">
                     <img
                         className="header-image"
@@ -69,14 +79,21 @@ const AquascapeCard = ({
                     </Headline>
                 </div>
                 <div className="footer">
-                    <UserWidget
-                        image={userImage}
-                        text={
-                            <Paragraph type="t1" color={colors.SHADE_DEEP}>
-                                {name}
-                            </Paragraph>
-                        }
-                    />
+                    <Link
+                        href={routes.profile}
+                        as={createDynamicPath(routes.profile, {slug: profileSlug})}
+                    >
+                        <a className="user-link">
+                            <UserWidget
+                                image={userImage}
+                                text={
+                                    <Paragraph type="t1" color={colors.SHADE_DEEP}>
+                                        {name}
+                                    </Paragraph>
+                                }
+                            />
+                        </a>
+                    </Link>
                     <div className="tags">
                         {tags.map((tag, index) => (
                             <Tag key={index} text={tag.name} variant="primary" />
@@ -186,6 +203,10 @@ const AquascapeCard = ({
             .footer {
                 display: flex;
                 justify-content: space-between;
+            }
+
+            .footer .user-link {
+                text-decoration: none;
             }
 
             .footer > .tags :global(.${Tag.classes.root}) {

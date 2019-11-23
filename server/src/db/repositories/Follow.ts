@@ -6,16 +6,16 @@ import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 export interface FollowRepositoryInterface
     extends BaseRepositoryInterface<Follow> {
     followUser: (
-        followerUserId: number,
-        followedUserId: number
+        followedId: number,
+        followerId: number
     ) => Bluebird<Follow | null>
     unfollowUser: (
-        followerUserId: number,
-        followedUserId: number
+        followedId: number,
+        followerId: number
     ) => Bluebird<Follow | null>
     getFollows: (
         userId: number
-    ) => Promise<{followers: Follow[]; following: Follow[]}>
+    ) => Promise<{followers: Follow[], following: Follow[]}>
     isFollowedBy: (followerId: number, followedId: number) => Promise<boolean>
 }
 
@@ -25,21 +25,27 @@ export class FollowRepository extends BaseRepository<Follow> {
         super(Follow)
     }
 
-    followUser(followerUserId: number, followedUserId: number) {
-        return this.create({followerUserId, followedUserId})
+    followUser(followedId: number, followerId: number) {
+        return this.create({followerUserId: followerId, followedUserId: followedId})
     }
 
-    unfollowUser(followerUserId: number, followedUserId: number) {
-        return this.destroy({where: {followerUserId, followedUserId}})
+    unfollowUser(followedId: number, followerId: number) {
+        return this.destroy({where: {followerUserId: followerId, followedUserId: followedId}})
     }
 
     async isFollowedBy(followerId: number, followedId: number) {
-        const follow = this.findOne({
+        const follow = await this.findOne({
             where: {
                 followerUserId: followerId,
                 followedUserId: followedId,
             },
         })
+
+
+        console.log('Follower::::::')
+        console.log(followerId)
+        console.log(followedId)
+        console.log(follow)
 
         return Boolean(follow)
     }

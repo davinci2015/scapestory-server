@@ -8,12 +8,12 @@ import {tokens} from 'di/tokens'
 import {UserInputError} from 'apollo-server'
 
 export interface FollowProviderInterface {
-    followUser: (followerId: number, followedId: number) => Promise<User>
-    unfollowUser: (followerId: number, followedId: number) => Promise<User>
+    followUser: (followedId: number, followerId: number) => Promise<User>
+    unfollowUser: (followedId: number, followerId: number) => Promise<User>
     isFollowedBy: (followerId: number, followedId: number) => Promise<boolean>
     getFollows: (
         userId: number
-    ) => Promise<{followers: Follow[]; following: Follow[]}>
+    ) => Promise<{followers: Follow[], following: Follow[]}>
 }
 
 @Injectable()
@@ -25,7 +25,7 @@ export class FollowProvider implements FollowProviderInterface {
         private userRepository: UserRepositoryInterface
     ) {}
 
-    async followUser(followerId: number, followedId: number) {
+    async followUser(followedId: number, followerId: number) {
         const [follower, followed] = await this.findUsers(
             followerId,
             followedId
@@ -35,12 +35,12 @@ export class FollowProvider implements FollowProviderInterface {
             throw new UserInputError('User does not exist')
         }
 
-        await this.followRepository.followUser(followerId, followedId)
+        await this.followRepository.followUser(followedId, followerId)
 
         return followed
     }
 
-    async unfollowUser(followerId: number, followedId: number) {
+    async unfollowUser(followedId: number, followerId: number) {
         const [follower, followed] = await this.findUsers(
             followerId,
             followedId
@@ -50,7 +50,7 @@ export class FollowProvider implements FollowProviderInterface {
             throw new UserInputError('User does not exist')
         }
 
-        await this.followRepository.unfollowUser(followerId, followedId)
+        await this.followRepository.unfollowUser(followedId, followerId)
 
         return followed
     }

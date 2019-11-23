@@ -7,8 +7,8 @@ type Query {
 type User {
     id: Int!
     email: String!
-    username: String!
-    name: String
+    slug: String!
+    name: String!
     profileImage: String
     country: String
     youtubeLink: String

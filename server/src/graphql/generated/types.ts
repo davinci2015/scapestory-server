@@ -286,7 +286,7 @@ export type Query = {
   me: User,
   user?: Maybe<User>,
   users: Array<Maybe<User>>,
-  usernameExists?: Maybe<Scalars['Boolean']>,
+  userProfileSlugExists?: Maybe<Scalars['Boolean']>,
   follows?: Maybe<Follows>,
   aquascapes: AquascapesResult,
   trendingAquascapes: Array<Aquascape>,
@@ -302,8 +302,8 @@ export type QueryUserArgs = {
 };
 
 
-export type QueryUsernameExistsArgs = {
-  username: Scalars['String']
+export type QueryUserProfileSlugExistsArgs = {
+  slug: Scalars['String']
 };
 
 
@@ -367,7 +367,7 @@ export type User = {
   __typename?: 'User',
   id: Scalars['Int'],
   email: Scalars['String'],
-  username: Scalars['String'],
+  slug: Scalars['String'],
   name?: Maybe<Scalars['String']>,
   profileImage?: Maybe<Scalars['String']>,
   country?: Maybe<Scalars['String']>,
@@ -699,7 +699,7 @@ export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes[
   me?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, QueryUserArgs>,
   users?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>,
-  usernameExists?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, QueryUsernameExistsArgs>,
+  userProfileSlugExists?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, QueryUserProfileSlugExistsArgs>,
   follows?: Resolver<Maybe<ResolversTypes['Follows']>, ParentType, ContextType, QueryFollowsArgs>,
   aquascapes?: Resolver<ResolversTypes['AquascapesResult'], ParentType, ContextType, QueryAquascapesArgs>,
   trendingAquascapes?: Resolver<Array<ResolversTypes['Aquascape']>, ParentType, ContextType, QueryTrendingAquascapesArgs>,
@@ -737,7 +737,7 @@ export type TankResolvers<ContextType = any, ParentType = ResolversParentTypes['
 export type UserResolvers<ContextType = any, ParentType = ResolversParentTypes['User']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  slug?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   profileImage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,

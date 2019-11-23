@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable camelcase */
 import {Injectable, Inject} from '@graphql-modules/di'
 import {AuthenticationError, UserInputError} from 'apollo-server'
 import {Request, Response} from 'express'
@@ -5,15 +7,11 @@ import slugify from 'slugify'
 
 import {User} from 'db/models/User'
 import {UserRepositoryInterface} from 'db/repositories/User'
-import {
-    authenticateFacebook,
-    authenticateGoogle,
-} from 'graphql/modules/Auth/passport'
+import {authenticateFacebook, authenticateGoogle} from 'graphql/modules/Auth/passport'
 import {AuthHelper} from 'utils/AuthHelper'
 import {tokens} from 'di/tokens'
 import {SocialLoginRepositoryInterface} from 'db/repositories/SocialLogin'
 import socialProviders from 'constants/socialProviders'
-import {SocialLogin} from 'db/models/SocialLogin'
 
 export type AuthPayload = {
     token: string
@@ -28,18 +26,14 @@ export interface AuthProviderInterface {
         req: Request,
         res: Response
     ) => Promise<AuthPayload | undefined>
-    googleRegister: (
-        token: string,
-        req: Request,
-        res: Response
-    ) => Promise<AuthPayload | undefined>
-    usernameExists: (username: string) => Promise<boolean>
+    googleRegister: (token: string, req: Request, res: Response) => Promise<AuthPayload | undefined>
+    userProfileSlugExists: (slug: string) => Promise<boolean>
 }
 
 interface SocialLoginData {
     socialProfileId: string
     email: string
-    username: string
+    name: string
     profileImage: string
     provider: string
 }
@@ -53,8 +47,8 @@ export class AuthProvider implements AuthProviderInterface {
         private socialLoginRepository: SocialLoginRepositoryInterface
     ) {}
 
-    async usernameExists(username: string) {
-        return Boolean(await this.userRepository.findUserByUsername(username))
+    async userProfileSlugExists(slug: string) {
+        return Boolean(await this.userRepository.findBySlug(slug))
     }
 
     async emailExists(email: string) {
@@ -83,22 +77,19 @@ export class AuthProvider implements AuthProviderInterface {
             throw new UserInputError('User with provided email already exists')
         }
 
-        let username = this.slugifyUsername(
-            email.substring(0, email.lastIndexOf('@'))
-        )
+        let slug = this.slugifyProfileUrl(email.substring(0, email.lastIndexOf('@')))
 
-        const usernameExists = await this.usernameExists(username)
+        const slugExists = await this.userProfileSlugExists(slug)
 
-        if (usernameExists) {
-            username = await this.generateUniqueUsername(username)
+        if (slugExists) {
+            slug = await this.generateUniqueSlug(slug)
         }
 
-        const hashedPassword = AuthHelper.cryptPassword(password)
-
         const user = await this.userRepository.create({
+            name: slug,
             email,
-            username,
-            password: hashedPassword,
+            slug,
+            password: AuthHelper.cryptPassword(password),
         })
 
         return {token: AuthHelper.createJWTToken(user.id), user}
@@ -112,7 +103,7 @@ export class AuthProvider implements AuthProviderInterface {
         if (data && data.profile) {
             return this.handleSocialLogin({
                 email: data.profile.emails[0].value,
-                username: data.profile.displayName,
+                name: data.profile.displayName,
                 profileImage: data.profile.photos[0].value,
                 provider: socialProviders.FACEBOOK,
                 socialProfileId: data.profile.id,
@@ -128,7 +119,7 @@ export class AuthProvider implements AuthProviderInterface {
         if (data && data.profile) {
             return this.handleSocialLogin({
                 email: data.profile.emails[0].value,
-                username: data.profile.displayName,
+                name: data.profile.displayName,
                 profileImage: data.profile._json.picture,
                 provider: socialProviders.GOOGLE,
                 socialProfileId: data.profile.id,
@@ -136,50 +127,46 @@ export class AuthProvider implements AuthProviderInterface {
         }
     }
 
-    private async generateUniqueUsername(base: string): Promise<string> {
-        let uniqueUsername
+    private async generateUniqueSlug(base: string): Promise<string> {
+        let uniqueSlug: string
 
         return new Promise(async resolve => {
-            while (!uniqueUsername) {
+            while (!uniqueSlug) {
                 const randomNumber = Math.floor(Math.random() * 10000 + 1)
-                const possibleUsername = `${base}${randomNumber}`
-                const usernameExists = await this.usernameExists(
-                    possibleUsername
-                )
+                const possibleSlug = `${base}${randomNumber}`
+                const slugExists = await this.userProfileSlugExists(possibleSlug)
 
-                if (!usernameExists) {
-                    uniqueUsername = possibleUsername
-                    resolve(uniqueUsername)
+                if (!slugExists) {
+                    uniqueSlug = possibleSlug
+                    resolve(uniqueSlug)
                 }
             }
         })
     }
 
-    private slugifyUsername(username: string) {
+    private slugifyProfileUrl(slug: string) {
         const replacement = '_'
-        return slugify(username, {replacement, lower: true})
+        return slugify(slug, {replacement, lower: true})
     }
 
     private async handleSocialLogin(data: SocialLoginData) {
-        let social: SocialLogin | null
         let user: User | null
-        let username = this.slugifyUsername(data.username)
+        let slug = this.slugifyProfileUrl(data.name)
 
-        const usernameExists = await this.usernameExists(username)
+        const slugExists = await this.userProfileSlugExists(slug)
 
-        if (usernameExists) {
-            username = await this.generateUniqueUsername(username)
+        if (slugExists) {
+            slug = await this.generateUniqueSlug(slug)
         }
 
         const userToCreate = {
+            slug,
+            name: data.name,
             email: data.email,
-            username: this.slugifyUsername(username),
             profileImage: data.profileImage,
         }
 
-        social = await this.socialLoginRepository.findSocialLogin(
-            data.socialProfileId
-        )
+        const social = await this.socialLoginRepository.findSocialLogin(data.socialProfileId)
 
         if (social) {
             user = await this.userRepository.findUserById(social.userId)

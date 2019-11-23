@@ -22,6 +22,7 @@ interface Props {
 }
 
 const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, toggleFollow}) => {
+    console.log(aquascape?.user)
     if (!aquascape) return null
 
     return (

@@ -45,10 +45,7 @@ const Footer = ({openModal}: Props) => (
                     <li>
                         <a onClick={() => openModal('feedback')}>
                             <Paragraph weight="bold">
-                                <FormattedMessage
-                                    id="footer.feedback"
-                                    defaultMessage="Feedback"
-                                />
+                                <FormattedMessage id="footer.feedback" defaultMessage="Feedback" />
                             </Paragraph>
                         </a>
                     </li>
@@ -79,20 +76,10 @@ const Footer = ({openModal}: Props) => (
                 </ul>
             </div>
             <div className="social-icons">
-                <a
-                    className="social-icon"
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer">
                     <Icon d={Icon.FACEBOOK} viewBox="0 0 48 48" size={24} />
                 </a>
-                <a
-                    className="social-icon"
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer">
                     <Icon d={Icon.INSTAGRAM} viewBox="0 0 48 48" size={24} />
                 </a>
             </div>

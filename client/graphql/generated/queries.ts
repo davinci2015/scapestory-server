@@ -283,7 +283,7 @@ export type Query = {
   me: User,
   user?: Maybe<User>,
   users: Array<Maybe<User>>,
-  usernameExists?: Maybe<Scalars['Boolean']>,
+  userProfileSlugExists?: Maybe<Scalars['Boolean']>,
   follows?: Maybe<Follows>,
   aquascapes: AquascapesResult,
   trendingAquascapes: Array<Aquascape>,
@@ -299,8 +299,8 @@ export type QueryUserArgs = {
 };
 
 
-export type QueryUsernameExistsArgs = {
-  username: Scalars['String']
+export type QueryUserProfileSlugExistsArgs = {
+  slug: Scalars['String']
 };
 
 
@@ -364,8 +364,8 @@ export type User = {
    __typename?: 'User',
   id: Scalars['Int'],
   email: Scalars['String'],
-  username: Scalars['String'],
-  name?: Maybe<Scalars['String']>,
+  slug: Scalars['String'],
+  name: Scalars['String'],
   profileImage?: Maybe<Scalars['String']>,
   country?: Maybe<Scalars['String']>,
   youtubeLink?: Maybe<Scalars['String']>,
@@ -443,7 +443,7 @@ export type AquascapeDetailsQuery = (
       & Pick<AquascapeImage, 'id' | 'title' | 'url'>
     )>>, user: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'name' | 'profileImage' | 'username' | 'isFollowedByMe'>
+      & Pick<User, 'id' | 'name' | 'profileImage' | 'slug' | 'isFollowedByMe'>
       & { aquascapes: (
         { __typename?: 'AquascapesResult' }
         & { rows: Array<(
@@ -466,7 +466,7 @@ export type AquascapeFieldsFragment = (
     & Pick<Tag, 'name'>
   )>, user: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'profileImage' | 'username'>
+    & Pick<User, 'id' | 'name' | 'profileImage' | 'slug'>
   )> }
 );
 
@@ -478,7 +478,7 @@ export type CommentFieldsFragment = (
     & Pick<Like, 'id' | 'userId'>
   )>, user: (
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'name' | 'username' | 'profileImage'>
+    & Pick<User, 'id' | 'name' | 'slug' | 'profileImage'>
   ) }
 );
 
@@ -489,7 +489,7 @@ export type User_ProfileQuery = (
   { __typename?: 'Query' }
   & { me: (
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'username' | 'name' | 'country' | 'profileImage'>
+    & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'profileImage'>
   ) }
 );
 
