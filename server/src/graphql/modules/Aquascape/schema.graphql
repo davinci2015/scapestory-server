@@ -4,6 +4,7 @@
 # import Plant from '../Plant/schema.graphql'
 # import Hardscape from '../Hardscape/schema.graphql'
 # import Livestock from '../Livestock/schema.graphql'
+# import Substrate from '../Substrate/schema.graphql'
 
 type CO2 {
     id: Int!
@@ -21,14 +22,6 @@ type AquascapeImage {
     title: String
     description: String
     url: String!
-}
-
-type Substrate {
-    id: Int!
-    brand: String
-    name: String!
-    description: String
-    image: String
 }
 
 type Additive {
