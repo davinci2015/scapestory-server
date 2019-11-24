@@ -6,6 +6,7 @@
 # import Livestock from '../Livestock/schema.graphql'
 # import Substrate from '../Substrate/schema.graphql'
 # import Additive from '../Additive/schema.graphql'
+# import Filter from '../Filter/schema.graphql'
 
 type CO2 {
     id: Int!
@@ -29,14 +30,6 @@ type Tag {
     id: Int!
     predefined: Boolean!
     name: String!
-}
-
-type Filter {
-    id: Int!
-    brand: String!
-    model: String!
-    description: String
-    image: String
 }
 
 type Tank {

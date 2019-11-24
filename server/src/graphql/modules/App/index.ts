@@ -14,6 +14,7 @@ import {HardscapeModule} from 'graphql/modules/Hardscape'
 import {LivestockModule} from 'graphql/modules/Livestock'
 import {SubstrateModule} from 'graphql/modules/Substrate'
 import {AdditiveModule} from 'graphql/modules/Additive'
+import {FilterModule} from 'graphql/modules/Filter'
 
 // @ts-ignore
 export const AppModule = new GraphQLModule({
@@ -31,6 +32,7 @@ export const AppModule = new GraphQLModule({
         LivestockModule,
         SubstrateModule,
         AdditiveModule,
+        FilterModule,
     ],
     context: composeContext([attachCurrentUserId, attachSession]),
 })

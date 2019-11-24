@@ -1,7 +1,12 @@
 type Filter {
     id: Int!
     predefined: Boolean!
-    name: String!
+    brand: String!
+    model: String!
     description: String
     image: String
+}
+
+type Query {
+    filters: [Filter!]!
 }
