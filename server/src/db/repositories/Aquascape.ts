@@ -9,10 +9,6 @@ import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {Pagination} from 'graphql/generated/types'
 
-export interface AquascapeFilter {
-    trending: boolean
-}
-
 export interface AquascapeRepositoryInterface
     extends BaseRepositoryInterface<Aquascape> {
     getAquascapes: (

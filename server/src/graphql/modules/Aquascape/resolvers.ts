@@ -1,11 +1,9 @@
 import {GraphQLResolveInfo} from 'graphql'
 import {Includeable} from 'sequelize/types'
 
-import {AquascapeFilter} from 'db/repositories/Aquascape'
 import {authenticate} from 'graphql/guards'
 import {UsersProviderInterface} from 'graphql/modules/User/UsersProvider'
 import {tokens} from 'di/tokens'
-import {Pagination} from 'interfaces'
 
 import {Tag} from 'db/models/Tag'
 import {Visitor} from 'db/models/Visitor'
@@ -29,20 +27,6 @@ import {
     QueryAquascapeArgs,
     MutationCreateAquascapeArgs,
 } from 'graphql/generated/types'
-
-export type CreateAquascapeArgs = {
-    title: string
-}
-
-export type AquascapesArgs = {
-    filter?: AquascapeFilter
-    userId?: number
-    pagination: Pagination
-}
-
-export type VisitAquascapeArgs = {
-    aquascapeId: number
-}
 
 const defaultInclude: Includeable[] = [
     {model: Visitor, attributes: ['id']}, // Include Visitor model for viewsCount

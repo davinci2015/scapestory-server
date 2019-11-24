@@ -2,6 +2,7 @@
 # import Filter from '../Filter/schema.graphql'
 # import Light from '../Light/schema.graphql'
 # import Plant from '../Plant/schema.graphql'
+# import Hardscape from '../Hardscape/schema.graphql'
 
 type CO2 {
     id: Int!
@@ -33,14 +34,6 @@ type Additive {
     id: Int!
     brand: String
     name: String
-    description: String
-    image: String
-}
-
-type Hardscape {
-    id: Int!
-    predefined: Boolean!
-    name: String!
     description: String
     image: String
 }

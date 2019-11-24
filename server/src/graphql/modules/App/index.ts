@@ -10,6 +10,7 @@ import {CommentModule} from 'graphql/modules/Comment'
 import {LikeModule} from 'graphql/modules/Like'
 import {PlantModule} from 'graphql/modules/Plant'
 import {VisitorModule} from 'graphql/modules/Visitor'
+import {HardscapeModule} from 'graphql/modules/Hardscape'
 
 // @ts-ignore
 export const AppModule = new GraphQLModule({
@@ -22,6 +23,7 @@ export const AppModule = new GraphQLModule({
         CommentModule,
         LikeModule,
         PlantModule,
+        HardscapeModule,
         VisitorModule,
     ],
     context: composeContext([attachCurrentUserId, attachSession]),

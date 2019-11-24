@@ -1,0 +1,11 @@
+type Hardscape {
+    id: Int!
+    predefined: Boolean!
+    name: String!
+    description: String
+    image: String
+}
+
+type Query {
+    hardscape: [Hardscape!]!
+}

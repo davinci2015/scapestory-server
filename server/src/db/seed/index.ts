@@ -174,6 +174,7 @@ const aquascapeTags = filterDuplicateKeys(
 
 const hardscape = getEmptyArray(entriesCount.hardscape).map((_, index) => ({
     _id: index + 1,
+    predefined: true,
     name: faker.commerce.productMaterial(),
     description: faker.lorem.words(),
     image: faker.image.imageUrl(),
