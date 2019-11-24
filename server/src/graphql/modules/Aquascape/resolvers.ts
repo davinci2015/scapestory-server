@@ -1,12 +1,10 @@
 import {GraphQLResolveInfo} from 'graphql'
-import {Includeable} from 'sequelize/types'
 
 import {authenticate} from 'graphql/guards'
 import {UsersProviderInterface} from 'graphql/modules/User/UsersProvider'
 import {tokens} from 'di/tokens'
 
 import {Tag} from 'db/models/Tag'
-import {Visitor} from 'db/models/Visitor'
 import {Plant} from 'db/models/Plant'
 import {Hardscape} from 'db/models/Hardscape'
 import {Livestock} from 'db/models/Livestock'
@@ -28,10 +26,6 @@ import {
     MutationCreateAquascapeArgs,
 } from 'graphql/generated/types'
 
-const defaultInclude: Includeable[] = [
-    {model: Visitor, attributes: ['id']}, // Include Visitor model for viewsCount
-]
-
 const modelMapping = {
     tags: Tag,
     plants: Plant,
@@ -46,10 +40,8 @@ const modelMapping = {
     images: AquascapeImage,
 }
 
-export const getAquascapeJoinFields = (info: GraphQLResolveInfo) => [
-    ...defaultInclude,
-    ...GraphQLHelper.getIncludeableFields(info, modelMapping),
-]
+const getAquascapeJoinFields = (info: GraphQLResolveInfo) =>
+    GraphQLHelper.getIncludeableFields(info, modelMapping)
 
 export const resolvers = {
     Query: {
@@ -94,9 +86,6 @@ export const resolvers = {
         async user(aquascape, args, context) {
             const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
             return await provider.findUserById(aquascape.userId)
-        },
-        viewsCount(aquascape) {
-            return aquascape.visitors.length
         },
     },
     User: {

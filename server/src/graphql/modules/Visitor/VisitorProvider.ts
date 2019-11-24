@@ -10,6 +10,7 @@ export interface VisitorProviderInterface {
         aquascapeId: number,
         visitorId?: string
     ): Bluebird<[Visitor, boolean]>
+    countViews(aquascapeId: number): Promise<number>
 }
 
 @Injectable()
@@ -21,5 +22,9 @@ export class VisitorProvider implements VisitorProviderInterface {
 
     visitAquascape(aquascapeId: number, visitorId?: string) {
         return this.visitorRepository.addVisitor(aquascapeId, visitorId)
+    }
+
+    countViews(aquascapeId: number) {
+        return this.visitorRepository.countViews(aquascapeId)
     }
 }

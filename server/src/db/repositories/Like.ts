@@ -88,10 +88,10 @@ export class LikeRepository extends BaseRepository<Like> {
         const field = entityToFieldMapper[entity]
 
         switch (field) {
-            case entityToFieldMapper[LikeEntityType.AQUASCAPE]:
-                return this.aquascapeLikesLoader.load(entityId)
-            default:
-                return 0
+        case entityToFieldMapper[LikeEntityType.AQUASCAPE]:
+            return this.aquascapeLikesLoader.load(entityId)
+        default:
+            return 0
         }
     }
 
@@ -100,12 +100,6 @@ export class LikeRepository extends BaseRepository<Like> {
             where: {[entityToFieldMapper[LikeEntityType.AQUASCAPE]]: ids},
         })
 
-        return ids.map(id =>
-            likes.reduce(
-                (acc, currentLike) =>
-                    currentLike.aquascapeId === id ? acc + 1 : acc,
-                0
-            )
-        )
+        return ids.map(id => likes.filter(like => like.aquascapeId === id).length)
     }
 }

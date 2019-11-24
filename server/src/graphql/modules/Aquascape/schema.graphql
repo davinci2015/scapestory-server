@@ -63,7 +63,6 @@ type Aquascape {
     photoperiod: Int!
     mainImage: String
     images: [AquascapeImage!]
-    viewsCount: Int!
     tags: [Tag!]!
     plants: [Plant!]!
     hardscape: [Hardscape!]!
