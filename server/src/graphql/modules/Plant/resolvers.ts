@@ -22,10 +22,6 @@ export const resolvers = {
             // Add existing plant
             if (args.plantId) {
                 plant = await provider.findPlantById(args.plantId)
-
-                if (!plant) {
-                    throw new UserInputError('Plant does not exist')
-                }
             } else if (args.name) {
                 plant = await provider.addPlant(args.name)
             }
