@@ -1,0 +1,10 @@
+type Livestock {
+    id: Int!
+    name: String!
+    description: String
+    image: String
+}
+
+type Query {
+    livestock: [Livestock!]!
+}

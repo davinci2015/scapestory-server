@@ -3,6 +3,7 @@
 # import Light from '../Light/schema.graphql'
 # import Plant from '../Plant/schema.graphql'
 # import Hardscape from '../Hardscape/schema.graphql'
+# import Livestock from '../Livestock/schema.graphql'
 
 type CO2 {
     id: Int!
@@ -42,13 +43,6 @@ type Tag {
     id: Int!
     predefined: Boolean!
     name: String!
-}
-
-type Livestock {
-    id: Int!
-    name: String!
-    description: String
-    image: String
 }
 
 type Filter {
