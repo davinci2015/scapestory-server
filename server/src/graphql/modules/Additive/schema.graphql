@@ -1,0 +1,11 @@
+type Additive {
+    id: Int!
+    brand: String
+    name: String!
+    description: String
+    image: String
+}
+
+type Query {
+    additives: [Additive!]!
+}
