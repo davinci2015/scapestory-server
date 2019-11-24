@@ -7,8 +7,7 @@ import {Aquascape} from 'db/models/Aquascape'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {tokens} from 'di/tokens'
 
-import {CreateAquascapeArgs} from './resolvers'
-import {Pagination} from 'graphql/generated/types'
+import {Pagination, MutationCreateAquascapeArgs} from 'graphql/generated/types'
 
 export interface AquascapeProviderInterface {
     getAquascapes: (
@@ -34,7 +33,7 @@ export interface AquascapeProviderInterface {
 
     createAquascape: (
         userId: number,
-        data: CreateAquascapeArgs
+        data: MutationCreateAquascapeArgs
     ) => Promise<Aquascape>
 
     getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
@@ -76,7 +75,7 @@ export class AquascapeProvider implements AquascapeProviderInterface {
         return this.aquascapeRepository.getAquascapeById(id, include)
     }
 
-    async createAquascape(userId: number, data: CreateAquascapeArgs) {
+    async createAquascape(userId: number, data: MutationCreateAquascapeArgs) {
         return this.aquascapeRepository.create({userId, ...data})
     }
 

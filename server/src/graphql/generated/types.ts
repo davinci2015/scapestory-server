@@ -15,7 +15,7 @@ export type Additive = {
   __typename?: 'Additive',
   id: Scalars['Int'],
   brand?: Maybe<Scalars['String']>,
-  name?: Maybe<Scalars['String']>,
+  name: Scalars['String'],
   description?: Maybe<Scalars['String']>,
   image?: Maybe<Scalars['String']>,
 };
@@ -37,7 +37,6 @@ export type Aquascape = {
   photoperiod: Scalars['Int'],
   mainImage?: Maybe<Scalars['String']>,
   images?: Maybe<Array<AquascapeImage>>,
-  viewsCount: Scalars['Int'],
   tags: Array<Tag>,
   plants: Array<Plant>,
   hardscape: Array<Hardscape>,
@@ -49,6 +48,7 @@ export type Aquascape = {
   comments: Array<Comment>,
   likesCount: Scalars['Int'],
   isLikedByMe: Scalars['Boolean'],
+  viewsCount: Scalars['Int'],
 };
 
 export type AquascapeImage = {
@@ -103,6 +103,7 @@ export enum CommentEntityType {
 export type Filter = {
   __typename?: 'Filter',
   id: Scalars['Int'],
+  predefined: Scalars['Boolean'],
   brand: Scalars['String'],
   model: Scalars['String'],
   description?: Maybe<Scalars['String']>,
@@ -191,6 +192,8 @@ export type Mutation = {
   removeComment?: Maybe<Comment>,
   like?: Maybe<Like>,
   dislike?: Maybe<Like>,
+  addPlant: Plant,
+  removePlant?: Maybe<Plant>,
   visitAquascape: VisitAquascapeResult,
 };
 
@@ -257,6 +260,19 @@ export type MutationDislikeArgs = {
 };
 
 
+export type MutationAddPlantArgs = {
+  plantId?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationRemovePlantArgs = {
+  plantId: Scalars['Int'],
+  aquascapeId: Scalars['Int']
+};
+
+
 export type MutationVisitAquascapeArgs = {
   aquascapeId: Scalars['Int']
 };
@@ -288,13 +304,18 @@ export type Query = {
   userBySlug?: Maybe<User>,
   users: Array<Maybe<User>>,
   userProfileSlugExists?: Maybe<Scalars['Boolean']>,
-  follows?: Maybe<Follows>,
   aquascapes: AquascapesResult,
   trendingAquascapes: Array<Aquascape>,
   featuredAquascape?: Maybe<Aquascape>,
   aquascape?: Maybe<Aquascape>,
-  lights: Array<Maybe<Light>>,
+  lights: Array<Light>,
   comments: Array<Comment>,
+  plants: Array<Plant>,
+  hardscape: Array<Hardscape>,
+  livestock: Array<Livestock>,
+  substrates: Array<Substrate>,
+  additives: Array<Additive>,
+  filters: Array<Filter>,
 };
 
 
@@ -310,11 +331,6 @@ export type QueryUserBySlugArgs = {
 
 export type QueryUserProfileSlugExistsArgs = {
   slug: Scalars['String']
-};
-
-
-export type QueryFollowsArgs = {
-  userId: Scalars['Int']
 };
 
 
@@ -381,6 +397,8 @@ export type User = {
   instagramLink?: Maybe<Scalars['String']>,
   createdAt: Scalars['String'],
   updatedAt: Scalars['String'],
+  followersCount: Scalars['Int'],
+  followingCount: Scalars['Int'],
   isFollowedByMe: Scalars['Boolean'],
   aquascapes: AquascapesResult,
 };
@@ -488,8 +506,6 @@ export type ResolversTypes = {
   Additive: ResolverTypeWrapper<Partial<Additive>>,
   Comment: ResolverTypeWrapper<Partial<Comment>>,
   Like: ResolverTypeWrapper<Partial<Like>>,
-  Follows: ResolverTypeWrapper<Partial<Follows>>,
-  Follow: ResolverTypeWrapper<Partial<Follow>>,
   CommentEntityType: ResolverTypeWrapper<Partial<CommentEntityType>>,
   Mutation: ResolverTypeWrapper<{}>,
   AuthPayload: ResolverTypeWrapper<Partial<AuthPayload>>,
@@ -497,6 +513,8 @@ export type ResolversTypes = {
   VisitAquascapeResult: ResolverTypeWrapper<Partial<VisitAquascapeResult>>,
   Visitor: ResolverTypeWrapper<Partial<Visitor>>,
   AquascapesFilter: ResolverTypeWrapper<Partial<AquascapesFilter>>,
+  Follow: ResolverTypeWrapper<Partial<Follow>>,
+  Follows: ResolverTypeWrapper<Partial<Follows>>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -523,8 +541,6 @@ export type ResolversParentTypes = {
   Additive: Partial<Additive>,
   Comment: Partial<Comment>,
   Like: Partial<Like>,
-  Follows: Partial<Follows>,
-  Follow: Partial<Follow>,
   CommentEntityType: Partial<CommentEntityType>,
   Mutation: {},
   AuthPayload: Partial<AuthPayload>,
@@ -532,12 +548,14 @@ export type ResolversParentTypes = {
   VisitAquascapeResult: Partial<VisitAquascapeResult>,
   Visitor: Partial<Visitor>,
   AquascapesFilter: Partial<AquascapesFilter>,
+  Follow: Partial<Follow>,
+  Follows: Partial<Follows>,
 };
 
 export type AdditiveResolvers<ContextType = any, ParentType = ResolversParentTypes['Additive']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   brand?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
@@ -558,7 +576,6 @@ export type AquascapeResolvers<ContextType = any, ParentType = ResolversParentTy
   photoperiod?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   mainImage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   images?: Resolver<Maybe<Array<ResolversTypes['AquascapeImage']>>, ParentType, ContextType>,
-  viewsCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   tags?: Resolver<Array<ResolversTypes['Tag']>, ParentType, ContextType>,
   plants?: Resolver<Array<ResolversTypes['Plant']>, ParentType, ContextType>,
   hardscape?: Resolver<Array<ResolversTypes['Hardscape']>, ParentType, ContextType>,
@@ -570,6 +587,7 @@ export type AquascapeResolvers<ContextType = any, ParentType = ResolversParentTy
   comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType>,
   likesCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   isLikedByMe?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  viewsCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
 };
 
 export type AquascapeImageResolvers<ContextType = any, ParentType = ResolversParentTypes['AquascapeImage']> = {
@@ -609,6 +627,7 @@ export type CommentResolvers<ContextType = any, ParentType = ResolversParentType
 
 export type FilterResolvers<ContextType = any, ParentType = ResolversParentTypes['Filter']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  predefined?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   brand?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   model?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
@@ -684,6 +703,8 @@ export type MutationResolvers<ContextType = any, ParentType = ResolversParentTyp
   removeComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationRemoveCommentArgs>,
   like?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, MutationLikeArgs>,
   dislike?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, MutationDislikeArgs>,
+  addPlant?: Resolver<ResolversTypes['Plant'], ParentType, ContextType, MutationAddPlantArgs>,
+  removePlant?: Resolver<Maybe<ResolversTypes['Plant']>, ParentType, ContextType, MutationRemovePlantArgs>,
   visitAquascape?: Resolver<ResolversTypes['VisitAquascapeResult'], ParentType, ContextType, MutationVisitAquascapeArgs>,
 };
 
@@ -707,13 +728,18 @@ export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes[
   userBySlug?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, QueryUserBySlugArgs>,
   users?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>,
   userProfileSlugExists?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, QueryUserProfileSlugExistsArgs>,
-  follows?: Resolver<Maybe<ResolversTypes['Follows']>, ParentType, ContextType, QueryFollowsArgs>,
   aquascapes?: Resolver<ResolversTypes['AquascapesResult'], ParentType, ContextType, QueryAquascapesArgs>,
   trendingAquascapes?: Resolver<Array<ResolversTypes['Aquascape']>, ParentType, ContextType, QueryTrendingAquascapesArgs>,
   featuredAquascape?: Resolver<Maybe<ResolversTypes['Aquascape']>, ParentType, ContextType>,
   aquascape?: Resolver<Maybe<ResolversTypes['Aquascape']>, ParentType, ContextType, QueryAquascapeArgs>,
-  lights?: Resolver<Array<Maybe<ResolversTypes['Light']>>, ParentType, ContextType>,
+  lights?: Resolver<Array<ResolversTypes['Light']>, ParentType, ContextType>,
   comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType, QueryCommentsArgs>,
+  plants?: Resolver<Array<ResolversTypes['Plant']>, ParentType, ContextType>,
+  hardscape?: Resolver<Array<ResolversTypes['Hardscape']>, ParentType, ContextType>,
+  livestock?: Resolver<Array<ResolversTypes['Livestock']>, ParentType, ContextType>,
+  substrates?: Resolver<Array<ResolversTypes['Substrate']>, ParentType, ContextType>,
+  additives?: Resolver<Array<ResolversTypes['Additive']>, ParentType, ContextType>,
+  filters?: Resolver<Array<ResolversTypes['Filter']>, ParentType, ContextType>,
 };
 
 export type SubstrateResolvers<ContextType = any, ParentType = ResolversParentTypes['Substrate']> = {
@@ -752,6 +778,8 @@ export type UserResolvers<ContextType = any, ParentType = ResolversParentTypes['
   instagramLink?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  followersCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  followingCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   isFollowedByMe?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   aquascapes?: Resolver<ResolversTypes['AquascapesResult'], ParentType, ContextType, UserAquascapesArgs>,
 };

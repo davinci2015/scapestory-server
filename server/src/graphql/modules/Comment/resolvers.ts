@@ -79,7 +79,7 @@ export const resolvers = {
         async addComment(
             root,
             args: MutationAddCommentArgs,
-            context: ModuleContext & AuthenticationContext
+            context: ModuleContext
         ) {
             const provider: CommentProviderInterface = context.injector.get(
                 tokens.COMMENT_PROVIDER

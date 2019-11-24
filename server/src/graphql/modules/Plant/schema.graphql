@@ -15,3 +15,8 @@ type Plant {
 type Query {
     plants: [Plant!]!
 }
+
+type Mutation {
+    addPlant(plantId: Int, name: String, aquascapeId: Int!): Plant!
+    removePlant(plantId: Int!, aquascapeId: Int!): Plant
+}
