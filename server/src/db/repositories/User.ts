@@ -2,6 +2,7 @@ import * as DataLoader from 'dataloader'
 import {Injectable} from '@graphql-modules/di'
 import {User} from 'db/models/User'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
+import {GraphQLHelper} from 'utils/GraphQLHelper'
 
 export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
     findUserById(id: number): Promise<User | null>
@@ -33,6 +34,10 @@ export class UserRepository extends BaseRepository<User>
 
     private batchGetUserById = async (ids: number[]) => {
         const users = await this.findAll({where: {id: ids}})
-        return users.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
+        return GraphQLHelper.ensureOrder({
+            docs: users,
+            keys: ids,
+            prop: 'id'
+        })
     }
 }

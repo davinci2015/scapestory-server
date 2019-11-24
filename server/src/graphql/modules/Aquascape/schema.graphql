@@ -1,6 +1,7 @@
 # import User from '../User/schema.graphql'
 # import Filter from '../Filter/schema.graphql'
 # import Light from '../Light/schema.graphql'
+# import Plant from '../Plant/schema.graphql'
 
 type CO2 {
     id: Int!
@@ -48,20 +49,6 @@ type Tag {
     id: Int!
     predefined: Boolean!
     name: String!
-}
-
-type Plant {
-    id: Int!
-    name: String!
-    description: String
-    image: String
-    origin: String
-    minHeight: Int
-    maxHeight: Int
-    position: String
-    luminosity: String
-    growthSpeed: String
-    difficulty: String
 }
 
 type Livestock {

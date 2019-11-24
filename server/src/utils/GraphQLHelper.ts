@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as graphqlFields from 'graphql-fields'
 import {Includeable} from 'sequelize/types'
 import {GraphQLResolveInfo} from 'graphql'
@@ -24,5 +25,17 @@ export class GraphQLHelper {
         }
 
         return include
+    }
+
+    static ensureOrder = <ModelType>(options: {docs: ModelType[], keys: (string | number)[], prop: string}) => {
+        const {
+            docs,
+            keys,
+            prop,
+        } = options
+
+        const docsMap = new Map()
+        docs.forEach(doc => docsMap.set(doc[prop], doc))
+        return keys.map(key => docsMap.get(key))
     }
 }
