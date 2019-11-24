@@ -72,19 +72,21 @@ const ProfileContainer = () => {
         <Content>
             <Grid>
                 <ProfileSection toggleFollow={toggleFollow} user={userResult.user} />
-                <AquascapeCardList
-                    title={
-                        <Headline as="h2" variant="h4">
-                            <FormattedMessage
-                                id="home_list_title_explore"
-                                defaultMessage="{name}'s aquascapes"
-                                values={{name: userResult.user.name}}
-                            />
-                        </Headline>
-                    }
-                >
-                    <Grid.Row>{renderAquascapeCards(userResult.user.aquascapes.rows)}</Grid.Row>
-                </AquascapeCardList>
+                {userResult.user.aquascapes.rows.length && (
+                    <AquascapeCardList
+                        title={
+                            <Headline as="h2" variant="h4">
+                                <FormattedMessage
+                                    id="home_list_title_explore"
+                                    defaultMessage="{name}'s aquascapes"
+                                    values={{name: userResult.user.name}}
+                                />
+                            </Headline>
+                        }
+                    >
+                        <Grid.Row>{renderAquascapeCards(userResult.user.aquascapes.rows)}</Grid.Row>
+                    </AquascapeCardList>
+                )}
             </Grid>
         </Content>
     )

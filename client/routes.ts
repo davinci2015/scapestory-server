@@ -9,6 +9,7 @@ export default {
     privacyPolicy: '/privacy',
     termsAndConditions: '/terms',
     aquascapeDetails: '/aquascape/[title]/[id]',
+    aquascapeDetailsEdit: '/aquascape/edit/[title]/[id]',
     profile: '/profile/[slug]',
 }
 

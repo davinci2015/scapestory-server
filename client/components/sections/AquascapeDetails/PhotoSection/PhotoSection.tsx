@@ -9,7 +9,7 @@ interface Props {
 }
 
 const PostsSection: React.FunctionComponent<Props> = ({images}) => {
-    if (!images || !images.length) return null
+    if (!images) return null
 
     return (
         <>

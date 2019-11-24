@@ -37,6 +37,7 @@ import {
     UnfollowUserMutation,
     UnfollowUserMutationVariables,
 } from 'graphql/generated/mutations'
+import routes, {createDynamicPath, getAquascapeDetailsSlug} from 'routes'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -47,7 +48,7 @@ const sections = {
 
 const AquascapeDetailsContainer: React.FunctionComponent = () => {
     const router = useRouter()
-    const {isAuthenticated} = useContext(AuthContext)
+    const {isAuthenticated, user} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
     const aquascapeId = Number(router.query.id)
 
@@ -146,13 +147,32 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         return null
     }
 
+    const redirectToEdit = () => {
+        if (!aquascapeResult || !aquascapeResult.aquascape) return null
+
+        router.push(
+            createDynamicPath(routes.aquascapeDetailsEdit, {
+                id: aquascapeResult.aquascape.id.toString(),
+                title: getAquascapeDetailsSlug(aquascapeResult.aquascape.title),
+            })
+        )
+    }
+
+    const mineAquascape =
+        aquascapeResult.aquascape.user && user
+            ? aquascapeResult.aquascape.user.id === user.id
+            : false
+
     return (
         <Content>
             <HeroSection
+                onEdit={redirectToEdit}
+                mineAquascape={mineAquascape}
                 aquascape={aquascapeResult.aquascape}
                 toggleFollow={toggleFollow}
                 toggleLike={toggleLike}
             />
+
             <SubNavigation>
                 <SubNavigation.Item id={sections.PHOTO_POSTS}>
                     <FormattedMessage
@@ -184,7 +204,9 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                 <Element name={sections.PHOTO_POSTS}>
                     <PhotoSection images={aquascapeResult.aquascape.images} />
                 </Element>
+
                 <Divider />
+
                 <Element name={sections.FLORA}>
                     <FloraSection
                         plants={aquascapeResult.aquascape.plants}
@@ -192,7 +214,9 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                         hardscape={aquascapeResult.aquascape.hardscape}
                     />
                 </Element>
+
                 <Divider />
+
                 <Element name={sections.EQUIPMENT}>
                     <EquipmentSection
                         lights={aquascapeResult.aquascape.lights}
@@ -202,7 +226,9 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                         co2={aquascapeResult.aquascape.co2}
                     />
                 </Element>
+
                 <Divider />
+
                 {aquascapeResult?.aquascape?.user?.aquascapes?.rows &&
                     aquascapeResult.aquascape.user.aquascapes.rows.length > 1 && (
                         <>
@@ -215,12 +241,14 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                             <Divider />
                         </>
                     )}
+
                 <Element name={sections.COMMENTS}>
                     <CommentsContainer
                         aquascapeId={aquascapeId}
                         comments={aquascapeResult.aquascape.comments}
                     />
                 </Element>
+
                 {aquascapeResult.aquascapes && Boolean(aquascapeResult.aquascapes.rows.length) && (
                     <>
                         <Divider />

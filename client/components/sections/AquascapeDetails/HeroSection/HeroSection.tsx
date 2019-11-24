@@ -17,12 +17,20 @@ import {getUserName} from 'utils/mappers'
 import {ProfileLink} from 'components/core'
 
 interface Props {
+    mineAquascape: boolean
     aquascape: AquascapeDetailsQuery['aquascape']
     toggleLike: () => void
     toggleFollow: () => void
+    onEdit: () => void
 }
 
-const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, toggleFollow}) => {
+const HeroSection: React.FunctionComponent<Props> = ({
+    aquascape,
+    toggleLike,
+    toggleFollow,
+    mineAquascape,
+    onEdit,
+}) => {
     if (!aquascape || !aquascape.user) return null
 
     return (
@@ -52,56 +60,75 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, toggleLike, tog
                                                     values={{username: getUserName(aquascape.user)}}
                                                 />
                                             </Paragraph>
-                                            <div
-                                                className="follow"
-                                                onClick={(event: SyntheticEvent) => {
-                                                    event.preventDefault()
-                                                    toggleFollow()
-                                                }}
-                                                role="presentation"
-                                            >
-                                                <Paragraph
-                                                    type="s2"
-                                                    color={colors.WHITE}
-                                                    weight="semibold"
+                                            {!mineAquascape && (
+                                                <div
+                                                    className="follow"
+                                                    onClick={(event: SyntheticEvent) => {
+                                                        event.preventDefault()
+                                                        toggleFollow()
+                                                    }}
+                                                    role="presentation"
                                                 >
-                                                    {aquascape.user?.isFollowedByMe ? (
-                                                        <FormattedMessage
-                                                            id="aquascape.hero_section.unfollow"
-                                                            defaultMessage="Unfollow"
-                                                        />
-                                                    ) : (
-                                                        <FormattedMessage
-                                                            id="aquascape.hero_section.follow"
-                                                            defaultMessage="Follow"
-                                                        />
-                                                    )}
-                                                </Paragraph>
-                                            </div>
+                                                    <Paragraph
+                                                        type="s2"
+                                                        color={colors.WHITE}
+                                                        weight="semibold"
+                                                    >
+                                                        {aquascape.user?.isFollowedByMe ? (
+                                                            <FormattedMessage
+                                                                id="aquascape.hero_section.unfollow"
+                                                                defaultMessage="Unfollow"
+                                                            />
+                                                        ) : (
+                                                            <FormattedMessage
+                                                                id="aquascape.hero_section.follow"
+                                                                defaultMessage="Follow"
+                                                            />
+                                                        )}
+                                                    </Paragraph>
+                                                </div>
+                                            )}
                                         </div>
                                     }
                                 />
                             </ProfileLink>
                         </Hero.TopLeft>
                         <Hero.TopRight>
-                            <Button
-                                onClick={toggleLike}
-                                leftIcon={
-                                    <Icon
-                                        d={aquascape.isLikedByMe ? Icon.HEART : Icon.HEART_OUTLINE}
-                                        color={
-                                            aquascape.isLikedByMe ? colors.SECONDARY : colors.WHITE
-                                        }
+                            {!mineAquascape && (
+                                <Button
+                                    onClick={toggleLike}
+                                    leftIcon={
+                                        <Icon
+                                            d={
+                                                aquascape.isLikedByMe
+                                                    ? Icon.HEART
+                                                    : Icon.HEART_OUTLINE
+                                            }
+                                            color={
+                                                aquascape.isLikedByMe
+                                                    ? colors.SECONDARY
+                                                    : colors.WHITE
+                                            }
+                                        />
+                                    }
+                                    dimensions="extraSmall"
+                                    color="tertiary"
+                                >
+                                    <FormattedMessage
+                                        id="aquascape.hero_section.like"
+                                        defaultMessage="Like"
                                     />
-                                }
-                                dimensions="extraSmall"
-                                color="tertiary"
-                            >
-                                <FormattedMessage
-                                    id="aquascape.hero_section.like"
-                                    defaultMessage="Like"
-                                />
-                            </Button>
+                                </Button>
+                            )}
+
+                            {mineAquascape && (
+                                <Button dimensions="extraSmall" color="tertiary" onClick={onEdit}>
+                                    <FormattedMessage
+                                        id="aquascape.hero_section.edit"
+                                        defaultMessage="Edit"
+                                    />
+                                </Button>
+                            )}
                         </Hero.TopRight>
                     </Hero.TopSection>
                 }

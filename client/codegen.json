@@ -9,6 +9,7 @@
             "documents": [
                 "./graphql/queries/queries.ts",
                 "./containers/AquascapeDetailsContainer/queries.ts",
+                "./containers/AquascapeDetailsEditContainer/queries.ts",
                 "./containers/ProfileContainer/queries.ts"
             ],
             "config": ["flattenGeneratedTypes"]

@@ -1,13 +1,14 @@
 import React from 'react'
 import cx from 'classnames'
 
-import {borderRadius, spaces, colors, zIndex, media} from 'styles'
+import {borderRadius, spaces, colors, zIndex, media, typography} from 'styles'
 import {Headline} from 'components/atoms'
 import {TopSection, TopLeft, TopRight} from 'components/sections/shared/Hero/TopSection'
 import {BottomSection, BottomLeft, BottomRight} from 'components/sections/shared/Hero/BottomSection'
 import {GRID_MAX_WIDTH} from 'components/core/Grid'
 
 interface Props {
+    editMode?: boolean
     image?: string | null
     title: string
     topSection?: React.ReactNode
@@ -17,7 +18,7 @@ interface Props {
 
 const IMAGE_PLACEHOLDER = ''
 
-const Hero = ({image, title, topSection, bottomSection, variant = 'default'}: Props) => (
+const Hero = ({image, title, topSection, bottomSection, variant = 'default', editMode}: Props) => (
     <div className="container">
         <img
             className={cx('container-image', {
@@ -40,9 +41,13 @@ const Hero = ({image, title, topSection, bottomSection, variant = 'default'}: Pr
         >
             {topSection}
             <div className="bottom">
-                <Headline as="h1" variant="h2" color={colors.WHITE}>
-                    {title}
-                </Headline>
+                {editMode ? (
+                    <input className="headline-input" defaultValue={title} />
+                ) : (
+                    <Headline as="h1" variant="h2" color={colors.WHITE}>
+                        {title}
+                    </Headline>
+                )}
                 {bottomSection}
             </div>
         </div>
@@ -66,6 +71,21 @@ const Hero = ({image, title, topSection, bottomSection, variant = 'default'}: Pr
                     height: 70vh;
                     margin: 0;
                 }
+            }
+
+            .headline-input {
+                width: 100%;
+                margin-bottom: ${spaces.s60};
+
+                font-weight: ${typography.fontWeight.extraBold};
+                font-size: ${typography.fontSize.fs51};
+                line-height: ${typography.lineHeight.lh66};
+
+                color: ${colors.WHITE};
+                background: transparent;
+
+                border: 0;
+                outline: 0;
             }
 
             .gradient {

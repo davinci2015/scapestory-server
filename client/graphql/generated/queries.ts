@@ -460,6 +460,53 @@ export type AquascapeDetailsQuery = (
   )> }
 );
 
+export type AquascapeDetailsEditQueryVariables = {
+  id: Scalars['Int']
+};
+
+
+export type AquascapeDetailsEditQuery = (
+  { __typename?: 'Query' }
+  & { aquascape: Maybe<(
+    { __typename?: 'Aquascape' }
+    & Pick<Aquascape, 'id' | 'title' | 'mainImage' | 'viewsCount' | 'likesCount' | 'isLikedByMe'>
+    & { plants: Array<(
+      { __typename?: 'Plant' }
+      & Pick<Plant, 'id' | 'name'>
+    )>, livestock: Array<(
+      { __typename?: 'Livestock' }
+      & Pick<Livestock, 'id' | 'name'>
+    )>, hardscape: Array<(
+      { __typename?: 'Hardscape' }
+      & Pick<Hardscape, 'id' | 'name'>
+    )>, lights: Array<(
+      { __typename?: 'Light' }
+      & Pick<Light, 'id' | 'brand' | 'model'>
+    )>, filters: Array<(
+      { __typename?: 'Filter' }
+      & Pick<Filter, 'id' | 'brand' | 'model'>
+    )>, co2: Maybe<(
+      { __typename?: 'CO2' }
+      & Pick<Co2, 'id' | 'type' | 'bps'>
+    )>, substrates: Array<(
+      { __typename?: 'Substrate' }
+      & Pick<Substrate, 'id' | 'brand' | 'name'>
+    )>, additives: Array<(
+      { __typename?: 'Additive' }
+      & Pick<Additive, 'id' | 'brand' | 'name'>
+    )>, tags: Array<(
+      { __typename?: 'Tag' }
+      & Pick<Tag, 'name'>
+    )>, images: Maybe<Array<(
+      { __typename?: 'AquascapeImage' }
+      & Pick<AquascapeImage, 'id' | 'title' | 'url'>
+    )>>, user: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'profileImage' | 'slug'>
+    )> }
+  )> }
+);
+
 export type UserBySlugQueryVariables = {
   slug: Scalars['String'],
   pagination: Pagination

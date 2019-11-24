@@ -1,6 +1,6 @@
 interface Props {
     children: React.ReactNode
-    onClick: (...args: any[]) => void
+    onClick?: (...args: any[]) => void
 }
 
 const IconButton = ({children, onClick}: Props) => (
