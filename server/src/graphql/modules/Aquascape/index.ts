@@ -1,6 +1,5 @@
 import {GraphQLModule} from '@graphql-modules/core'
 
-import {composeContext, attachCurrentUserId} from 'graphql/context'
 import {AquascapeRepository} from 'db/repositories/Aquascape'
 import {LikeRepository} from 'db/repositories/Like'
 import {TagRepository} from 'db/repositories/Tag'
@@ -31,5 +30,4 @@ export const AquascapeModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([attachCurrentUserId]),
 })

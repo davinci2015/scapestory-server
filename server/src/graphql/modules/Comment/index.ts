@@ -1,6 +1,5 @@
 import {GraphQLModule} from '@graphql-modules/core'
 
-import {composeContext, attachCurrentUserId} from 'graphql/context'
 import {CommentRepository} from 'db/repositories/Comment'
 import {tokens} from 'di/tokens'
 
@@ -17,5 +16,4 @@ export const CommentModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([attachCurrentUserId]),
 })
