@@ -7,6 +7,7 @@ export interface DatabaseConnectionParams {
     username: string
     password: string
     host: string
+    port?: number
 }
 
 export interface DatabaseInterface {
