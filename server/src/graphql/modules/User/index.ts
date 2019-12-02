@@ -6,6 +6,7 @@ import {UserRepository} from 'db/repositories/User'
 
 import * as typeDefs from 'graphql/modules/User/schema.graphql'
 import {tokens} from 'di/tokens'
+import {composeContext, attachCurrentUserId} from 'graphql/context'
 
 // @ts-ignore
 export const UserModule = new GraphQLModule({
@@ -16,4 +17,5 @@ export const UserModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
+    context: composeContext([attachCurrentUserId])
 })

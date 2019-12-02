@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import * as passport from 'passport'
 import * as FacebookTokenStrategy from 'passport-facebook-token'
 import * as GoogleTokenStrategy from 'passport-google-token'
@@ -19,7 +20,7 @@ export interface GoogleProfile {
         familyName: string
         givenName: string
     }
-    emails: Array<{value: string}>
+    emails: {value: string}[]
     _json: {
         id: string
         email: string
@@ -44,36 +45,32 @@ export interface FacebookInfo {
 export const authenticateFacebook = (
     req: Request,
     res: Response
-): Promise<{data?: FacebookAuthData; info?: FacebookInfo}> => {
-    return new Promise((resolve, reject) => {
-        passport.authenticate(
-            'facebook-token',
-            {session: false},
-            (err, data?: FacebookAuthData, info?: FacebookInfo) => {
-                if (err) {
-                    reject(err)
-                }
-
-                resolve({data, info})
-            }
-        )(req, res)
-    })
-}
-
-export const authenticateGoogle = (
-    req: Request,
-    res: Response
-): Promise<{data: GoogleAuthData}> => {
-    return new Promise((resolve, reject) => {
-        passport.authenticate('google-token', (err, data: GoogleAuthData) => {
+): Promise<{data?: FacebookAuthData, info?: FacebookInfo}> => new Promise((resolve, reject) => {
+    passport.authenticate(
+        'facebook-token',
+        {session: false},
+        (err, data?: FacebookAuthData, info?: FacebookInfo) => {
             if (err) {
                 reject(err)
             }
 
-            resolve({data})
-        })(req, res)
-    })
-}
+            resolve({data, info})
+        }
+    )(req, res)
+})
+
+export const authenticateGoogle = (
+    req: Request,
+    res: Response
+): Promise<{data: GoogleAuthData}> => new Promise((resolve, reject) => {
+    passport.authenticate('google-token', (err, data: GoogleAuthData) => {
+        if (err) {
+            reject(err)
+        }
+
+        resolve({data})
+    })(req, res)
+})
 
 export const initPassport = () => {
     const FacebookTokenStrategyCallback: VerifyFunction = (

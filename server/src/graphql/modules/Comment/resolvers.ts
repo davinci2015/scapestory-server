@@ -40,13 +40,8 @@ export const resolvers = {
             context: ModuleContext,
             info: GraphQLResolveInfo
         ) {
-            const provider: CommentProviderInterface = context.injector.get(
-                tokens.COMMENT_PROVIDER
-            )
-            const fields = GraphQLHelper.getIncludeableFields(
-                info,
-                modelMapping
-            )
+            const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
+            const fields = GraphQLHelper.getIncludeableFields(info,modelMapping)
             return await provider.getComments(
                 args.entity,
                 args.entityId,
@@ -61,13 +56,8 @@ export const resolvers = {
             context: ModuleContext,
             info: GraphQLResolveInfo
         ) {
-            const provider: CommentProviderInterface = context.injector.get(
-                tokens.COMMENT_PROVIDER
-            )
-            const fields = GraphQLHelper.getIncludeableFields(
-                info,
-                modelMapping
-            )
+            const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
+            const fields = GraphQLHelper.getIncludeableFields(info,modelMapping)
             return await provider.getComments(
                 CommentEntityType.AQUASCAPE,
                 aquascape.id,
@@ -76,11 +66,7 @@ export const resolvers = {
         },
     },
     Mutation: {
-        async addComment(
-            root,
-            args: MutationAddCommentArgs,
-            context: ModuleContext
-        ) {
+        async addComment(root, args: MutationAddCommentArgs, context: ModuleContext) {
             const provider: CommentProviderInterface = context.injector.get(
                 tokens.COMMENT_PROVIDER
             )
@@ -92,14 +78,8 @@ export const resolvers = {
                 parentCommentId: args.parentCommentId,
             })
         },
-        async removeComment(
-            root,
-            args: MutationRemoveCommentArgs,
-            context: ModuleContext & AuthenticationContext
-        ) {
-            const provider: CommentProviderInterface = context.injector.get(
-                tokens.COMMENT_PROVIDER
-            )
+        async removeComment(root, args: MutationRemoveCommentArgs, context: ModuleContext & AuthenticationContext) {
+            const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
             return await provider.removeComment(args.id, context.currentUserId)
         },
     },

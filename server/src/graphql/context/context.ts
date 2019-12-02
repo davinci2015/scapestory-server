@@ -41,7 +41,7 @@ export const composeContext = (
 export const attachCurrentUserId = (
     session: SessionInterface): {currentUserId: number} | object => {
     const authToken = session.req.headers[headers.AUTH_TOKEN]
-
+    console.log('attachCurrentUserId')
     if (!authToken || typeof authToken !== 'string') {
         return {}
     }
@@ -61,7 +61,10 @@ export const attachCurrentUserId = (
     return {}
 }
 
-export const attachSession = (session: SessionInterface): SessionContext => ({
-    req: session.req,
-    res: session.res,
-})
+export const attachSession = (session: SessionInterface): SessionContext => {
+    console.log('attachSession')
+    return {
+        req: session.req,
+        res: session.res,
+    }
+}

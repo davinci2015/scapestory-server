@@ -6,6 +6,7 @@ import {tokens} from 'di/tokens'
 import {CommentProvider} from './CommentProvider'
 import {resolvers, resolversComposition} from './resolvers'
 import * as typeDefs from './schema.graphql'
+import {composeContext, attachSession, attachCurrentUserId} from 'graphql/context'
 
 // @ts-ignore
 export const CommentModule = new GraphQLModule({
@@ -16,4 +17,5 @@ export const CommentModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
+    context: composeContext([attachCurrentUserId, attachSession])
 })

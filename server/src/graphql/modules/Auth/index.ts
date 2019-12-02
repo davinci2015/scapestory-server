@@ -5,6 +5,7 @@ import {resolvers, resolversComposition} from 'graphql/modules/Auth/resolvers'
 import {UserRepository} from 'db/repositories/User'
 import {SocialLoginRepository} from 'db/repositories/SocialLogin'
 import * as typeDefs from 'graphql/modules/Auth/schema.graphql'
+import {attachSession, composeContext} from 'graphql/context'
 
 // @ts-ignore
 export const AuthModule = new GraphQLModule({
@@ -19,4 +20,5 @@ export const AuthModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
+    context: composeContext([attachSession]),
 })

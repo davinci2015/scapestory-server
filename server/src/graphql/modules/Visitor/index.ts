@@ -7,6 +7,7 @@ import {tokens} from 'di/tokens'
 import {resolvers, resolversComposition} from './resolvers'
 import {VisitorProvider} from './VisitorProvider'
 import * as typeDefs from './schema.graphql'
+import {attachSession, composeContext} from 'graphql/context'
 
 // @ts-ignore
 export const VisitorModule = new GraphQLModule({
@@ -17,4 +18,5 @@ export const VisitorModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
+    context: composeContext([attachSession])
 })

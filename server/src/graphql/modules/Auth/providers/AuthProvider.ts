@@ -21,11 +21,7 @@ export type AuthPayload = {
 export interface AuthProviderInterface {
     login: (email: string, password: string) => Promise<AuthPayload>
     register: (email: string, password: string) => Promise<AuthPayload>
-    facebookRegister: (
-        token: string,
-        req: Request,
-        res: Response
-    ) => Promise<AuthPayload | undefined>
+    facebookRegister: (token: string, req: Request, res: Response) => Promise<AuthPayload | undefined>
     googleRegister: (token: string, req: Request, res: Response) => Promise<AuthPayload | undefined>
     userProfileSlugExists: (slug: string) => Promise<boolean>
 }

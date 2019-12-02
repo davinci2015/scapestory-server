@@ -19,7 +19,6 @@ import {AquascapeImage} from 'db/models/AquascapeImage'
 import {AquascapeProviderInterface} from './AquascapeProvider'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
 import {
-    Aquascape,
     QueryAquascapesArgs,
     QueryTrendingAquascapesArgs,
     QueryAquascapeArgs,
@@ -58,10 +57,7 @@ export const resolvers = {
         async trendingAquascapes(root, args: QueryTrendingAquascapesArgs, context, info) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
 
-            return await provider.getTrendingAquascapes(
-                args.pagination,
-                getAquascapeJoinFields(info)
-            )
+            return await provider.getTrendingAquascapes(args.pagination, getAquascapeJoinFields(info))
         },
         async featuredAquascape(root, args, context, info) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
@@ -71,10 +67,7 @@ export const resolvers = {
         async aquascape(root, args: QueryAquascapeArgs, context, info) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
 
-            return ((await provider.getAquascapeById(
-                args.id,
-                getAquascapeJoinFields(info)
-            )) as unknown) as Promise<Aquascape>
+            return await provider.getAquascapeById(args.id, getAquascapeJoinFields(info))
         },
     },
     Aquascape: {

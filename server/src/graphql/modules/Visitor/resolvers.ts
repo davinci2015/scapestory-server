@@ -14,11 +14,7 @@ export const resolvers = {
         }
     },
     Mutation: {
-        async visitAquascape(
-            root,
-            args: {aquascapeId: number},
-            context: ModuleContext & SessionContext
-        ) {
+        async visitAquascape(root, args: {aquascapeId: number}, context: ModuleContext & SessionContext) {
             const provider: VisitorProviderInterface = context.injector.get(tokens.VISITOR_PROVIDER)
             let visitorId = context.req.headers[headers.VISITOR_TOKEN]
 

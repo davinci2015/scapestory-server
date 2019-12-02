@@ -1,6 +1,5 @@
 import {GraphQLModule} from '@graphql-modules/core'
 
-import {composeContext, attachCurrentUserId, attachSession} from 'graphql/context'
 import {AquascapeModule} from 'graphql/modules/Aquascape'
 import {FollowModule} from 'graphql/modules/Follow'
 import {UserModule} from 'graphql/modules/User'
@@ -33,6 +32,5 @@ export const AppModule = new GraphQLModule({
         SubstrateModule,
         AdditiveModule,
         FilterModule,
-    ],
-    context: composeContext([attachCurrentUserId, attachSession]),
+    ]
 })

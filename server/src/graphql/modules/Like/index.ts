@@ -6,7 +6,9 @@ import {resolvers, resolversComposition} from './resolvers'
 import * as typeDefs from './schema.graphql'
 import {LikeProvider} from 'graphql/modules/Like/LikeProvider'
 import {LikeRepository} from 'db/repositories/Like'
+import {attachCurrentUserId, composeContext} from 'graphql/context'
 
+// @ts-ignore
 export const LikeModule = new GraphQLModule({
     providers: [
         {provide: tokens.LIKE_PROVIDER, useClass: LikeProvider},
@@ -14,5 +16,6 @@ export const LikeModule = new GraphQLModule({
     ],
     typeDefs,
     resolvers,
-    resolversComposition
+    resolversComposition,
+    context: composeContext([attachCurrentUserId])
 })

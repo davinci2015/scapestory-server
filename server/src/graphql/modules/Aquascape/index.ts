@@ -12,6 +12,7 @@ import {tokens} from 'di/tokens'
 import {AquascapeProvider} from './AquascapeProvider'
 import {resolvers, resolversComposition} from './resolvers'
 import * as typeDefs from './schema.graphql'
+import {attachCurrentUserId, composeContext} from 'graphql/context'
 
 // @ts-ignore
 export const AquascapeModule = new GraphQLModule({
@@ -30,4 +31,5 @@ export const AquascapeModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
+    context: composeContext([attachCurrentUserId])
 })
