@@ -18,7 +18,8 @@
             "plugins": ["typescript", "typescript-operations"],
             "documents": [
                 "./graphql/mutations/mutations.ts",
-                "./containers/AquascapeDetailsContainer/CommentsContainer/mutations.ts"
+                "./containers/AquascapeDetailsContainer/CommentsContainer/mutations.ts",
+                "./containers/AquascapeDetailsEditContainer/HeroSectionContainer/mutations.ts"
             ]
         }
     }

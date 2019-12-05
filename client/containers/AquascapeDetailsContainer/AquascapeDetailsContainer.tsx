@@ -57,10 +57,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
     const {data: aquascapeResult, error, loading} = useQuery<
         AquascapeDetailsQuery,
         AquascapeDetailsQueryVariables
-    >(AQUASCAPE_DETAILS, {
-        fetchPolicy: 'cache-and-network',
-        variables: {id: aquascapeId},
-    })
+    >(AQUASCAPE_DETAILS, {variables: {id: aquascapeId}})
 
     const [like] = useMutation<LikeMutation, LikeMutationVariables>(LIKE, {
         update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, {

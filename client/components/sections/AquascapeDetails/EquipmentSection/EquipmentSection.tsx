@@ -8,7 +8,7 @@ import {Light, Filter, Substrate, Additive, Co2} from 'graphql/generated/types'
 
 interface Props {
     lights: Pick<Light, 'id' | 'brand' | 'model'>[]
-    filters: Filter[]
+    filters: Pick<Filter, 'id' | 'brand' | 'model'>[]
     substrates: Substrate[]
     additives: Additive[]
     co2: Pick<Co2, 'id' | 'type' | 'bps'> | null

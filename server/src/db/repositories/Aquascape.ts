@@ -33,6 +33,8 @@ export interface AquascapeRepositoryInterface
     ) => Bluebird<Aquascape | null>
 
     getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
+
+    updateAquascapeTitle: (id: number, title: string) => Bluebird<[number, Aquascape[]]>
 }
 
 @Injectable()
@@ -101,5 +103,9 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
 
     getAquascapeImages(aquascapeId: number) {
         return AquascapeImage.findAll({where: {aquascapeId}})
+    }
+
+    updateAquascapeTitle(id: number, title: string) {
+        return this.update({title}, {where: {id}, returning: true})
     }
 }

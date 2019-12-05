@@ -12,7 +12,7 @@ export type Additive = {
    __typename?: 'Additive',
   id: Scalars['Int'],
   brand?: Maybe<Scalars['String']>,
-  name?: Maybe<Scalars['String']>,
+  name: Scalars['String'],
   description?: Maybe<Scalars['String']>,
   image?: Maybe<Scalars['String']>,
 };
@@ -34,7 +34,6 @@ export type Aquascape = {
   photoperiod: Scalars['Int'],
   mainImage?: Maybe<Scalars['String']>,
   images?: Maybe<Array<AquascapeImage>>,
-  viewsCount: Scalars['Int'],
   tags: Array<Tag>,
   plants: Array<Plant>,
   hardscape: Array<Hardscape>,
@@ -46,6 +45,7 @@ export type Aquascape = {
   comments: Array<Comment>,
   likesCount: Scalars['Int'],
   isLikedByMe: Scalars['Boolean'],
+  viewsCount: Scalars['Int'],
 };
 
 export type AquascapeImage = {
@@ -100,6 +100,7 @@ export enum CommentEntityType {
 export type Filter = {
    __typename?: 'Filter',
   id: Scalars['Int'],
+  predefined: Scalars['Boolean'],
   brand: Scalars['String'],
   model: Scalars['String'],
   description?: Maybe<Scalars['String']>,
@@ -184,10 +185,13 @@ export type Mutation = {
   followUser?: Maybe<User>,
   unfollowUser?: Maybe<User>,
   createAquascape: Aquascape,
+  updateAquascapeTitle: Array<Aquascape>,
   addComment?: Maybe<Comment>,
   removeComment?: Maybe<Comment>,
   like?: Maybe<Like>,
   dislike?: Maybe<Like>,
+  addPlant: Plant,
+  removePlant?: Maybe<Plant>,
   visitAquascape: VisitAquascapeResult,
 };
 
@@ -224,7 +228,8 @@ export type MutationUnfollowUserArgs = {
 };
 
 
-export type MutationCreateAquascapeArgs = {
+export type MutationUpdateAquascapeTitleArgs = {
+  aquascapeId: Scalars['Int'],
   title: Scalars['String']
 };
 
@@ -251,6 +256,19 @@ export type MutationLikeArgs = {
 export type MutationDislikeArgs = {
   entity: LikeEntityType,
   entityId: Scalars['Int']
+};
+
+
+export type MutationAddPlantArgs = {
+  plantId?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationRemovePlantArgs = {
+  plantId: Scalars['Int'],
+  aquascapeId: Scalars['Int']
 };
 
 
@@ -289,8 +307,14 @@ export type Query = {
   trendingAquascapes: Array<Aquascape>,
   featuredAquascape?: Maybe<Aquascape>,
   aquascape?: Maybe<Aquascape>,
-  lights: Array<Maybe<Light>>,
+  lights: Array<Light>,
   comments: Array<Comment>,
+  plants: Array<Plant>,
+  hardscape: Array<Hardscape>,
+  livestock: Array<Livestock>,
+  substrates: Array<Substrate>,
+  additives: Array<Additive>,
+  filters: Array<Filter>,
 };
 
 

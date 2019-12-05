@@ -95,5 +95,6 @@ type Query {
 }
 
 type Mutation {
-    createAquascape(title: String!): Aquascape!
+    createAquascape: Aquascape!
+    updateAquascapeTitle(aquascapeId: Int!, title: String!): String
 }

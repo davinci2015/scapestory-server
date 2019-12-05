@@ -1,6 +1,6 @@
 import {GraphQLResolveInfo} from 'graphql'
 
-import {authenticate} from 'graphql/guards'
+import {authenticate, authorizeAquascapeUpdate} from 'graphql/guards'
 import {UsersProviderInterface} from 'graphql/modules/User/UsersProvider'
 import {tokens} from 'di/tokens'
 
@@ -22,7 +22,7 @@ import {
     QueryAquascapesArgs,
     QueryTrendingAquascapesArgs,
     QueryAquascapeArgs,
-    MutationCreateAquascapeArgs,
+    MutationUpdateAquascapeTitleArgs,
 } from 'graphql/generated/types'
 
 const modelMapping = {
@@ -90,14 +90,25 @@ export const resolvers = {
         },
     },
     Mutation: {
-        async createAquascape(root, args: MutationCreateAquascapeArgs, context) {
+        async createAquascape(root, args, context) {
             const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
 
-            return await provider.createAquascape(context.currentUserId, args)
+            return await provider.createAquascape(context.currentUserId)
         },
+
+        async updateAquascapeTitle(root, args: MutationUpdateAquascapeTitleArgs, context) {
+            const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
+            const maxTitleLength = 40
+            const title = args.title.slice(0, maxTitleLength)
+
+            await provider.updateAquascapeTitle(args.aquascapeId, title)
+
+            return title
+        }
     },
 }
 
 export const resolversComposition = {
     'Mutation.createAquascape': [authenticate],
+    'Mutation.updateAquascapeTitle': [authenticate, authorizeAquascapeUpdate],
 }

@@ -188,6 +188,7 @@ export type Mutation = {
   followUser?: Maybe<User>,
   unfollowUser?: Maybe<User>,
   createAquascape: Aquascape,
+  updateAquascapeTitle?: Maybe<Aquascape>,
   addComment?: Maybe<Comment>,
   removeComment?: Maybe<Comment>,
   like?: Maybe<Like>,
@@ -230,7 +231,8 @@ export type MutationUnfollowUserArgs = {
 };
 
 
-export type MutationCreateAquascapeArgs = {
+export type MutationUpdateAquascapeTitleArgs = {
+  aquascapeId: Scalars['Int'],
   title: Scalars['String']
 };
 
@@ -698,7 +700,8 @@ export type MutationResolvers<ContextType = any, ParentType = ResolversParentTyp
   googleRegister?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationGoogleRegisterArgs>,
   followUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationFollowUserArgs>,
   unfollowUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationUnfollowUserArgs>,
-  createAquascape?: Resolver<ResolversTypes['Aquascape'], ParentType, ContextType, MutationCreateAquascapeArgs>,
+  createAquascape?: Resolver<ResolversTypes['Aquascape'], ParentType, ContextType>,
+  updateAquascapeTitle?: Resolver<Maybe<ResolversTypes['Aquascape']>, ParentType, ContextType, MutationUpdateAquascapeTitleArgs>,
   addComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationAddCommentArgs>,
   removeComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationRemoveCommentArgs>,
   like?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, MutationLikeArgs>,

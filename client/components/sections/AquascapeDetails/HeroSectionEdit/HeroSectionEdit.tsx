@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {FormattedMessage, Paragraph, Icon, Tag, IconText} from 'components/atoms'
+import {FormattedMessage, Paragraph, Icon, Tag, IconText, Button} from 'components/atoms'
 import {colors, spaces} from 'styles'
 import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
@@ -10,15 +10,18 @@ import {ProfileLink} from 'components/core'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
+    onTitleChange: (title: string) => void
+    onPreview: () => void
 }
 
-const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
+const HeroSection: React.FunctionComponent<Props> = ({aquascape, onTitleChange, onPreview}) => {
     if (!aquascape || !aquascape.user) return null
 
     return (
         <>
             <Hero
                 editMode={true}
+                onTitleChange={onTitleChange}
                 variant="cover"
                 title={aquascape.title}
                 image={aquascape.mainImage}
@@ -48,7 +51,14 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
                                 />
                             </ProfileLink>
                         </Hero.TopLeft>
-                        <Hero.TopRight></Hero.TopRight>
+                        <Hero.TopRight>
+                            <Button dimensions="extraSmall" color="tertiary" onClick={onPreview}>
+                                <FormattedMessage
+                                    id="aquascape.hero_section.preview"
+                                    defaultMessage="Preview"
+                                />
+                            </Button>
+                        </Hero.TopRight>
                     </Hero.TopSection>
                 }
                 bottomSection={

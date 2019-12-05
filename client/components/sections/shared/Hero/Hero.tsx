@@ -13,12 +13,21 @@ interface Props {
     title: string
     topSection?: React.ReactNode
     bottomSection?: React.ReactNode
+    onTitleChange?: (title: string) => void
     variant?: 'default' | 'cover'
 }
 
 const IMAGE_PLACEHOLDER = ''
 
-const Hero = ({image, title, topSection, bottomSection, variant = 'default', editMode}: Props) => (
+const Hero = ({
+    image,
+    title,
+    topSection,
+    bottomSection,
+    variant = 'default',
+    editMode,
+    onTitleChange,
+}: Props) => (
     <div className="container">
         <img
             className={cx('container-image', {
@@ -42,7 +51,12 @@ const Hero = ({image, title, topSection, bottomSection, variant = 'default', edi
             {topSection}
             <div className="bottom">
                 {editMode ? (
-                    <input className="headline-input" defaultValue={title} />
+                    <input
+                        className="headline-input"
+                        defaultValue={title}
+                        maxLength={40}
+                        onChange={e => onTitleChange && onTitleChange(e.target.value)}
+                    />
                 ) : (
                     <Headline as="h1" variant="h2" color={colors.WHITE}>
                         {title}
@@ -74,7 +88,6 @@ const Hero = ({image, title, topSection, bottomSection, variant = 'default', edi
             }
 
             .headline-input {
-                width: 100%;
                 margin-bottom: ${spaces.s60};
 
                 font-weight: ${typography.fontWeight.extraBold};
@@ -85,6 +98,7 @@ const Hero = ({image, title, topSection, bottomSection, variant = 'default', edi
                 background: transparent;
 
                 border: 0;
+                border-bottom: 2px solid ${colors.SHADE_EXTRA_LIGHT};
                 outline: 0;
             }
 
