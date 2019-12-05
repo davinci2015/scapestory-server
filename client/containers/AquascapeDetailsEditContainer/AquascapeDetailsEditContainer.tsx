@@ -10,9 +10,10 @@ import {SubNavigation} from 'components/molecules'
 import {AuthContext} from 'providers/AuthenticationProvider'
 import {FloraSection, EquipmentSection, PhotoSection} from 'components/sections/AquascapeDetails'
 import {AquascapeDetailsQuery, AquascapeDetailsQueryVariables} from 'graphql/generated/queries'
-import {AQUASCAPE_DETAILS_EDIT} from 'containers/AquascapeDetailsEditContainer/queries'
 import routes from 'routes'
-import HeroSectionContainer from 'containers/AquascapeDetailsEditContainer/HeroSectionContainer/HeroSectionContainer'
+
+import {AQUASCAPE_DETAILS_EDIT} from './queries'
+import HeroSectionEditContainer from './HeroSectionEditContainer'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -60,7 +61,7 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
 
     return (
         <Content>
-            <HeroSectionContainer aquascape={aquascapeResult.aquascape} />
+            <HeroSectionEditContainer aquascape={aquascapeResult.aquascape} />
             <SubNavigation>
                 <SubNavigation.Item id={sections.PHOTO_POSTS}>
                     <FormattedMessage

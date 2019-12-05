@@ -5,12 +5,13 @@ import {useRouter} from 'next/router'
 
 import {AquascapeDetailsQuery} from 'graphql/generated/queries'
 import {HeroSectionEdit} from 'components/sections/AquascapeDetails'
-import {UPDATE_AQUASCAPE_TITLE} from 'containers/AquascapeDetailsEditContainer/HeroSectionContainer/mutations'
 import {
     UpdateAquascapeTitleMutation,
     UpdateAquascapeTitleMutationVariables,
 } from 'graphql/generated/mutations'
 import routes, {createDynamicPath, getAquascapeDetailsSlug} from 'routes'
+
+import {UPDATE_AQUASCAPE_TITLE} from './mutations'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']

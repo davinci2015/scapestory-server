@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {useQuery, useMutation} from 'react-apollo'
 import {FormattedMessage} from 'react-intl'
@@ -8,17 +8,13 @@ import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetailsContainer/queries'
 import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
-import {LikeEntityType} from 'graphql/generated/types'
-import {LIKE, DISLIKE, FOLLOW, UNFOLLOW, VISIT} from 'graphql/mutations'
-import {ModalContext} from 'providers/ModalProvider'
+import {VISIT} from 'graphql/mutations'
 import CommentsContainer from 'containers/AquascapeDetailsContainer/CommentsContainer'
-import {AuthContext} from 'providers/AuthenticationProvider'
 import {
     updateAquascapeDetailsCache,
     AquascapeDetailsActions,
 } from 'containers/AquascapeDetailsContainer/cache'
 import {
-    HeroSection,
     FloraSection,
     EquipmentSection,
     UserAquascapesSection,
@@ -27,17 +23,7 @@ import {
 } from 'components/sections/AquascapeDetails'
 import cookie from 'services/cookie'
 import {AquascapeDetailsQuery, AquascapeDetailsQueryVariables} from 'graphql/generated/queries'
-import {
-    LikeMutation,
-    LikeMutationVariables,
-    DislikeMutation,
-    DislikeMutationVariables,
-    FollowUserMutation,
-    FollowUserMutationVariables,
-    UnfollowUserMutation,
-    UnfollowUserMutationVariables,
-} from 'graphql/generated/mutations'
-import routes, {createDynamicPath, getAquascapeDetailsSlug} from 'routes'
+import HeroSectionContainer from 'containers/AquascapeDetailsContainer/HeroSectionContainer'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -48,8 +34,6 @@ const sections = {
 
 const AquascapeDetailsContainer: React.FunctionComponent = () => {
     const router = useRouter()
-    const {isAuthenticated, user} = useContext(AuthContext)
-    const {openModal} = useContext(ModalContext)
     const aquascapeId = Number(router.query.id)
 
     if (!aquascapeId) return null
@@ -57,35 +41,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
     const {data: aquascapeResult, error, loading} = useQuery<
         AquascapeDetailsQuery,
         AquascapeDetailsQueryVariables
-    >(AQUASCAPE_DETAILS, {variables: {id: aquascapeId}})
-
-    const [like] = useMutation<LikeMutation, LikeMutationVariables>(LIKE, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, {
-            aquascapeId,
-            isLiked: true,
-        }),
-    })
-
-    const [dislike] = useMutation<DislikeMutation, DislikeMutationVariables>(DISLIKE, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_LIKE, {
-            aquascapeId,
-            isLiked: false,
-        }),
-    })
-
-    const [follow] = useMutation<FollowUserMutation, FollowUserMutationVariables>(FOLLOW, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW, {
-            aquascapeId,
-            isFollowed: true,
-        }),
-    })
-
-    const [unfollow] = useMutation<UnfollowUserMutation, UnfollowUserMutationVariables>(UNFOLLOW, {
-        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_USER_FOLLOW, {
-            aquascapeId,
-            isFollowed: false,
-        }),
-    })
+    >(AQUASCAPE_DETAILS, {variables: {id: aquascapeId}, fetchPolicy: 'cache-and-network'})
 
     const [visit] = useMutation(VISIT, {
         variables: {aquascapeId},
@@ -103,43 +59,13 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
             }
         }
 
-        visitAquascape()
-    }, [aquascapeId])
-
-    const toggleLike = () => {
-        if (!aquascapeResult || !aquascapeResult.aquascape) {
-            return
+        if (aquascapeResult && !loading) {
+            visitAquascape()
         }
-
-        if (!isAuthenticated) {
-            return openModal('login')
-        }
-
-        const mutateLike = aquascapeResult.aquascape.isLikedByMe ? dislike : like
-        mutateLike({
-            variables: {
-                entity: LikeEntityType.Aquascape,
-                entityId: aquascapeResult.aquascape.id,
-            },
-        })
-    }
-
-    const toggleFollow = () => {
-        if (!aquascapeResult || !aquascapeResult.aquascape || !aquascapeResult.aquascape.user) {
-            return
-        }
-
-        if (!isAuthenticated) {
-            return openModal('login')
-        }
-
-        const mutateFollow = aquascapeResult.aquascape.user.isFollowedByMe ? unfollow : follow
-        mutateFollow({variables: {userId: aquascapeResult.aquascape.user.id}})
-    }
+    }, [aquascapeResult, loading])
 
     if (loading) {
         // TODO: Show loader
-        return null
     }
 
     if (error) {
@@ -152,32 +78,9 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         return null
     }
 
-    const redirectToEdit = () => {
-        if (!aquascapeResult || !aquascapeResult.aquascape) return null
-
-        router.push(
-            createDynamicPath(routes.aquascapeDetailsEdit, {
-                id: aquascapeResult.aquascape.id.toString(),
-                title: getAquascapeDetailsSlug(aquascapeResult.aquascape.title),
-            })
-        )
-    }
-
-    const mineAquascape =
-        aquascapeResult.aquascape.user && user
-            ? aquascapeResult.aquascape.user.id === user.id
-            : false
-
     return (
         <Content>
-            <HeroSection
-                onEdit={redirectToEdit}
-                mineAquascape={mineAquascape}
-                aquascape={aquascapeResult.aquascape}
-                toggleFollow={toggleFollow}
-                toggleLike={toggleLike}
-            />
-
+            <HeroSectionContainer aquascape={aquascapeResult.aquascape} />
             <SubNavigation>
                 <SubNavigation.Item id={sections.PHOTO_POSTS}>
                     <FormattedMessage
