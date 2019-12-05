@@ -53,11 +53,6 @@ const Navigation = ({
                             <FormattedMessage id="navigation_discover" defaultMessage="Discover" />
                         </a>
                     </NavLink>
-                    <NavLink href={routes.news}>
-                        <a>
-                            <FormattedMessage id="navigation_newsfeed" defaultMessage="Newsfeed" />
-                        </a>
-                    </NavLink>
                 </div>
                 <div className="right">
                     {!isAuthenticated && (

@@ -88,6 +88,7 @@ const Hero = ({
             }
 
             .headline-input {
+                width: 50%;
                 margin-bottom: ${spaces.s60};
 
                 font-weight: ${typography.fontWeight.extraBold};

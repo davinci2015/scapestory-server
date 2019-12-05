@@ -1,5 +1,6 @@
 import React from 'react'
 import numeral from 'numeral'
+import Truncate from 'react-truncate'
 
 import {Headline, Tag, IconText, Icon, Paragraph} from 'components/atoms'
 import {colors, spaces, borderRadius, media} from 'styles'
@@ -65,7 +66,7 @@ const AquascapeCard = ({
             <div className="body">
                 <div className="headline">
                     <Headline as="h2" variant="h5">
-                        {title}
+                        <Truncate trimWhitespace>{title}</Truncate>
                     </Headline>
                 </div>
                 <div className="footer">
