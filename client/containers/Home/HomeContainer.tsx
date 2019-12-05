@@ -22,12 +22,14 @@ const HomeContainer = () => {
     const [allRecentLoaded, setAllRecentLoaded] = useState(false)
 
     const recent = useQuery<AquascapesQuery>(AQUASCAPES, {
+        fetchPolicy: 'cache-and-network',
         variables: {
             pagination: {limit: RECENT_AQUASCAPES_LIMIT, cursor: null},
         },
     })
 
     const trending = useQuery<TrendingAquascapesQuery>(TRENDING_AQUASCAPES, {
+        fetchPolicy: 'cache-and-network',
         variables: {
             pagination: {limit: TRENDING_AQUASCAPES_LIMIT},
         },

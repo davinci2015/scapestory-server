@@ -1,4 +1,4 @@
-import {Injectable} from '@graphql-modules/di'
+import {Injectable, ProviderScope} from '@graphql-modules/di'
 import {UserInputError} from 'apollo-server'
 import * as Bluebird from 'bluebird'
 import * as DataLoader from 'dataloader'
@@ -37,7 +37,7 @@ const entityToFieldMapper = {
     [LikeEntityType.COMMENT]: 'commentId',
 }
 
-@Injectable()
+@Injectable({ scope: ProviderScope.Session })
 export class LikeRepository extends BaseRepository<Like> {
     aquascapeLikesLoader: DataLoader<number, number>
 

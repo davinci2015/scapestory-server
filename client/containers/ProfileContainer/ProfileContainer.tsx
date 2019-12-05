@@ -72,7 +72,7 @@ const ProfileContainer = () => {
         <Content>
             <Grid>
                 <ProfileSection toggleFollow={toggleFollow} user={userResult.user} />
-                {userResult.user.aquascapes.rows.length && (
+                {!!userResult.user.aquascapes.rows.length && (
                     <AquascapeCardList
                         title={
                             <Headline as="h2" variant="h4">

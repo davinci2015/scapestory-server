@@ -1,4 +1,4 @@
-import {Injectable, Inject} from '@graphql-modules/di'
+import {Injectable, Inject, ProviderScope} from '@graphql-modules/di'
 import * as Bluebird from 'bluebird'
 
 import {tokens} from 'di/tokens'
@@ -24,7 +24,7 @@ export interface LikeProviderInterface {
     ): Promise<boolean>
 }
 
-@Injectable()
+@Injectable({ scope: ProviderScope.Session })
 export class LikeProvider implements LikeProviderInterface {
     constructor(
         @Inject(tokens.LIKE_REPOSITORY)

@@ -1,4 +1,4 @@
-import {Injectable} from '@graphql-modules/di'
+import {Injectable, ProviderScope} from '@graphql-modules/di'
 import * as uuid from 'uuid/v4'
 import * as Bluebird from 'bluebird'
 import * as DataLoader from 'dataloader'
@@ -15,9 +15,8 @@ export interface VisitorRepositoryInterface
     countViews(aquascapeId: number): Promise<number>
 }
 
-@Injectable()
-export class VisitorRepository extends BaseRepository<Visitor>
-    implements VisitorRepositoryInterface {
+@Injectable({ scope: ProviderScope.Session })
+export class VisitorRepository extends BaseRepository<Visitor> implements VisitorRepositoryInterface {
     aquascapeVisitLoader: DataLoader<number, number>
 
     constructor() {

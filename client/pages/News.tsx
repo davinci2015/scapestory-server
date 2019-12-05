@@ -1,8 +1,8 @@
 import React from 'react'
 
-import NavigationContainer from 'containers/Navigation'
 import withAuth from 'hocs/withAuth'
 import ModalProvider from 'providers/ModalProvider'
+import NavigationContainer from 'containers/NavigationContainer'
 
 const News = () => (
     <ModalProvider>

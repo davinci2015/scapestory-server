@@ -1,4 +1,4 @@
-import {Injectable, Inject} from '@graphql-modules/di'
+import {Injectable, Inject, ProviderScope} from '@graphql-modules/di'
 import * as Bluebird from 'bluebird'
 
 import {tokens} from 'di/tokens'
@@ -13,7 +13,7 @@ export interface VisitorProviderInterface {
     countViews(aquascapeId: number): Promise<number>
 }
 
-@Injectable()
+@Injectable({scope: ProviderScope.Session})
 export class VisitorProvider implements VisitorProviderInterface {
     constructor(
         @Inject(tokens.VISITOR_REPOSITORY)

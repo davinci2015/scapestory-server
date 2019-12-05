@@ -148,11 +148,7 @@ export const updateAquascapeDetailsCache = (action: AquascapeDetailsActions, pay
             query = gql`query { aquascape(id: ${payload.aquascapeId}) { id viewsCount }}`
             data = cache.readQuery<any>({query})
 
-            if (
-                mutationData &&
-                mutationData.visitAquascape &&
-                mutationData.visitAquascape.created
-            ) {
+            if (mutationData?.visitAquascape?.created) {
                 cache.writeQuery({
                     query,
                     data: {

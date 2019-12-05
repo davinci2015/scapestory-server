@@ -138,7 +138,7 @@ const HeroSection: React.FunctionComponent<Props> = ({
                             <div className="icons">
                                 <IconText
                                     icon={Icon.EYE_SHOW_FULL}
-                                    text={aquascape.viewsCount === 0 ? 1 : aquascape.viewsCount}
+                                    text={aquascape.viewsCount}
                                     color={colors.WHITE}
                                 />
                                 <IconButton onClick={toggleLike}>
