@@ -18,6 +18,7 @@ import {AquascapeImage} from 'db/models/AquascapeImage'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
+import {uploadStreamFile} from 'services/cloudinary'
 import {
     QueryAquascapesArgs,
     QueryTrendingAquascapesArgs,
@@ -108,8 +109,13 @@ export const resolvers = {
         },
 
         async updateAquascapeMainImage(root, args: MutationUpdateAquascapeMainImageArgs, context) {
-            console.log(args)
-            return 'random'
+            const { createReadStream, filename } = await args.file
+            const result = await uploadStreamFile(createReadStream, filename)
+
+            return {
+                publicId: result.public_id,
+                secureUrl: result.secure_url
+            }
         }
     },
 }

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable camelcase */
 import environment from 'config/environment'
-import {Stream} from 'stream'
-const cloudinary = require('cloudinary').v2
+import {ReadStream} from 'fs'
+import cloudinary = require('cloudinary')
 
 interface UploadConfiguration {
     width? : number
@@ -24,7 +24,7 @@ interface CloudinaryUploadResult {
     secure_url: string
 }
 
-cloudinary.config({
+cloudinary.v2.config({
     api_key: environment.CLOUDINARY_API_KEY,
     api_secret: environment.CLOUDINARY_API_SECRET,
     cloud_name: environment.CLOUDINARY_CLOUD_NAME
@@ -35,12 +35,14 @@ export const deleteFile = (id: string) => new Promise((resolve, reject) => {
 })
 
 export const getFile = (id: string) => new Promise((resolve, reject) => {
-    cloudinary.api.resource(id, (result: any) => result.error ? reject(result.error) : resolve(result))
+    cloudinary.v2.api.resource(id, (result: any) => result.error ? reject(result.error) : resolve(result))
 })
 
-export const uploadStreamFile = (fileStream: Stream) => new Promise<CloudinaryUploadResult>((resolve, reject) => {
-    const stream = cloudinary.v2.uploader.upload_stream((error, result: CloudinaryUploadResult) =>
-        error ? reject(error) : resolve(result))
+export const uploadStreamFile = (fileStream: any, filename: string) =>
+    new Promise<CloudinaryUploadResult>((resolve, reject) => {
+        const readStream = fileStream()
+        const uploadStream = cloudinary.v2.uploader.upload_stream(filename, (error, result) =>
+            error ? reject(error) : resolve(result))
 
-    fileStream.pipe(stream)
-})
+        readStream.on('open', () => readStream.pipe(uploadStream))
+    })

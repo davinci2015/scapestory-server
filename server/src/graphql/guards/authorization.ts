@@ -15,7 +15,7 @@ export const authorizeAquascapeUpdate = (next: (root, args, context, info) => vo
         const aquascape = await aquascapeRepository.getAquascapeById(args.aquascapeId)
 
         if (aquascape && aquascape.userId === context.currentUserId) {
-            next(root, args, context, info)
+            return next(root, args, context, info)
         } else {
             throw new AuthenticationError('Unauthorized to update the aquascape')
         }
