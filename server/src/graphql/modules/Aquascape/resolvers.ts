@@ -23,6 +23,7 @@ import {
     QueryTrendingAquascapesArgs,
     QueryAquascapeArgs,
     MutationUpdateAquascapeTitleArgs,
+    MutationUpdateAquascapeMainImageArgs,
 } from 'graphql/generated/types'
 
 const modelMapping = {
@@ -104,6 +105,11 @@ export const resolvers = {
             await provider.updateAquascapeTitle(args.aquascapeId, title)
 
             return title
+        },
+
+        async updateAquascapeMainImage(root, args: MutationUpdateAquascapeMainImageArgs, context) {
+            console.log(args)
+            return 'random'
         }
     },
 }
@@ -111,4 +117,5 @@ export const resolvers = {
 export const resolversComposition = {
     'Mutation.createAquascape': [authenticate],
     'Mutation.updateAquascapeTitle': [authenticate, authorizeAquascapeUpdate],
+    'Mutation.updateAquascapeMainImage': [authenticate, authorizeAquascapeUpdate],
 }

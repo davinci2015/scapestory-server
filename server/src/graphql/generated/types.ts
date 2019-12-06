@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null;
 
 /** All built-in and custom scalars, mapped to their actual values */
@@ -9,6 +9,7 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
+  Upload: any,
 };
 
 export type Additive = {
@@ -188,7 +189,8 @@ export type Mutation = {
   followUser?: Maybe<User>,
   unfollowUser?: Maybe<User>,
   createAquascape: Aquascape,
-  updateAquascapeTitle?: Maybe<Aquascape>,
+  updateAquascapeTitle?: Maybe<Scalars['String']>,
+  updateAquascapeMainImage?: Maybe<Scalars['String']>,
   addComment?: Maybe<Comment>,
   removeComment?: Maybe<Comment>,
   like?: Maybe<Like>,
@@ -234,6 +236,12 @@ export type MutationUnfollowUserArgs = {
 export type MutationUpdateAquascapeTitleArgs = {
   aquascapeId: Scalars['Int'],
   title: Scalars['String']
+};
+
+
+export type MutationUpdateAquascapeMainImageArgs = {
+  aquascapeId: Scalars['Int'],
+  file: Scalars['Upload']
 };
 
 
@@ -387,6 +395,7 @@ export type Tank = {
   glassThickness?: Maybe<Scalars['Float']>,
 };
 
+
 export type User = {
   __typename?: 'User',
   id: Scalars['Int'],
@@ -511,6 +520,7 @@ export type ResolversTypes = {
   CommentEntityType: ResolverTypeWrapper<Partial<CommentEntityType>>,
   Mutation: ResolverTypeWrapper<{}>,
   AuthPayload: ResolverTypeWrapper<Partial<AuthPayload>>,
+  Upload: ResolverTypeWrapper<Partial<Scalars['Upload']>>,
   LikeEntityType: ResolverTypeWrapper<Partial<LikeEntityType>>,
   VisitAquascapeResult: ResolverTypeWrapper<Partial<VisitAquascapeResult>>,
   Visitor: ResolverTypeWrapper<Partial<Visitor>>,
@@ -546,6 +556,7 @@ export type ResolversParentTypes = {
   CommentEntityType: Partial<CommentEntityType>,
   Mutation: {},
   AuthPayload: Partial<AuthPayload>,
+  Upload: Partial<Scalars['Upload']>,
   LikeEntityType: Partial<LikeEntityType>,
   VisitAquascapeResult: Partial<VisitAquascapeResult>,
   Visitor: Partial<Visitor>,
@@ -701,7 +712,8 @@ export type MutationResolvers<ContextType = any, ParentType = ResolversParentTyp
   followUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationFollowUserArgs>,
   unfollowUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationUnfollowUserArgs>,
   createAquascape?: Resolver<ResolversTypes['Aquascape'], ParentType, ContextType>,
-  updateAquascapeTitle?: Resolver<Maybe<ResolversTypes['Aquascape']>, ParentType, ContextType, MutationUpdateAquascapeTitleArgs>,
+  updateAquascapeTitle?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, MutationUpdateAquascapeTitleArgs>,
+  updateAquascapeMainImage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, MutationUpdateAquascapeMainImageArgs>,
   addComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationAddCommentArgs>,
   removeComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationRemoveCommentArgs>,
   like?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, MutationLikeArgs>,
@@ -770,6 +782,10 @@ export type TankResolvers<ContextType = any, ParentType = ResolversParentTypes['
   glassThickness?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>,
 };
 
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
+  name: 'Upload'
+}
+
 export type UserResolvers<ContextType = any, ParentType = ResolversParentTypes['User']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -819,6 +835,7 @@ export type Resolvers<ContextType = any> = {
   Substrate?: SubstrateResolvers<ContextType>,
   Tag?: TagResolvers<ContextType>,
   Tank?: TankResolvers<ContextType>,
+  Upload?: GraphQLScalarType,
   User?: UserResolvers<ContextType>,
   VisitAquascapeResult?: VisitAquascapeResultResolvers<ContextType>,
   Visitor?: VisitorResolvers<ContextType>,

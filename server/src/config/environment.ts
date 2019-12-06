@@ -15,7 +15,10 @@ const environment = {
     FACEBOOK_SECRET: process.env.FACEBOOK_SECRET,
     GOOGLE_SECRET: process.env.GOOGLE_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-} as Readonly<{[key: string]: string}>
+    CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+    CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+    CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
+}
 
 const checkVariables = (variables: {[key: string]: string | undefined}) => {
     for (const x in variables) {
