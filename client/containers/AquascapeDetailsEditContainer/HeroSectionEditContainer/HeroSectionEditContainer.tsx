@@ -8,10 +8,12 @@ import {HeroSectionEdit} from 'components/sections/AquascapeDetails'
 import {
     UpdateAquascapeTitleMutation,
     UpdateAquascapeTitleMutationVariables,
+    UpdateAquascapeMainImageMutation,
+    UpdateAquascapeMainImageMutationVariables,
 } from 'graphql/generated/mutations'
 import routes, {createDynamicPath, getAquascapeDetailsSlug} from 'routes'
 
-import {UPDATE_AQUASCAPE_TITLE} from './mutations'
+import {UPDATE_AQUASCAPE_TITLE, UPDATE_AQUASCAPE_MAIN_IMAGE} from './mutations'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -19,10 +21,16 @@ interface Props {
 
 const HeroSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
     const router = useRouter()
+
     const [updateTitle] = useMutation<
         UpdateAquascapeTitleMutation,
         UpdateAquascapeTitleMutationVariables
     >(UPDATE_AQUASCAPE_TITLE)
+
+    const [updateMainImage] = useMutation<
+        UpdateAquascapeMainImageMutation,
+        UpdateAquascapeMainImageMutationVariables
+    >(UPDATE_AQUASCAPE_MAIN_IMAGE)
 
     if (!aquascape) return null
 
@@ -47,7 +55,11 @@ const HeroSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
     }
 
     const onImageChange = (files: FileList | null) => {
-        console.log(files)
+        // TODO: Validate file extension
+        // TODO: Validate file size
+        if (!files || !files.length) return
+
+        updateMainImage({variables: {aquascapeId: aquascape.id, file: files[0]}})
     }
 
     return (

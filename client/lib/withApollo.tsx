@@ -1,8 +1,10 @@
-import {ApolloClient, ApolloLink, HttpLink} from 'apollo-boost'
+import {ApolloClient, ApolloLink} from 'apollo-boost'
 import {InMemoryCache} from 'apollo-cache-inmemory'
-import appConstants from 'appConstants'
 import {withApollo} from 'next-with-apollo'
+import {createUploadLink} from 'apollo-upload-client'
+
 import cookie from 'services/cookie'
+import appConstants from 'appConstants'
 
 export default withApollo(({headers, initialState}) => {
     const headersMiddleware = new ApolloLink((operation, forward) => {
@@ -17,7 +19,7 @@ export default withApollo(({headers, initialState}) => {
         return null
     })
 
-    const httpLink = new HttpLink({
+    const httpLink = createUploadLink({
         uri: 'http://localhost:8080', // Server URL (must be absolute)
         credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
         fetch: !process.browser ? fetch : undefined,

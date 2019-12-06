@@ -5,3 +5,9 @@ export const UPDATE_AQUASCAPE_TITLE = gql`
         updateAquascapeTitle(aquascapeId: $aquascapeId, title: $title)
     }
 `
+
+export const UPDATE_AQUASCAPE_MAIN_IMAGE = gql`
+    mutation updateAquascapeMainImage($aquascapeId: Int!, $file: Upload!) {
+        updateAquascapeMainImage(aquascapeId: $aquascapeId, file: $file)
+    }
+`

@@ -6,6 +6,7 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
+  Upload: any,
 };
 
 export type Additive = {
@@ -185,7 +186,8 @@ export type Mutation = {
   followUser?: Maybe<User>,
   unfollowUser?: Maybe<User>,
   createAquascape: Aquascape,
-  updateAquascapeTitle: Array<Aquascape>,
+  updateAquascapeTitle?: Maybe<Scalars['String']>,
+  updateAquascapeMainImage?: Maybe<Scalars['String']>,
   addComment?: Maybe<Comment>,
   removeComment?: Maybe<Comment>,
   like?: Maybe<Like>,
@@ -231,6 +233,12 @@ export type MutationUnfollowUserArgs = {
 export type MutationUpdateAquascapeTitleArgs = {
   aquascapeId: Scalars['Int'],
   title: Scalars['String']
+};
+
+
+export type MutationUpdateAquascapeMainImageArgs = {
+  aquascapeId: Scalars['Int'],
+  file: Scalars['Upload']
 };
 
 
@@ -383,6 +391,7 @@ export type Tank = {
   depth?: Maybe<Scalars['Float']>,
   glassThickness?: Maybe<Scalars['Float']>,
 };
+
 
 export type User = {
    __typename?: 'User',
