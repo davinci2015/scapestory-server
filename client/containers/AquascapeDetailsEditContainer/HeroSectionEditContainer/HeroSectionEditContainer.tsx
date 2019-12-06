@@ -46,11 +46,16 @@ const HeroSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
         )
     }
 
+    const onImageChange = (files: FileList | null) => {
+        console.log(files)
+    }
+
     return (
         <HeroSectionEdit
             onTitleChange={onTitleChange}
             onPreview={redirectToPreview}
             aquascape={aquascape}
+            onImageChange={onImageChange}
         />
     )
 }

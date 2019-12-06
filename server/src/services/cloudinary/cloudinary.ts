@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable camelcase */
 import environment from 'config/environment'
+import {Stream} from 'stream'
 const cloudinary = require('cloudinary').v2
 
 interface UploadConfiguration {
@@ -10,6 +11,16 @@ interface UploadConfiguration {
 
 interface CloudinaryUploadResult {
     public_id: string
+    version: number
+    signature: string
+    width: number
+    height: number
+    format: string
+    resource_type: string
+    created_at: string
+    bytes: number
+    type: string
+    url: string
     secure_url: string
 }
 
@@ -27,15 +38,9 @@ export const getFile = (id: string) => new Promise((resolve, reject) => {
     cloudinary.api.resource(id, (result: any) => result.error ? reject(result.error) : resolve(result))
 })
 
-export const uploadFile = (filePath: string, params?: UploadConfiguration) => new Promise((resolve, reject) => {
-    cloudinary.v2.uploader.upload(filePath, params, (error: Error, result? : any & CloudinaryUploadResult) => {
-        if (error || !result) {
-            reject(error)
-        } else {
-            resolve({
-                publicId: result.public_id,
-                secureUrl: result.secure_url
-            })
-        }
-    })
+export const uploadStreamFile = (fileStream: Stream) => new Promise<CloudinaryUploadResult>((resolve, reject) => {
+    const stream = cloudinary.v2.uploader.upload_stream((error, result: CloudinaryUploadResult) =>
+        error ? reject(error) : resolve(result))
+
+    fileStream.pipe(stream)
 })

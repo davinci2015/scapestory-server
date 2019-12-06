@@ -6,15 +6,21 @@ import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
 import {AquascapeDetailsQuery} from 'graphql/generated/queries'
 import {getUserName} from 'utils/mappers'
-import {ProfileLink} from 'components/core'
+import {ProfileLink, ImageUpload} from 'components/core'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
     onTitleChange: (title: string) => void
+    onImageChange: (files: FileList | null) => void
     onPreview: () => void
 }
 
-const HeroSection: React.FunctionComponent<Props> = ({aquascape, onTitleChange, onPreview}) => {
+const HeroSection: React.FunctionComponent<Props> = ({
+    aquascape,
+    onTitleChange,
+    onPreview,
+    onImageChange,
+}) => {
     if (!aquascape || !aquascape.user) return null
 
     return (
@@ -52,6 +58,21 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape, onTitleChange, 
                             </ProfileLink>
                         </Hero.TopLeft>
                         <Hero.TopRight>
+                            <ImageUpload
+                                onChange={onImageChange}
+                                render={({openFinder}) => (
+                                    <Button
+                                        onClick={openFinder}
+                                        dimensions="extraSmall"
+                                        color="tertiary"
+                                    >
+                                        <FormattedMessage
+                                            id="aquascape.hero_section.preview"
+                                            defaultMessage="Change cover image"
+                                        />
+                                    </Button>
+                                )}
+                            />
                             <Button dimensions="extraSmall" color="tertiary" onClick={onPreview}>
                                 <FormattedMessage
                                     id="aquascape.hero_section.preview"
