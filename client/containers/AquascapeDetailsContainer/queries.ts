@@ -12,7 +12,7 @@ export const AQUASCAPE_DETAILS = gql`
         aquascape(id: $id) {
             id
             title
-            mainImage
+            mainImageUrl
             viewsCount
             likesCount
             isLikedByMe

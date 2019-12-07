@@ -6,7 +6,7 @@ export const fragments = {
             id
             createdAt
             title
-            mainImage
+            mainImageUrl
             viewsCount
             likesCount
             tags {

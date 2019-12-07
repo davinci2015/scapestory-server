@@ -5,7 +5,7 @@ import {PhotoGrid} from 'components/molecules'
 import {AquascapeImage} from 'graphql/generated/types'
 
 interface Props {
-    images: AquascapeImage[] | null
+    images: Pick<AquascapeImage, 'id' | 'title' | 'url'>[]
 }
 
 const PostsSection: React.FunctionComponent<Props> = ({images}) => {

@@ -38,7 +38,7 @@ const HeroSection: React.FunctionComponent<Props> = ({
             <Hero
                 variant="cover"
                 title={aquascape.title}
-                image={aquascape.mainImage}
+                image={aquascape.mainImageUrl}
                 topSection={
                     <Hero.TopSection>
                         <Hero.TopLeft>

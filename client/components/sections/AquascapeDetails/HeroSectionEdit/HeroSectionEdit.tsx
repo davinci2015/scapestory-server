@@ -30,7 +30,7 @@ const HeroSection: React.FunctionComponent<Props> = ({
                 onTitleChange={onTitleChange}
                 variant="cover"
                 title={aquascape.title}
-                image={aquascape.mainImage}
+                image={aquascape.mainImageUrl}
                 topSection={
                     <Hero.TopSection>
                         <Hero.TopLeft>

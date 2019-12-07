@@ -14,6 +14,9 @@ export class AquascapeImage extends Model<AquascapeImage> {
     @Column
     url: string
 
+    @Column
+    publicId: string
+
     @ForeignKey(() => Aquascape)
     @Column
     aquascapeId: number

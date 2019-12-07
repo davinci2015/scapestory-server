@@ -24,6 +24,7 @@ type AquascapeImage {
     title: String
     description: String
     url: String!
+    publicId: String!
 }
 
 type Tag {
@@ -61,8 +62,9 @@ type Aquascape {
     co2: CO2
     tank: Tank
     photoperiod: Int!
-    mainImage: String
-    images: [AquascapeImage!]
+    mainImageUrl: String
+    mainImagePublicId: String
+    images: [AquascapeImage!]!
     tags: [Tag!]!
     plants: [Plant!]!
     hardscape: [Hardscape!]!

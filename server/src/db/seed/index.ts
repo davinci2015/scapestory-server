@@ -120,7 +120,8 @@ const aquascapes = getEmptyArray(entriesCount.aquascapes).map((_, index) => ({
     _id: index + 1,
     title: faker.commerce.productName(),
     volume: faker.random.number({min: 10, max: 1000}),
-    mainImage: getAquascapeImage(),
+    mainImageUrl: getAquascapeImage(),
+    mainImagePublicId: faker.random.number(),
     startedAt: faker.date.recent(),
     trending: faker.random.boolean(),
     featured: faker.random.boolean(),
@@ -135,6 +136,7 @@ const images = getEmptyArray(entriesCount.images).map((_, index) => ({
     title: faker.lorem.word(),
     description: faker.lorem.sentence(),
     url: getAquascapeImage(),
+    publicId: faker.random.number(),
     aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
 }))
 

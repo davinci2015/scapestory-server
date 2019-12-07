@@ -33,7 +33,7 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
                 <AquascapeDetailsLink id={aquascape.id} title={aquascape.title}>
                     <Hero
                         title={aquascape.title}
-                        image={aquascape.mainImage}
+                        image={aquascape.mainImageUrl}
                         topSection={
                             <Hero.TopSection>
                                 <Hero.TopLeft>

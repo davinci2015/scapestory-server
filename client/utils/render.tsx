@@ -15,7 +15,7 @@ export const renderAquascapeCards = (aquascapes: AquascapeFieldsFragment[]) =>
                 viewsCount={scape.viewsCount}
                 likesCount={scape.likesCount}
                 userImage={scape.user?.profileImage}
-                image={scape.mainImage}
+                image={scape.mainImageUrl}
                 tags={scape.tags}
             />
         </Grid.Item>

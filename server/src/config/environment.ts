@@ -3,6 +3,23 @@ import logger from 'logger'
 
 dotenv.config()
 
+interface EnvironmentVariables {
+    DB_HOST: string
+    DB_USER: string
+    DB_PASS: string
+    DB_NAME: string
+    ENVIRONMENT: string
+    SECURITY_TOKEN_SECRET: string
+    SECURITY_TOKEN_STATIC: string
+    FACEBOOK_CLIENT_ID: string
+    FACEBOOK_SECRET: string
+    GOOGLE_SECRET: string
+    GOOGLE_CLIENT_ID: string
+    CLOUDINARY_CLOUD_NAME: string
+    CLOUDINARY_API_KEY: string
+    CLOUDINARY_API_SECRET: string
+}
+
 const environment = {
     DB_HOST: process.env.DB_HOST,
     DB_USER: process.env.DB_USER,
@@ -18,9 +35,9 @@ const environment = {
     CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
-}
+} as EnvironmentVariables
 
-const checkVariables = (variables: {[key: string]: string | undefined}) => {
+const checkVariables = (variables: EnvironmentVariables) => {
     for (const x in variables) {
         if (!variables[x]) {
             logger.warn(`Environment variable ${x} is missing!`)

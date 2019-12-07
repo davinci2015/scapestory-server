@@ -33,8 +33,9 @@ export type Aquascape = {
   co2?: Maybe<Co2>,
   tank?: Maybe<Tank>,
   photoperiod: Scalars['Int'],
-  mainImage?: Maybe<Scalars['String']>,
-  images?: Maybe<Array<AquascapeImage>>,
+  mainImageUrl?: Maybe<Scalars['String']>,
+  mainImagePublicId?: Maybe<Scalars['String']>,
+  images: Array<AquascapeImage>,
   tags: Array<Tag>,
   plants: Array<Plant>,
   hardscape: Array<Hardscape>,
@@ -55,6 +56,7 @@ export type AquascapeImage = {
   title?: Maybe<Scalars['String']>,
   description?: Maybe<Scalars['String']>,
   url: Scalars['String'],
+  publicId: Scalars['String'],
 };
 
 export type AquascapesFilter = {
@@ -177,6 +179,12 @@ export type Livestock = {
   image?: Maybe<Scalars['String']>,
 };
 
+export type MainImageUploadResult = {
+   __typename?: 'MainImageUploadResult',
+  publicId: Scalars['String'],
+  secureUrl: Scalars['String'],
+};
+
 export type Mutation = {
    __typename?: 'Mutation',
   login?: Maybe<AuthPayload>,
@@ -187,7 +195,7 @@ export type Mutation = {
   unfollowUser?: Maybe<User>,
   createAquascape: Aquascape,
   updateAquascapeTitle?: Maybe<Scalars['String']>,
-  updateAquascapeMainImage?: Maybe<Scalars['String']>,
+  updateAquascapeMainImage?: Maybe<MainImageUploadResult>,
   addComment?: Maybe<Comment>,
   removeComment?: Maybe<Comment>,
   like?: Maybe<Like>,
@@ -445,7 +453,7 @@ export type AquascapeDetailsQuery = (
     )> }
   ), aquascape: Maybe<(
     { __typename?: 'Aquascape' }
-    & Pick<Aquascape, 'id' | 'title' | 'mainImage' | 'viewsCount' | 'likesCount' | 'isLikedByMe'>
+    & Pick<Aquascape, 'id' | 'title' | 'mainImageUrl' | 'viewsCount' | 'likesCount' | 'isLikedByMe'>
     & { plants: Array<(
       { __typename?: 'Plant' }
       & Pick<Plant, 'id' | 'name'>
@@ -473,10 +481,10 @@ export type AquascapeDetailsQuery = (
     )>, tags: Array<(
       { __typename?: 'Tag' }
       & Pick<Tag, 'name'>
-    )>, images: Maybe<Array<(
+    )>, images: Array<(
       { __typename?: 'AquascapeImage' }
       & Pick<AquascapeImage, 'id' | 'title' | 'url'>
-    )>>, user: Maybe<(
+    )>, user: Maybe<(
       { __typename?: 'User' }
       & Pick<User, 'id' | 'name' | 'profileImage' | 'slug' | 'isFollowedByMe'>
       & { aquascapes: (
@@ -502,7 +510,7 @@ export type AquascapeDetailsEditQuery = (
   { __typename?: 'Query' }
   & { aquascape: Maybe<(
     { __typename?: 'Aquascape' }
-    & Pick<Aquascape, 'id' | 'title' | 'mainImage' | 'viewsCount' | 'likesCount' | 'isLikedByMe'>
+    & Pick<Aquascape, 'id' | 'title' | 'mainImageUrl' | 'viewsCount' | 'likesCount' | 'isLikedByMe'>
     & { plants: Array<(
       { __typename?: 'Plant' }
       & Pick<Plant, 'id' | 'name'>
@@ -530,10 +538,10 @@ export type AquascapeDetailsEditQuery = (
     )>, tags: Array<(
       { __typename?: 'Tag' }
       & Pick<Tag, 'name'>
-    )>, images: Maybe<Array<(
+    )>, images: Array<(
       { __typename?: 'AquascapeImage' }
       & Pick<AquascapeImage, 'id' | 'title' | 'url'>
-    )>>, user: Maybe<(
+    )>, user: Maybe<(
       { __typename?: 'User' }
       & Pick<User, 'id' | 'name' | 'profileImage' | 'slug'>
     )> }
@@ -564,7 +572,7 @@ export type UserBySlugQuery = (
 
 export type AquascapeFieldsFragment = (
   { __typename?: 'Aquascape' }
-  & Pick<Aquascape, 'id' | 'createdAt' | 'title' | 'mainImage' | 'viewsCount' | 'likesCount'>
+  & Pick<Aquascape, 'id' | 'createdAt' | 'title' | 'mainImageUrl' | 'viewsCount' | 'likesCount'>
   & { tags: Array<(
     { __typename?: 'Tag' }
     & Pick<Tag, 'name'>

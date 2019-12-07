@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {useRouter} from 'next/router'
 import {useQuery} from 'react-apollo'
 import {FormattedMessage} from 'react-intl'
@@ -27,17 +27,28 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
     const {isAuthenticated, user} = useContext(AuthContext)
     const aquascapeId = Number(router.query.id)
 
-    if (!aquascapeId) return null
+    useEffect(() => {
+        if (!isAuthenticated) {
+            router.push(routes.index)
+        }
+    }, [isAuthenticated])
+
+    if (!aquascapeId || !user) return null
 
     const {data: aquascapeResult, error, loading} = useQuery<
         AquascapeDetailsQuery,
         AquascapeDetailsQueryVariables
     >(AQUASCAPE_DETAILS_EDIT, {variables: {id: aquascapeId}})
 
-    if (!isAuthenticated) {
-        router.push(routes.index)
-        return null
-    }
+    useEffect(() => {
+        if (
+            user &&
+            aquascapeResult?.aquascape?.user &&
+            aquascapeResult.aquascape.user.id !== user.id
+        ) {
+            router.push(routes.index)
+        }
+    }, [aquascapeResult])
 
     if (loading) {
         // TODO: Show loader
@@ -54,8 +65,7 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
         return null
     }
 
-    if (aquascapeResult.aquascape.user && user && aquascapeResult.aquascape.user.id !== user.id) {
-        router.push(routes.index)
+    if (aquascapeResult?.aquascape?.user?.id !== user.id) {
         return null
     }
 

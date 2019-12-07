@@ -33,8 +33,9 @@ export type Aquascape = {
   co2?: Maybe<Co2>,
   tank?: Maybe<Tank>,
   photoperiod: Scalars['Int'],
-  mainImage?: Maybe<Scalars['String']>,
-  images?: Maybe<Array<AquascapeImage>>,
+  mainImageUrl?: Maybe<Scalars['String']>,
+  mainImagePublicId?: Maybe<Scalars['String']>,
+  images: Array<AquascapeImage>,
   tags: Array<Tag>,
   plants: Array<Plant>,
   hardscape: Array<Hardscape>,
@@ -55,6 +56,7 @@ export type AquascapeImage = {
   title?: Maybe<Scalars['String']>,
   description?: Maybe<Scalars['String']>,
   url: Scalars['String'],
+  publicId: Scalars['String'],
 };
 
 export type AquascapesFilter = {
@@ -177,6 +179,12 @@ export type Livestock = {
   image?: Maybe<Scalars['String']>,
 };
 
+export type MainImageUploadResult = {
+   __typename?: 'MainImageUploadResult',
+  publicId: Scalars['String'],
+  secureUrl: Scalars['String'],
+};
+
 export type Mutation = {
    __typename?: 'Mutation',
   login?: Maybe<AuthPayload>,
@@ -187,7 +195,7 @@ export type Mutation = {
   unfollowUser?: Maybe<User>,
   createAquascape: Aquascape,
   updateAquascapeTitle?: Maybe<Scalars['String']>,
-  updateAquascapeMainImage?: Maybe<Scalars['String']>,
+  updateAquascapeMainImage?: Maybe<MainImageUploadResult>,
   addComment?: Maybe<Comment>,
   removeComment?: Maybe<Comment>,
   like?: Maybe<Like>,
@@ -478,7 +486,10 @@ export type UpdateAquascapeMainImageMutationVariables = {
 
 export type UpdateAquascapeMainImageMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'updateAquascapeMainImage'>
+  & { updateAquascapeMainImage: Maybe<(
+    { __typename?: 'MainImageUploadResult' }
+    & Pick<MainImageUploadResult, 'publicId' | 'secureUrl'>
+  )> }
 );
 
 export type LikeMutationVariables = {
