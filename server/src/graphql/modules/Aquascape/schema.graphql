@@ -7,6 +7,7 @@
 # import Substrate from '../Substrate/schema.graphql'
 # import Additive from '../Additive/schema.graphql'
 # import Filter from '../Filter/schema.graphql'
+# import AquascapeImage from '../AquascapeImage/schema.graphql'
 
 type CO2 {
     id: Int!
@@ -17,14 +18,6 @@ type CO2 {
 type Like {
     id: Int!
     user: User!
-}
-
-type AquascapeImage {
-    id: Int!
-    title: String
-    description: String
-    url: String!
-    publicId: String!
 }
 
 type Tag {
@@ -107,6 +100,4 @@ type Mutation {
     createAquascape: Aquascape!
     updateAquascapeTitle(aquascapeId: Int!, title: String!): String
     updateAquascapeMainImage(aquascapeId: Int!, file: Upload!): MainImageUploadResult!
-    addAquascapeImage(aquascapeId: Int!, file: Upload!): AquascapeImage!
-    deleteAquascapeImage(aquascapeId: Int!, imageId: Int!): Int
 }
