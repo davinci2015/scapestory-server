@@ -181,8 +181,8 @@ export type Livestock = {
 
 export type MainImageUploadResult = {
    __typename?: 'MainImageUploadResult',
-  publicId: Scalars['String'],
-  secureUrl: Scalars['String'],
+  mainImagePublicId: Scalars['String'],
+  mainImageUrl: Scalars['String'],
 };
 
 export type Mutation = {
@@ -314,7 +314,7 @@ export type Plant = {
 
 export type Query = {
    __typename?: 'Query',
-  me: User,
+  me?: Maybe<User>,
   user?: Maybe<User>,
   userBySlug?: Maybe<User>,
   users: Array<Maybe<User>>,

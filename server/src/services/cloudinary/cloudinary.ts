@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable camelcase */
 import environment from 'config/environment'
-import {ReadStream} from 'fs'
 import cloudinary = require('cloudinary')
 
 interface UploadConfiguration {
@@ -9,7 +8,7 @@ interface UploadConfiguration {
     height? : number
 }
 
-interface CloudinaryUploadResult {
+export interface CloudinaryUploadResult {
     public_id: string
     version: number
     signature: string

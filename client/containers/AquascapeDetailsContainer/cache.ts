@@ -11,6 +11,7 @@ export enum AquascapeDetailsActions {
     AQUASCAPE_ADD_COMMENT,
     AQUASCAPE_REMOVE_COMMENT,
     AQUASCAPE_VISIT,
+    AQUASCAPE_UPDATE_MAIN_IMAGE,
 }
 
 interface Payload {
@@ -155,6 +156,24 @@ export const updateAquascapeDetailsCache = (action: AquascapeDetailsActions, pay
                         aquascape: {
                             ...data.aquascape,
                             viewsCount: data.aquascape.viewsCount + 1,
+                        },
+                    },
+                })
+            }
+
+            return
+
+        case AquascapeDetailsActions.AQUASCAPE_UPDATE_MAIN_IMAGE:
+            query = gql`query { aquascape(id: ${payload.aquascapeId}) { id mainImageUrl }}`
+            data = cache.readQuery<any>({query})
+
+            if (mutationData?.updateAquascapeMainImage) {
+                cache.writeQuery({
+                    query,
+                    data: {
+                        aquascape: {
+                            ...data.aquascape,
+                            mainImageUrl: mutationData.updateAquascapeMainImage.mainImageUrl,
                         },
                     },
                 })

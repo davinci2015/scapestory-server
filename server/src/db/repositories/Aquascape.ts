@@ -9,32 +9,32 @@ import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {Pagination} from 'graphql/generated/types'
 
-export interface AquascapeRepositoryInterface
-    extends BaseRepositoryInterface<Aquascape> {
+export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aquascape> {
     getAquascapes: (
         pagination: Pagination,
         userId?: number,
         random?: boolean,
         include?: Includeable[]
-    ) => Promise<{rows: Aquascape[], count: number}>
+    ) => Promise<{rows: Aquascape[]; count: number}>
 
-    getFeaturedAquascape: (
-        include?: Includeable[]
-    ) => Bluebird<Aquascape | null>
+    getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape | null>
 
     getTrendingAquascapes: (
         pagination: Pagination,
         include?: Includeable[]
     ) => Bluebird<Aquascape[]>
 
-    getAquascapeById: (
-        id: number,
-        include?: Includeable[]
-    ) => Bluebird<Aquascape | null>
+    getAquascapeById: (id: number, include?: Includeable[]) => Bluebird<Aquascape | null>
 
     getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
 
     updateAquascapeTitle: (id: number, title: string) => Bluebird<[number, Aquascape[]]>
+
+    updateAquascapeMainImage: (
+        id: number,
+        imagePublicId: string,
+        imageUrl: string
+    ) => Bluebird<[number, Aquascape[]]>
 }
 
 @Injectable()
@@ -62,7 +62,7 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
 
         if (pagination.cursor) {
             where.createdAt = {
-                [Op.lt]: new Date(Number(pagination.cursor))
+                [Op.lt]: new Date(Number(pagination.cursor)),
             }
         }
 
@@ -70,18 +70,18 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
             where,
             include,
             order: random ? randomOrder : defaultOrder,
-            limit: pagination.limit
+            limit: pagination.limit,
         })
 
         return {rows, count}
     }
 
     getTrendingAquascapes(pagination: Pagination, include?: Includeable[]) {
-        const where: WhereOptions = { trending: true }
+        const where: WhereOptions = {trending: true}
 
         if (pagination.cursor) {
             where.createdAt = {
-                [Op.lt]: new Date(Number(pagination.cursor))
+                [Op.lt]: new Date(Number(pagination.cursor)),
             }
         }
 
@@ -107,5 +107,19 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
 
     updateAquascapeTitle(id: number, title: string) {
         return this.update({title}, {where: {id}, returning: true})
+    }
+
+    updateAquascapeMainImage(id: number, mainImagePublicId: string, mainImageUrl: string) {
+        return this.update(
+            {
+                mainImagePublicId,
+                mainImageUrl,
+            },
+            {
+                where: {
+                    id,
+                },
+            }
+        )
     }
 }

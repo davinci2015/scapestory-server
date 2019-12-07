@@ -8,6 +8,8 @@ import {AquascapeImage} from 'db/models/AquascapeImage'
 import {tokens} from 'di/tokens'
 
 import {Pagination} from 'graphql/generated/types'
+import {FileUpload} from 'graphql-upload'
+import {uploadStreamFile, CloudinaryUploadResult, deleteFile} from 'services/cloudinary'
 
 export interface AquascapeProviderInterface {
     getAquascapes: (
@@ -28,6 +30,8 @@ export interface AquascapeProviderInterface {
     getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
 
     updateAquascapeTitle: (id: number, title: string) => Bluebird<[number, Aquascape[]]>
+
+    updateAquascapeMainImage: (id: number, file: Promise<FileUpload>) => Promise<CloudinaryUploadResult>
 }
 
 @Injectable()
@@ -76,5 +80,23 @@ export class AquascapeProvider implements AquascapeProviderInterface {
 
     updateAquascapeTitle(id: number, title: string) {
         return this.aquascapeRepository.updateAquascapeTitle(id, title)
+    }
+
+    async updateAquascapeMainImage(id: number, file: Promise<FileUpload>) {
+        const aquascape = await this.aquascapeRepository.getAquascapeById(id)
+        const { createReadStream, filename } = await file
+
+        // Upload new image
+        const result = await uploadStreamFile(createReadStream, filename)
+
+        // Remove old image
+        if (aquascape?.mainImagePublicId) {
+            deleteFile(aquascape.mainImagePublicId)
+        }
+
+        // Update main image in db
+        await this.aquascapeRepository.updateAquascapeMainImage(id, result.public_id, result.secure_url)
+
+        return result
     }
 }

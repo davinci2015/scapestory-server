@@ -18,14 +18,13 @@ import {AquascapeImage} from 'db/models/AquascapeImage'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
-import {uploadStreamFile} from 'services/cloudinary'
 import {
     QueryAquascapesArgs,
     QueryTrendingAquascapesArgs,
     QueryAquascapeArgs,
     MutationUpdateAquascapeTitleArgs,
-    MutationUpdateAquascapeMainImageArgs,
 } from 'graphql/generated/types'
+import {FileUpload} from 'graphql-upload'
 
 const modelMapping = {
     tags: Tag,
@@ -108,13 +107,13 @@ export const resolvers = {
             return title
         },
 
-        async updateAquascapeMainImage(root, args: MutationUpdateAquascapeMainImageArgs, context) {
-            const { createReadStream, filename } = await args.file
-            const result = await uploadStreamFile(createReadStream, filename)
+        async updateAquascapeMainImage(root, args: { aquascapeId: number, file: Promise<FileUpload>}, context) {
+            const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
+            const result = await provider.updateAquascapeMainImage(args.aquascapeId, args.file)
 
             return {
-                publicId: result.public_id,
-                secureUrl: result.secure_url
+                mainImagePublicId: result.public_id,
+                mainImageUrl: result.secure_url
             }
         }
     },

@@ -36,7 +36,8 @@ export type Aquascape = {
   co2?: Maybe<Co2>,
   tank?: Maybe<Tank>,
   photoperiod: Scalars['Int'],
-  mainImage?: Maybe<AquascapeImage>,
+  mainImageUrl?: Maybe<Scalars['String']>,
+  mainImagePublicId?: Maybe<Scalars['String']>,
   images: Array<AquascapeImage>,
   tags: Array<Tag>,
   plants: Array<Plant>,
@@ -316,7 +317,7 @@ export type Plant = {
 
 export type Query = {
   __typename?: 'Query',
-  me: User,
+  me?: Maybe<User>,
   user?: Maybe<User>,
   userBySlug?: Maybe<User>,
   users: Array<Maybe<User>>,
@@ -596,7 +597,8 @@ export type AquascapeResolvers<ContextType = any, ParentType = ResolversParentTy
   co2?: Resolver<Maybe<ResolversTypes['CO2']>, ParentType, ContextType>,
   tank?: Resolver<Maybe<ResolversTypes['Tank']>, ParentType, ContextType>,
   photoperiod?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
-  mainImage?: Resolver<Maybe<ResolversTypes['AquascapeImage']>, ParentType, ContextType>,
+  mainImageUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  mainImagePublicId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   images?: Resolver<Array<ResolversTypes['AquascapeImage']>, ParentType, ContextType>,
   tags?: Resolver<Array<ResolversTypes['Tag']>, ParentType, ContextType>,
   plants?: Resolver<Array<ResolversTypes['Plant']>, ParentType, ContextType>,
@@ -753,7 +755,7 @@ export type PlantResolvers<ContextType = any, ParentType = ResolversParentTypes[
 };
 
 export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes['Query']> = {
-  me?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
+  me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, QueryUserArgs>,
   userBySlug?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, QueryUserBySlugArgs>,
   users?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>,

@@ -12,8 +12,11 @@ import {
     UpdateAquascapeMainImageMutationVariables,
 } from 'graphql/generated/mutations'
 import routes, {createDynamicPath, getAquascapeDetailsSlug} from 'routes'
-
 import {UPDATE_AQUASCAPE_TITLE, UPDATE_AQUASCAPE_MAIN_IMAGE} from './mutations'
+import {
+    updateAquascapeDetailsCache,
+    AquascapeDetailsActions,
+} from 'containers/AquascapeDetailsContainer/cache'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -21,6 +24,8 @@ interface Props {
 
 const HeroSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
     const router = useRouter()
+
+    if (!aquascape) return null
 
     const [updateTitle] = useMutation<
         UpdateAquascapeTitleMutation,
@@ -30,9 +35,11 @@ const HeroSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
     const [updateMainImage] = useMutation<
         UpdateAquascapeMainImageMutation,
         UpdateAquascapeMainImageMutationVariables
-    >(UPDATE_AQUASCAPE_MAIN_IMAGE)
-
-    if (!aquascape) return null
+    >(UPDATE_AQUASCAPE_MAIN_IMAGE, {
+        update: updateAquascapeDetailsCache(AquascapeDetailsActions.AQUASCAPE_UPDATE_MAIN_IMAGE, {
+            aquascapeId: aquascape.id,
+        }),
+    })
 
     const debouncedUpdateTitle = debounce((title: string) => {
         updateTitle({variables: {aquascapeId: aquascape.id, title}})
