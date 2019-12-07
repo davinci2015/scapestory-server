@@ -184,8 +184,8 @@ export type Livestock = {
 
 export type MainImageUploadResult = {
   __typename?: 'MainImageUploadResult',
-  publicId: Scalars['String'],
-  secureUrl: Scalars['String'],
+  mainImagePublicId: Scalars['String'],
+  mainImageUrl: Scalars['String'],
 };
 
 export type Mutation = {
@@ -198,7 +198,9 @@ export type Mutation = {
   unfollowUser?: Maybe<User>,
   createAquascape: Aquascape,
   updateAquascapeTitle?: Maybe<Scalars['String']>,
-  updateAquascapeMainImage?: Maybe<MainImageUploadResult>,
+  updateAquascapeMainImage: MainImageUploadResult,
+  addAquascapeImage: AquascapeImage,
+  deleteAquascapeImage?: Maybe<Scalars['Int']>,
   addComment?: Maybe<Comment>,
   removeComment?: Maybe<Comment>,
   like?: Maybe<Like>,
@@ -250,6 +252,18 @@ export type MutationUpdateAquascapeTitleArgs = {
 export type MutationUpdateAquascapeMainImageArgs = {
   aquascapeId: Scalars['Int'],
   file: Scalars['Upload']
+};
+
+
+export type MutationAddAquascapeImageArgs = {
+  aquascapeId: Scalars['Int'],
+  file: Scalars['Upload']
+};
+
+
+export type MutationDeleteAquascapeImageArgs = {
+  aquascapeId: Scalars['Int'],
+  imageId: Scalars['Int']
 };
 
 
@@ -717,8 +731,8 @@ export type LivestockResolvers<ContextType = any, ParentType = ResolversParentTy
 };
 
 export type MainImageUploadResultResolvers<ContextType = any, ParentType = ResolversParentTypes['MainImageUploadResult']> = {
-  publicId?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  secureUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  mainImagePublicId?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  mainImageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
 };
 
 export type MutationResolvers<ContextType = any, ParentType = ResolversParentTypes['Mutation']> = {
@@ -730,7 +744,9 @@ export type MutationResolvers<ContextType = any, ParentType = ResolversParentTyp
   unfollowUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationUnfollowUserArgs>,
   createAquascape?: Resolver<ResolversTypes['Aquascape'], ParentType, ContextType>,
   updateAquascapeTitle?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, MutationUpdateAquascapeTitleArgs>,
-  updateAquascapeMainImage?: Resolver<Maybe<ResolversTypes['MainImageUploadResult']>, ParentType, ContextType, MutationUpdateAquascapeMainImageArgs>,
+  updateAquascapeMainImage?: Resolver<ResolversTypes['MainImageUploadResult'], ParentType, ContextType, MutationUpdateAquascapeMainImageArgs>,
+  addAquascapeImage?: Resolver<ResolversTypes['AquascapeImage'], ParentType, ContextType, MutationAddAquascapeImageArgs>,
+  deleteAquascapeImage?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, MutationDeleteAquascapeImageArgs>,
   addComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationAddCommentArgs>,
   removeComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationRemoveCommentArgs>,
   like?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType, MutationLikeArgs>,

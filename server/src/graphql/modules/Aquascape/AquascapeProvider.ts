@@ -29,16 +29,16 @@ export interface AquascapeProviderInterface {
 
     getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
 
-    updateAquascapeTitle: (id: number, title: string) => Bluebird<[number, Aquascape[]]>
+    updateAquascapeTitle: (aquascapeId: number, title: string) => Bluebird<[number, Aquascape[]]>
 
-    updateAquascapeMainImage: (id: number, file: Promise<FileUpload>) => Promise<CloudinaryUploadResult>
+    updateAquascapeMainImage: (aquascapeId: number, file: Promise<FileUpload>) => Promise<CloudinaryUploadResult>
 }
 
 @Injectable()
 export class AquascapeProvider implements AquascapeProviderInterface {
     constructor(
         @Inject(tokens.AQUASCAPE_REPOSITORY)
-        private aquascapeRepository: AquascapeRepositoryInterface
+        private aquascapeRepository: AquascapeRepositoryInterface,
     ) {}
 
     getAquascapes(
@@ -78,12 +78,12 @@ export class AquascapeProvider implements AquascapeProviderInterface {
         return this.aquascapeRepository.getAquascapeImages(aquascapeId)
     }
 
-    updateAquascapeTitle(id: number, title: string) {
-        return this.aquascapeRepository.updateAquascapeTitle(id, title)
+    updateAquascapeTitle(aquascapeId: number, title: string) {
+        return this.aquascapeRepository.updateAquascapeTitle(aquascapeId, title)
     }
 
-    async updateAquascapeMainImage(id: number, file: Promise<FileUpload>) {
-        const aquascape = await this.aquascapeRepository.getAquascapeById(id)
+    async updateAquascapeMainImage(aquascapeId: number, file: Promise<FileUpload>) {
+        const aquascape = await this.aquascapeRepository.getAquascapeById(aquascapeId)
         const { createReadStream, filename } = await file
 
         // Upload new image
@@ -95,7 +95,7 @@ export class AquascapeProvider implements AquascapeProviderInterface {
         }
 
         // Update main image in db
-        await this.aquascapeRepository.updateAquascapeMainImage(id, result.public_id, result.secure_url)
+        await this.aquascapeRepository.updateAquascapeMainImage(aquascapeId, result.public_id, result.secure_url)
 
         return result
     }

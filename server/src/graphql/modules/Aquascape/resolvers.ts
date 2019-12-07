@@ -115,6 +115,16 @@ export const resolvers = {
                 mainImagePublicId: result.public_id,
                 mainImageUrl: result.secure_url
             }
+        },
+
+        async addAquascapeImage(root, args: { aquascapeId: number, file: Promise<FileUpload>}, context) {
+            const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
+            return await provider.addAquascapeImage(args.aquascapeId, args.file)
+        },
+
+        async deleteAquascapeImage(root, args: {aquascapeId: number, imageId: number}, context) {
+            const provider: AquascapeProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
+            return await provider.deleteAquascapeImage(args.aquascapeId, args.imageId)
         }
     },
 }

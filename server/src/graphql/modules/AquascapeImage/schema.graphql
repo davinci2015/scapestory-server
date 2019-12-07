@@ -1,0 +1,14 @@
+type AquascapeImage {
+    id: Int!
+    title: String
+    description: String
+    url: String!
+    publicId: String!
+}
+
+scalar Upload
+
+type Mutation {
+    addAquascapeImage(aquascapeId: Int!, file: Upload!): AquascapeImage!
+    deleteAquascapeImage(aquascapeId: Int!, imageId: Int!): Int
+}

@@ -14,6 +14,7 @@ import {LivestockModule} from 'graphql/modules/Livestock'
 import {SubstrateModule} from 'graphql/modules/Substrate'
 import {AdditiveModule} from 'graphql/modules/Additive'
 import {FilterModule} from 'graphql/modules/Filter'
+import {AquascapeImageModule} from 'graphql/modules/AquascapeImage'
 
 // @ts-ignore
 export const AppModule = new GraphQLModule({
@@ -32,5 +33,6 @@ export const AppModule = new GraphQLModule({
         SubstrateModule,
         AdditiveModule,
         FilterModule,
+        AquascapeImageModule,
     ]
 })
