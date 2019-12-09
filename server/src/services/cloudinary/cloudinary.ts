@@ -3,11 +3,6 @@
 import environment from 'config/environment'
 import cloudinary = require('cloudinary')
 
-interface UploadConfiguration {
-    width? : number
-    height? : number
-}
-
 export interface CloudinaryUploadResult {
     public_id: string
     version: number

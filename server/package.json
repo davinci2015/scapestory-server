@@ -6,9 +6,9 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "nodemon --exec ts-node -r tsconfig-paths/register --transpile-only src/main.ts",
+        "start": "ts-node -r tsconfig-paths/register --transpile-only src/main.ts",
+        "build": "tsc",
         "seed": "ts-node -r tsconfig-paths/register src/db/seed/index.ts",
-        "build": "webpack --config webpack.production.config.ts",
-        "start": "node dist/main.js",
         "lint": "tslint ./src/**/*.ts",
         "codegen": "graphql-codegen --config codegen.json",
         "pretty": "prettier --write \"./**/*.{ts,json}\""

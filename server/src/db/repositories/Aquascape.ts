@@ -7,7 +7,7 @@ import * as Bluebird from 'bluebird'
 import {Aquascape} from 'db/models/Aquascape'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {AquascapeImage} from 'db/models/AquascapeImage'
-import {Pagination} from 'graphql/generated/types'
+import {Pagination} from 'api/generated/types'
 
 export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aquascape> {
     getAquascapes: (

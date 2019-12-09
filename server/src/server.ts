@@ -2,7 +2,7 @@ import {ApolloServer} from 'apollo-server'
 import {ModuleContext} from '@graphql-modules/core'
 import {SequelizeAdapter} from 'db/adapters/SequelizeAdapter'
 import {Database} from 'db/Database'
-import {initPassport} from 'graphql/modules/Auth/passport'
+import {initPassport} from 'api/modules/Auth/passport'
 
 export const connectToDatabase = (onConnect?: (db: Database) => void) => {
     const adapter = new SequelizeAdapter()
