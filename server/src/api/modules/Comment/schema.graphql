@@ -1,6 +1,6 @@
-# import User from '../User/schema.graphql'
-# import Like from '../Like/schema.graphql'
-# import Pagination from '../Aquascape/schema.graphql'
+#import "../User/schema.graphql"
+#import "../Like/schema.graphql"
+#import "../Aquascape/schema.graphql"
 
 type Comment {
     id: Int!
@@ -24,11 +24,7 @@ enum CommentEntityType {
 }
 
 type Query {
-    comments(
-        entity: CommentEntityType!
-        entityId: Int!
-        pagination: Pagination!
-    ): [Comment!]!
+    comments(entity: CommentEntityType!, entityId: Int!, pagination: Pagination!): [Comment!]!
 }
 
 type Mutation {

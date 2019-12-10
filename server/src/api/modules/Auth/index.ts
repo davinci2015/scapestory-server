@@ -4,7 +4,7 @@ import {AuthProvider} from 'api/modules/Auth/providers/AuthProvider'
 import {resolvers, resolversComposition} from 'api/modules/Auth/resolvers'
 import {UserRepository} from 'db/repositories/User'
 import {SocialLoginRepository} from 'db/repositories/SocialLogin'
-import * as typeDefs from 'api/modules/Auth/schema.graphql'
+import typeDefs from 'api/modules/Auth/schema.graphql'
 import {attachSession, composeContext} from 'api/context'
 
 // @ts-ignore

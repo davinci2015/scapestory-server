@@ -16,18 +16,17 @@ import {AdditiveModule} from 'api/modules/Additive'
 import {FilterModule} from 'api/modules/Filter'
 import {AquascapeImageModule} from 'api/modules/AquascapeImage'
 
-// @ts-ignore
 export const AppModule = new GraphQLModule({
     imports: [
-        UserModule,
         AuthModule,
-        FollowModule,
-        AquascapeModule,
-        LightModule,
         CommentModule,
+        FollowModule,
+        LightModule,
+        AquascapeModule,
         LikeModule,
         PlantModule,
         HardscapeModule,
+        UserModule,
         VisitorModule,
         LivestockModule,
         SubstrateModule,

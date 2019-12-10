@@ -4,7 +4,7 @@ import {UsersProvider} from 'api/modules/User/UsersProvider'
 import {resolvers, resolversComposition} from 'api/modules/User/resolvers'
 import {UserRepository} from 'db/repositories/User'
 
-import * as typeDefs from 'api/modules/User/schema.graphql'
+import * as typeDefs from './schema.graphql'
 import {tokens} from 'di/tokens'
 import {composeContext, attachCurrentUserId} from 'api/context'
 

@@ -7,7 +7,7 @@ import {
     followResolversComposition,
 } from 'api/modules/Follow/resolvers'
 import {tokens} from 'di/tokens'
-import * as followDefs from 'api/modules/Follow/schema.graphql'
+import followDefs from 'api/modules/Follow/schema.graphql'
 import {attachCurrentUserId, composeContext} from 'api/context'
 
 // @ts-ignore

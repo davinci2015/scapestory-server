@@ -2,7 +2,7 @@ import {Injectable, Inject} from '@graphql-modules/di'
 import {tokens} from 'di/tokens'
 import {UserRepositoryInterface} from 'db/repositories/User'
 import {User} from 'db/models/User'
-import * as Bluebird from 'bluebird'
+import Bluebird from 'bluebird'
 
 export interface UsersProviderInterface {
     findUserById: (id: number) => Promise<User | null>

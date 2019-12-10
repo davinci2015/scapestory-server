@@ -1,23 +1,19 @@
-# import User from '../User/schema.graphql'
-# import Filter from '../Filter/schema.graphql'
-# import Light from '../Light/schema.graphql'
-# import Plant from '../Plant/schema.graphql'
-# import Hardscape from '../Hardscape/schema.graphql'
-# import Livestock from '../Livestock/schema.graphql'
-# import Substrate from '../Substrate/schema.graphql'
-# import Additive from '../Additive/schema.graphql'
-# import Filter from '../Filter/schema.graphql'
-# import AquascapeImage from '../AquascapeImage/schema.graphql'
+#import "../User/schema.graphql"
+#import "../Filter/schema.graphql"
+#import "../Light/schema.graphql"
+#import "../Plant/schema.graphql"
+#import "../Hardscape/schema.graphql"
+#import "../Livestock/schema.graphql"
+#import "../Substrate/schema.graphql"
+#import "../Additive/schema.graphql"
+#import "../Filter/schema.graphql"
+#import "../Like/schema.graphql"
+#import "../AquascapeImage/schema.graphql"
 
 type CO2 {
     id: Int!
     type: String
     bps: Int
-}
-
-type Like {
-    id: Int!
-    user: User!
 }
 
 type Tag {

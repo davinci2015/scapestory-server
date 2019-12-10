@@ -1,8 +1,35 @@
-import * as Bluebird from 'bluebird'
-import * as path from 'path'
+import Bluebird from 'bluebird'
 import {Sequelize} from 'sequelize-typescript'
 import {DatabaseConnectionParams} from 'db/Database'
 import {SyncOptions} from 'sequelize/types'
+import {
+    Additive,
+    Aquascape,
+    AquascapeImage,
+    Visitor,
+    Comment,
+    AquascapeTag,
+    CO2,
+    Filter,
+    Follow,
+    Hardscape,
+    Light,
+    Like,
+    Livestock,
+    Plant,
+    SocialLogin,
+    Substrate,
+    Tag,
+    Tank,
+    User,
+    AquascapeAdditive,
+    AquascapeFilter,
+    AquascapeHardscape,
+    AquascapeLight,
+    AquascapeLivestock,
+    AquascapePlant,
+    AquascapeSubstrate,
+} from 'db/models'
 
 export interface DatabaseAdapter {
     connect: (params: DatabaseConnectionParams) => void
@@ -23,9 +50,33 @@ export class SequelizeAdapter implements DatabaseAdapter {
             username: params.username,
             password: params.password,
             dialect: 'postgres',
-            modelPaths: [
-                path.join(__dirname, '../models'),
-                path.join(__dirname, '../models/manyToMany'),
+            models: [
+                Additive,
+                Aquascape,
+                AquascapeImage,
+                AquascapeTag,
+                CO2,
+                Comment,
+                Filter,
+                Follow,
+                Hardscape,
+                Light,
+                Like,
+                Livestock,
+                Plant,
+                SocialLogin,
+                Substrate,
+                Tag,
+                Tank,
+                User,
+                Visitor,
+                AquascapeAdditive,
+                AquascapeFilter,
+                AquascapeHardscape,
+                AquascapeLight,
+                AquascapeLivestock,
+                AquascapePlant,
+                AquascapeSubstrate,
             ],
         })
     }
