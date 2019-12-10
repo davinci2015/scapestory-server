@@ -6,8 +6,7 @@ import AquascapeCard from './AquascapeCard'
 storiesOf('Molecules | AquascapeCard', module).add('default', () => (
     <div style={{maxWidth: 420}}>
         <AquascapeCard
-            id="random"
-            slug="random"
+            id={1}
             viewsCount={100}
             likesCount={200}
             tags={[{name: 'Diorama'}]}

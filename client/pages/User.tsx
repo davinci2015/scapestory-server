@@ -1,7 +1,6 @@
 import React from 'react'
 import {useRouter} from 'next/router'
-
-import NavigationContainer from 'containers/Navigation'
+import NavigationContainer from 'containers/NavigationContainer'
 
 const Profile = () => {
     const router = useRouter()

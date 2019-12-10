@@ -1,6 +1,6 @@
 import {useMutation} from 'react-apollo'
 import {LIKE, DISLIKE} from 'graphql/mutations'
-import {LikeEntityType} from 'generated/graphql'
+import {LikeEntityType} from 'graphql/generated/types'
 
 export const useToggleLike = (initiallyLiked: Boolean = false) => {
     const [like] = useMutation(LIKE)

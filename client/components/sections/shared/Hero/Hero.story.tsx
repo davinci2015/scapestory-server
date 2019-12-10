@@ -32,22 +32,14 @@ storiesOf('Sections | Hero', module).add('default', () => (
                 <Hero.BottomLeft>
                     {createUserWidget(
                         <Paragraph type="body" color={colors.WHITE}>
-                            by {mock.username}
+                            by {mock.name}
                         </Paragraph>,
                         'large',
                         'border'
                     )}
 
-                    <IconText
-                        icon={Icon.EYE_SHOW_FULL}
-                        text={10}
-                        color={colors.WHITE}
-                    />
-                    <IconText
-                        icon={Icon.HEART}
-                        text={10}
-                        color={colors.WHITE}
-                    />
+                    <IconText icon={Icon.EYE_SHOW_FULL} text={10} color={colors.WHITE} />
+                    <IconText icon={Icon.HEART} text={10} color={colors.WHITE} />
                 </Hero.BottomLeft>
                 <Hero.BottomRight>
                     {createTag('large')}
