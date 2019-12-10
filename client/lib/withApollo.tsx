@@ -20,7 +20,7 @@ export default withApollo(({headers, initialState}) => {
     })
 
     const httpLink = createUploadLink({
-        uri: 'http://localhost:8080', // Server URL (must be absolute)
+        uri: process.env.API_URL || 'http://localhost:8080', // Server URL (must be absolute)
         credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
         fetch: !process.browser ? fetch : undefined,
     })
