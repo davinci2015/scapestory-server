@@ -7,6 +7,9 @@ import {CommentProvider} from './CommentProvider'
 import {resolvers, resolversComposition} from './resolvers'
 import * as typeDefs from './schema.graphql'
 import {composeContext, attachSession, attachCurrentUserId} from 'api/context'
+import {UserModule} from 'api/modules/User'
+import {AquascapeModule} from 'api/modules/Aquascape'
+import {LikeModule} from 'api/modules/Like'
 
 export const CommentModule = new GraphQLModule({
     providers: [
@@ -16,5 +19,10 @@ export const CommentModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([attachCurrentUserId, attachSession])
+    context: composeContext([attachCurrentUserId, attachSession]),
+    imports: [
+        UserModule,
+        AquascapeModule,
+        LikeModule
+    ]
 })

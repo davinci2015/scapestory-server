@@ -6,6 +6,7 @@ import {UserRepository} from 'db/repositories/User'
 import {SocialLoginRepository} from 'db/repositories/SocialLogin'
 import * as typeDefs from 'api/modules/Auth/schema.graphql'
 import {attachSession, composeContext} from 'api/context'
+import {UserModule} from 'api/modules/User'
 
 export const AuthModule = new GraphQLModule({
     providers: [
@@ -20,4 +21,5 @@ export const AuthModule = new GraphQLModule({
     resolvers,
     resolversComposition,
     context: composeContext([attachSession]),
+    imports: [UserModule]
 })
