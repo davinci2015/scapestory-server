@@ -5,7 +5,6 @@ export default {
     signUp: '/signup',
     signUpEmail: '/signup/email',
     about: '/about',
-    news: '/news',
     privacyPolicy: '/privacy',
     termsAndConditions: '/terms',
     aquascapeDetails: '/aquascape/[title]/[id]',

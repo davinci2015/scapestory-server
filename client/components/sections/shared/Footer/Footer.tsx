@@ -32,18 +32,6 @@ const Footer = ({openModal}: Props) => (
                             </Link>
                         </li>
                         <li>
-                            <Link href={routes.news}>
-                                <a>
-                                    <Paragraph weight="bold">
-                                        <FormattedMessage
-                                            id="footer.newsfeed"
-                                            defaultMessage="Newsfeed"
-                                        />
-                                    </Paragraph>
-                                </a>
-                            </Link>
-                        </li>
-                        <li>
                             <a onClick={() => openModal('feedback')}>
                                 <Paragraph weight="bold">
                                     <FormattedMessage
