@@ -1,4 +1,4 @@
-# import User from '../User/schema.graphql'
+#import '../User/schema.graphql'
 
 type AuthPayload {
     token: String
