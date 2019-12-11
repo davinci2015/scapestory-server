@@ -8,7 +8,6 @@ import {AquascapeImageProvider} from './AquascapeImageProvider'
 import {resolvers, resolversComposition} from './resolvers'
 import * as typeDefs from './schema.graphql'
 
-// @ts-ignore
 export const AquascapeImageModule = new GraphQLModule({
     providers: [
         {provide: tokens.AQUASCAPE_IMAGE_PROVIDER, useClass: AquascapeImageProvider},

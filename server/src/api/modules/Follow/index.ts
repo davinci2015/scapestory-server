@@ -10,7 +10,6 @@ import {tokens} from 'di/tokens'
 import * as followDefs from 'api/modules/Follow/schema.graphql'
 import {attachCurrentUserId, composeContext} from 'api/context'
 
-// @ts-ignore
 export const FollowModule = new GraphQLModule({
     providers: [
         {provide: tokens.FOLLOW_PROVIDER, useClass: FollowProvider},

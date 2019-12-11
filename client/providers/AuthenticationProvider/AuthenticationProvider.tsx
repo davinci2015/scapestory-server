@@ -30,6 +30,7 @@ const AuthenticationProvider: React.FunctionComponent<Props> = ({
     const {data, error, refetch} = useQuery(USER_PROFILE, {
         errorPolicy: 'ignore',
     })
+    console.log(data)
     const user = data ? data.me : null
 
     if (error) {

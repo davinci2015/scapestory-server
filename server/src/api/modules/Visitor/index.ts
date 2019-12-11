@@ -9,7 +9,6 @@ import {VisitorProvider} from './VisitorProvider'
 import * as typeDefs from './schema.graphql'
 import {attachSession, composeContext} from 'api/context'
 
-// @ts-ignore
 export const VisitorModule = new GraphQLModule({
     providers: [
         {provide: tokens.VISITOR_PROVIDER, useClass: VisitorProvider},

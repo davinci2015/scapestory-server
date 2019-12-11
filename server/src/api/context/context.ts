@@ -1,10 +1,9 @@
-import {ModuleContext} from '@graphql-modules/core'
-import {Context} from 'apollo-server-core'
+import {ModuleContext, BuildContextFn, ModuleSessionInfo} from '@graphql-modules/core'
+import {Config} from 'apollo-server'
 
 import headers from 'constants/headers'
 import {AuthHelper} from 'utils/AuthHelper'
 import {SessionInterface} from 'interfaces'
-import {Injector} from '@graphql-modules/di'
 
 export type AuthenticationContext = {
     currentUserId: number
@@ -12,34 +11,16 @@ export type AuthenticationContext = {
 
 export type SessionContext = SessionInterface
 
-export const composeContext = (
-    contexts: ((
-        session: SessionInterface,
-        currentContext: ModuleContext,
-        moduleSessionInfo: SessionInterface
-    ) => Promise<Context> | Context)[]
-) => (
-    session: SessionInterface,
-    currentContext: ModuleContext,
-    moduleSessionInfo: SessionInterface
-) => contexts.reduce(
-    (
-        acc: ModuleContext,
-        ctx: (
-            session: SessionInterface,
-            currentContext: ModuleContext,
-            moduleSessionInfo: SessionInterface
-        ) => ModuleContext
-    ) => ({
-        ...acc,
-        ...ctx(session, currentContext, moduleSessionInfo),
-    }),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    {} as {injector: Injector, [x: string]: any }
-)
+export const composeContext = (contexts: Function[]): BuildContextFn<Config, ModuleSessionInfo, ModuleContext> =>
+    (session: ModuleSessionInfo, currentContext: ModuleContext, moduleSessionInfo: ModuleSessionInfo) =>
+        contexts.reduce((acc, ctx) => (
+            {
+                ...acc,
+                ...ctx(session, currentContext, moduleSessionInfo),
+            }
+        ), {})
 
-export const attachCurrentUserId = (
-    session: SessionInterface): {currentUserId: number} | object => {
+export const attachCurrentUserId = (session: SessionInterface): {currentUserId: number} | object => {
     const authToken = session.req.headers[headers.AUTH_TOKEN]
     if (!authToken || typeof authToken !== 'string') {
         return {}

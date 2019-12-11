@@ -8,7 +8,6 @@ import {resolvers, resolversComposition} from './resolvers'
 import * as typeDefs from './schema.graphql'
 import {composeContext, attachSession, attachCurrentUserId} from 'api/context'
 
-// @ts-ignore
 export const CommentModule = new GraphQLModule({
     providers: [
         {provide: tokens.COMMENT_PROVIDER, useClass: CommentProvider},

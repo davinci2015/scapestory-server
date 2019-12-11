@@ -8,7 +8,6 @@ import * as typeDefs from './schema.graphql'
 import {tokens} from 'di/tokens'
 import {composeContext, attachCurrentUserId} from 'api/context'
 
-// @ts-ignore
 export const UserModule = new GraphQLModule({
     providers: [
         {provide: tokens.USER_PROVIDER, useClass: UsersProvider},

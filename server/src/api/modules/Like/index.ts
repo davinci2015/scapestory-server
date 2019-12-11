@@ -8,7 +8,6 @@ import {LikeProvider} from 'api/modules/Like/LikeProvider'
 import {LikeRepository} from 'db/repositories/Like'
 import {attachCurrentUserId, composeContext} from 'api/context'
 
-// @ts-ignore
 export const LikeModule = new GraphQLModule({
     providers: [
         {provide: tokens.LIKE_PROVIDER, useClass: LikeProvider},

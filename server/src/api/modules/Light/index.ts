@@ -7,7 +7,6 @@ import * as typeDefs from './schema.graphql'
 import {LightProvider} from './LightProvider'
 import {resolvers} from './resolvers'
 
-// @ts-ignore
 export const LightModule = new GraphQLModule({
     providers: [
         {provide: tokens.LIGHT_PROVIDER, useClass: LightProvider},

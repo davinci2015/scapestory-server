@@ -7,7 +7,6 @@ import {SocialLoginRepository} from 'db/repositories/SocialLogin'
 import * as typeDefs from 'api/modules/Auth/schema.graphql'
 import {attachSession, composeContext} from 'api/context'
 
-// @ts-ignore
 export const AuthModule = new GraphQLModule({
     providers: [
         {provide: tokens.AUTH_PROVIDER, useClass: AuthProvider},

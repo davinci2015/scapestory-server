@@ -14,7 +14,6 @@ import {resolvers, resolversComposition} from './resolvers'
 import * as typeDefs from './schema.graphql'
 import {attachCurrentUserId, composeContext} from 'api/context'
 
-// @ts-ignore
 export const AquascapeModule = new GraphQLModule({
     providers: [
         {provide: tokens.AQUASCAPE_PROVIDER, useClass: AquascapeProvider},
