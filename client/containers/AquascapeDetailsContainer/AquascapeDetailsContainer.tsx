@@ -5,7 +5,7 @@ import {FormattedMessage} from 'react-intl'
 import {Element} from 'react-scroll'
 
 import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetailsContainer/queries'
-import {Divider} from 'components/atoms'
+import {Divider, Icon} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
 import {VISIT} from 'graphql/mutations'
@@ -24,7 +24,8 @@ import {
 import cookie from 'services/cookie'
 import {AquascapeDetailsQuery, AquascapeDetailsQueryVariables} from 'graphql/generated/queries'
 import HeroSectionContainer from 'containers/AquascapeDetailsContainer/HeroSectionContainer'
-import PlantsList from 'components/sections/AquascapeDetails/FloraSection/PlantsList'
+import FloraList from 'components/sections/AquascapeDetails/FloraSection/FloraList'
+import {colors} from 'styles'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -117,11 +118,76 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                 <Divider />
 
                 <Element name={sections.FLORA}>
-                    <FloraSection
-                        livestock={aquascapeResult.aquascape.livestock}
-                        hardscape={aquascapeResult.aquascape.hardscape}
-                    >
-                        <PlantsList plants={aquascapeResult.aquascape.plants} />
+                    <FloraSection>
+                        <FloraList
+                            entities={aquascapeResult.aquascape.plants}
+                            title={
+                                <FormattedMessage
+                                    id="aquascape.flora_and_fauna.plants"
+                                    defaultMessage="Plants"
+                                />
+                            }
+                            icon={
+                                <Icon
+                                    d={Icon.PLANT}
+                                    color={colors.WHITE}
+                                    size={48}
+                                    viewBox="0 0 48 48"
+                                />
+                            }
+                            noEntityText={
+                                <FormattedMessage
+                                    id="aquascape.flora_and_fauna.no_plants"
+                                    defaultMessage="No plants added"
+                                />
+                            }
+                        />
+                        <FloraList
+                            entities={aquascapeResult.aquascape.livestock}
+                            title={
+                                <FormattedMessage
+                                    id="aquascape.flora_and_fauna.livestock"
+                                    defaultMessage="Livestock"
+                                />
+                            }
+                            icon={
+                                <Icon
+                                    d={Icon.FISH}
+                                    color={colors.WHITE}
+                                    size={48}
+                                    viewBox="0 0 48 48"
+                                />
+                            }
+                            noEntityText={
+                                <FormattedMessage
+                                    id="aquascape.flora_and_fauna.no_livestock"
+                                    defaultMessage="No livestock added"
+                                />
+                            }
+                        />
+                        <FloraList
+                            entities={aquascapeResult.aquascape.hardscape}
+                            title={
+                                <FormattedMessage
+                                    id="aquascape.flora_and_fauna.hardscape"
+                                    defaultMessage="Hardscape"
+                                />
+                            }
+                            icon={
+                                <Icon
+                                    d={Icon.STONE}
+                                    color={colors.WHITE}
+                                    size={48}
+                                    viewBox="0 0 48 48"
+                                />
+                            }
+                            noEntityText={
+                                <FormattedMessage
+                                    id="aquascape.flora_and_fauna.no_hardscape"
+                                    defaultMessage="No hardscape added"
+                                />
+                            }
+                        />
                     </FloraSection>
                 </Element>
 

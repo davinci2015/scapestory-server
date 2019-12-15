@@ -9,7 +9,6 @@ import {
     RemovePlantMutation,
     RemovePlantMutationVariables,
 } from 'graphql/generated/mutations'
-import PlantsList from 'components/sections/AquascapeDetails/FloraSection/PlantsList'
 import {PLANTS} from 'containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/PlantsSectionContainer/queries'
 import {
     ADD_PLANT,
@@ -19,6 +18,9 @@ import {
     updateAquascapeEditCache,
     AquascapeEditActions,
 } from 'containers/AquascapeDetailsEditContainer/cache'
+import FloraListEdit from 'components/sections/AquascapeDetails/FloraSection/FloraListEdit'
+import {Icon, FormattedMessage} from 'components/atoms'
+import {colors} from 'styles'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -91,15 +93,36 @@ const PlantsSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => 
     }
 
     return (
-        <PlantsList
-            edit
-            addPlant={addPlant}
-            removePlant={removePlant}
-            plants={aquascape.plants}
-            allPlants={plantsResult?.plants}
-            onPlantInputChange={onPlantInputChange}
-            onPlantSelect={onPlantSelect}
-            plantInputValue={plantInput}
+        <FloraListEdit
+            icon={<Icon d={Icon.PLANT} color={colors.WHITE} size={48} viewBox="0 0 48 48" />}
+            title={
+                <FormattedMessage id="aquascape.flora_and_fauna.plants" defaultMessage="Plant" />
+            }
+            noEntityText={
+                <FormattedMessage
+                    id="aquascape.flora_and_fauna.no_plants"
+                    defaultMessage="No plants added"
+                />
+            }
+            inputValue={plantInput}
+            entities={aquascape.plants}
+            allEntities={plantsResult?.plants}
+            addEntity={addPlant}
+            removeEntity={removePlant}
+            onEntityInputChange={onPlantInputChange}
+            onEntitySelect={onPlantSelect}
+            addEntityText={
+                <FormattedMessage
+                    id="aquascape.flora_and_fauna.add_plant"
+                    defaultMessage="Add plant"
+                />
+            }
+            removeEntityText={
+                <FormattedMessage
+                    id="aquascape.flora_and_fauna.remove_plant"
+                    defaultMessage="Remove plant"
+                />
+            }
         />
     )
 }
