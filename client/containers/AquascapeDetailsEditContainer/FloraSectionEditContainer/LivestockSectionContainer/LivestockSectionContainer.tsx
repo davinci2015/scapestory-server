@@ -29,13 +29,13 @@ const LivestockSectionContainer: React.FunctionComponent<Props> = ({aquascape}) 
     const {data: livestockResult} = useQuery(LIVESTOCK)
 
     const [addLivestockMutation] = useMutation(ADD_LIVESTOCK, {
-        update: updateAquascapeEditCache(AquascapeEditActions.AQUASCAPE_ADD_PLANT, {
+        update: updateAquascapeEditCache(AquascapeEditActions.AQUASCAPE_ADD_LIVESTOCK, {
             aquascapeId: aquascape.id,
         }),
     })
 
     const [removeLivestockMutation] = useMutation(REMOVE_LIVESTOCK, {
-        update: updateAquascapeEditCache(AquascapeEditActions.AQUASCAPE_REMOVE_PLANT, {
+        update: updateAquascapeEditCache(AquascapeEditActions.AQUASCAPE_REMOVE_LIVESTOCK, {
             aquascapeId: aquascape.id,
         }),
     })

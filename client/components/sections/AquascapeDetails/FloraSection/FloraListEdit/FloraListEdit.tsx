@@ -64,7 +64,7 @@ const FloraListEdit: React.FunctionComponent<Props> = ({
             )}
             onChange={onEntityInputChange}
             onSelect={onEntitySelect}
-            items={allEntities}
+            items={allEntities.filter(entity => !entities.some(x => x.name === entity.name))}
         />
         <Button dimensions="extraSmall" onClick={addEntity}>
             {addEntityText}

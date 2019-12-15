@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const REMOVE_LIVESTOCK = gql`
-    mutation removePlant($plantId: Int!, $aquascapeId: Int!) {
-        removePlant(plantId: $plantId, aquascapeId: $aquascapeId) {
+    mutation removeLivestock($livestockId: Int!, $aquascapeId: Int!) {
+        removeLivestock(livestockId: $livestockId, aquascapeId: $aquascapeId) {
             id
             name
         }
@@ -10,8 +10,8 @@ export const REMOVE_LIVESTOCK = gql`
 `
 
 export const ADD_LIVESTOCK = gql`
-    mutation addPlant($plantId: Int, $name: String, $aquascapeId: Int!) {
-        addPlant(plantId: $plantId, name: $name, aquascapeId: $aquascapeId) {
+    mutation addLivestock($livestockId: Int, $name: String, $aquascapeId: Int!) {
+        addLivestock(livestockId: $livestockId, name: $name, aquascapeId: $aquascapeId) {
             id
             name
         }

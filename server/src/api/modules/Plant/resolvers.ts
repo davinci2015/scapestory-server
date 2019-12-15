@@ -19,7 +19,6 @@ export const resolvers = {
             let plant: Plant | null = null
             const provider: PlantProviderInterface = context.injector.get(tokens.PLANT_PROVIDER)
 
-            // Add existing plant
             if (args.plantId) {
                 plant = await provider.findPlantById(args.plantId)
             } else if (args.name) {

@@ -15,7 +15,6 @@ export class PlantRepository extends BaseRepository<Plant> implements PlantRepos
         super(Plant)
     }
 
-
     getPlants() {
         return this.findAll({where: {predefined: true}})
     }
