@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react'
 import {noop} from 'lodash'
 
-import {FormattedMessage, Icon, InputAutocomplete} from 'components/atoms'
+import {FormattedMessage, Icon, InputAutocomplete, Button} from 'components/atoms'
 import {List} from 'components/molecules'
 import {colors, spaces} from 'styles'
 import {Plant} from 'graphql/generated/types'
@@ -23,6 +23,8 @@ const PlantsList: React.FunctionComponent<Props> = ({
     edit,
     onPlantInputChange = noop,
     onPlantSelect = noop,
+    removePlant = noop,
+    addPlant = noop,
     plantInputValue = '',
     allPlants = [],
     plants = [],
@@ -35,7 +37,16 @@ const PlantsList: React.FunctionComponent<Props> = ({
             }
         >
             {plants.length ? (
-                plants.map(plant => <List.Item key={plant.id}>{plant.name}</List.Item>)
+                plants.map(plant => (
+                    <List.Item key={plant.id}>
+                        {plant.name}{' '}
+                        {edit && (
+                            <Button dimensions="extraSmall" onClick={() => removePlant(plant.id)}>
+                                Remove
+                            </Button>
+                        )}
+                    </List.Item>
+                ))
             ) : (
                 <List.Item>
                     <FormattedMessage
@@ -46,22 +57,27 @@ const PlantsList: React.FunctionComponent<Props> = ({
             )}
 
             {edit && (
-                <InputAutocomplete
-                    value={plantInputValue}
-                    getItemValue={item => item.name}
-                    shouldItemRender={(item, value) => matchItemToValue(item.name, value)}
-                    renderItem={(item, isHighlighted) => (
-                        <div
-                            key={item.id}
-                            style={{background: isHighlighted ? 'lightblue' : 'white'}}
-                        >
-                            {item.name}
-                        </div>
-                    )}
-                    onChange={onPlantInputChange}
-                    onSelect={onPlantSelect}
-                    items={allPlants}
-                />
+                <>
+                    <InputAutocomplete
+                        value={plantInputValue}
+                        getItemValue={item => item.name}
+                        shouldItemRender={(item, value) => matchItemToValue(item.name, value)}
+                        renderItem={(item, isHighlighted) => (
+                            <div
+                                key={item.id}
+                                style={{background: isHighlighted ? 'lightblue' : 'white'}}
+                            >
+                                {item.name}
+                            </div>
+                        )}
+                        onChange={onPlantInputChange}
+                        onSelect={onPlantSelect}
+                        items={allPlants}
+                    />
+                    <Button dimensions="extraSmall" onClick={addPlant}>
+                        Add plant
+                    </Button>
+                </>
             )}
         </List>
         <style jsx>{`

@@ -2,7 +2,6 @@ import React, {ChangeEvent, useState} from 'react'
 import {useMutation, useQuery} from 'react-apollo'
 
 import {AquascapeDetailsQuery, PlantsQuery} from 'graphql/generated/queries'
-import {REMOVE_COMMENT} from 'containers/AquascapeDetailsContainer/CommentsContainer/mutations'
 import {Plant} from 'graphql/generated/types'
 import {
     AddPlantMutation,
@@ -12,7 +11,14 @@ import {
 } from 'graphql/generated/mutations'
 import PlantsList from 'components/sections/AquascapeDetails/FloraSection/PlantsList'
 import {PLANTS} from 'containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/PlantsSectionContainer/queries'
-import {ADD_PLANT} from 'containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/PlantsSectionContainer/mutations'
+import {
+    ADD_PLANT,
+    REMOVE_PLANT,
+} from 'containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/PlantsSectionContainer/mutations'
+import {
+    updateAquascapeEditCache,
+    AquascapeEditActions,
+} from 'containers/AquascapeDetailsEditContainer/cache'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -25,9 +31,20 @@ const PlantsSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => 
     if (!aquascape) return null
 
     const {data: plantsResult} = useQuery<PlantsQuery>(PLANTS)
-    const [addPlantMutation] = useMutation<AddPlantMutation, AddPlantMutationVariables>(ADD_PLANT)
+
+    const [addPlantMutation] = useMutation<AddPlantMutation, AddPlantMutationVariables>(ADD_PLANT, {
+        update: updateAquascapeEditCache(AquascapeEditActions.AQUASCAPE_ADD_PLANT, {
+            aquascapeId: aquascape.id,
+        }),
+    })
+
     const [removePlantMutation] = useMutation<RemovePlantMutation, RemovePlantMutationVariables>(
-        REMOVE_COMMENT
+        REMOVE_PLANT,
+        {
+            update: updateAquascapeEditCache(AquascapeEditActions.AQUASCAPE_REMOVE_PLANT, {
+                aquascapeId: aquascape.id,
+            }),
+        }
     )
 
     const onPlantInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,6 +57,11 @@ const PlantsSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => 
         setPlantInput(value)
     }
 
+    const resetFields = () => {
+        setSelectedPlant(null)
+        setPlantInput('')
+    }
+
     const addPlant = () => {
         if (!plantInput || plantInput === '') return
         const plantName = plantInput.trim()
@@ -49,6 +71,7 @@ const PlantsSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => 
                 ? selectedPlant.id
                 : undefined
 
+        resetFields()
         addPlantMutation({
             variables: {
                 plantId,
