@@ -8,12 +8,13 @@ import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
 import {AuthContext} from 'providers/AuthenticationProvider'
-import {FloraSection, EquipmentSection, PhotoSection} from 'components/sections/AquascapeDetails'
+import {EquipmentSection, PhotoSection} from 'components/sections/AquascapeDetails'
 import {AquascapeDetailsQuery, AquascapeDetailsQueryVariables} from 'graphql/generated/queries'
 import routes from 'routes'
 
 import {AQUASCAPE_DETAILS_EDIT} from './queries'
 import HeroSectionEditContainer from './HeroSectionEditContainer'
+import FloraSectionEditContainer from 'containers/AquascapeDetailsEditContainer/FloraSectionEditContainer'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -100,11 +101,7 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
                 <Divider />
 
                 <Element name={sections.FLORA}>
-                    <FloraSection
-                        plants={aquascapeResult.aquascape.plants}
-                        livestock={aquascapeResult.aquascape.livestock}
-                        hardscape={aquascapeResult.aquascape.hardscape}
-                    />
+                    <FloraSectionEditContainer aquascape={aquascapeResult.aquascape} />
                 </Element>
 
                 <Divider />

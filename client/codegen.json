@@ -10,7 +10,8 @@
                 "./graphql/queries/queries.ts",
                 "./containers/AquascapeDetailsContainer/queries.ts",
                 "./containers/AquascapeDetailsEditContainer/queries.ts",
-                "./containers/ProfileContainer/queries.ts"
+                "./containers/ProfileContainer/queries.ts",
+                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/queries.ts"
             ],
             "config": ["flattenGeneratedTypes"]
         },
@@ -19,7 +20,8 @@
             "documents": [
                 "./graphql/mutations/mutations.ts",
                 "./containers/AquascapeDetailsContainer/CommentsContainer/mutations.ts",
-                "./containers/AquascapeDetailsEditContainer/HeroSectionEditContainer/mutations.ts"
+                "./containers/AquascapeDetailsEditContainer/HeroSectionEditContainer/mutations.ts",
+                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/mutations.ts"
             ]
         }
     }

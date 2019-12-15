@@ -20,6 +20,8 @@ export type Additive = {
 
 export type Aquascape = {
    __typename?: 'Aquascape',
+  likesCount: Scalars['Int'],
+  isLikedByMe: Scalars['Boolean'],
   id: Scalars['Int'],
   createdAt: Scalars['String'],
   updatedAt: Scalars['String'],
@@ -45,8 +47,6 @@ export type Aquascape = {
   substrates: Array<Substrate>,
   additives: Array<Additive>,
   comments: Array<Comment>,
-  likesCount: Scalars['Int'],
-  isLikedByMe: Scalars['Boolean'],
   viewsCount: Scalars['Int'],
 };
 
@@ -158,7 +158,6 @@ export type Light = {
 export type Like = {
    __typename?: 'Like',
   id: Scalars['Int'],
-  user: User,
   userId: Scalars['Int'],
   aquascapeImageId?: Maybe<Scalars['Int']>,
   aquascapeId?: Maybe<Scalars['Int']>,
@@ -187,54 +186,61 @@ export type MainImageUploadResult = {
 
 export type Mutation = {
    __typename?: 'Mutation',
+  addPlant: Plant,
+  removePlant?: Maybe<Plant>,
+  like?: Maybe<Like>,
+  dislike?: Maybe<Like>,
+  addAquascapeImage: AquascapeImage,
+  deleteAquascapeImage?: Maybe<Scalars['Int']>,
+  createAquascape: Aquascape,
+  updateAquascapeTitle?: Maybe<Scalars['String']>,
+  updateAquascapeMainImage: MainImageUploadResult,
+  addComment?: Maybe<Comment>,
+  removeComment?: Maybe<Comment>,
+  followUser?: Maybe<User>,
+  unfollowUser?: Maybe<User>,
   login?: Maybe<AuthPayload>,
   register?: Maybe<AuthPayload>,
   fbRegister?: Maybe<AuthPayload>,
   googleRegister?: Maybe<AuthPayload>,
-  followUser?: Maybe<User>,
-  unfollowUser?: Maybe<User>,
-  createAquascape: Aquascape,
-  updateAquascapeTitle?: Maybe<Scalars['String']>,
-  updateAquascapeMainImage?: Maybe<MainImageUploadResult>,
-  addComment?: Maybe<Comment>,
-  removeComment?: Maybe<Comment>,
-  like?: Maybe<Like>,
-  dislike?: Maybe<Like>,
-  addPlant: Plant,
-  removePlant?: Maybe<Plant>,
   visitAquascape: VisitAquascapeResult,
 };
 
 
-export type MutationLoginArgs = {
-  email: Scalars['String'],
-  password: Scalars['String']
+export type MutationAddPlantArgs = {
+  plantId?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+  aquascapeId: Scalars['Int']
 };
 
 
-export type MutationRegisterArgs = {
-  email: Scalars['String'],
-  password: Scalars['String']
+export type MutationRemovePlantArgs = {
+  plantId: Scalars['Int'],
+  aquascapeId: Scalars['Int']
 };
 
 
-export type MutationFbRegisterArgs = {
-  token: Scalars['String']
+export type MutationLikeArgs = {
+  entity: LikeEntityType,
+  entityId: Scalars['Int']
 };
 
 
-export type MutationGoogleRegisterArgs = {
-  token: Scalars['String']
+export type MutationDislikeArgs = {
+  entity: LikeEntityType,
+  entityId: Scalars['Int']
 };
 
 
-export type MutationFollowUserArgs = {
-  userId: Scalars['Int']
+export type MutationAddAquascapeImageArgs = {
+  aquascapeId: Scalars['Int'],
+  file: Scalars['Upload']
 };
 
 
-export type MutationUnfollowUserArgs = {
-  userId: Scalars['Int']
+export type MutationDeleteAquascapeImageArgs = {
+  aquascapeId: Scalars['Int'],
+  imageId: Scalars['Int']
 };
 
 
@@ -263,28 +269,35 @@ export type MutationRemoveCommentArgs = {
 };
 
 
-export type MutationLikeArgs = {
-  entity: LikeEntityType,
-  entityId: Scalars['Int']
+export type MutationFollowUserArgs = {
+  userId: Scalars['Int']
 };
 
 
-export type MutationDislikeArgs = {
-  entity: LikeEntityType,
-  entityId: Scalars['Int']
+export type MutationUnfollowUserArgs = {
+  userId: Scalars['Int']
 };
 
 
-export type MutationAddPlantArgs = {
-  plantId?: Maybe<Scalars['Int']>,
-  name?: Maybe<Scalars['String']>,
-  aquascapeId: Scalars['Int']
+export type MutationLoginArgs = {
+  email: Scalars['String'],
+  password: Scalars['String']
 };
 
 
-export type MutationRemovePlantArgs = {
-  plantId: Scalars['Int'],
-  aquascapeId: Scalars['Int']
+export type MutationRegisterArgs = {
+  email: Scalars['String'],
+  password: Scalars['String']
+};
+
+
+export type MutationFbRegisterArgs = {
+  token: Scalars['String']
+};
+
+
+export type MutationGoogleRegisterArgs = {
+  token: Scalars['String']
 };
 
 
@@ -318,19 +331,19 @@ export type Query = {
   user?: Maybe<User>,
   userBySlug?: Maybe<User>,
   users: Array<Maybe<User>>,
-  userProfileSlugExists?: Maybe<Scalars['Boolean']>,
-  aquascapes: AquascapesResult,
-  trendingAquascapes: Array<Aquascape>,
-  featuredAquascape?: Maybe<Aquascape>,
-  aquascape?: Maybe<Aquascape>,
+  filters: Array<Filter>,
   lights: Array<Light>,
-  comments: Array<Comment>,
   plants: Array<Plant>,
   hardscape: Array<Hardscape>,
   livestock: Array<Livestock>,
   substrates: Array<Substrate>,
   additives: Array<Additive>,
-  filters: Array<Filter>,
+  aquascapes: AquascapesResult,
+  trendingAquascapes: Array<Aquascape>,
+  featuredAquascape?: Maybe<Aquascape>,
+  aquascape?: Maybe<Aquascape>,
+  comments: Array<Comment>,
+  userProfileSlugExists?: Maybe<Scalars['Boolean']>,
 };
 
 
@@ -340,11 +353,6 @@ export type QueryUserArgs = {
 
 
 export type QueryUserBySlugArgs = {
-  slug: Scalars['String']
-};
-
-
-export type QueryUserProfileSlugExistsArgs = {
   slug: Scalars['String']
 };
 
@@ -370,6 +378,11 @@ export type QueryCommentsArgs = {
   entity: CommentEntityType,
   entityId: Scalars['Int'],
   pagination: Pagination
+};
+
+
+export type QueryUserProfileSlugExistsArgs = {
+  slug: Scalars['String']
 };
 
 export type Substrate = {
@@ -413,10 +426,10 @@ export type User = {
   instagramLink?: Maybe<Scalars['String']>,
   createdAt: Scalars['String'],
   updatedAt: Scalars['String'],
+  aquascapes: AquascapesResult,
   followersCount: Scalars['Int'],
   followingCount: Scalars['Int'],
   isFollowedByMe: Scalars['Boolean'],
-  aquascapes: AquascapesResult,
 };
 
 
@@ -498,6 +511,17 @@ export type AquascapeDetailsQuery = (
       { __typename?: 'Comment' }
       & CommentFieldsFragment
     )> }
+  )> }
+);
+
+export type PlantsQueryVariables = {};
+
+
+export type PlantsQuery = (
+  { __typename?: 'Query' }
+  & { plants: Array<(
+    { __typename?: 'Plant' }
+    & Pick<Plant, 'id' | 'name'>
   )> }
 );
 

@@ -24,6 +24,7 @@ import {
 import cookie from 'services/cookie'
 import {AquascapeDetailsQuery, AquascapeDetailsQueryVariables} from 'graphql/generated/queries'
 import HeroSectionContainer from 'containers/AquascapeDetailsContainer/HeroSectionContainer'
+import PlantsList from 'components/sections/AquascapeDetails/FloraSection/PlantsList'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -117,10 +118,11 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
 
                 <Element name={sections.FLORA}>
                     <FloraSection
-                        plants={aquascapeResult.aquascape.plants}
                         livestock={aquascapeResult.aquascape.livestock}
                         hardscape={aquascapeResult.aquascape.hardscape}
-                    />
+                    >
+                        <PlantsList plants={aquascapeResult.aquascape.plants} />
+                    </FloraSection>
                 </Element>
 
                 <Divider />

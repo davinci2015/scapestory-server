@@ -6,26 +6,30 @@ export interface Props<ItemType> {
     value: string
     onSelect(value: string, item: ItemType): void
     onChange(e: ChangeEvent<HTMLInputElement>): void
+    getItemValue(item: ItemType): string
     renderItem(item: ItemType, isHighlighted: boolean): React.ReactNode
+    shouldItemRender?: (item: ItemType, value: string) => boolean
 }
 
 const InputAutocomplete = function<ItemType>({
     renderItem,
     items,
     onChange,
+    getItemValue,
     onSelect,
     value,
+    shouldItemRender,
 }: Props<ItemType>) {
     return (
         <>
             <Autocomplete
-                getItemValue={item => item}
+                getItemValue={getItemValue}
                 items={items}
                 renderItem={renderItem}
-                renderMenu={items => <div>{items}</div>}
                 value={value}
                 onChange={onChange}
                 onSelect={onSelect}
+                shouldItemRender={shouldItemRender}
             />
             <style jsx>{``}</style>
         </>

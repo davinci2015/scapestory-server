@@ -3,16 +3,15 @@ import React from 'react'
 import {FormattedMessage, Headline, Icon} from 'components/atoms'
 import {List} from 'components/molecules'
 import {colors, spaces} from 'styles'
-import {Plant, Livestock, Hardscape} from 'graphql/generated/types'
+import {Livestock, Hardscape} from 'graphql/generated/types'
 
 interface Props {
-    plants: Pick<Plant, 'id' | 'name'>[]
     livestock: Pick<Livestock, 'id' | 'name'>[]
     hardscape: Pick<Hardscape, 'id' | 'name'>[]
 }
 
 const FloraSection: React.FunctionComponent<Props> = ({
-    plants = [],
+    children,
     livestock = [],
     hardscape = [],
 }) => (
@@ -25,28 +24,7 @@ const FloraSection: React.FunctionComponent<Props> = ({
                 />
             </Headline>
             <div className="list">
-                <List
-                    icon={
-                        <Icon d={Icon.PLANT} color={colors.WHITE} size={48} viewBox="0 0 48 48" />
-                    }
-                    title={
-                        <FormattedMessage
-                            id="aquascape.flora_and_fauna.plants"
-                            defaultMessage="Plants"
-                        />
-                    }
-                >
-                    {plants.length ? (
-                        plants.map(plant => <List.Item key={plant.id}>{plant.name}</List.Item>)
-                    ) : (
-                        <List.Item>
-                            <FormattedMessage
-                                id="aquascape.flora_and_fauna.no_plants"
-                                defaultMessage="No plants added"
-                            />
-                        </List.Item>
-                    )}
-                </List>
+                {children}
                 <List
                     icon={<Icon d={Icon.FISH} color={colors.WHITE} size={48} viewBox="0 0 48 48" />}
                     title={
