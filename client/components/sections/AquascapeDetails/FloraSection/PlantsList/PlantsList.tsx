@@ -6,6 +6,7 @@ import {List} from 'components/molecules'
 import {colors, spaces} from 'styles'
 import {Plant} from 'graphql/generated/types'
 import {PlantsQuery} from 'graphql/generated/queries'
+import {matchItemToValue} from 'utils/general'
 
 interface Props {
     edit?: boolean
@@ -48,13 +49,11 @@ const PlantsList: React.FunctionComponent<Props> = ({
                 <InputAutocomplete
                     value={plantInputValue}
                     getItemValue={item => item.name}
-                    shouldItemRender={item =>
-                        item.name.toLowerCase().indexOf(plantInputValue.toLocaleLowerCase()) !== -1
-                    }
+                    shouldItemRender={(item, value) => matchItemToValue(item.name, value)}
                     renderItem={(item, isHighlighted) => (
                         <div
                             key={item.id}
-                            style={{background: isHighlighted ? 'lightgray' : 'white'}}
+                            style={{background: isHighlighted ? 'lightblue' : 'white'}}
                         >
                             {item.name}
                         </div>

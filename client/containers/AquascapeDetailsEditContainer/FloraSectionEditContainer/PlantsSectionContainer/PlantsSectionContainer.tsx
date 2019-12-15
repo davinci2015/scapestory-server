@@ -42,16 +42,17 @@ const PlantsSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => 
 
     const addPlant = () => {
         if (!plantInput || plantInput === '') return
+        const plantName = plantInput.trim()
 
         const plantId =
-            selectedPlant && selectedPlant.name.toLowerCase() === plantInput.toLowerCase()
+            selectedPlant && selectedPlant.name.toLowerCase() === plantName.toLowerCase()
                 ? selectedPlant.id
                 : undefined
 
         addPlantMutation({
             variables: {
                 plantId,
-                name: plantInput,
+                name: plantName,
                 aquascapeId: aquascape.id,
             },
         })
