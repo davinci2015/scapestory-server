@@ -1,13 +1,15 @@
 import {DataProxy} from 'apollo-cache'
 import {FetchResult} from 'apollo-link'
 import gql from 'graphql-tag'
-import {Plant, Livestock} from 'graphql/generated/types'
+import {Plant, Livestock, Hardscape} from 'graphql/generated/types'
 
 export enum AquascapeEditActions {
     AQUASCAPE_ADD_PLANT,
-    AQUASCAPE_ADD_LIVESTOCK,
     AQUASCAPE_REMOVE_PLANT,
+    AQUASCAPE_ADD_LIVESTOCK,
     AQUASCAPE_REMOVE_LIVESTOCK,
+    AQUASCAPE_ADD_HARDSCAPE,
+    AQUASCAPE_REMOVE_HARDSCAPE,
 }
 
 interface Payload {
@@ -91,6 +93,41 @@ export const updateAquascapeEditCache = (action: AquascapeEditActions, payload: 
                     aquascape: {
                         ...data.aquascape,
                         livestock: [...data.aquascape.livestock, mutationData.addLivestock],
+                    },
+                },
+            })
+
+        case AquascapeEditActions.AQUASCAPE_REMOVE_HARDSCAPE:
+            query = gql`query { aquascape(id: ${payload.aquascapeId}) { id hardscape { id name } }}`
+            data = cache.readQuery<any>({query})
+
+            if (!mutationData.removeHardscape || !mutationData.removeHardscape.id) return
+
+            return cache.writeQuery({
+                query,
+                data: {
+                    aquascape: {
+                        ...data.aquascape,
+                        hardscape: data.aquascape.hardscape.filter(
+                            (hardscape: Hardscape) =>
+                                hardscape.id !== mutationData.removeHardscape.id
+                        ),
+                    },
+                },
+            })
+
+        case AquascapeEditActions.AQUASCAPE_ADD_HARDSCAPE:
+            query = gql`query { aquascape(id: ${payload.aquascapeId}) { id hardscape { id name } }}`
+            data = cache.readQuery<any>({query})
+
+            if (!mutationData.addHardscape || !mutationData.addHardscape.id) return
+
+            return cache.writeQuery({
+                query,
+                data: {
+                    aquascape: {
+                        ...data.aquascape,
+                        hardscape: [...data.aquascape.hardscape, mutationData.addHardscape],
                     },
                 },
             })

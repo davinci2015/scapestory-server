@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const REMOVE_HARDSCAPE = gql`
-    mutation removeHardscape($plantId: Int!, $aquascapeId: Int!) {
-        removeHardscape(plantId: $plantId, aquascapeId: $aquascapeId) {
+    mutation removeHardscape($hardscapeId: Int!, $aquascapeId: Int!) {
+        removeHardscape(hardscapeId: $hardscapeId, aquascapeId: $aquascapeId) {
             id
             name
         }
@@ -10,8 +10,8 @@ export const REMOVE_HARDSCAPE = gql`
 `
 
 export const ADD_HARDSCAPE = gql`
-    mutation removeHardscape($plantId: Int, $name: String, $aquascapeId: Int!) {
-        removeHardscape(plantId: $plantId, name: $name, aquascapeId: $aquascapeId) {
+    mutation addHardscape($hardscapeId: Int, $name: String, $aquascapeId: Int!) {
+        addHardscape(hardscapeId: $hardscapeId, name: $name, aquascapeId: $aquascapeId) {
             id
             name
         }

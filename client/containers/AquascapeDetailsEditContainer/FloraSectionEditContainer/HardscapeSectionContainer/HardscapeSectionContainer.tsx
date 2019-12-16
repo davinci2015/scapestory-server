@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from 'react'
 import {useMutation, useQuery} from 'react-apollo'
 
 import {AquascapeDetailsQuery} from 'graphql/generated/queries'
-import {Plant, Hardscape} from 'graphql/generated/types'
+import {Hardscape} from 'graphql/generated/types'
 import {
     updateAquascapeEditCache,
     AquascapeEditActions,
@@ -32,13 +32,13 @@ const HardscapeSectionContainer: React.FunctionComponent<Props> = ({aquascape}) 
     const {data: hardscapeResult} = useQuery(HARDSCAPE)
 
     const [addHardscapeMutation] = useMutation(ADD_HARDSCAPE, {
-        update: updateAquascapeEditCache(AquascapeEditActions.AQUASCAPE_ADD_PLANT, {
+        update: updateAquascapeEditCache(AquascapeEditActions.AQUASCAPE_ADD_HARDSCAPE, {
             aquascapeId: aquascape.id,
         }),
     })
 
     const [removeHardscapeMutation] = useMutation(REMOVE_HARDSCAPE, {
-        update: updateAquascapeEditCache(AquascapeEditActions.AQUASCAPE_REMOVE_PLANT, {
+        update: updateAquascapeEditCache(AquascapeEditActions.AQUASCAPE_REMOVE_HARDSCAPE, {
             aquascapeId: aquascape.id,
         }),
     })
@@ -48,8 +48,8 @@ const HardscapeSectionContainer: React.FunctionComponent<Props> = ({aquascape}) 
         setSelectedHardscape(null)
     }
 
-    const onHardscapeSelect = (value: string, plant: Pick<Plant, 'id' | 'name'>) => {
-        setSelectedHardscape(plant)
+    const onHardscapeSelect = (value: string, hardscape: Pick<Hardscape, 'id' | 'name'>) => {
+        setSelectedHardscape(hardscape)
         setHardscapeInput(value)
     }
 
