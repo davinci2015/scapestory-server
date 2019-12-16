@@ -37,7 +37,7 @@ export const resolvers = {
             const livestock = await provider.findLivestockById(args.livestockId)
 
             if (!livestock) {
-                throw new UserInputError('Plant not found')
+                throw new UserInputError('Livestock not found')
             }
 
             await provider.removeLivestockForAquascape(livestock.id, args.aquascapeId)

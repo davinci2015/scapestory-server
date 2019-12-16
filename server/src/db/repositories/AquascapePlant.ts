@@ -9,8 +9,7 @@ export interface AquascapePlantRepositoryInterface extends BaseRepositoryInterfa
 }
 
 @Injectable()
-export class AquascapePlantRepository
-    extends BaseRepository<AquascapePlant>
+export class AquascapePlantRepository extends BaseRepository<AquascapePlant>
     implements AquascapePlantRepositoryInterface {
     constructor() {
         super(AquascapePlant)
