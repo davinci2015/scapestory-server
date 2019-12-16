@@ -13,28 +13,28 @@ export class Light extends Model<Light> {
     model: string
 
     @Column
-    width: number // milimeter (symbol: mm)
+    width: number // Milimeter (symbol: mm)
 
     @Column
-    height: number // milimeter (symbol: mm)
+    height: number // Milimeter (symbol: mm)
 
     @Column
-    depth: number // milimeter (symbol: mm)
+    depth: number // Milimeter (symbol: mm)
 
     @Column
-    power: number // watt (symbol: W)
+    power: number // Watt (symbol: W)
 
     @Column
-    lumenMin: number // symbol: lm
+    lumenMin: number // Symbol: lm
 
     @Column
-    lumenMax: number // symbol: lm
+    lumenMax: number // Symbol: lm
 
     @Column
-    kelvinMin: number // symbol: K
+    kelvinMin: number // Symbol: K
 
     @Column
-    kelvinMax: number // symbol: K
+    kelvinMax: number // Symbol: K
 
     @Column
     dimmable: boolean
