@@ -19,3 +19,8 @@ type Light {
 type Query {
     lights: [Light!]!
 }
+
+type Mutation {
+    addLight(brand: String!, model: String!, aquascapeId: Int!): Light!
+    removeLight(lightId: Int!, aquascapeId: Int!): Light
+}

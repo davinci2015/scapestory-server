@@ -22,23 +22,19 @@ const Item: React.FunctionComponent<ItemProps> = ({
         <style jsx>{`
             .item {
                 display: flex;
+                flex-direction: column;
                 margin: 0 ${GUTTER}px;
             }
 
             @media ${media.up('extraSmall')} {
                 .item {
-                    flex: 0 1
-                        calc(${(extraSmall / COLUMNS) * 100}% - ${GUTTER * 2}px);
+                    flex: 0 1 calc(${(extraSmall / COLUMNS) * 100}% - ${GUTTER * 2}px);
                 }
             }
 
             @media ${media.up('small')} {
                 .item {
-                    flex: 0 1
-                        calc(
-                            ${((small || extraSmall) / COLUMNS) * 100}% -
-                                ${GUTTER * 2}px
-                        );
+                    flex: 0 1 calc(${((small || extraSmall) / COLUMNS) * 100}% - ${GUTTER * 2}px);
                 }
             }
 
@@ -46,8 +42,7 @@ const Item: React.FunctionComponent<ItemProps> = ({
                 .item {
                     flex: 0 1
                         calc(
-                            ${((medium || small || extraSmall) / COLUMNS) *
-                                    100}% - ${GUTTER * 2}px
+                            ${((medium || small || extraSmall) / COLUMNS) * 100}% - ${GUTTER * 2}px
                         );
                 }
             }
@@ -56,9 +51,8 @@ const Item: React.FunctionComponent<ItemProps> = ({
                 .item {
                     flex: 0 1
                         calc(
-                            ${((large || medium || small || extraSmall) /
-                                    COLUMNS) *
-                                    100}% - ${GUTTER * 2}px
+                            ${((large || medium || small || extraSmall) / COLUMNS) * 100}% -
+                                ${GUTTER * 2}px
                         );
                 }
             }

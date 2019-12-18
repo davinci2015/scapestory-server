@@ -6,7 +6,8 @@ import mock from 'mocks/storybook'
 
 storiesOf('Molecules | Comment', module).add('default', () => (
     <Comment
-        isLiked={true}
+        isLiked
+        likesCount={30}
         onLike={() => null}
         comment={{
             id: 1,

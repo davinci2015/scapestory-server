@@ -13,6 +13,7 @@ import {Grid} from 'components/core'
 import {spaces} from 'styles'
 import Comment from 'components/molecules/Comment/Comment'
 import {CommentFieldsFragment} from 'graphql/generated/queries'
+import CommentsBlock from './CommentBlock'
 
 interface Props {
     comments: CommentFieldsFragment[]
@@ -20,6 +21,7 @@ interface Props {
     userId?: number
     enteredComment: string
     onCommentChange: (e: FormEvent<HTMLTextAreaElement>) => void
+    onReply: (comment: CommentFieldsFragment) => void
     removeComment: (comment: CommentFieldsFragment) => void
     toggleLike: (comment: CommentFieldsFragment) => void
     onSubmit: () => void
@@ -31,6 +33,7 @@ const CommentsSection: React.FunctionComponent<Props> = ({
     onCommentChange,
     enteredComment,
     onSubmit,
+    onReply,
     removeComment,
     userImage,
     userId,
@@ -75,18 +78,21 @@ const CommentsSection: React.FunctionComponent<Props> = ({
                 </Grid.Row>
                 <div className="list">
                     <Grid.Row>
-                        {comments.map(comment => (
-                            <Grid.Item key={comment.id} extraSmall={12} medium={6}>
-                                <Comment
-                                    onRemove={
-                                        comment.user.id === userId ? removeComment : undefined
-                                    }
-                                    isLiked={comment.likes.some(like => like.userId === userId)}
+                        {comments
+                            .filter(comment => !comment.parentCommentId)
+                            .map(comment => (
+                                <CommentsBlock
+                                    key={comment.id}
+                                    userId={userId}
+                                    reply={onReply}
+                                    removeComment={removeComment}
+                                    toggleLike={toggleLike}
                                     comment={comment}
-                                    onLike={toggleLike}
+                                    childComments={comments.filter(
+                                        childComment => childComment.parentCommentId === comment.id
+                                    )}
                                 />
-                            </Grid.Item>
-                        ))}
+                            ))}
                     </Grid.Row>
                 </div>
             </div>
@@ -123,3 +129,15 @@ const CommentsSection: React.FunctionComponent<Props> = ({
 }
 
 export default CommentsSection
+
+/*
+    <CommentBlock>
+        {(expand, isExpanded) => (
+            <Comment onReply={expand} />
+            {isExpanded && <div className="wrapped"><Comment /></div>}
+        )}
+    </CommentBlock>
+
+
+    <CommentBlock comments={[]}/>
+*/

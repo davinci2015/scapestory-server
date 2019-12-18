@@ -4,7 +4,11 @@
         "es6": true,
         "node": true
     },
-    "extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:react/recommended"
+    ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -19,6 +23,7 @@
     },
     "plugins": ["react", "@typescript-eslint"],
     "rules": {
-        "no-console": "warn"
+        "no-console": "warn",
+        "react/prop-types": "off"
     }
 }

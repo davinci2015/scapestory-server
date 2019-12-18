@@ -1,6 +1,7 @@
 import React, {useCallback} from 'react'
+import classnames from 'classnames'
 
-import {UserImage, FormattedMessage} from 'components/atoms'
+import {UserImage, FormattedMessage, Icon} from 'components/atoms'
 import {typography, spaces, colors} from 'styles'
 import {formatDate, dateFormats} from 'utils/date'
 import {CommentFieldsFragment} from 'graphql/generated/queries'
@@ -13,6 +14,9 @@ const classes = {
 interface Props {
     comment: CommentFieldsFragment
     isLiked: boolean
+    likesCount: number
+    repliesCount: number
+    onReply?: () => void
     onRemove?: (comment: CommentFieldsFragment) => void
     onLike: (comment: CommentFieldsFragment) => void
 }
@@ -21,7 +25,15 @@ type CardInterface = React.FunctionComponent<Props> & {
     classes: typeof classes
 }
 
-const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
+const Comment: CardInterface = ({
+    comment,
+    isLiked,
+    onLike,
+    likesCount,
+    repliesCount,
+    onRemove,
+    onReply,
+}) => {
     const onLikeClick = useCallback(() => onLike(comment), [comment, onLike])
     const onRemoveClick = useCallback(() => onRemove && onRemove(comment), [comment, onRemove])
 
@@ -37,28 +49,57 @@ const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
                     </ProfileLink>
                     <span className="content">{comment.content}</span>
                     <div className="bottom">
-                        <span className="date">
-                            {formatDate(parseInt(comment.createdAt), dateFormats.PRIMARY)}
-                        </span>
-                        <div className="divider"></div>
-                        <span className="action" onClick={onLikeClick}>
-                            {isLiked ? (
-                                <FormattedMessage
-                                    id="comment.action.like"
-                                    defaultMessage="Dislike"
-                                />
-                            ) : (
+                        <div>
+                            <span className="date">
+                                {formatDate(parseInt(comment.createdAt), dateFormats.PRIMARY)}
+                            </span>
+                            <div className="divider"></div>
+                            <span
+                                onClick={onLikeClick}
+                                className={classnames('action', {
+                                    'action--active': isLiked,
+                                })}
+                            >
                                 <FormattedMessage id="comment.action.like" defaultMessage="Like" />
-                            )}
-                        </span>
-                        {Boolean(onRemove) && (
-                            <span className="action" onClick={onRemoveClick}>
+                            </span>
+                            <span onClick={onReply} className="action">
                                 <FormattedMessage
-                                    id="comment.action.remove"
-                                    defaultMessage="Remove"
+                                    id="comment.action.reply"
+                                    defaultMessage="Reply"
                                 />
                             </span>
-                        )}
+                            {onRemove && (
+                                <span className="action" onClick={onRemoveClick}>
+                                    <FormattedMessage
+                                        id="comment.action.remove"
+                                        defaultMessage="Remove"
+                                    />
+                                </span>
+                            )}
+                        </div>
+                        <div className="info">
+                            {!!repliesCount && (
+                                <div className="info-block" role="presentation" onClick={onReply}>
+                                    <span>{repliesCount}</span>
+                                    <Icon
+                                        d={Icon.REPLY}
+                                        viewBox="0 0 20 20"
+                                        size={20}
+                                        color={colors.SHADE_MIDDLE}
+                                    />
+                                </div>
+                            )}
+                            {!!likesCount && (
+                                <div
+                                    className="info-block"
+                                    role="presentation"
+                                    onClick={onLikeClick}
+                                >
+                                    <span>{likesCount}</span>
+                                    <Icon d={Icon.HEART} size={20} color={colors.SHADE_MIDDLE} />
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,6 +107,7 @@ const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
             <style jsx>{`
                 .comment {
                     position: relative;
+                    width: 100%;
                 }
 
                 .comment :global(.${UserImage.classes.root}) {
@@ -96,6 +138,11 @@ const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
                     color: ${colors.SHADE_DEEP};
                 }
 
+                .bottom {
+                    display: flex;
+                    justify-content: space-between;
+                }
+
                 .bottom .date {
                     margin-right: ${spaces.s16};
                 }
@@ -118,8 +165,23 @@ const Comment: CardInterface = ({comment, isLiked, onLike, onRemove}) => {
                     transition: color 80ms linear;
                 }
 
-                .bottom .action:hover {
-                    color: ${colors.BLACK};
+                .bottom .action--active {
+                    color: ${colors.PRIMARY};
+                }
+
+                .bottom .info,
+                .bottom .info-block {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .bottom .info-block {
+                    margin-right: ${spaces.s12};
+                    cursor: pointer;
+                }
+
+                .bottom .info span {
+                    margin-right: 2px;
                 }
             `}</style>
         </>

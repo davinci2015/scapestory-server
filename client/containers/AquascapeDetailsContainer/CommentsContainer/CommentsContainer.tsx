@@ -83,6 +83,10 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
         })
     }
 
+    const onReply = () => {
+        // TODO
+    }
+
     const toggleLike = useCallback(
         (comment: CommentFieldsFragment) => {
             if (!isAuthenticated || !user) {
@@ -106,10 +110,11 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
 
     return (
         <CommentsSection
-            userId={user ? user.id : undefined}
+            userId={user?.id}
             enteredComment={comment || ''}
-            userImage={user ? user.profileImage : undefined}
+            userImage={user?.profileImage}
             toggleLike={toggleLike}
+            onReply={onReply}
             comments={comments}
             onCommentChange={handleCommentChange}
             removeComment={handleRemoveComment}
