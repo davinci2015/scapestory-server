@@ -21,9 +21,11 @@
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
-    "plugins": ["react", "@typescript-eslint"],
+    "plugins": ["react", "@typescript-eslint", "sort-destructure-keys"],
     "rules": {
         "no-console": "warn",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off"
     }
 }
