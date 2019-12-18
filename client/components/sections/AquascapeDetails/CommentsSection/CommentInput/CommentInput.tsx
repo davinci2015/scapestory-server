@@ -1,7 +1,7 @@
 import React, {FormEvent} from 'react'
 
 import {Textarea, InputAdornment, Button, UserImage} from 'components/atoms'
-import {spaces} from 'styles'
+import {spaces, typography} from 'styles'
 
 interface Props {
     userImage?: string | null
@@ -14,11 +14,11 @@ interface Props {
 
 const CommentInput: React.FunctionComponent<Props> = ({
     onChange,
-    value,
     onSubmit,
-    userImage,
     placeholder,
     submitText,
+    userImage,
+    value,
 }) => (
     <>
         <div className="textarea">
@@ -41,6 +41,7 @@ const CommentInput: React.FunctionComponent<Props> = ({
             .textarea {
                 display: flex;
                 align-items: center;
+                font-size: ${typography.fontSize.fs20};
                 width: 100%;
             }
 

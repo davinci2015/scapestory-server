@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {colors, typography, borderRadius} from 'styles'
+import {colors, typography, borderRadius, spaces} from 'styles'
 import {Paragraph, InputAdornment} from 'components/atoms'
 
 const classes = {
@@ -18,23 +18,18 @@ export interface TextareaProps extends React.HTMLProps<HTMLTextAreaElement> {
 }
 
 const Textarea = ({
-    errorMessage,
-    error,
-    placeholder,
-    endAdornment,
-    rows = 6,
     cols = 10,
+    endAdornment,
+    error,
+    errorMessage,
+    placeholder,
+    rows = 6,
     ...props
 }: TextareaProps) => (
     <>
         <div className={classes.textarea}>
             <div className="wrapper">
-                <textarea
-                    placeholder={placeholder}
-                    rows={rows}
-                    cols={cols}
-                    {...props}
-                />
+                <textarea placeholder={placeholder} rows={rows} cols={cols} {...props} />
                 {endAdornment}
             </div>
             {error && (
@@ -73,7 +68,7 @@ const Textarea = ({
                 width: 100%;
                 outline: 0;
                 border: 0;
-                padding: 28px 32px;
+                padding: ${spaces.s24} ${spaces.s30};
 
                 font-family: ${typography.fontFamily.PRIMARY};
                 font-weight: ${typography.fontWeight.semibold};

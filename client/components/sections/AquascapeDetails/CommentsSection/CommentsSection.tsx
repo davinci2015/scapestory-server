@@ -23,14 +23,14 @@ interface Props {
 
 const CommentsSection: React.FunctionComponent<Props> = ({
     comments,
-    toggleLike,
-    onCommentChange,
     enteredComment,
-    onSubmit,
+    onCommentChange,
     onReply,
+    onSubmit,
     removeComment,
-    userImage,
+    toggleLike,
     userId,
+    userImage,
 }) => {
     const intl = useIntl()
 
@@ -72,6 +72,7 @@ const CommentsSection: React.FunctionComponent<Props> = ({
                                 <CommentsBlock
                                     key={comment.id}
                                     userId={userId}
+                                    userImage={userImage}
                                     reply={onReply}
                                     removeComment={removeComment}
                                     toggleLike={toggleLike}
