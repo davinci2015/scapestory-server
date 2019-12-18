@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, FormEvent} from 'react'
 import {useIntl} from 'react-intl'
 
 import {Grid} from 'components/core'
@@ -12,7 +12,8 @@ interface Props {
     comment: CommentFieldsFragment
     childComments?: CommentFieldsFragment[]
     removeComment: (comment: CommentFieldsFragment) => void
-    reply: (comment: CommentFieldsFragment) => void
+    onReplyChange: (e: FormEvent<HTMLTextAreaElement>, commentId: number) => void
+    onReply: (commentId: number) => void
     toggleLike: (comment: CommentFieldsFragment) => void
     userId?: number
     userImage?: string | null
@@ -24,6 +25,8 @@ const CommentsBlock: React.FunctionComponent<Props> = ({
     userImage,
     childComments = [],
     toggleLike,
+    onReply,
+    onReplyChange,
     removeComment,
 }) => {
     const intl = useIntl()
@@ -49,16 +52,15 @@ const CommentsBlock: React.FunctionComponent<Props> = ({
                 {renderComment(comment)}
                 {open && (
                     <div className="child-wrapper">
-                        {childComments.map(comment => (
-                            <Grid.Item key={comment.id} extraSmall={12} medium={6}>
-                                {renderComment(comment)}
+                        {childComments.map(childComment => (
+                            <Grid.Item key={childComment.id} extraSmall={12} medium={6}>
+                                {renderComment(childComment)}
                             </Grid.Item>
                         ))}
                         <Grid.Item key={comment.id} extraSmall={12} medium={6}>
                             <CommentInput
-                                value={''}
-                                onChange={() => {}}
-                                onSubmit={() => {}}
+                                onChange={e => onReplyChange(e, comment.id)}
+                                onSubmit={() => onReply(comment.id)}
                                 userImage={userImage}
                                 submitText={
                                     <FormattedMessage

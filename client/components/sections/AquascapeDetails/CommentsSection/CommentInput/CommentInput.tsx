@@ -5,7 +5,7 @@ import {spaces, typography} from 'styles'
 
 interface Props {
     userImage?: string | null
-    value: string
+    value?: string
     onChange: (e: FormEvent<HTMLTextAreaElement>) => void
     onSubmit: () => void
     placeholder: string

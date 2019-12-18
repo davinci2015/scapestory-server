@@ -9,6 +9,7 @@ storiesOf('Molecules | Comment', module).add('default', () => (
         isLiked
         likesCount={30}
         onLike={() => null}
+        repliesCount={30}
         comment={{
             id: 1,
             createdAt: Date.now().toLocaleString(),

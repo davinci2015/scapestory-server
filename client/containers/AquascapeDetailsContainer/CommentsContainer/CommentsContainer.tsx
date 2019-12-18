@@ -33,12 +33,18 @@ interface Props {
 
 const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comments}) => {
     const [comment, updateComment] = useState<string | null>(null)
+    const [replies, setReply] = useState<{[key: number]: string}>({})
     const {isAuthenticated, user} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
 
     const handleCommentChange = (e: FormEvent<HTMLTextAreaElement>) => {
         const value = (e.target as HTMLTextAreaElement).value
         updateComment(value)
+    }
+
+    const handleReplyChange = (e: FormEvent<HTMLTextAreaElement>, commentId: number) => {
+        const value = (e.target as HTMLTextAreaElement).value
+        setReply({...replies, [commentId]: value})
     }
 
     const [like] = useMutation<LikeMutation, LikeMutationVariables>(LIKE, {
@@ -83,8 +89,9 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
         })
     }
 
-    const onReply = () => {
-        // TODO
+    const onReply = (commentId: number) => {
+        console.log(replies)
+        console.log(commentId)
     }
 
     const toggleLike = useCallback(
@@ -117,6 +124,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
             onReply={onReply}
             comments={comments}
             onCommentChange={handleCommentChange}
+            onReplyChange={handleReplyChange}
             removeComment={handleRemoveComment}
             onSubmit={onSubmit}
         />

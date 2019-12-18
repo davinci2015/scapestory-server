@@ -15,7 +15,8 @@ interface Props {
     userId?: number
     enteredComment: string
     onCommentChange: (e: FormEvent<HTMLTextAreaElement>) => void
-    onReply: (comment: CommentFieldsFragment) => void
+    onReplyChange: (e: FormEvent<HTMLTextAreaElement>, commentId: number) => void
+    onReply: (commentId: number) => void
     removeComment: (comment: CommentFieldsFragment) => void
     toggleLike: (comment: CommentFieldsFragment) => void
     onSubmit: () => void
@@ -26,6 +27,7 @@ const CommentsSection: React.FunctionComponent<Props> = ({
     enteredComment,
     onCommentChange,
     onReply,
+    onReplyChange,
     onSubmit,
     removeComment,
     toggleLike,
@@ -73,7 +75,8 @@ const CommentsSection: React.FunctionComponent<Props> = ({
                                     key={comment.id}
                                     userId={userId}
                                     userImage={userImage}
-                                    reply={onReply}
+                                    onReply={onReply}
+                                    onReplyChange={onReplyChange}
                                     removeComment={removeComment}
                                     toggleLike={toggleLike}
                                     comment={comment}
