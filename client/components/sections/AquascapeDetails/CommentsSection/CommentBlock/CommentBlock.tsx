@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
+import {useIntl} from 'react-intl'
 
 import {Grid} from 'components/core'
 import Comment from 'components/molecules/Comment/Comment'
 import {CommentFieldsFragment} from 'graphql/generated/queries'
-import {spaces} from 'styles'
 import CommentInput from 'components/sections/AquascapeDetails/CommentsSection/CommentInput'
 import {FormattedMessage} from 'components/atoms'
-import {useIntl} from 'react-intl'
+import {spaces} from 'styles'
 
 interface Props {
     comment: CommentFieldsFragment

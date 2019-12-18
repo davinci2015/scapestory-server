@@ -4,10 +4,10 @@ import {useIntl} from 'react-intl'
 import {FormattedMessage, Headline} from 'components/atoms'
 import {Grid} from 'components/core'
 import {Comment} from 'components/molecules'
-import {spaces} from 'styles'
 import {CommentFieldsFragment} from 'graphql/generated/queries'
 import CommentsBlock from './CommentBlock/CommentBlock'
 import CommentInput from 'components/sections/AquascapeDetails/CommentsSection/CommentInput'
+import {spaces} from 'styles'
 
 interface Props {
     comments: CommentFieldsFragment[]
