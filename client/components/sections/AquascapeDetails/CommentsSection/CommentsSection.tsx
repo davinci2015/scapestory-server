@@ -1,19 +1,13 @@
 import React, {FormEvent} from 'react'
 import {useIntl} from 'react-intl'
 
-import {
-    FormattedMessage,
-    Headline,
-    Textarea,
-    InputAdornment,
-    Button,
-    UserImage,
-} from 'components/atoms'
+import {FormattedMessage, Headline} from 'components/atoms'
 import {Grid} from 'components/core'
+import {Comment} from 'components/molecules'
 import {spaces} from 'styles'
-import Comment from 'components/molecules/Comment/Comment'
 import {CommentFieldsFragment} from 'graphql/generated/queries'
-import CommentsBlock from './CommentBlock'
+import CommentsBlock from './CommentBlock/CommentBlock'
+import CommentInput from 'components/sections/AquascapeDetails/CommentsSection/CommentInput'
 
 interface Props {
     comments: CommentFieldsFragment[]
@@ -52,28 +46,22 @@ const CommentsSection: React.FunctionComponent<Props> = ({
                 </Headline>
                 <Grid.Row>
                     <Grid.Item extraSmall={12} medium={6}>
-                        <div className="textarea">
-                            <UserImage size="large" image={userImage} />
-                            <Textarea
-                                rows={1}
-                                value={enteredComment}
-                                onChange={onCommentChange}
-                                placeholder={intl.formatMessage({
-                                    id: 'aquascape.comments.input.placeholder',
-                                    defaultMessage: 'Write your comment here',
-                                })}
-                                endAdornment={
-                                    <InputAdornment>
-                                        <Button dimensions="small" onClick={onSubmit}>
-                                            <FormattedMessage
-                                                id="aquascape.comments.input.submit"
-                                                defaultMessage="Post comment"
-                                            />
-                                        </Button>
-                                    </InputAdornment>
-                                }
-                            />
-                        </div>
+                        <CommentInput
+                            value={enteredComment}
+                            onChange={onCommentChange}
+                            onSubmit={onSubmit}
+                            userImage={userImage}
+                            submitText={
+                                <FormattedMessage
+                                    id="aquascape.comments.input.submit"
+                                    defaultMessage="Post comment"
+                                />
+                            }
+                            placeholder={intl.formatMessage({
+                                id: 'aquascape.comments.input.placeholder',
+                                defaultMessage: 'Write your comment here',
+                            })}
+                        />
                     </Grid.Item>
                 </Grid.Row>
                 <div className="list">
@@ -105,12 +93,6 @@ const CommentsSection: React.FunctionComponent<Props> = ({
                     margin-bottom: ${spaces.s48};
                 }
 
-                .section .textarea {
-                    display: flex;
-                    align-items: center;
-                    width: 100%;
-                }
-
                 .section .list {
                     margin-top: ${spaces.s30};
                 }
@@ -118,26 +100,9 @@ const CommentsSection: React.FunctionComponent<Props> = ({
                 .section :global(.${Comment.classes.root}) {
                     margin: ${spaces.s30} 0;
                 }
-
-                .section .textarea :global(.${UserImage.classes.root}) {
-                    margin-right: ${spaces.s24};
-                    flex-shrink: 0;
-                }
             `}</style>
         </>
     )
 }
 
 export default CommentsSection
-
-/*
-    <CommentBlock>
-        {(expand, isExpanded) => (
-            <Comment onReply={expand} />
-            {isExpanded && <div className="wrapped"><Comment /></div>}
-        )}
-    </CommentBlock>
-
-
-    <CommentBlock comments={[]}/>
-*/
