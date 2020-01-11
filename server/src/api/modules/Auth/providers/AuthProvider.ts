@@ -21,7 +21,11 @@ export type AuthPayload = {
 export interface AuthProviderInterface {
     login: (email: string, password: string) => Promise<AuthPayload>
     register: (email: string, password: string) => Promise<AuthPayload>
-    facebookRegister: (token: string, req: Request, res: Response) => Promise<AuthPayload | undefined>
+    facebookRegister: (
+        token: string,
+        req: Request,
+        res: Response
+    ) => Promise<AuthPayload | undefined>
     googleRegister: (token: string, req: Request, res: Response) => Promise<AuthPayload | undefined>
     userProfileSlugExists: (slug: string) => Promise<boolean>
 }
@@ -73,13 +77,7 @@ export class AuthProvider implements AuthProviderInterface {
             throw new UserInputError('User with provided email already exists')
         }
 
-        let slug = this.slugifyProfileUrl(email.substring(0, email.lastIndexOf('@')))
-
-        const slugExists = await this.userProfileSlugExists(slug)
-
-        if (slugExists) {
-            slug = await this.generateUniqueSlug(slug)
-        }
+        const slug = this.generateUniqueSlug()
 
         const user = await this.userRepository.create({
             name: slug,
@@ -123,12 +121,12 @@ export class AuthProvider implements AuthProviderInterface {
         }
     }
 
-    private async generateUniqueSlug(base: string): Promise<string> {
+    private async generateUniqueSlug(base: string = 'user'): Promise<string> {
         let uniqueSlug: string
 
         return new Promise(async resolve => {
             while (!uniqueSlug) {
-                const randomNumber = Math.floor(Math.random() * 10000 + 1)
+                const randomNumber = Math.floor(Math.random() * 1000000 + 1)
                 const possibleSlug = `${base}${randomNumber}`
                 const slugExists = await this.userProfileSlugExists(possibleSlug)
 
@@ -141,8 +139,7 @@ export class AuthProvider implements AuthProviderInterface {
     }
 
     private slugifyProfileUrl(slug: string) {
-        const replacement = '_'
-        return slugify(slug, {replacement, lower: true})
+        return slugify(slug, {replacement: '_', lower: true})
     }
 
     private async handleSocialLogin(data: SocialLoginData) {
