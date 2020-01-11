@@ -43,13 +43,9 @@ const FloraListEdit: React.FunctionComponent<Props> = ({
             {entities.length ? (
                 entities.map(entity => (
                     <List.Item key={entity.id}>
-                        <div
-                            className="item"
-                            role="presentation"
-                            onClick={() => removeEntity(entity.id)}
-                        >
+                        <div className="item">
                             {entity.name}
-                            <IconButton onClick={() => null}>
+                            <IconButton onClick={() => removeEntity(entity.id)}>
                                 <Icon d={Icon.BIN} color={colors.PRIMARY} />
                             </IconButton>
                         </div>
@@ -84,7 +80,6 @@ const FloraListEdit: React.FunctionComponent<Props> = ({
                 margin-left: -${spaces.s12};
 
                 border-radius: ${borderRadius.TERTIARY};
-                cursor: pointer;
                 transition: background-color 100ms ease-in-out;
             }
 

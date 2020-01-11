@@ -1,10 +1,7 @@
 import React from 'react'
 
 import {colors, boxShadow, zIndex} from 'styles'
-import {
-    SubNavigationItemProps,
-    Item,
-} from 'components/molecules/SubNavigation/Item'
+import {SubNavigationItemProps, Item} from 'components/molecules/SubNavigation/Item'
 import {navigationHeight} from 'components/molecules/Navigation'
 import {Grid} from 'components/core'
 

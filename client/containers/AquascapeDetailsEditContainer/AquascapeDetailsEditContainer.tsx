@@ -77,7 +77,7 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
                 <SubNavigation.Item id={sections.PHOTO_POSTS}>
                     <FormattedMessage
                         id="aquascape.subnavigation.photo"
-                        defaultMessage="Photo Posts"
+                        defaultMessage="Photo Diary"
                     />
                 </SubNavigation.Item>
                 <SubNavigation.Item id={sections.FLORA}>
@@ -95,7 +95,7 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
             </SubNavigation>
             <Grid>
                 <Element name={sections.PHOTO_POSTS}>
-                    <PhotoSection images={aquascapeResult.aquascape.images} />
+                    <PhotoSection edit images={aquascapeResult.aquascape.images} />
                 </Element>
 
                 <Divider />

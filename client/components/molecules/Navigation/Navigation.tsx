@@ -26,11 +26,11 @@ export const navigationHeight = {
 const scrollOffset = 80
 
 const Navigation = ({
-    user,
     isAuthenticated,
+    onCreateAquascape,
     openLoginModal,
     openRegisterModal,
-    onCreateAquascape,
+    user,
 }: Props) => {
     const {position} = useScrollPosition()
     const isSlim = position.y > scrollOffset

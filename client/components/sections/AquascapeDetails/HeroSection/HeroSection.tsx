@@ -104,11 +104,7 @@ const HeroSection: React.FunctionComponent<Props> = ({
                                                     ? Icon.HEART
                                                     : Icon.HEART_OUTLINE
                                             }
-                                            color={
-                                                aquascape.isLikedByMe
-                                                    ? colors.SECONDARY
-                                                    : colors.WHITE
-                                            }
+                                            color={colors.WHITE}
                                         />
                                     }
                                     dimensions="extraSmall"

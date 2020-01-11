@@ -5,20 +5,22 @@ import {PhotoGrid} from 'components/molecules'
 import {AquascapeImage} from 'graphql/generated/types'
 
 interface Props {
+    edit?: boolean
     images: Pick<AquascapeImage, 'id' | 'title' | 'url'>[]
 }
 
-const PostsSection: React.FunctionComponent<Props> = ({images}) => {
+const PostsSection: React.FunctionComponent<Props> = ({edit, images}) => {
     if (!images) return null
 
     return (
         <>
             <div className="section">
                 <Headline as="h2" variant="h3">
-                    <FormattedMessage id="aquascape.posts.title" defaultMessage="Photo posts" />
+                    <FormattedMessage id="aquascape.posts.title" defaultMessage="Photo Diary" />
                 </Headline>
-                {!!images.length ? (
+                {images.length ? (
                     <PhotoGrid
+                        edit={edit}
                         images={images.map(image => ({
                             src: image.url,
                             alt: image.title,

@@ -12,14 +12,12 @@ export interface Props {
     href: string
 }
 
-const NavLink = ({router, children, as, href, ...rest}: Props) => (
+const NavLink = ({as, children, href, router, ...rest}: Props) => (
     <>
         <Link {...rest} href={href} as={as}>
             {React.cloneElement(React.Children.only(children), {
                 className:
-                    router.asPath === href || router.asPath === as
-                        ? 'nav-link active'
-                        : 'nav-link',
+                    router.asPath === href || router.asPath === as ? 'nav-link active' : 'nav-link',
             })}
         </Link>
         <style jsx>{`
