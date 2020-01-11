@@ -1,6 +1,7 @@
 export default {
     s4: '4px',
     s6: '6px',
+    s8: '8px',
     s12: '12px',
     s16: '16px',
     s18: '18px',

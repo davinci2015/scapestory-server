@@ -112,12 +112,6 @@ const LivestockSectionContainer: React.FunctionComponent<Props> = ({aquascape}) 
                     defaultMessage="Add livestock"
                 />
             }
-            removeEntityText={
-                <FormattedMessage
-                    id="aquascape.flora_and_fauna.remove_livestock"
-                    defaultMessage="Remove livestock"
-                />
-            }
         />
     )
 }

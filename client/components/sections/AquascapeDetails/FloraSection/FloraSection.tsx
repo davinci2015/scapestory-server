@@ -26,7 +26,7 @@ const FloraSection: React.FunctionComponent = ({children}) => (
             }
 
             .list :global(.${List.classes.root}) {
-                min-width: 470px;
+                flex: 1 1 0px;
             }
         `}</style>
     </>

@@ -14,15 +14,11 @@ const classes = {
     root: 'list',
 }
 
-const List = ({icon, title, children}: Props) => (
+const List = ({children, icon, title}: Props) => (
     <div className={classes.root}>
         <div className="icon">{icon}</div>
         <div className="content">
-            <Headline
-                variant="h4"
-                as="h4"
-                fontWeight={typography.fontWeight.extraBold}
-            >
+            <Headline variant="h4" as="h4" fontWeight={typography.fontWeight.extraBold}>
                 {title}
             </Headline>
             {children}

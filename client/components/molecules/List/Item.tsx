@@ -12,8 +12,10 @@ const classes = {
 const List = ({children}: Props) => (
     <div className={classes.root}>
         {children}
+
         <style jsx>{`
             .list-item {
+                display: flex;
                 margin: ${spaces.s6} 0;
                 font-size: ${typography.fontSize.fs20};
                 line-height: ${typography.lineHeight.lh40};
