@@ -17,9 +17,9 @@ interface Props {
 
 const HeroSection: React.FunctionComponent<Props> = ({
     aquascape,
-    onTitleChange,
-    onPreview,
     onImageChange,
+    onPreview,
+    onTitleChange,
 }) => {
     if (!aquascape || !aquascape.user) return null
 
@@ -58,27 +58,48 @@ const HeroSection: React.FunctionComponent<Props> = ({
                             </ProfileLink>
                         </Hero.TopLeft>
                         <Hero.TopRight>
-                            <ImageUpload
-                                onChange={onImageChange}
-                                render={({openFinder}) => (
-                                    <Button
-                                        onClick={openFinder}
-                                        dimensions="extraSmall"
-                                        color="tertiary"
-                                    >
-                                        <FormattedMessage
-                                            id="aquascape.hero_section.preview"
-                                            defaultMessage="Change cover image"
-                                        />
-                                    </Button>
-                                )}
-                            />
-                            <Button dimensions="extraSmall" color="tertiary" onClick={onPreview}>
-                                <FormattedMessage
-                                    id="aquascape.hero_section.preview"
-                                    defaultMessage="Preview"
+                            <div className="top-right">
+                                <ImageUpload
+                                    onChange={onImageChange}
+                                    render={({openFinder}) => (
+                                        <Button
+                                            leftIcon={
+                                                <Icon
+                                                    size={10}
+                                                    d={Icon.CAMERA}
+                                                    color={colors.WHITE}
+                                                />
+                                            }
+                                            onClick={openFinder}
+                                            dimensions="extraSmall"
+                                            color="tertiary"
+                                        >
+                                            <FormattedMessage
+                                                id="aquascape.hero_section.preview"
+                                                defaultMessage="Change cover image"
+                                            />
+                                        </Button>
+                                    )}
                                 />
-                            </Button>
+                                <Button
+                                    leftIcon={
+                                        <Icon
+                                            size={20}
+                                            d={Icon.EYE_SHOW}
+                                            viewBox="0 0 48 48"
+                                            color={colors.WHITE}
+                                        />
+                                    }
+                                    dimensions="extraSmall"
+                                    color="tertiary"
+                                    onClick={onPreview}
+                                >
+                                    <FormattedMessage
+                                        id="aquascape.hero_section.preview"
+                                        defaultMessage="Preview"
+                                    />
+                                </Button>
+                            </div>
                         </Hero.TopRight>
                     </Hero.TopSection>
                 }
@@ -114,6 +135,14 @@ const HeroSection: React.FunctionComponent<Props> = ({
 
                 .follow {
                     cursor: pointer;
+                }
+
+                .top-right {
+                    display: flex;
+                }
+
+                .top-right :global(.${Button.classes.root}) {
+                    margin-left: ${spaces.s18};
                 }
             `}</style>
         </>

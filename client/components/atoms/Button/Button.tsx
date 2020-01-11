@@ -19,11 +19,11 @@ const classes = {
 
 const Button = ({
     children,
-    variant = 'default',
     color = 'primary',
-    type = 'default',
     dimensions = 'default',
     leftIcon,
+    type = 'default',
+    variant = 'default',
     ...rest
 }: Props) => (
     <button
@@ -99,11 +99,19 @@ const Button = ({
 
             .tertiary {
                 color: ${colors.WHITE};
-                background-color: rgba(0, 0, 0, 0.3);
+                border: solid 2px ${colors.WHITE};
+                background-color: rgba(0, 0, 0, 0.5);
+                transition: background-color 150ms linear;
+            }
+
+            button.tertiary :global(svg),
+            button.tertiary :global(img) {
+                width: ${spaces.s20};
+                height: ${spaces.s20};
             }
 
             .tertiary:hover {
-                background-color: rgba(0, 0, 0, 0.5);
+                background-color: rgba(0, 0, 0, 0.7);
             }
 
             .outlined {

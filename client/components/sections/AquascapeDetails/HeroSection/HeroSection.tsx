@@ -26,10 +26,10 @@ interface Props {
 
 const HeroSection: React.FunctionComponent<Props> = ({
     aquascape,
-    toggleLike,
-    toggleFollow,
     mineAquascape,
     onEdit,
+    toggleFollow,
+    toggleLike,
 }) => {
     if (!aquascape || !aquascape.user) return null
 
@@ -122,7 +122,12 @@ const HeroSection: React.FunctionComponent<Props> = ({
                             )}
 
                             {mineAquascape && (
-                                <Button dimensions="extraSmall" color="tertiary" onClick={onEdit}>
+                                <Button
+                                    leftIcon={<Icon d={Icon.EDIT} color={colors.WHITE} />}
+                                    dimensions="extraSmall"
+                                    color="tertiary"
+                                    onClick={onEdit}
+                                >
                                     <FormattedMessage
                                         id="aquascape.hero_section.edit"
                                         defaultMessage="Edit"
