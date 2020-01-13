@@ -28,11 +28,11 @@ type CardInterface = React.FunctionComponent<Props> & {
 const Comment: CardInterface = ({
     comment,
     isLiked,
-    onLike,
     likesCount,
-    repliesCount,
+    onLike,
     onRemove,
     onReply,
+    repliesCount,
 }) => {
     const onLikeClick = useCallback(() => onLike(comment), [comment, onLike])
     const onRemoveClick = useCallback(() => onRemove && onRemove(comment), [comment, onRemove])
@@ -62,12 +62,14 @@ const Comment: CardInterface = ({
                             >
                                 <FormattedMessage id="comment.action.like" defaultMessage="Like" />
                             </span>
-                            <span onClick={onReply} className="action">
-                                <FormattedMessage
-                                    id="comment.action.reply"
-                                    defaultMessage="Reply"
-                                />
-                            </span>
+                            {!comment.parentCommentId && (
+                                <span onClick={onReply} className="action">
+                                    <FormattedMessage
+                                        id="comment.action.reply"
+                                        defaultMessage="Reply"
+                                    />
+                                </span>
+                            )}
                             {onRemove && (
                                 <span className="action" onClick={onRemoveClick}>
                                     <FormattedMessage
@@ -78,7 +80,7 @@ const Comment: CardInterface = ({
                             )}
                         </div>
                         <div className="info">
-                            {!!repliesCount && (
+                            {!comment.parentCommentId && !!repliesCount && (
                                 <div className="info-block" role="presentation" onClick={onReply}>
                                     <span>{repliesCount}</span>
                                     <Icon

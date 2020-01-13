@@ -33,7 +33,7 @@ interface Props {
 
 const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comments}) => {
     const [comment, updateComment] = useState<string | null>(null)
-    const [replies, setReply] = useState<{[key: number]: string}>({})
+    const [replies, setReply] = useState<{[key: number]: string | undefined}>({})
     const {isAuthenticated, user} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
 
@@ -76,7 +76,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
     )
 
     const onSubmit = () => {
-        if (!comment) return
+        if (!comment || comment.trim() === '') return
 
         updateComment(null)
 
@@ -90,8 +90,17 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
     }
 
     const onReply = (commentId: number) => {
-        console.log(replies)
-        console.log(commentId)
+        const reply = replies[commentId]
+        if (!reply || reply.trim() === '') return
+
+        addComment({
+            variables: {
+                entity: CommentEntityType.Aquascape,
+                entityId: aquascapeId,
+                content: reply,
+                parentCommentId: commentId,
+            },
+        }).finally(() => setReply({...replies, [commentId]: ''}))
     }
 
     const toggleLike = useCallback(
@@ -118,6 +127,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
     return (
         <CommentsSection
             userId={user?.id}
+            replies={replies}
             enteredComment={comment || ''}
             userImage={user?.profileImage}
             toggleLike={toggleLike}

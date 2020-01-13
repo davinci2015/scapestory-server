@@ -12,6 +12,7 @@ interface Props {
     comment: CommentFieldsFragment
     childComments?: CommentFieldsFragment[]
     removeComment: (comment: CommentFieldsFragment) => void
+    replies: {[key: number]: string | undefined}
     onReplyChange: (e: FormEvent<HTMLTextAreaElement>, commentId: number) => void
     onReply: (commentId: number) => void
     toggleLike: (comment: CommentFieldsFragment) => void
@@ -25,6 +26,7 @@ const CommentsBlock: React.FunctionComponent<Props> = ({
     userImage,
     childComments = [],
     toggleLike,
+    replies,
     onReply,
     onReplyChange,
     removeComment,
@@ -32,7 +34,7 @@ const CommentsBlock: React.FunctionComponent<Props> = ({
     const intl = useIntl()
     const [open, setOpen] = useState(false)
 
-    const openChildComments = () => setOpen(true)
+    const toggleChildComments = () => setOpen(!open)
 
     const renderComment = (comment: CommentFieldsFragment) => (
         <Comment
@@ -40,7 +42,7 @@ const CommentsBlock: React.FunctionComponent<Props> = ({
             repliesCount={childComments.length}
             isLiked={comment.likes.some(like => like.userId === userId)}
             comment={comment}
-            onReply={openChildComments}
+            onReply={toggleChildComments}
             onRemove={comment.user.id === userId ? removeComment : undefined}
             onLike={toggleLike}
         />
@@ -52,13 +54,16 @@ const CommentsBlock: React.FunctionComponent<Props> = ({
                 {renderComment(comment)}
                 {open && (
                     <div className="child-wrapper">
-                        {childComments.map(childComment => (
-                            <Grid.Item key={childComment.id} extraSmall={12} medium={6}>
-                                {renderComment(childComment)}
-                            </Grid.Item>
-                        ))}
+                        {childComments
+                            .sort((a, b) => Number(a.createdAt) - Number(b.createdAt))
+                            .map(childComment => (
+                                <Grid.Item key={childComment.id} extraSmall={12} medium={6}>
+                                    {renderComment(childComment)}
+                                </Grid.Item>
+                            ))}
                         <Grid.Item key={comment.id} extraSmall={12} medium={6}>
                             <CommentInput
+                                value={replies[comment.id]}
                                 onChange={e => onReplyChange(e, comment.id)}
                                 onSubmit={() => onReply(comment.id)}
                                 userImage={userImage}

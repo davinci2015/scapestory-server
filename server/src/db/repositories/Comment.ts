@@ -75,7 +75,8 @@ export class CommentRepository extends BaseRepository<Comment> {
             throw new UserInputError('Comment not found.')
         }
 
-        await comment.destroy()
+        await Promise.all([comment.destroy(), this.destroy({where: {parentCommentId: comment.id}})])
+
         return comment
     }
 }
