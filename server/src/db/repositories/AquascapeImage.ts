@@ -1,4 +1,4 @@
-import * as Bluebird from 'bluebird'
+import Bluebird from 'bluebird'
 import {Injectable} from '@graphql-modules/di'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
@@ -11,10 +11,8 @@ export interface AquascapeImageRepositoryInterface extends BaseRepositoryInterfa
 }
 
 @Injectable()
-export class AquascapeImageRepository
-    extends BaseRepository<AquascapeImage>
+export class AquascapeImageRepository extends BaseRepository<AquascapeImage>
     implements AquascapeImageRepositoryInterface {
-
     constructor() {
         super(AquascapeImage)
     }

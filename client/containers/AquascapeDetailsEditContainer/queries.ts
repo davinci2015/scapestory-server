@@ -63,6 +63,7 @@ export const AQUASCAPE_DETAILS_EDIT = gql`
                 id
                 title
                 url
+                createdAt
             }
 
             user {

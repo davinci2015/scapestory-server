@@ -11,7 +11,9 @@
                 "./containers/AquascapeDetailsContainer/queries.ts",
                 "./containers/AquascapeDetailsEditContainer/queries.ts",
                 "./containers/ProfileContainer/queries.ts",
-                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/queries.ts"
+                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/HardscapeSectionContainer/queries.ts",
+                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/LivestockSectionContainer/queries.ts",
+                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/PlantsSectionContainer/queries.ts"
             ],
             "config": ["flattenGeneratedTypes"]
         },
@@ -21,7 +23,11 @@
                 "./graphql/mutations/mutations.ts",
                 "./containers/AquascapeDetailsContainer/CommentsContainer/mutations.ts",
                 "./containers/AquascapeDetailsEditContainer/HeroSectionEditContainer/mutations.ts",
-                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/mutations.ts"
+                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/mutations.ts",
+                "./containers/AquascapeDetailsEditContainer/PhotoSectionEditContainer/mutations.ts",
+                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/HardscapeSectionContainer/mutations.ts",
+                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/LivestockSectionContainer/mutations.ts",
+                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/PlantsSectionContainer/mutations.ts"
             ]
         }
     }

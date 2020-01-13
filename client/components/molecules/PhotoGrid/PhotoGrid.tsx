@@ -6,6 +6,7 @@ import {FormattedMessage, Button, Icon} from 'components/atoms'
 import {ImageUpload} from 'components/core'
 
 interface Image {
+    id: number
     src: string
     alt?: string | null
 }
@@ -36,9 +37,9 @@ const ButtonAddPhoto = ({onClick}: {onClick: (files: FileList | null) => void}) 
     />
 )
 
-const ButtonRemovePhoto = ({onClick}: {onClick: (id: number) => void}) => (
+const ButtonRemovePhoto = ({id, onClick}: {onClick: (id: number) => void; id: number}) => (
     <Button
-        onClick={onClick}
+        onClick={() => onClick(id)}
         dimensions="small"
         color="tertiary"
         leftIcon={<Icon d={Icon.BIN} color={colors.WHITE} />}
@@ -62,7 +63,7 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                         {edit && (
                             <div className="btn-wrapper">
                                 <ButtonAddPhoto onClick={onImageChange} />
-                                <ButtonRemovePhoto onClick={onImageRemove} />
+                                <ButtonRemovePhoto id={images[0].id} onClick={onImageRemove} />
                             </div>
                         )}
                     </div>
@@ -80,7 +81,7 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                         <img src={images[1].src} alt={images[1].alt || ALT_PLACEHOLDER} />
                         {edit && (
                             <div className="btn-wrapper">
-                                <ButtonRemovePhoto onClick={onImageRemove} />
+                                <ButtonRemovePhoto id={images[1].id} onClick={onImageRemove} />
                             </div>
                         )}
                     </div>
@@ -93,7 +94,7 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                             <img src={images[2].src} alt={images[2].alt || ALT_PLACEHOLDER} />
                             {edit && (
                                 <div className="btn-wrapper">
-                                    <ButtonRemovePhoto onClick={onImageRemove} />
+                                    <ButtonRemovePhoto id={images[2].id} onClick={onImageRemove} />
                                 </div>
                             )}
                         </div>
@@ -105,7 +106,7 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                             <img src={images[3].src} alt={images[3].alt || ALT_PLACEHOLDER} />
                             {edit && (
                                 <div className="btn-wrapper">
-                                    <ButtonRemovePhoto onClick={onImageRemove} />
+                                    <ButtonRemovePhoto id={images[3].id} onClick={onImageRemove} />
                                 </div>
                             )}
                         </div>
@@ -115,12 +116,12 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                 </div>
             </div>
             <div className="row">
-                {images.slice(4, -1).map(image => (
+                {images.slice(4).map(image => (
                     <div className="image" key={image.src}>
                         <img src={image.src} alt={image.alt || ALT_PLACEHOLDER} />
                         {edit && (
                             <div className="btn-wrapper">
-                                <ButtonRemovePhoto onClick={onImageRemove} />
+                                <ButtonRemovePhoto id={image.id} onClick={onImageRemove} />
                             </div>
                         )}
                     </div>

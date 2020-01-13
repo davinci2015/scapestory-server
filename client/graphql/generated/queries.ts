@@ -57,6 +57,8 @@ export type AquascapeImage = {
   description?: Maybe<Scalars['String']>,
   url: Scalars['String'],
   publicId: Scalars['String'],
+  createdAt: Scalars['String'],
+  updatedAt: Scalars['String'],
 };
 
 export type AquascapesFilter = {
@@ -186,8 +188,14 @@ export type MainImageUploadResult = {
 
 export type Mutation = {
    __typename?: 'Mutation',
+  addLight: Light,
+  removeLight?: Maybe<Light>,
   addPlant: Plant,
   removePlant?: Maybe<Plant>,
+  addHardscape: Hardscape,
+  removeHardscape?: Maybe<Hardscape>,
+  addLivestock: Livestock,
+  removeLivestock?: Maybe<Livestock>,
   like?: Maybe<Like>,
   dislike?: Maybe<Like>,
   addAquascapeImage: AquascapeImage,
@@ -207,6 +215,19 @@ export type Mutation = {
 };
 
 
+export type MutationAddLightArgs = {
+  brand: Scalars['String'],
+  model: Scalars['String'],
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationRemoveLightArgs = {
+  lightId: Scalars['Int'],
+  aquascapeId: Scalars['Int']
+};
+
+
 export type MutationAddPlantArgs = {
   plantId?: Maybe<Scalars['Int']>,
   name?: Maybe<Scalars['String']>,
@@ -216,6 +237,32 @@ export type MutationAddPlantArgs = {
 
 export type MutationRemovePlantArgs = {
   plantId: Scalars['Int'],
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationAddHardscapeArgs = {
+  hardscapeId?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationRemoveHardscapeArgs = {
+  hardscapeId: Scalars['Int'],
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationAddLivestockArgs = {
+  livestockId?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationRemoveLivestockArgs = {
+  livestockId: Scalars['Int'],
   aquascapeId: Scalars['Int']
 };
 
@@ -496,7 +543,7 @@ export type AquascapeDetailsQuery = (
       & Pick<Tag, 'name'>
     )>, images: Array<(
       { __typename?: 'AquascapeImage' }
-      & Pick<AquascapeImage, 'id' | 'title' | 'url'>
+      & Pick<AquascapeImage, 'id' | 'title' | 'url' | 'createdAt'>
     )>, user: Maybe<(
       { __typename?: 'User' }
       & Pick<User, 'id' | 'name' | 'profileImage' | 'slug' | 'isFollowedByMe'>
@@ -511,6 +558,28 @@ export type AquascapeDetailsQuery = (
       { __typename?: 'Comment' }
       & CommentFieldsFragment
     )> }
+  )> }
+);
+
+export type HardscapeQueryVariables = {};
+
+
+export type HardscapeQuery = (
+  { __typename?: 'Query' }
+  & { hardscape: Array<(
+    { __typename?: 'Hardscape' }
+    & Pick<Hardscape, 'id' | 'name'>
+  )> }
+);
+
+export type LivestockQueryVariables = {};
+
+
+export type LivestockQuery = (
+  { __typename?: 'Query' }
+  & { livestock: Array<(
+    { __typename?: 'Livestock' }
+    & Pick<Livestock, 'id' | 'name'>
   )> }
 );
 
@@ -564,7 +633,7 @@ export type AquascapeDetailsEditQuery = (
       & Pick<Tag, 'name'>
     )>, images: Array<(
       { __typename?: 'AquascapeImage' }
-      & Pick<AquascapeImage, 'id' | 'title' | 'url'>
+      & Pick<AquascapeImage, 'id' | 'title' | 'url' | 'createdAt'>
     )>, user: Maybe<(
       { __typename?: 'User' }
       & Pick<User, 'id' | 'name' | 'profileImage' | 'slug'>

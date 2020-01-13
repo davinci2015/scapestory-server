@@ -6,15 +6,23 @@ import {FileUpload} from 'graphql-upload'
 
 export const resolvers = {
     Mutation: {
-        async addAquascapeImage(root, args: { aquascapeId: number, file: Promise<FileUpload>}, context) {
-            const provider: AquascapeImageProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
+        async addAquascapeImage(
+            root,
+            args: {aquascapeId: number, file: Promise<FileUpload>},
+            context
+        ) {
+            const provider: AquascapeImageProviderInterface = context.injector.get(
+                tokens.AQUASCAPE_IMAGE_PROVIDER
+            )
             return await provider.addAquascapeImage(args.aquascapeId, args.file)
         },
 
         async deleteAquascapeImage(root, args: {aquascapeId: number, imageId: number}, context) {
-            const provider: AquascapeImageProviderInterface = context.injector.get(tokens.AQUASCAPE_PROVIDER)
+            const provider: AquascapeImageProviderInterface = context.injector.get(
+                tokens.AQUASCAPE_IMAGE_PROVIDER
+            )
             return await provider.deleteAquascapeImage(args.aquascapeId, args.imageId)
-        }
+        },
     },
 }
 

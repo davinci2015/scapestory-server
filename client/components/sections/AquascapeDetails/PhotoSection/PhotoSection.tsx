@@ -6,10 +6,17 @@ import {AquascapeImage} from 'graphql/generated/types'
 
 interface Props {
     edit?: boolean
-    images: Pick<AquascapeImage, 'id' | 'title' | 'url'>[]
+    onImageChange?: (files: FileList | null) => void
+    onImageRemove?: (id: number) => void
+    images: Pick<AquascapeImage, 'id' | 'title' | 'url' | 'createdAt'>[]
 }
 
-const PostsSection: React.FunctionComponent<Props> = ({edit, images}) => {
+const PostsSection: React.FunctionComponent<Props> = ({
+    edit,
+    images,
+    onImageChange,
+    onImageRemove,
+}) => {
     if (!images) return null
 
     return (
@@ -21,10 +28,15 @@ const PostsSection: React.FunctionComponent<Props> = ({edit, images}) => {
                 {images.length ? (
                     <PhotoGrid
                         edit={edit}
-                        images={images.map(image => ({
-                            src: image.url,
-                            alt: image.title,
-                        }))}
+                        onImageChange={onImageChange}
+                        onImageRemove={onImageRemove}
+                        images={images
+                            .sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
+                            .map(image => ({
+                                id: image.id,
+                                src: image.url,
+                                alt: image.title,
+                            }))}
                     />
                 ) : (
                     <Paragraph type="body" as="span">

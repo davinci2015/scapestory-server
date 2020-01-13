@@ -4,6 +4,8 @@ type AquascapeImage {
     description: String
     url: String!
     publicId: String!
+    createdAt: String!
+    updatedAt: String!
 }
 
 scalar Upload

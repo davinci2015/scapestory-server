@@ -57,6 +57,8 @@ export type AquascapeImage = {
   description?: Maybe<Scalars['String']>,
   url: Scalars['String'],
   publicId: Scalars['String'],
+  createdAt: Scalars['String'],
+  updatedAt: Scalars['String'],
 };
 
 export type AquascapesFilter = {
@@ -186,8 +188,14 @@ export type MainImageUploadResult = {
 
 export type Mutation = {
    __typename?: 'Mutation',
+  addLight: Light,
+  removeLight?: Maybe<Light>,
   addPlant: Plant,
   removePlant?: Maybe<Plant>,
+  addHardscape: Hardscape,
+  removeHardscape?: Maybe<Hardscape>,
+  addLivestock: Livestock,
+  removeLivestock?: Maybe<Livestock>,
   like?: Maybe<Like>,
   dislike?: Maybe<Like>,
   addAquascapeImage: AquascapeImage,
@@ -207,6 +215,19 @@ export type Mutation = {
 };
 
 
+export type MutationAddLightArgs = {
+  brand: Scalars['String'],
+  model: Scalars['String'],
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationRemoveLightArgs = {
+  lightId: Scalars['Int'],
+  aquascapeId: Scalars['Int']
+};
+
+
 export type MutationAddPlantArgs = {
   plantId?: Maybe<Scalars['Int']>,
   name?: Maybe<Scalars['String']>,
@@ -216,6 +237,32 @@ export type MutationAddPlantArgs = {
 
 export type MutationRemovePlantArgs = {
   plantId: Scalars['Int'],
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationAddHardscapeArgs = {
+  hardscapeId?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationRemoveHardscapeArgs = {
+  hardscapeId: Scalars['Int'],
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationAddLivestockArgs = {
+  livestockId?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationRemoveLivestockArgs = {
+  livestockId: Scalars['Int'],
   aquascapeId: Scalars['Int']
 };
 
