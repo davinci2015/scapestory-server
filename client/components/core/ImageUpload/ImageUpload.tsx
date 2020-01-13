@@ -18,7 +18,6 @@ const ImageUpload: React.FunctionComponent<Props> = ({onChange, render}) => {
             <input
                 type="file"
                 accept="image/x-png,image/jpg,image/jpeg"
-                multiple
                 required
                 ref={inputRef}
                 style={{display: 'none'}}
