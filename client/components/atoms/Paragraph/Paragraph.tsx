@@ -19,9 +19,9 @@ const classes = {
 const Paragraph = ({
     as = 'p',
     children,
+    color,
     type = 'body',
     weight = 'regular',
-    color,
     ...props
 }: Props) => {
     const Component = as

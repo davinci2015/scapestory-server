@@ -1,6 +1,6 @@
 import React from 'react'
 import {spaces} from 'styles'
-import {Headline, FormattedMessage, Paragraph} from 'components/atoms'
+import {Headline, FormattedMessage} from 'components/atoms'
 import {PhotoGrid} from 'components/molecules'
 import {AquascapeImage} from 'graphql/generated/types'
 
@@ -25,27 +25,18 @@ const PostsSection: React.FunctionComponent<Props> = ({
                 <Headline as="h2" variant="h3">
                     <FormattedMessage id="aquascape.posts.title" defaultMessage="Photo Diary" />
                 </Headline>
-                {images.length ? (
-                    <PhotoGrid
-                        edit={edit}
-                        onImageChange={onImageChange}
-                        onImageRemove={onImageRemove}
-                        images={images
-                            .sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
-                            .map(image => ({
-                                id: image.id,
-                                src: image.url,
-                                alt: image.title,
-                            }))}
-                    />
-                ) : (
-                    <Paragraph type="body" as="span">
-                        <FormattedMessage
-                            id="aquascape.posts.no_photos"
-                            defaultMessage="No photos uploaded"
-                        />
-                    </Paragraph>
-                )}
+                <PhotoGrid
+                    edit={edit}
+                    onImageChange={onImageChange}
+                    onImageRemove={onImageRemove}
+                    images={images
+                        .sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
+                        .map(image => ({
+                            id: image.id,
+                            src: image.url,
+                            alt: image.title,
+                        }))}
+                />
             </div>
             <style jsx>{`
                 .section {

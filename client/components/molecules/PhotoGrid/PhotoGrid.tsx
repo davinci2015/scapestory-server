@@ -2,7 +2,7 @@ import React from 'react'
 import {noop} from 'lodash'
 
 import {spaces, borderRadius, colors} from 'styles'
-import {FormattedMessage, Button, Icon} from 'components/atoms'
+import {FormattedMessage, Button, Icon, Paragraph} from 'components/atoms'
 import {ImageUpload} from 'components/core'
 
 interface Image {
@@ -68,13 +68,21 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                         )}
                     </div>
                 ) : (
-                    edit && (
-                        <div className="image image--main">
+                    <div className="image image--main">
+                        {edit && (
                             <div className="btn-wrapper">
                                 <ButtonAddPhoto onClick={onImageChange} />
                             </div>
+                        )}
+                        <div className="placeholder-text">
+                            <Paragraph color={colors.DARK_GRAY} type="body" weight="bold">
+                                <FormattedMessage
+                                    id="photo_grid.no_images"
+                                    defaultMessage="No photos in the diary :("
+                                />
+                            </Paragraph>
                         </div>
-                    )
+                    </div>
                 )}
                 {images[1] ? (
                     <div className="image image--half">
@@ -136,6 +144,13 @@ const PhotoSection: React.FunctionComponent<Props> = ({
 
                 margin-top: ${spaces.s18};
                 margin-left: ${spaces.s18};
+            }
+
+            .photo-grid .placeholder-text {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%);
             }
 
             .photo-grid .btn-wrapper :global(.${Button.classes.root}) {

@@ -87,7 +87,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                 <SubNavigation.Item id={sections.PHOTO_POSTS}>
                     <FormattedMessage
                         id="aquascape.subnavigation.photo"
-                        defaultMessage="Photo Posts"
+                        defaultMessage="Photo Diary"
                     />
                 </SubNavigation.Item>
                 <SubNavigation.Item id={sections.FLORA}>
