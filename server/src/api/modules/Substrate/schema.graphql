@@ -2,8 +2,9 @@
 
 type Substrate {
     id: Int!
+    predefined: Boolean!
     brand: Brand
-    name: String!
+    model: String!
     description: String
     image: String
 }

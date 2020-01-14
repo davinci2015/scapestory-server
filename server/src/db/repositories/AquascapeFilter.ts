@@ -1,13 +1,10 @@
-import Bluebird from 'bluebird'
 import {Injectable} from '@graphql-modules/di'
 
-import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
+import {BaseRepository, EquipmentAquascapeRepositoryInterface} from 'db/repositories/Base'
 import {AquascapeFilter} from 'db/models/manyToMany/AquascapeFilter'
 
 export interface AquascapeFilterRepositoryInterface
-    extends BaseRepositoryInterface<AquascapeFilter> {
-    addFilterForAquascape(filterId: number, aquascapeId: number): Bluebird<AquascapeFilter>
-}
+    extends EquipmentAquascapeRepositoryInterface<AquascapeFilter> {}
 
 @Injectable()
 export class AquascapeFilterRepository extends BaseRepository<AquascapeFilter>
@@ -18,5 +15,13 @@ export class AquascapeFilterRepository extends BaseRepository<AquascapeFilter>
 
     addFilterForAquascape(filterId: number, aquascapeId: number) {
         return this.create({filterId, aquascapeId})
+    }
+
+    addEquipmentForAquascape(filterId: number, aquascapeId: number) {
+        return this.create({filterId, aquascapeId})
+    }
+
+    removeEquipmentFromAquascape(filterId: number, aquascapeId: number) {
+        return this.destroy({where: {filterId, aquascapeId}})
     }
 }

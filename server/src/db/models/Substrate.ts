@@ -15,7 +15,7 @@ export class Substrate extends Model<Substrate> {
     brand: Brand
 
     @Column
-    name: string
+    model: string
 
     @Column
     description: string

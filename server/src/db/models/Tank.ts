@@ -1,18 +1,7 @@
-import {Table, Column, Model, ForeignKey, BelongsTo} from 'sequelize-typescript'
-import {Brand} from './Brand'
+import {Table, Column, Model} from 'sequelize-typescript'
 
 @Table
 export class Tank extends Model<Tank> {
-    @ForeignKey(() => Brand)
-    @Column
-    brandId: number
-
-    @BelongsTo(() => Brand)
-    brand: Brand
-
-    @Column
-    model: string
-
     @Column
     volume: number // Litres
 

@@ -1,12 +1,11 @@
 import Bluebird from 'bluebird'
 import {Injectable} from '@graphql-modules/di'
 
-import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
+import {BaseRepository, EquipmentRepositoryInterface} from 'db/repositories/Base'
 import {Filter} from 'db/models/Filter'
 
-export interface FilterRepositoryInterface extends BaseRepositoryInterface<Filter> {
+export interface FilterRepositoryInterface extends EquipmentRepositoryInterface<Filter> {
     getFilters: () => Bluebird<Filter[]>
-    findFilterById(id: number): Bluebird<Filter | null>
 }
 
 @Injectable()
@@ -19,7 +18,15 @@ export class FilterRepository extends BaseRepository<Filter> implements FilterRe
         return this.findAll({where: {predefined: true}})
     }
 
-    findFilterById(id: number) {
+    findById(id: number) {
         return this.findOne({where: {id}})
+    }
+
+    addEquipment(model: string) {
+        return this.create({model})
+    }
+
+    removeEquipment(id: number) {
+        return this.destroy({where: {id}})
     }
 }

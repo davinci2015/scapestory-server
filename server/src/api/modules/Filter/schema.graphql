@@ -12,13 +12,3 @@ type Filter {
 type Query {
     filters: [Filter!]!
 }
-
-type FilterArgs {
-    filterId: Int
-    name: String
-}
-
-type Mutation {
-    addFilter(filter: FilterArgs!, aquascapeId: Int!): Filter!
-    removeFilter(filterId: Int!, aquascapeId: Int!): Filter
-}

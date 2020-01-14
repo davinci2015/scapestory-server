@@ -25,8 +25,6 @@ type Tag {
 
 type Tank {
     id: Int!
-    brand: Brand
-    model: String
     volume: Float
     width: Float
     height: Float

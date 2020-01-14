@@ -15,7 +15,7 @@ export class Additive extends Model<Additive> {
     brand: Brand
 
     @Column
-    name: string
+    model: string
 
     @Column
     description: string
