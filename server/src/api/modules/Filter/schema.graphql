@@ -1,7 +1,9 @@
+#import "../Brand/schema.graphql"
+
 type Filter {
     id: Int!
     predefined: Boolean!
-    brand: String!
+    brand: Brand!
     model: String!
     description: String
     image: String

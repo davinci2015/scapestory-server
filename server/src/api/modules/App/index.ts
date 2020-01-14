@@ -14,6 +14,7 @@ import {LivestockModule} from 'api/modules/Livestock'
 import {SubstrateModule} from 'api/modules/Substrate'
 import {AdditiveModule} from 'api/modules/Additive'
 import {FilterModule} from 'api/modules/Filter'
+import {BrandModule} from 'api/modules/Brand'
 import {AquascapeImageModule} from 'api/modules/AquascapeImage'
 
 export const AppModule = new GraphQLModule({
@@ -32,6 +33,7 @@ export const AppModule = new GraphQLModule({
         SubstrateModule,
         AdditiveModule,
         FilterModule,
+        BrandModule,
         AquascapeImageModule,
-    ]
+    ],
 })

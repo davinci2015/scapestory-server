@@ -9,6 +9,7 @@
 #import "../Filter/schema.graphql"
 #import "../Like/schema.graphql"
 #import "../AquascapeImage/schema.graphql"
+#import "../Brand/schema.graphql"
 
 type CO2 {
     id: Int!
@@ -24,7 +25,7 @@ type Tag {
 
 type Tank {
     id: Int!
-    brand: String
+    brand: Brand
     model: String
     volume: Float
     width: Float

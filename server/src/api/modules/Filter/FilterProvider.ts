@@ -1,5 +1,5 @@
 import {Injectable, Inject} from '@graphql-modules/di'
-import * as Bluebird from 'bluebird'
+import Bluebird from 'bluebird'
 
 import {tokens} from 'di/tokens'
 import {FilterRepositoryInterface} from 'db/repositories/Filter'

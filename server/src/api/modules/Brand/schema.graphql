@@ -1,0 +1,11 @@
+type Brand {
+    id: Int!
+    predefined: Boolean!
+    name: String!
+    logo: String
+    address: String
+}
+
+type Query {
+    brands: [Brand!]!
+}

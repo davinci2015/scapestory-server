@@ -1,4 +1,4 @@
-import * as Bluebird from 'bluebird'
+import Bluebird from 'bluebird'
 import {Injectable} from '@graphql-modules/di'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
@@ -13,7 +13,6 @@ export class FilterRepository extends BaseRepository<Filter> implements FilterRe
     constructor() {
         super(Filter)
     }
-
 
     getFilters() {
         return this.findAll({where: {predefined: true}})

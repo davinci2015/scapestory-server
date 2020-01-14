@@ -30,6 +30,7 @@ import {
     AquascapePlant,
     AquascapeSubstrate,
 } from 'db/models'
+import {Brand} from 'db/models/Brand'
 
 export interface DatabaseAdapter {
     connect: (params: DatabaseConnectionParams) => void
@@ -58,6 +59,7 @@ export class SequelizeAdapter implements DatabaseAdapter {
                 CO2,
                 Comment,
                 Filter,
+                Brand,
                 Follow,
                 Hardscape,
                 Light,
