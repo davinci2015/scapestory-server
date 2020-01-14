@@ -6,6 +6,7 @@ import {Filter} from 'db/models/Filter'
 
 export interface FilterRepositoryInterface extends BaseRepositoryInterface<Filter> {
     getFilters: () => Bluebird<Filter[]>
+    findFilterById(id: number): Bluebird<Filter | null>
 }
 
 @Injectable()
@@ -16,5 +17,9 @@ export class FilterRepository extends BaseRepository<Filter> implements FilterRe
 
     getFilters() {
         return this.findAll({where: {predefined: true}})
+    }
+
+    findFilterById(id: number) {
+        return this.findOne({where: {id}})
     }
 }
