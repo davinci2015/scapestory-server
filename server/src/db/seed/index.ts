@@ -199,7 +199,7 @@ const hardscape = getEmptyArray(entriesCount.hardscape).map((_, index) => ({
 const substrate = getEmptyArray(entriesCount.substrate).map((_, index) => ({
     _id: index + 1,
     brandId: brands[getRandomIndex(brands.length)]._id,
-    name: faker.commerce.productMaterial(),
+    model: faker.commerce.productMaterial(),
     description: faker.lorem.words(),
     image: faker.image.imageUrl(),
 }))
@@ -207,7 +207,7 @@ const substrate = getEmptyArray(entriesCount.substrate).map((_, index) => ({
 const additives = getEmptyArray(entriesCount.additives).map((_, index) => ({
     _id: index + 1,
     brandId: brands[getRandomIndex(brands.length)]._id,
-    name: faker.commerce.productMaterial(),
+    model: faker.commerce.productMaterial(),
     description: faker.lorem.words(),
     image: faker.image.imageUrl(),
 }))
@@ -317,7 +317,7 @@ const aquascapeSubstrate = filterDuplicateKeys(
     getEmptyArray(entriesCount.aquascapeSubstrate).map((_, index) => ({
         _id: index + 1,
         aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
-        substrateId: lights[getRandomIndex(entriesCount.lights)]._id,
+        substrateId: substrate[getRandomIndex(entriesCount.substrate)]._id,
     })),
     ['aquascapeId', 'substrateId']
 )

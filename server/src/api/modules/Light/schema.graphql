@@ -3,7 +3,7 @@
 type Light {
     id: Int!
     predefined: Boolean!
-    brand: Brand!
+    brand: Brand
     model: String!
     width: Float
     height: Float

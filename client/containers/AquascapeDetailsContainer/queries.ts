@@ -34,14 +34,20 @@ export const AQUASCAPE_DETAILS = gql`
 
             lights {
                 id
-                brand
                 model
+                brand {
+                    id
+                    name
+                }
             }
 
             filters {
                 id
-                brand
                 model
+                brand {
+                    id
+                    name
+                }
             }
 
             co2 {
@@ -52,14 +58,20 @@ export const AQUASCAPE_DETAILS = gql`
 
             substrates {
                 id
-                brand
-                name
+                model
+                brand {
+                    id
+                    name
+                }
             }
 
             additives {
                 id
-                brand
-                name
+                model
+                brand {
+                    id
+                    name
+                }
             }
 
             tags {

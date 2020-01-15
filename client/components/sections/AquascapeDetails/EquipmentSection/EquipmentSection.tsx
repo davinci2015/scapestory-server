@@ -9,8 +9,8 @@ import {Light, Filter, Substrate, Additive, Co2} from 'graphql/generated/types'
 interface Props {
     lights: Pick<Light, 'id' | 'brand' | 'model'>[]
     filters: Pick<Filter, 'id' | 'brand' | 'model'>[]
-    substrates: Substrate[]
-    additives: Additive[]
+    substrates: Pick<Substrate, 'id' | 'brand' | 'model'>[]
+    additives: Pick<Additive, 'id' | 'brand' | 'model'>[]
     co2: Pick<Co2, 'id' | 'type' | 'bps'> | null
 }
 
@@ -128,7 +128,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                                     >
                                         {substrates.map(substrate => (
                                             <Paragraph key={substrate.id}>
-                                                {substrate.brand} {substrate.name}
+                                                {substrate.brand} {substrate.model}
                                             </Paragraph>
                                         ))}
                                     </EquipmentCard>
@@ -149,7 +149,7 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                                     >
                                         {additives.map(additive => (
                                             <Paragraph key={additive.id}>
-                                                {additive.brand} {additive.name}
+                                                {additive.brand} {additive.model}
                                             </Paragraph>
                                         ))}
                                     </EquipmentCard>

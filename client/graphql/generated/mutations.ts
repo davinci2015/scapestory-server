@@ -12,8 +12,9 @@ export type Scalars = {
 export type Additive = {
    __typename?: 'Additive',
   id: Scalars['Int'],
-  brand?: Maybe<Scalars['String']>,
-  name: Scalars['String'],
+  predefined: Scalars['Boolean'],
+  brand?: Maybe<Brand>,
+  model: Scalars['String'],
   description?: Maybe<Scalars['String']>,
   image?: Maybe<Scalars['String']>,
 };
@@ -77,6 +78,15 @@ export type AuthPayload = {
   user?: Maybe<User>,
 };
 
+export type Brand = {
+   __typename?: 'Brand',
+  id: Scalars['Int'],
+  predefined: Scalars['Boolean'],
+  name: Scalars['String'],
+  logo?: Maybe<Scalars['String']>,
+  address?: Maybe<Scalars['String']>,
+};
+
 export type Co2 = {
    __typename?: 'CO2',
   id: Scalars['Int'],
@@ -102,11 +112,34 @@ export enum CommentEntityType {
   Image = 'IMAGE'
 }
 
+export type Equipment = {
+   __typename?: 'Equipment',
+  id: Scalars['Int'],
+  predefined: Scalars['Boolean'],
+  brand?: Maybe<Brand>,
+  model: Scalars['String'],
+  description?: Maybe<Scalars['String']>,
+  image?: Maybe<Scalars['String']>,
+};
+
+export type EquipmentArgs = {
+  equipmentType: EquipmentType,
+  equipmentId?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+};
+
+export enum EquipmentType {
+  Filter = 'FILTER',
+  Substrate = 'SUBSTRATE',
+  Light = 'LIGHT',
+  Additives = 'ADDITIVES'
+}
+
 export type Filter = {
    __typename?: 'Filter',
   id: Scalars['Int'],
   predefined: Scalars['Boolean'],
-  brand: Scalars['String'],
+  brand?: Maybe<Brand>,
   model: Scalars['String'],
   description?: Maybe<Scalars['String']>,
   image?: Maybe<Scalars['String']>,
@@ -142,7 +175,7 @@ export type Light = {
    __typename?: 'Light',
   id: Scalars['Int'],
   predefined: Scalars['Boolean'],
-  brand: Scalars['String'],
+  brand?: Maybe<Brand>,
   model: Scalars['String'],
   width?: Maybe<Scalars['Float']>,
   height?: Maybe<Scalars['Float']>,
@@ -212,6 +245,8 @@ export type Mutation = {
   fbRegister?: Maybe<AuthPayload>,
   googleRegister?: Maybe<AuthPayload>,
   visitAquascape: VisitAquascapeResult,
+  addEquipment: Equipment,
+  removeEquipment?: Maybe<Equipment>,
 };
 
 
@@ -352,6 +387,18 @@ export type MutationVisitAquascapeArgs = {
   aquascapeId: Scalars['Int']
 };
 
+
+export type MutationAddEquipmentArgs = {
+  equipment: EquipmentArgs,
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationRemoveEquipmentArgs = {
+  equipmentId: Scalars['Int'],
+  aquascapeId: Scalars['Int']
+};
+
 export type Pagination = {
   limit: Scalars['Int'],
   cursor?: Maybe<Scalars['String']>,
@@ -379,6 +426,7 @@ export type Query = {
   userBySlug?: Maybe<User>,
   users: Array<Maybe<User>>,
   filters: Array<Filter>,
+  brands: Array<Brand>,
   lights: Array<Light>,
   plants: Array<Plant>,
   hardscape: Array<Hardscape>,
@@ -435,8 +483,9 @@ export type QueryUserProfileSlugExistsArgs = {
 export type Substrate = {
    __typename?: 'Substrate',
   id: Scalars['Int'],
-  brand?: Maybe<Scalars['String']>,
-  name: Scalars['String'],
+  predefined: Scalars['Boolean'],
+  brand?: Maybe<Brand>,
+  model: Scalars['String'],
   description?: Maybe<Scalars['String']>,
   image?: Maybe<Scalars['String']>,
 };
@@ -451,8 +500,6 @@ export type Tag = {
 export type Tank = {
    __typename?: 'Tank',
   id: Scalars['Int'],
-  brand?: Maybe<Scalars['String']>,
-  model?: Maybe<Scalars['String']>,
   volume?: Maybe<Scalars['Float']>,
   width?: Maybe<Scalars['Float']>,
   height?: Maybe<Scalars['Float']>,
