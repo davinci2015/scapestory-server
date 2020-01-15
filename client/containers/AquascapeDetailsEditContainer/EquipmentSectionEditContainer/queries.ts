@@ -12,3 +12,16 @@ export const FILTERS = gql`
         }
     }
 `
+
+export const LIGHTS = gql`
+    query Lights {
+        lights {
+            id
+            model
+            brand {
+                id
+                name
+            }
+        }
+    }
+`

@@ -639,6 +639,21 @@ export type FiltersQuery = (
   )> }
 );
 
+export type LightsQueryVariables = {};
+
+
+export type LightsQuery = (
+  { __typename?: 'Query' }
+  & { lights: Array<(
+    { __typename?: 'Light' }
+    & Pick<Light, 'id' | 'model'>
+    & { brand: Maybe<(
+      { __typename?: 'Brand' }
+      & Pick<Brand, 'id' | 'name'>
+    )> }
+  )> }
+);
+
 export type HardscapeQueryVariables = {};
 
 

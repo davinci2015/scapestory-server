@@ -14,6 +14,7 @@ import {Grid} from 'components/core'
 import FilterEditContainer from './FilterEditContainer'
 import {ADD_EQUIPMENT, REMOVE_EQUIPMENT} from './mutations'
 import {updateAquascapeEquipmentCache, AquascapeEquipmentActions} from './cache'
+import LightEditContainer from './LightEditContainer'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -100,7 +101,6 @@ const EquipmentSectionEditContainer: React.FunctionComponent<Props> = ({aquascap
 
     return (
         <EquipmentSectionEdit
-            lights={aquascape.lights}
             substrates={aquascape.substrates}
             additives={aquascape.additives}
             co2={aquascape.co2}
@@ -112,6 +112,14 @@ const EquipmentSectionEditContainer: React.FunctionComponent<Props> = ({aquascap
                         onFilterCreate={onEquipmentCreate(EquipmentType.Filter)}
                         onFilterSelect={onEquipmentSelect(EquipmentType.Filter)}
                         onFilterDelete={onEquipmentDelete(EquipmentType.Filter)}
+                    />
+                </Grid.Item>
+                <Grid.Item extraSmall={12} small={6} large={4}>
+                    <LightEditContainer
+                        lights={aquascape.lights}
+                        onLightCreate={onEquipmentCreate(EquipmentType.Light)}
+                        onLightSelect={onEquipmentSelect(EquipmentType.Light)}
+                        onLightDelete={onEquipmentDelete(EquipmentType.Light)}
                     />
                 </Grid.Item>
             </Grid.Row>

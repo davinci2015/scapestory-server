@@ -4,11 +4,10 @@ import {FormattedMessage, Headline, Paragraph} from 'components/atoms'
 import {EquipmentCard, ListItem} from 'components/molecules'
 import {spaces} from 'styles'
 import {Grid} from 'components/core'
-import {Light, Substrate, Additive, Co2} from 'graphql/generated/types'
-import {LightsCard, SubstratesCard, AdditivesCard} from '../EquipmentSection/Cards'
+import {Substrate, Additive, Co2} from 'graphql/generated/types'
+import {SubstratesCard, AdditivesCard} from '../EquipmentSection/Cards'
 
 interface Props {
-    lights: Pick<Light, 'id' | 'brand' | 'model'>[]
     substrates: Pick<Substrate, 'id' | 'brand' | 'model'>[]
     additives: Pick<Additive, 'id' | 'brand' | 'model'>[]
     co2: Pick<Co2, 'id' | 'type' | 'bps'> | null
@@ -16,7 +15,6 @@ interface Props {
 
 const EquipmentSectionEdit: React.FunctionComponent<Props> = ({
     children,
-    lights = [],
     substrates = [],
     additives = [],
 }) => {
@@ -35,15 +33,6 @@ const EquipmentSectionEdit: React.FunctionComponent<Props> = ({
                 <div className="list">
                     {children}
                     <Grid.Row>
-                        <Grid.Item extraSmall={12} small={6} large={4}>
-                            <LightsCard>
-                                {lights.map(light => (
-                                    <ListItem key={light.id} onDelete={() => null}>
-                                        {light.brand} {light.model}
-                                    </ListItem>
-                                ))}
-                            </LightsCard>
-                        </Grid.Item>
                         <Grid.Item extraSmall={12} small={6} large={4}>
                             <EquipmentCard
                                 title={

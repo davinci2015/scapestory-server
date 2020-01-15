@@ -1,12 +1,24 @@
 import {Injectable} from '@graphql-modules/di'
-import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
+import {BaseRepository, EquipmentRepositoryInterface} from 'db/repositories/Base'
 import {Light} from 'db/models/Light'
 
-export interface LightRepositoryInterface extends BaseRepositoryInterface<Light> {}
+export interface LightRepositoryInterface extends EquipmentRepositoryInterface<Light> {}
 
 @Injectable()
-export class LightRepository extends BaseRepository<Light> implements BaseRepositoryInterface<Light> {
+export class LightRepository extends BaseRepository<Light> implements LightRepositoryInterface {
     constructor() {
         super(Light)
+    }
+
+    findById(id: number) {
+        return this.findOne({where: {id}})
+    }
+
+    addEquipment(model: string) {
+        return this.create({model})
+    }
+
+    removeEquipment(id: number) {
+        return this.destroy({where: {id}})
     }
 }
