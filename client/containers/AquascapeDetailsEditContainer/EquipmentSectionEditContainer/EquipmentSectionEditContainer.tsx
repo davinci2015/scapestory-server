@@ -13,6 +13,7 @@ import {EquipmentType} from 'graphql/generated/mutations'
 import {Grid} from 'components/core'
 import FilterEditContainer from './FilterEditContainer'
 import {ADD_EQUIPMENT, REMOVE_EQUIPMENT} from './mutations'
+import {updateAquascapeEquipmentCache, AquascapeEquipmentActions} from './cache'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -35,14 +36,10 @@ export interface EquipmentInterface {
 const EquipmentSectionEditContainer: React.FunctionComponent<Props> = ({aquascape}) => {
     if (!aquascape) return null
 
-    const [addEquipmentMutation] = useMutation<Equipment, MutationAddEquipmentArgs>(
-        ADD_EQUIPMENT,
-        {}
-    )
+    const [addEquipmentMutation] = useMutation<Equipment, MutationAddEquipmentArgs>(ADD_EQUIPMENT)
 
     const [removeEquipmentMutation] = useMutation<Equipment, MutationRemoveEquipmentArgs>(
-        REMOVE_EQUIPMENT,
-        {}
+        REMOVE_EQUIPMENT
     )
 
     const onEquipmentSelect = (equipmentType: EquipmentType) => (
@@ -58,6 +55,10 @@ const EquipmentSectionEditContainer: React.FunctionComponent<Props> = ({aquascap
                     equipmentId: (selected as EquipmentOptionType).value,
                 },
             },
+            update: updateAquascapeEquipmentCache(AquascapeEquipmentActions.ADD_EQUIPMENT, {
+                equipmentType,
+                aquascapeId: aquascape.id,
+            }),
         })
     }
 
@@ -72,6 +73,10 @@ const EquipmentSectionEditContainer: React.FunctionComponent<Props> = ({aquascap
                     name,
                 },
             },
+            update: updateAquascapeEquipmentCache(AquascapeEquipmentActions.ADD_EQUIPMENT, {
+                equipmentType,
+                aquascapeId: aquascape.id,
+            }),
         })
     }
 
@@ -86,6 +91,10 @@ const EquipmentSectionEditContainer: React.FunctionComponent<Props> = ({aquascap
                     equipmentId,
                 },
             },
+            update: updateAquascapeEquipmentCache(AquascapeEquipmentActions.REMOVE_EQUIPMENT, {
+                equipmentType,
+                aquascapeId: aquascape.id,
+            }),
         })
     }
 
