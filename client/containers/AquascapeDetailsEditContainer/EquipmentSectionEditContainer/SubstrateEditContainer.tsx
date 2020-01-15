@@ -43,7 +43,9 @@ const SubstrateEditContainer: React.FunctionComponent<Props> = ({
                     }
                     onChange={onSubstrateSelect}
                     onCreateOption={onSubstrateCreate}
-                    options={groupEquipmentByBrand(allSubstrates.substrates)}
+                    options={groupEquipmentByBrand(
+                        allSubstrates.substrates.filter(x => !substrates.some(y => y.id === x.id))
+                    )}
                 />
             )}
         </SubstratesCard>

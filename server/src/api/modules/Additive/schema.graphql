@@ -1,4 +1,6 @@
-type Additive {
+#import "../Equipment/schema.graphql"
+
+type Additive implements Equipment {
     id: Int!
     predefined: Boolean!
     model: String!

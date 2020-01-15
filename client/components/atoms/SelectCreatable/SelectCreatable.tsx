@@ -10,13 +10,14 @@ import {
 } from 'react-select'
 
 import {colors} from 'styles'
+import {Option} from 'react-select/src/filters'
 
 export interface Props<OptionType> {
     options: GroupedOptionsType<OptionType> | OptionsType<OptionType>
     onChange: (newValue: ValueType<OptionType>, actionMeta: ActionMeta) => void
     onInputChange?: (newValue: string, actionMeta: InputActionMeta) => void
     onCreateOption?: (inputValue: string) => void
-    filterOptions?: (option: {}, inputValue: string) => boolean
+    filterOptions?: (option: Option, inputValue: string) => boolean
     placeholder?: React.ReactNode
 }
 

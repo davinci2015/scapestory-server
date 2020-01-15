@@ -43,7 +43,9 @@ const LightEditContainer: React.FunctionComponent<Props> = ({
                     }
                     onChange={onLightSelect}
                     onCreateOption={onLightCreate}
-                    options={groupEquipmentByBrand(allLights.lights)}
+                    options={groupEquipmentByBrand(
+                        allLights.lights.filter(x => !lights.some(y => y.id === x.id))
+                    )}
                 />
             )}
         </LightsCard>

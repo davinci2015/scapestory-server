@@ -1,4 +1,6 @@
-type Filter {
+#import "../Equipment/schema.graphql"
+
+type Filter implements Equipment {
     id: Int!
     predefined: Boolean!
     model: String!

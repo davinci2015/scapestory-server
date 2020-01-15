@@ -43,7 +43,9 @@ const FilterEditContainer: React.FunctionComponent<Props> = ({
                     }
                     onChange={onFilterSelect}
                     onCreateOption={onFilterCreate}
-                    options={groupEquipmentByBrand(allFilters.filters)}
+                    options={groupEquipmentByBrand(
+                        allFilters.filters.filter(x => !filters.some(y => y.id === x.id))
+                    )}
                 />
             )}
         </FiltersCard>

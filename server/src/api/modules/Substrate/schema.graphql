@@ -1,4 +1,6 @@
-type Substrate {
+#import "../Equipment/schema.graphql"
+
+type Substrate implements Equipment {
     id: Int!
     predefined: Boolean!
     model: String!

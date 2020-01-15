@@ -1,4 +1,6 @@
-type Light {
+#import "../Equipment/schema.graphql"
+
+type Light implements Equipment {
     id: Int!
     predefined: Boolean!
     model: String!

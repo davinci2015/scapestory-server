@@ -39,4 +39,9 @@ export const resolvers = {
             return await resolveBrand(root, args, context)
         },
     },
+    Equipment: {
+        async brand(root, args, context: ModuleContext) {
+            return await resolveBrand(root, args, context)
+        },
+    },
 }

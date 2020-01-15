@@ -43,7 +43,9 @@ const AdditiveEditContainer: React.FunctionComponent<Props> = ({
                     }
                     onChange={onAdditiveSelect}
                     onCreateOption={onAdditiveCreate}
-                    options={groupEquipmentByBrand(allAdditives.additives)}
+                    options={groupEquipmentByBrand(
+                        allAdditives.additives.filter(x => !additives.some(y => y.id === x.id))
+                    )}
                 />
             )}
         </AdditivesCard>

@@ -57,6 +57,25 @@ const getEquipmentProvider = (
 }
 
 export const resolvers = {
+    Equipment: {
+        __resolveType(equipment, context, info) {
+            if (equipment instanceof Filter) {
+                return 'Filter'
+            }
+
+            if (equipment instanceof Light) {
+                return 'Light'
+            }
+
+            if (equipment instanceof Substrate) {
+                return 'Substrate'
+            }
+
+            if (equipment instanceof Additive) {
+                return 'Additive'
+            }
+        },
+    },
     Mutation: {
         async addEquipment(root, args: MutationAddEquipmentArgs, context) {
             let equipment: EquipmentModel | null = null
