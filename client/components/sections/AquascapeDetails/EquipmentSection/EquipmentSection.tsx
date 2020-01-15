@@ -40,6 +40,17 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                 {hasEquipment ? (
                     <div className="list">
                         <Grid.Row>
+                            {!!filters.length && (
+                                <Grid.Item extraSmall={12} small={6} large={4}>
+                                    <FiltersCard>
+                                        {filters.map(filter => (
+                                            <Paragraph key={filter.id}>
+                                                {filter.brand} {filter.model}
+                                            </Paragraph>
+                                        ))}
+                                    </FiltersCard>
+                                </Grid.Item>
+                            )}
                             {!!lights.length && (
                                 <Grid.Item extraSmall={12} small={6} large={4}>
                                     <LightsCard>
@@ -51,15 +62,15 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                                     </LightsCard>
                                 </Grid.Item>
                             )}
-                            {!!filters.length && (
+                            {!!substrates.length && (
                                 <Grid.Item extraSmall={12} small={6} large={4}>
-                                    <FiltersCard>
-                                        {filters.map(filter => (
-                                            <Paragraph key={filter.id}>
-                                                {filter.brand} {filter.model}
+                                    <SubstratesCard>
+                                        {substrates.map(substrate => (
+                                            <Paragraph key={substrate.id}>
+                                                {substrate.brand} {substrate.model}
                                             </Paragraph>
                                         ))}
-                                    </FiltersCard>
+                                    </SubstratesCard>
                                 </Grid.Item>
                             )}
                             {co2 && co2.type && !!co2.bps && (
@@ -92,17 +103,6 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                                             />
                                         </Paragraph>
                                     </EquipmentCard>
-                                </Grid.Item>
-                            )}
-                            {!!substrates.length && (
-                                <Grid.Item extraSmall={12} small={6} large={4}>
-                                    <SubstratesCard>
-                                        {substrates.map(substrate => (
-                                            <Paragraph key={substrate.id}>
-                                                {substrate.brand} {substrate.model}
-                                            </Paragraph>
-                                        ))}
-                                    </SubstratesCard>
                                 </Grid.Item>
                             )}
                             {!!additives.length && (

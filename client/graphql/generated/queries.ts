@@ -654,6 +654,21 @@ export type LightsQuery = (
   )> }
 );
 
+export type SubstratesQueryVariables = {};
+
+
+export type SubstratesQuery = (
+  { __typename?: 'Query' }
+  & { substrates: Array<(
+    { __typename?: 'Substrate' }
+    & Pick<Substrate, 'id' | 'model'>
+    & { brand: Maybe<(
+      { __typename?: 'Brand' }
+      & Pick<Brand, 'id' | 'name'>
+    )> }
+  )> }
+);
+
 export type HardscapeQueryVariables = {};
 
 

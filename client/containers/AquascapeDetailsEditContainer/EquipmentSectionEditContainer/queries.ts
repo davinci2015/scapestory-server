@@ -25,3 +25,16 @@ export const LIGHTS = gql`
         }
     }
 `
+
+export const SUBSTRATES = gql`
+    query Substrates {
+        substrates {
+            id
+            model
+            brand {
+                id
+                name
+            }
+        }
+    }
+`

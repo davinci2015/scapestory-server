@@ -4,20 +4,15 @@ import {FormattedMessage, Headline, Paragraph} from 'components/atoms'
 import {EquipmentCard, ListItem} from 'components/molecules'
 import {spaces} from 'styles'
 import {Grid} from 'components/core'
-import {Substrate, Additive, Co2} from 'graphql/generated/types'
-import {SubstratesCard, AdditivesCard} from '../EquipmentSection/Cards'
+import {Additive, Co2} from 'graphql/generated/types'
+import {AdditivesCard} from '../EquipmentSection/Cards'
 
 interface Props {
-    substrates: Pick<Substrate, 'id' | 'brand' | 'model'>[]
     additives: Pick<Additive, 'id' | 'brand' | 'model'>[]
     co2: Pick<Co2, 'id' | 'type' | 'bps'> | null
 }
 
-const EquipmentSectionEdit: React.FunctionComponent<Props> = ({
-    children,
-    substrates = [],
-    additives = [],
-}) => {
+const EquipmentSectionEdit: React.FunctionComponent<Props> = ({children, additives = []}) => {
     return (
         <>
             <div className="section">
@@ -46,15 +41,6 @@ const EquipmentSectionEdit: React.FunctionComponent<Props> = ({
                                 <Paragraph>Type: TODO INPUT</Paragraph>
                                 <Paragraph>Bubbles per second: TODO INPUT</Paragraph>
                             </EquipmentCard>
-                        </Grid.Item>
-                        <Grid.Item extraSmall={12} small={6} large={4}>
-                            <SubstratesCard>
-                                {substrates.map(substrate => (
-                                    <ListItem key={substrate.id} onDelete={() => null}>
-                                        {substrate.brand} {substrate.model}
-                                    </ListItem>
-                                ))}
-                            </SubstratesCard>
                         </Grid.Item>
                         <Grid.Item extraSmall={12} small={6} large={4}>
                             <AdditivesCard>

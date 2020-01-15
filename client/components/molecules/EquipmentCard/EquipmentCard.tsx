@@ -16,7 +16,7 @@ type CardInterface = React.FunctionComponent<Props> & {
     classes: typeof classes
 }
 
-const EquipmentCard: CardInterface = ({children, title, image}) => (
+const EquipmentCard: CardInterface = ({children, image, title}) => (
     <>
         <div className={classes.root}>
             <Headline as="h4">{title}</Headline>
@@ -27,6 +27,7 @@ const EquipmentCard: CardInterface = ({children, title, image}) => (
         <style jsx>{`
             .equipment-card {
                 position: relative;
+                flex: 1;
                 background-color: ${colors.WHITE};
                 width: 100%;
 
@@ -48,9 +49,7 @@ const EquipmentCard: CardInterface = ({children, title, image}) => (
                 margin: 0;
             }
 
-            .equipment-card
-                > .description
-                :global(.${Paragraph.classes.root}):not(:last-of-type) {
+            .equipment-card > .description :global(.${Paragraph.classes.root}):not(:last-of-type) {
                 margin-bottom: ${spaces.s12};
             }
 

@@ -18,7 +18,7 @@ const equipmentMapping = {
     [EquipmentType.Filter]: 'filters',
     [EquipmentType.Additives]: 'additives',
     [EquipmentType.Light]: 'lights',
-    [EquipmentType.Substrate]: 'substrate',
+    [EquipmentType.Substrate]: 'substrates',
 }
 
 export const updateAquascapeEquipmentCache = (
