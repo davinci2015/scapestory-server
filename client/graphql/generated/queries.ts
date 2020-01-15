@@ -395,7 +395,7 @@ export type MutationAddEquipmentArgs = {
 
 
 export type MutationRemoveEquipmentArgs = {
-  equipmentId: Scalars['Int'],
+  equipment: EquipmentArgs,
   aquascapeId: Scalars['Int']
 };
 
@@ -620,6 +620,21 @@ export type AquascapeDetailsQuery = (
     )>, comments: Array<(
       { __typename?: 'Comment' }
       & CommentFieldsFragment
+    )> }
+  )> }
+);
+
+export type FiltersQueryVariables = {};
+
+
+export type FiltersQuery = (
+  { __typename?: 'Query' }
+  & { filters: Array<(
+    { __typename?: 'Filter' }
+    & Pick<Filter, 'id' | 'model'>
+    & { brand: Maybe<(
+      { __typename?: 'Brand' }
+      & Pick<Brand, 'id' | 'name'>
     )> }
   )> }
 );

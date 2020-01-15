@@ -4,20 +4,19 @@ import {FormattedMessage, Headline, Paragraph} from 'components/atoms'
 import {EquipmentCard, ListItem} from 'components/molecules'
 import {spaces} from 'styles'
 import {Grid} from 'components/core'
-import {Light, Filter, Substrate, Additive, Co2} from 'graphql/generated/types'
-import {LightsCard, FiltersCard, SubstratesCard, AdditivesCard} from '../EquipmentSection/Cards'
+import {Light, Substrate, Additive, Co2} from 'graphql/generated/types'
+import {LightsCard, SubstratesCard, AdditivesCard} from '../EquipmentSection/Cards'
 
 interface Props {
     lights: Pick<Light, 'id' | 'brand' | 'model'>[]
-    filters: Pick<Filter, 'id' | 'brand' | 'model'>[]
     substrates: Pick<Substrate, 'id' | 'brand' | 'model'>[]
     additives: Pick<Additive, 'id' | 'brand' | 'model'>[]
     co2: Pick<Co2, 'id' | 'type' | 'bps'> | null
 }
 
 const EquipmentSectionEdit: React.FunctionComponent<Props> = ({
+    children,
     lights = [],
-    filters = [],
     substrates = [],
     additives = [],
 }) => {
@@ -34,6 +33,7 @@ const EquipmentSectionEdit: React.FunctionComponent<Props> = ({
                 </div>
 
                 <div className="list">
+                    {children}
                     <Grid.Row>
                         <Grid.Item extraSmall={12} small={6} large={4}>
                             <LightsCard>
@@ -43,15 +43,6 @@ const EquipmentSectionEdit: React.FunctionComponent<Props> = ({
                                     </ListItem>
                                 ))}
                             </LightsCard>
-                        </Grid.Item>
-                        <Grid.Item extraSmall={12} small={6} large={4}>
-                            <FiltersCard>
-                                {filters.map(filter => (
-                                    <ListItem key={filter.id} onDelete={() => null}>
-                                        {filter.brand} {filter.model}
-                                    </ListItem>
-                                ))}
-                            </FiltersCard>
                         </Grid.Item>
                         <Grid.Item extraSmall={12} small={6} large={4}>
                             <EquipmentCard

@@ -13,7 +13,8 @@
                 "./containers/ProfileContainer/queries.ts",
                 "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/HardscapeSectionContainer/queries.ts",
                 "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/LivestockSectionContainer/queries.ts",
-                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/PlantsSectionContainer/queries.ts"
+                "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/PlantsSectionContainer/queries.ts",
+                "./containers/AquascapeDetailsEditContainer/EquipmentSectionEditContainer/queries.ts"
             ],
             "config": ["flattenGeneratedTypes"]
         },

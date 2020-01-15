@@ -395,7 +395,7 @@ export type MutationAddEquipmentArgs = {
 
 
 export type MutationRemoveEquipmentArgs = {
-  equipmentId: Scalars['Int'],
+  equipment: EquipmentArgs,
   aquascapeId: Scalars['Int']
 };
 

@@ -4,6 +4,7 @@ import {tokens} from 'di/tokens'
 import {authenticate, authorizeAquascapeUpdate} from 'api/guards'
 import {Filter, Light, Substrate, Additive} from 'db/models'
 import {EquipmentProviderInterface} from './EquipmentProvider'
+import {MutationAddEquipmentArgs, MutationRemoveEquipmentArgs} from 'graphql/generated/types'
 
 enum EquipmentType {
     FILTER = 'FILTER',
@@ -28,11 +29,17 @@ const equipmentAquascapeRepoMapping = {
     [EquipmentType.ADDITIVES]: tokens.AQUASCAPE_ADDITIVES_REPOSITORY,
 }
 
-const getEquipmentProvider = (root, args, context) => {
-    const equipmentRepository = context.injector.get(equipmentRepoMapping[args.equipmentType])
+const getEquipmentProvider = (
+    root,
+    args: MutationAddEquipmentArgs | MutationRemoveEquipmentArgs,
+    context
+) => {
+    const equipmentRepository = context.injector.get(
+        equipmentRepoMapping[args.equipment.equipmentType]
+    )
 
     const equipmentAquascapeRepository = context.injector.get(
-        equipmentAquascapeRepoMapping[args.equipmentType]
+        equipmentAquascapeRepoMapping[args.equipment.equipmentType]
     )
 
     if (!equipmentRepository || !equipmentAquascapeRepository) {
@@ -50,24 +57,15 @@ const getEquipmentProvider = (root, args, context) => {
 }
 
 export const resolvers = {
-    Equipment: {
-        __resolveType(equipment, context, info) {
-            if (equipment.power) {
-                return 'Light'
-            }
-
-            return 'Filter'
-        },
-    },
     Mutation: {
-        async addEquipment(root, args, context) {
+        async addEquipment(root, args: MutationAddEquipmentArgs, context) {
             let equipment: EquipmentModel | null = null
             const provider = getEquipmentProvider(root, args, context)
 
-            if (args.equipment.id) {
-                equipment = await provider.findEquipmentById(args.filterId)
+            if (args.equipment.equipmentId) {
+                equipment = await provider.findEquipmentById(args.equipment.equipmentId)
             } else if (args.equipment.name) {
-                equipment = await provider.addEquipment(args.name)
+                equipment = await provider.addEquipment(args.equipment.name)
             }
 
             if (!equipment) {
@@ -78,9 +76,14 @@ export const resolvers = {
 
             return equipment
         },
-        async removeEquipment(root, args, context) {
+        async removeEquipment(root, args: MutationRemoveEquipmentArgs, context) {
+            if (!args.equipment.equipmentId) {
+                throw new UserInputError('equipment id or equipment name is not provided')
+            }
+
             const provider = getEquipmentProvider(root, args, context)
-            const equipment = await provider.findEquipmentById(args.filterId)
+
+            const equipment = await provider.findEquipmentById(args.equipment.equipmentId)
 
             if (!equipment) {
                 throw new UserInputError('Equipment not found')
