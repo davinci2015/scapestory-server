@@ -669,6 +669,21 @@ export type SubstratesQuery = (
   )> }
 );
 
+export type AdditivesQueryVariables = {};
+
+
+export type AdditivesQuery = (
+  { __typename?: 'Query' }
+  & { additives: Array<(
+    { __typename?: 'Additive' }
+    & Pick<Additive, 'id' | 'model'>
+    & { brand: Maybe<(
+      { __typename?: 'Brand' }
+      & Pick<Brand, 'id' | 'name'>
+    )> }
+  )> }
+);
+
 export type HardscapeQueryVariables = {};
 
 

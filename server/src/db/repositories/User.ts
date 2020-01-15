@@ -1,5 +1,6 @@
 import * as DataLoader from 'dataloader'
 import {Injectable} from '@graphql-modules/di'
+
 import {User} from 'db/models/User'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
@@ -11,8 +12,7 @@ export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
 }
 
 @Injectable()
-export class UserRepository extends BaseRepository<User>
-    implements UserRepositoryInterface {
+export class UserRepository extends BaseRepository<User> implements UserRepositoryInterface {
     dataLoader: DataLoader<number, User>
 
     constructor() {
@@ -37,7 +37,7 @@ export class UserRepository extends BaseRepository<User>
         return GraphQLHelper.ensureOrder({
             docs: users,
             keys: ids,
-            prop: 'id'
+            prop: 'id',
         })
     }
 }

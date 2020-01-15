@@ -1,9 +1,6 @@
-#import "../Brand/schema.graphql"
-
 type Substrate {
     id: Int!
     predefined: Boolean!
-    brand: Brand
     model: String!
     description: String
     image: String

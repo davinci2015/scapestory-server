@@ -30,7 +30,7 @@ const LightEditContainer: React.FunctionComponent<Props> = ({
         <LightsCard>
             {lights.map(light => (
                 <ListItem key={light.id} onDelete={() => onLightDelete(light.id)}>
-                    {light.brand} {light.model}
+                    {light.brand?.name} {light.model}
                 </ListItem>
             ))}
             {allLights && allLights.lights && (

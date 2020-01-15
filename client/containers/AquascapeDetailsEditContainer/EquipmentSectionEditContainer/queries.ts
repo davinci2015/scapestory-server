@@ -38,3 +38,16 @@ export const SUBSTRATES = gql`
         }
     }
 `
+
+export const ADDITIVES = gql`
+    query Additives {
+        additives {
+            id
+            model
+            brand {
+                id
+                name
+            }
+        }
+    }
+`

@@ -2,7 +2,7 @@ import React from 'react'
 import {ValueType} from 'react-select'
 import {useMutation} from 'react-apollo'
 
-import EquipmentSectionEdit from 'components/sections/AquascapeDetails/EquipmentSectionEdit'
+import EquipmentSection from 'components/sections/AquascapeDetails/EquipmentSection'
 import {
     AquascapeDetailsQuery,
     MutationAddEquipmentArgs,
@@ -16,6 +16,7 @@ import {ADD_EQUIPMENT, REMOVE_EQUIPMENT} from './mutations'
 import {updateAquascapeEquipmentCache, AquascapeEquipmentActions} from './cache'
 import LightEditContainer from './LightEditContainer'
 import SubstrateEditContainer from './SubstrateEditContainer'
+import AdditiveEditContainer from './AdditiveEditContainer'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -101,7 +102,7 @@ const EquipmentSectionEditContainer: React.FunctionComponent<Props> = ({aquascap
     }
 
     return (
-        <EquipmentSectionEdit additives={aquascape.additives} co2={aquascape.co2}>
+        <EquipmentSection>
             <Grid.Row>
                 <Grid.Item extraSmall={12} small={6} large={4}>
                     <FilterEditContainer
@@ -127,8 +128,16 @@ const EquipmentSectionEditContainer: React.FunctionComponent<Props> = ({aquascap
                         onSubstrateDelete={onEquipmentDelete(EquipmentType.Substrate)}
                     />
                 </Grid.Item>
+                <Grid.Item extraSmall={12} small={6} large={4}>
+                    <AdditiveEditContainer
+                        additives={aquascape.additives}
+                        onAdditiveCreate={onEquipmentCreate(EquipmentType.Additives)}
+                        onAdditiveSelect={onEquipmentSelect(EquipmentType.Additives)}
+                        onAdditiveDelete={onEquipmentDelete(EquipmentType.Additives)}
+                    />
+                </Grid.Item>
             </Grid.Row>
-        </EquipmentSectionEdit>
+        </EquipmentSection>
     )
 }
 

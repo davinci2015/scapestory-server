@@ -5,9 +5,9 @@ import {FormattedMessage} from 'react-intl'
 import {Element} from 'react-scroll'
 
 import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetailsContainer/queries'
-import {Divider, Icon} from 'components/atoms'
+import {Divider, Icon, Paragraph} from 'components/atoms'
 import {Grid, Content} from 'components/core'
-import {SubNavigation} from 'components/molecules'
+import {SubNavigation, EquipmentCard} from 'components/molecules'
 import {VISIT} from 'graphql/mutations'
 import CommentsContainer from 'containers/AquascapeDetailsContainer/CommentsContainer'
 import {
@@ -26,6 +26,12 @@ import {AquascapeDetailsQuery, AquascapeDetailsQueryVariables} from 'graphql/gen
 import HeroSectionContainer from 'containers/AquascapeDetailsContainer/HeroSectionContainer'
 import FloraList from 'components/sections/AquascapeDetails/FloraSection/FloraList'
 import {colors} from 'styles'
+import {
+    AdditivesCard,
+    SubstratesCard,
+    LightsCard,
+    FiltersCard,
+} from 'components/sections/AquascapeDetails/EquipmentSection/Cards'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -79,6 +85,11 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         // TODO: Return not found page
         return null
     }
+
+    const {additives, co2, filters, lights, substrates} = aquascapeResult.aquascape
+
+    const hasEquipment =
+        [lights, filters, substrates, additives].some(equipment => !!equipment.length) || co2
 
     return (
         <Content>
@@ -194,13 +205,98 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                 <Divider />
 
                 <Element name={sections.EQUIPMENT}>
-                    <EquipmentSection
-                        lights={aquascapeResult.aquascape.lights}
-                        filters={aquascapeResult.aquascape.filters}
-                        substrates={aquascapeResult.aquascape.substrates}
-                        additives={aquascapeResult.aquascape.additives}
-                        co2={aquascapeResult.aquascape.co2}
-                    />
+                    <EquipmentSection>
+                        {hasEquipment ? (
+                            <Grid.Row>
+                                {!!filters.length && (
+                                    <Grid.Item extraSmall={12} small={6} large={4}>
+                                        <FiltersCard>
+                                            {filters.map(filter => (
+                                                <Paragraph key={filter.id}>
+                                                    {filter.brand} {filter.model}
+                                                </Paragraph>
+                                            ))}
+                                        </FiltersCard>
+                                    </Grid.Item>
+                                )}
+                                {!!lights.length && (
+                                    <Grid.Item extraSmall={12} small={6} large={4}>
+                                        <LightsCard>
+                                            {lights.map(light => (
+                                                <Paragraph key={light.id}>
+                                                    {light.brand} {light.model}
+                                                </Paragraph>
+                                            ))}
+                                        </LightsCard>
+                                    </Grid.Item>
+                                )}
+                                {!!substrates.length && (
+                                    <Grid.Item extraSmall={12} small={6} large={4}>
+                                        <SubstratesCard>
+                                            {substrates.map(substrate => (
+                                                <Paragraph key={substrate.id}>
+                                                    {substrate.brand} {substrate.model}
+                                                </Paragraph>
+                                            ))}
+                                        </SubstratesCard>
+                                    </Grid.Item>
+                                )}
+                                {co2 && co2.type && !!co2.bps && (
+                                    <Grid.Item extraSmall={12} small={6} large={4}>
+                                        <EquipmentCard
+                                            title={
+                                                <FormattedMessage
+                                                    id="aquascape.equipment.co2"
+                                                    defaultMessage="CO2"
+                                                />
+                                            }
+                                            image={
+                                                <img
+                                                    src="/static/equipment/filter.png"
+                                                    alt="Filter"
+                                                />
+                                            }
+                                        >
+                                            <Paragraph>
+                                                <FormattedMessage
+                                                    id="aquascape.equipment.co2.type"
+                                                    defaultMessage="Type: {type}"
+                                                    values={{type: co2.type}}
+                                                />
+                                            </Paragraph>
+                                            <Paragraph>
+                                                <FormattedMessage
+                                                    id="aquascape.equipment.co2.type"
+                                                    defaultMessage="Bubbles per second: {bps}"
+                                                    values={{
+                                                        bps: co2.bps.toString(),
+                                                    }}
+                                                />
+                                            </Paragraph>
+                                        </EquipmentCard>
+                                    </Grid.Item>
+                                )}
+                                {!!additives.length && (
+                                    <Grid.Item extraSmall={12} small={6} large={4}>
+                                        <AdditivesCard>
+                                            {additives.map(additive => (
+                                                <Paragraph key={additive.id}>
+                                                    {additive.brand} {additive.model}
+                                                </Paragraph>
+                                            ))}
+                                        </AdditivesCard>
+                                    </Grid.Item>
+                                )}
+                            </Grid.Row>
+                        ) : (
+                            <Paragraph type="body" as="span">
+                                <FormattedMessage
+                                    id="aquascape.equipment.no_equipment"
+                                    defaultMessage="No equipment added"
+                                />
+                            </Paragraph>
+                        )}
+                    </EquipmentSection>
                 </Element>
 
                 <Divider />

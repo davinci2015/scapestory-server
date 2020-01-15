@@ -6,6 +6,22 @@ type Brand {
     address: String
 }
 
+type Filter {
+    brand: Brand
+}
+
+type Substrate {
+    brand: Brand
+}
+
+type Additive {
+    brand: Brand
+}
+
+type Light {
+    brand: Brand
+}
+
 type Query {
     brands: [Brand!]!
 }

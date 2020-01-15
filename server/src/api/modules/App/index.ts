@@ -34,8 +34,8 @@ export const AppModule = new GraphQLModule({
         SubstrateModule,
         AdditiveModule,
         FilterModule,
-        BrandModule,
         EquipmentModule,
+        BrandModule,
         AquascapeImageModule,
     ],
 })

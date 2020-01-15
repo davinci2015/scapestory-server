@@ -1,9 +1,6 @@
-#import "../Brand/schema.graphql"
-
 type Light {
     id: Int!
     predefined: Boolean!
-    brand: Brand
     model: String!
     width: Float
     height: Float

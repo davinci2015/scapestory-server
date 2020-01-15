@@ -30,7 +30,7 @@ const SubstrateEditContainer: React.FunctionComponent<Props> = ({
         <SubstratesCard>
             {substrates.map(substrate => (
                 <ListItem key={substrate.id} onDelete={() => onSubstrateDelete(substrate.id)}>
-                    {substrate.brand} {substrate.model}
+                    {substrate.brand?.name} {substrate.model}
                 </ListItem>
             ))}
             {allSubstrates && allSubstrates.substrates && (

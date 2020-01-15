@@ -7,7 +7,7 @@ import {User} from 'db/models/User'
 import {AuthenticationContext} from 'api/context'
 import {MutationFollowUserArgs, MutationUnfollowUserArgs} from 'api/generated/types'
 
-export const followResolvers = {
+export const resolvers = {
     User: {
         async isFollowedByMe(user: User, args, context: ModuleContext & AuthenticationContext) {
             if (!context.currentUserId || context.currentUserId === user.id) {
@@ -19,12 +19,12 @@ export const followResolvers = {
         },
         async followersCount(user: User, args, context) {
             const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
-            const { followers } = await provider.getFollows(user.id)
+            const {followers} = await provider.getFollows(user.id)
             return followers.length
         },
         async followingCount(user: User, args, context) {
             const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
-            const { following } = await provider.getFollows(user.id)
+            const {following} = await provider.getFollows(user.id)
             return following.length
         },
     },
@@ -48,7 +48,7 @@ export const followResolvers = {
     },
 }
 
-export const followResolversComposition = {
+export const resolversComposition = {
     'Mutation.followUser': [authenticate],
     'Mutation.unfollowUser': [authenticate],
 }

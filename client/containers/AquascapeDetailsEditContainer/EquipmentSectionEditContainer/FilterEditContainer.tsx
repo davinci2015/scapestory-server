@@ -30,7 +30,7 @@ const FilterEditContainer: React.FunctionComponent<Props> = ({
         <FiltersCard>
             {filters.map(filter => (
                 <ListItem key={filter.id} onDelete={() => onFilterDelete(filter.id)}>
-                    {filter.brand} {filter.model}
+                    {filter.brand?.name} {filter.model}
                 </ListItem>
             ))}
             {allFilters && allFilters.filters && (
