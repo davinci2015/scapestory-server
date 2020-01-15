@@ -5,6 +5,7 @@ import {EquipmentCard} from 'components/molecules'
 import {spaces} from 'styles'
 import {Grid} from 'components/core'
 import {Light, Filter, Substrate, Additive, Co2} from 'graphql/generated/types'
+import {LightsCard, FiltersCard, SubstratesCard, AdditivesCard} from './Cards'
 
 interface Props {
     lights: Pick<Light, 'id' | 'brand' | 'model'>[]
@@ -41,44 +42,24 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                         <Grid.Row>
                             {!!lights.length && (
                                 <Grid.Item extraSmall={12} small={6} large={4}>
-                                    <EquipmentCard
-                                        title={
-                                            <FormattedMessage
-                                                id="aquascape.equipment.lighting"
-                                                defaultMessage="Lighting"
-                                            />
-                                        }
-                                        image={
-                                            <img src="/static/equipment/filter.png" alt="Filter" />
-                                        }
-                                    >
+                                    <LightsCard>
                                         {lights.map(light => (
                                             <Paragraph key={light.id}>
                                                 {light.brand} {light.model}
                                             </Paragraph>
                                         ))}
-                                    </EquipmentCard>
+                                    </LightsCard>
                                 </Grid.Item>
                             )}
                             {!!filters.length && (
                                 <Grid.Item extraSmall={12} small={6} large={4}>
-                                    <EquipmentCard
-                                        title={
-                                            <FormattedMessage
-                                                id="aquascape.equipment.filtration"
-                                                defaultMessage="Filtration"
-                                            />
-                                        }
-                                        image={
-                                            <img src="/static/equipment/filter.png" alt="Filter" />
-                                        }
-                                    >
+                                    <FiltersCard>
                                         {filters.map(filter => (
                                             <Paragraph key={filter.id}>
                                                 {filter.brand} {filter.model}
                                             </Paragraph>
                                         ))}
-                                    </EquipmentCard>
+                                    </FiltersCard>
                                 </Grid.Item>
                             )}
                             {co2 && co2.type && !!co2.bps && (
@@ -115,44 +96,24 @@ const EquipmentSection: React.FunctionComponent<Props> = ({
                             )}
                             {!!substrates.length && (
                                 <Grid.Item extraSmall={12} small={6} large={4}>
-                                    <EquipmentCard
-                                        title={
-                                            <FormattedMessage
-                                                id="aquascape.equipment.substrate"
-                                                defaultMessage="Substrate"
-                                            />
-                                        }
-                                        image={
-                                            <img src="/static/equipment/filter.png" alt="Filter" />
-                                        }
-                                    >
+                                    <SubstratesCard>
                                         {substrates.map(substrate => (
                                             <Paragraph key={substrate.id}>
                                                 {substrate.brand} {substrate.model}
                                             </Paragraph>
                                         ))}
-                                    </EquipmentCard>
+                                    </SubstratesCard>
                                 </Grid.Item>
                             )}
                             {!!additives.length && (
                                 <Grid.Item extraSmall={12} small={6} large={4}>
-                                    <EquipmentCard
-                                        title={
-                                            <FormattedMessage
-                                                id="aquascape.equipment.additives"
-                                                defaultMessage="Additives"
-                                            />
-                                        }
-                                        image={
-                                            <img src="/static/equipment/filter.png" alt="Filter" />
-                                        }
-                                    >
+                                    <AdditivesCard>
                                         {additives.map(additive => (
                                             <Paragraph key={additive.id}>
                                                 {additive.brand} {additive.model}
                                             </Paragraph>
                                         ))}
-                                    </EquipmentCard>
+                                    </AdditivesCard>
                                 </Grid.Item>
                             )}
                         </Grid.Row>
