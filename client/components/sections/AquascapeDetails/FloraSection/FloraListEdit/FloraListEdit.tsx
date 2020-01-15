@@ -1,10 +1,9 @@
 import React, {ChangeEvent} from 'react'
 import {noop} from 'lodash'
 
-import {InputAutocomplete, Button, IconButton, Icon} from 'components/atoms'
-import {List} from 'components/molecules'
+import {InputAutocomplete, Button} from 'components/atoms'
+import {List, CardListItem} from 'components/molecules'
 import {matchItemToValue} from 'utils/general'
-import {colors, spaces, borderRadius} from 'styles'
 
 interface EntityType {
     id: number
@@ -38,60 +37,36 @@ const FloraListEdit: React.FunctionComponent<Props> = ({
     entities = [],
     allEntities = [],
 }) => (
-    <>
-        <List icon={icon} title={title}>
-            {entities.length ? (
-                entities.map(entity => (
-                    <List.Item key={entity.id}>
-                        <div className="item">
-                            {entity.name}
-                            <IconButton onClick={() => removeEntity(entity.id)}>
-                                <Icon d={Icon.BIN} color={colors.PRIMARY} />
-                            </IconButton>
-                        </div>
-                    </List.Item>
-                ))
-            ) : (
-                <List.Item>{noEntityText}</List.Item>
+    <List icon={icon} title={title}>
+        {entities.length ? (
+            entities.map(entity => (
+                <List.Item key={entity.id}>
+                    <CardListItem onDelete={() => removeEntity(entity.id)}>
+                        {entity.name}
+                    </CardListItem>
+                </List.Item>
+            ))
+        ) : (
+            <List.Item>{noEntityText}</List.Item>
+        )}
+
+        <InputAutocomplete
+            value={inputValue}
+            getItemValue={item => item.name}
+            shouldItemRender={(item, value) => matchItemToValue(item.name, value)}
+            renderItem={(item, isHighlighted) => (
+                <div key={item.id} style={{background: isHighlighted ? 'lightblue' : 'white'}}>
+                    {item.name}
+                </div>
             )}
-
-            <InputAutocomplete
-                value={inputValue}
-                getItemValue={item => item.name}
-                shouldItemRender={(item, value) => matchItemToValue(item.name, value)}
-                renderItem={(item, isHighlighted) => (
-                    <div key={item.id} style={{background: isHighlighted ? 'lightblue' : 'white'}}>
-                        {item.name}
-                    </div>
-                )}
-                onChange={onEntityInputChange}
-                onSelect={onEntitySelect}
-                items={allEntities.filter(entity => !entities.some(x => x.name === entity.name))}
-            />
-            <Button dimensions="extraSmall" onClick={addEntity}>
-                {addEntityText}
-            </Button>
-        </List>
-        <style jsx>{`
-            .item {
-                display: flex;
-                align-items: center;
-                padding: ${spaces.s4} ${spaces.s12};
-                margin-left: -${spaces.s12};
-
-                border-radius: ${borderRadius.TERTIARY};
-                transition: background-color 100ms ease-in-out;
-            }
-
-            .item:hover {
-                background-color: ${colors.PRIMARY_LIGHT};
-            }
-
-            .item :global(.${IconButton.classes.root}) {
-                margin-left: ${spaces.s8};
-            }
-        `}</style>
-    </>
+            onChange={onEntityInputChange}
+            onSelect={onEntitySelect}
+            items={allEntities.filter(entity => !entities.some(x => x.name === entity.name))}
+        />
+        <Button dimensions="extraSmall" onClick={addEntity}>
+            {addEntityText}
+        </Button>
+    </List>
 )
 
 export default FloraListEdit
