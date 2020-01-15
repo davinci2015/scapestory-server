@@ -1,8 +1,7 @@
-import React, {ChangeEvent, useState} from 'react'
+import React from 'react'
 import {useMutation, useQuery} from 'react-apollo'
 
 import {AquascapeDetailsQuery, PlantsQuery} from 'graphql/generated/queries'
-import {Plant} from 'graphql/generated/types'
 import {
     AddPlantMutation,
     AddPlantMutationVariables,
@@ -18,18 +17,18 @@ import {
     updateAquascapeEditCache,
     AquascapeEditActions,
 } from 'containers/AquascapeDetailsEditContainer/cache'
-import FloraListEdit from 'components/sections/AquascapeDetails/FloraSection/FloraListEdit'
+import FloraListEdit, {
+    FloraEntityType,
+} from 'components/sections/AquascapeDetails/FloraSection/FloraListEdit'
 import {Icon, FormattedMessage} from 'components/atoms'
 import {colors} from 'styles'
+import {ValueType} from 'react-select'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
 }
 
 const PlantsSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
-    const [plantInput, setPlantInput] = useState('')
-    const [selectedPlant, setSelectedPlant] = useState<Pick<Plant, 'id' | 'name'> | null>()
-
     if (!aquascape) return null
 
     const {data: plantsResult} = useQuery<PlantsQuery>(PLANTS)
@@ -49,44 +48,30 @@ const PlantsSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => 
         }
     )
 
-    const onPlantInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setPlantInput(e.target.value)
-        setSelectedPlant(null)
-    }
-
-    const onPlantSelect = (value: string, plant: Pick<Plant, 'id' | 'name'>) => {
-        setSelectedPlant(plant)
-        setPlantInput(value)
-    }
-
-    const resetFields = () => {
-        setSelectedPlant(null)
-        setPlantInput('')
-    }
-
-    const addPlant = () => {
-        if (!plantInput || plantInput === '') return
-        const plantName = plantInput.trim()
-
-        const plantId =
-            selectedPlant && selectedPlant.name.toLowerCase() === plantName.toLowerCase()
-                ? selectedPlant.id
-                : undefined
-
-        resetFields()
-        addPlantMutation({
+    const removePlant = (plantId: number) => {
+        removePlantMutation({
             variables: {
                 plantId,
-                name: plantName,
                 aquascapeId: aquascape.id,
             },
         })
     }
 
-    const removePlant = (plantId: number) => {
-        removePlantMutation({
+    const onPlantSelect = (plant: ValueType<FloraEntityType>) => {
+        addPlantMutation({
             variables: {
-                plantId,
+                plantId: (plant as FloraEntityType).id,
+                aquascapeId: aquascape.id,
+            },
+        })
+    }
+
+    const onPlantCreate = (value: string) => {
+        if (!value || value.trim() === '') return
+
+        addPlantMutation({
+            variables: {
+                name: value.trim(),
                 aquascapeId: aquascape.id,
             },
         })
@@ -104,19 +89,11 @@ const PlantsSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => 
                     defaultMessage="No plants added"
                 />
             }
-            inputValue={plantInput}
             entities={aquascape.plants}
             allEntities={plantsResult?.plants}
-            addEntity={addPlant}
             removeEntity={removePlant}
-            onEntityInputChange={onPlantInputChange}
+            onEntityCreate={onPlantCreate}
             onEntitySelect={onPlantSelect}
-            addEntityText={
-                <FormattedMessage
-                    id="aquascape.flora_and_fauna.add_plant"
-                    defaultMessage="Add plant"
-                />
-            }
         />
     )
 }

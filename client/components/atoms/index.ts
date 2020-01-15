@@ -1,5 +1,5 @@
 export {default as Input} from './Input'
-export {default as InputAutocomplete} from './InputAutocomplete'
+export {default as SelectCreatable} from './SelectCreatable'
 export {default as Textarea} from './Textarea'
 export {default as InputAdornment} from './InputAdornment'
 export {default as PasswordInput} from './PasswordInput'

@@ -1,8 +1,7 @@
-import React, {ChangeEvent, useState} from 'react'
+import React from 'react'
 import {useMutation, useQuery} from 'react-apollo'
 
 import {AquascapeDetailsQuery} from 'graphql/generated/queries'
-import {Plant} from 'graphql/generated/types'
 import {LIVESTOCK} from 'containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/LivestockSectionContainer/queries'
 import {
     updateAquascapeEditCache,
@@ -14,16 +13,16 @@ import {
 } from 'containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/LivestockSectionContainer/mutations'
 import {Icon, FormattedMessage} from 'components/atoms'
 import {colors} from 'styles'
-import FloraListEdit from 'components/sections/AquascapeDetails/FloraSection/FloraListEdit'
+import FloraListEdit, {
+    FloraEntityType,
+} from 'components/sections/AquascapeDetails/FloraSection/FloraListEdit'
+import {ValueType} from 'react-select'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
 }
 
 const LivestockSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
-    const [livestockInput, setLivestockInput] = useState('')
-    const [selectedLivestock, setSelectedLivestock] = useState<Pick<Plant, 'id' | 'name'> | null>()
-
     if (!aquascape) return null
 
     const {data: livestockResult} = useQuery(LIVESTOCK)
@@ -40,45 +39,30 @@ const LivestockSectionContainer: React.FunctionComponent<Props> = ({aquascape}) 
         }),
     })
 
-    const onLivestockInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setLivestockInput(e.target.value)
-        setSelectedLivestock(null)
-    }
-
-    const onLivestockSelect = (value: string, plant: Pick<Plant, 'id' | 'name'>) => {
-        setSelectedLivestock(plant)
-        setLivestockInput(value)
-    }
-
-    const resetFields = () => {
-        setSelectedLivestock(null)
-        setLivestockInput('')
-    }
-
-    const addLivestock = () => {
-        if (!livestockInput || livestockInput === '') return
-        const livestockName = livestockInput.trim()
-
-        const livestockId =
-            selectedLivestock &&
-            selectedLivestock.name.toLowerCase() === livestockName.toLowerCase()
-                ? selectedLivestock.id
-                : undefined
-
-        resetFields()
-        addLivestockMutation({
+    const removeLivestock = (livestockId: number) => {
+        removeLivestockMutation({
             variables: {
                 livestockId,
-                name: livestockName,
                 aquascapeId: aquascape.id,
             },
         })
     }
 
-    const removeLivestock = (livestockId: number) => {
-        removeLivestockMutation({
+    const onLivestockSelect = (livestock: ValueType<FloraEntityType>) => {
+        addLivestockMutation({
             variables: {
-                livestockId,
+                livestockId: (livestock as FloraEntityType).id,
+                aquascapeId: aquascape.id,
+            },
+        })
+    }
+
+    const onLivestockCreate = (value: string) => {
+        if (!value || value.trim() === '') return
+
+        addLivestockMutation({
+            variables: {
+                name: value.trim(),
                 aquascapeId: aquascape.id,
             },
         })
@@ -99,19 +83,11 @@ const LivestockSectionContainer: React.FunctionComponent<Props> = ({aquascape}) 
                     defaultMessage="No livestock added"
                 />
             }
-            inputValue={livestockInput}
             entities={aquascape.livestock}
             allEntities={livestockResult?.livestock}
-            addEntity={addLivestock}
             removeEntity={removeLivestock}
-            onEntityInputChange={onLivestockInputChange}
             onEntitySelect={onLivestockSelect}
-            addEntityText={
-                <FormattedMessage
-                    id="aquascape.flora_and_fauna.add_livestock"
-                    defaultMessage="Add livestock"
-                />
-            }
+            onEntityCreate={onLivestockCreate}
         />
     )
 }
