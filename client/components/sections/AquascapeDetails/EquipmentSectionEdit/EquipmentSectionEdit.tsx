@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {FormattedMessage, Headline, Paragraph} from 'components/atoms'
-import {EquipmentCard} from 'components/molecules'
+import {EquipmentCard, ListItem} from 'components/molecules'
 import {spaces} from 'styles'
 import {Grid} from 'components/core'
 import {Light, Filter, Substrate, Additive, Co2} from 'graphql/generated/types'
@@ -20,7 +20,6 @@ const EquipmentSectionEdit: React.FunctionComponent<Props> = ({
     filters = [],
     substrates = [],
     additives = [],
-    co2,
 }) => {
     return (
         <>
@@ -39,18 +38,18 @@ const EquipmentSectionEdit: React.FunctionComponent<Props> = ({
                         <Grid.Item extraSmall={12} small={6} large={4}>
                             <LightsCard>
                                 {lights.map(light => (
-                                    <Paragraph key={light.id}>
+                                    <ListItem key={light.id} onDelete={() => null}>
                                         {light.brand} {light.model}
-                                    </Paragraph>
+                                    </ListItem>
                                 ))}
                             </LightsCard>
                         </Grid.Item>
                         <Grid.Item extraSmall={12} small={6} large={4}>
                             <FiltersCard>
                                 {filters.map(filter => (
-                                    <Paragraph key={filter.id}>
+                                    <ListItem key={filter.id} onDelete={() => null}>
                                         {filter.brand} {filter.model}
-                                    </Paragraph>
+                                    </ListItem>
                                 ))}
                             </FiltersCard>
                         </Grid.Item>
@@ -71,18 +70,18 @@ const EquipmentSectionEdit: React.FunctionComponent<Props> = ({
                         <Grid.Item extraSmall={12} small={6} large={4}>
                             <SubstratesCard>
                                 {substrates.map(substrate => (
-                                    <Paragraph key={substrate.id}>
+                                    <ListItem key={substrate.id} onDelete={() => null}>
                                         {substrate.brand} {substrate.model}
-                                    </Paragraph>
+                                    </ListItem>
                                 ))}
                             </SubstratesCard>
                         </Grid.Item>
                         <Grid.Item extraSmall={12} small={6} large={4}>
                             <AdditivesCard>
                                 {additives.map(additive => (
-                                    <Paragraph key={additive.id}>
+                                    <ListItem key={additive.id} onDelete={() => null}>
                                         {additive.brand} {additive.model}
-                                    </Paragraph>
+                                    </ListItem>
                                 ))}
                             </AdditivesCard>
                         </Grid.Item>

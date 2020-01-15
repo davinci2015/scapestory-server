@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react'
 import {noop} from 'lodash'
 
 import {InputAutocomplete, Button} from 'components/atoms'
-import {List, CardListItem} from 'components/molecules'
+import {List, ListItem} from 'components/molecules'
 import {matchItemToValue} from 'utils/general'
 
 interface EntityType {
@@ -40,14 +40,12 @@ const FloraListEdit: React.FunctionComponent<Props> = ({
     <List icon={icon} title={title}>
         {entities.length ? (
             entities.map(entity => (
-                <List.Item key={entity.id}>
-                    <CardListItem onDelete={() => removeEntity(entity.id)}>
-                        {entity.name}
-                    </CardListItem>
-                </List.Item>
+                <ListItem key={entity.id} onDelete={() => removeEntity(entity.id)}>
+                    {entity.name}
+                </ListItem>
             ))
         ) : (
-            <List.Item>{noEntityText}</List.Item>
+            <ListItem>{noEntityText}</ListItem>
         )}
 
         <InputAutocomplete

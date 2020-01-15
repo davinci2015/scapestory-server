@@ -1,5 +1,5 @@
 import React from 'react'
-import {List, CardListItem} from 'components/molecules'
+import {List, ListItem} from 'components/molecules'
 
 interface EntityType {
     id: number
@@ -16,13 +16,9 @@ interface Props {
 const FloraList: React.FunctionComponent<Props> = ({title, icon, noEntityText, entities = []}) => (
     <List icon={icon} title={title}>
         {entities.length ? (
-            entities.map(entity => (
-                <List.Item key={entity.id}>
-                    <CardListItem>{entity.name}</CardListItem>
-                </List.Item>
-            ))
+            entities.map(entity => <ListItem key={entity.id}>{entity.name}</ListItem>)
         ) : (
-            <List.Item>{noEntityText}</List.Item>
+            <ListItem>{noEntityText}</ListItem>
         )}
     </List>
 )

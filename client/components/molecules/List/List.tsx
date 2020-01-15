@@ -2,10 +2,8 @@ import React from 'react'
 import {Headline} from 'components/atoms'
 import {colors, typography, spaces} from 'styles'
 
-import Item from './Item'
-
 interface Props {
-    icon: React.ReactNode
+    icon?: React.ReactNode
     title: React.ReactNode
     children: React.ReactNode
 }
@@ -56,6 +54,5 @@ const List = ({children, icon, title}: Props) => (
 )
 
 List.classes = classes
-List.Item = Item
 
 export default List

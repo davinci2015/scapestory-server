@@ -8,14 +8,14 @@ import {Divider} from 'components/atoms'
 import {Grid, Content} from 'components/core'
 import {SubNavigation} from 'components/molecules'
 import {AuthContext} from 'providers/AuthenticationProvider'
-import {EquipmentSection} from 'components/sections/AquascapeDetails'
 import {AquascapeDetailsQuery, AquascapeDetailsQueryVariables} from 'graphql/generated/queries'
 import routes from 'routes'
 
 import {AQUASCAPE_DETAILS_EDIT} from './queries'
-import HeroSectionEditContainer from './HeroSectionEditContainer'
+import HeroSectionEditContainer from 'containers/AquascapeDetailsEditContainer/HeroSectionEditContainer'
 import FloraSectionEditContainer from 'containers/AquascapeDetailsEditContainer/FloraSectionEditContainer'
-import PhotoSectionEditContainer from './PhotoSectionEditContainer'
+import PhotoSectionEditContainer from 'containers/AquascapeDetailsEditContainer/PhotoSectionEditContainer'
+import EquipmentSectionEditContainer from 'containers/AquascapeDetailsEditContainer/EquipmentSectionEditContainer'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -111,13 +111,7 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
                 <Divider />
 
                 <Element name={sections.EQUIPMENT}>
-                    <EquipmentSection
-                        lights={aquascapeResult.aquascape.lights}
-                        filters={aquascapeResult.aquascape.filters}
-                        substrates={aquascapeResult.aquascape.substrates}
-                        additives={aquascapeResult.aquascape.additives}
-                        co2={aquascapeResult.aquascape.co2}
-                    />
+                    <EquipmentSectionEditContainer aquascape={aquascapeResult.aquascape} />
                 </Element>
             </Grid>
         </Content>
