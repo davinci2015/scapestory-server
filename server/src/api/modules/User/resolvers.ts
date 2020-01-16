@@ -9,13 +9,10 @@ import {QueryUserArgs, QueryUserBySlugArgs} from 'api/generated/types'
 export const resolvers = {
     Query: {
         async me(root, args, context: ModuleContext & AuthenticationContext) {
-            console.log('me ------------------------------------------')
             const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
             return await provider.findUserById(context.currentUserId)
         },
         async user(root, args: QueryUserArgs, {injector}: ModuleContext) {
-            console.log('user ------------------------------------------')
-
             const provider: UsersProviderInterface = injector.get(tokens.USER_PROVIDER)
             return await provider.findUserById(args.id)
         },

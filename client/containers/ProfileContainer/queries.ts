@@ -10,8 +10,12 @@ export const USER_BY_SLUG = gql`
             name
             country
             profileImage
-            youtubeLink
-            instagramLink
+            profileImagePublicId
+            coverImage
+            coverImagePublicId
+            youtubeUrl
+            instagramUrl
+            twitterUrl
             followersCount
             followingCount
             isFollowedByMe

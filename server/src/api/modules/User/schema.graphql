@@ -3,10 +3,15 @@ type User {
     email: String!
     slug: String!
     name: String!
+    description: String
     profileImage: String
+    profileImagePublicId: String
+    coverImage: String
+    coverImagePublicId: String
     country: String
-    youtubeLink: String
-    instagramLink: String
+    youtubeUrl: String
+    instagramUrl: String
+    twitterUrl: String
     createdAt: String!
     updatedAt: String!
 }

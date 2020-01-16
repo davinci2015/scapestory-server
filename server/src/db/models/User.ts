@@ -20,16 +20,31 @@ export class User extends Model<User> {
     name: string
 
     @Column
+    description: string
+
+    @Column
     profileImage: string
+
+    @Column
+    profileImagePublicId: string
+
+    @Column
+    coverImage: string
+
+    @Column
+    coverImagePublicId: string
 
     @Column
     country: string
 
     @Column
-    youtubeLink: string
+    youtubeUrl: string
 
     @Column
-    instagramLink: string
+    instagramUrl: string
+
+    @Column
+    twitterUrl: string
 
     @HasMany(() => SocialLogin)
     social: SocialLogin[]

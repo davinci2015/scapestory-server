@@ -213,7 +213,8 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                                         <FiltersCard>
                                             {filters.map(filter => (
                                                 <Paragraph key={filter.id}>
-                                                    {filter.brand} {filter.model}
+                                                    {filter.brand?.name}
+                                                    {filter.model}
                                                 </Paragraph>
                                             ))}
                                         </FiltersCard>
@@ -224,7 +225,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                                         <LightsCard>
                                             {lights.map(light => (
                                                 <Paragraph key={light.id}>
-                                                    {light.brand} {light.model}
+                                                    {light.brand?.name} {light.model}
                                                 </Paragraph>
                                             ))}
                                         </LightsCard>
@@ -235,7 +236,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                                         <SubstratesCard>
                                             {substrates.map(substrate => (
                                                 <Paragraph key={substrate.id}>
-                                                    {substrate.brand} {substrate.model}
+                                                    {substrate.brand?.name} {substrate.model}
                                                 </Paragraph>
                                             ))}
                                         </SubstratesCard>
@@ -281,7 +282,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                                         <AdditivesCard>
                                             {additives.map(additive => (
                                                 <Paragraph key={additive.id}>
-                                                    {additive.brand} {additive.model}
+                                                    {additive.brand?.name} {additive.model}
                                                 </Paragraph>
                                             ))}
                                         </AdditivesCard>
