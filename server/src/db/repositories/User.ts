@@ -4,6 +4,7 @@ import {Injectable} from '@graphql-modules/di'
 import {User} from 'db/models/User'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
+import {UserDetails} from 'graphql/generated/types'
 
 export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
     findUserById(id: number): Promise<User | null>
@@ -11,6 +12,7 @@ export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
     findUserBySlug(slug: string): Promise<User | null>
     updateProfileImage(userId: number, publicId: string, url: string): Promise<[number, User[]]>
     updateCoverImage(userId: number, publicId: string, url: string): Promise<[number, User[]]>
+    updateUserDetails(userId: number, userDetails: UserDetails): Promise<[number, User[]]>
 }
 
 @Injectable()
@@ -52,6 +54,10 @@ export class UserRepository extends BaseRepository<User> implements UserReposito
             },
             {where: {id: userId}}
         )
+    }
+
+    updateUserDetails(userId: number, userDetails: UserDetails) {
+        return this.update(userDetails, {where: {id: userId}})
     }
 
     private batchGetUserById = async (ids: number[]) => {

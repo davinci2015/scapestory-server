@@ -6,11 +6,11 @@ import {authenticate} from 'api/guards'
 import {tokens} from 'di/tokens'
 import {QueryUserArgs, QueryUserBySlugArgs} from 'api/generated/types'
 import {UserInputError} from 'apollo-server'
-
-enum ImageVariant {
-    PROFILE = 'PROFILE',
-    COVER = 'COVER',
-}
+import {
+    MutationUploadUserImageArgs,
+    ImageVariant,
+    MutationUpdateUserDetailsArgs,
+} from 'graphql/generated/types'
 
 export const resolvers = {
     Query: {
@@ -32,19 +32,34 @@ export const resolvers = {
         },
     },
     Mutation: {
-        async uploadUserImage(root, args, context: ModuleContext & AuthenticationContext) {
+        async uploadUserImage(
+            root,
+            args: MutationUploadUserImageArgs,
+            context: ModuleContext & AuthenticationContext
+        ) {
             const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
 
-            if (args.imageVariant === ImageVariant.PROFILE) {
-                provider.uploadProfileImage(context.currentUserId, args.file)
-            } else if (args.imageVariant === ImageVariant.COVER) {
-                provider.uploadCoverImage(context.currentUserId, args.file)
+            if (args.imageVariant === ImageVariant.Profile) {
+                return await provider.uploadProfileImage(context.currentUserId, args.file)
+            } else if (args.imageVariant === ImageVariant.Cover) {
+                return await provider.uploadCoverImage(context.currentUserId, args.file)
             } else {
                 throw new UserInputError('Wrong image variant provided')
             }
         },
-        async updateUserDetails(root, args, context: ModuleContext & AuthenticationContext) {
-            // TODO
+        async updateUserDetails(
+            root,
+            args: MutationUpdateUserDetailsArgs,
+            context: ModuleContext & AuthenticationContext
+        ) {
+            const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
+            const [_, user] = await provider.updateUserDetails(context.currentUserId, args.details)
+
+            if (!user) {
+                throw new UserInputError('Updating user details error')
+            }
+
+            return user
         },
     },
 }
