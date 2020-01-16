@@ -20,7 +20,7 @@ export class User extends Model<User> {
     name: string
 
     @Column
-    description: string
+    about: string
 
     @Column
     profileImage: string

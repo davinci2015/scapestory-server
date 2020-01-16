@@ -9,6 +9,8 @@ export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
     findUserById(id: number): Promise<User | null>
     findUserByEmail(email: string): Promise<User | null>
     findUserBySlug(slug: string): Promise<User | null>
+    updateProfileImage(userId: number, publicId: string, url: string): Promise<[number, User[]]>
+    updateCoverImage(userId: number, publicId: string, url: string): Promise<[number, User[]]>
 }
 
 @Injectable()
@@ -30,6 +32,26 @@ export class UserRepository extends BaseRepository<User> implements UserReposito
 
     findUserBySlug(slug: string): Promise<User | null> {
         return this.findOne({where: {slug}})
+    }
+
+    updateProfileImage(userId: number, publicId: string, url: string) {
+        return this.update(
+            {
+                profileImageUrl: url,
+                profileImagePublicId: publicId,
+            },
+            {where: {id: userId}}
+        )
+    }
+
+    updateCoverImage(userId: number, publicId: string, url: string) {
+        return this.update(
+            {
+                coverImageUrl: url,
+                coverImagePublicId: publicId,
+            },
+            {where: {id: userId}}
+        )
     }
 
     private batchGetUserById = async (ids: number[]) => {

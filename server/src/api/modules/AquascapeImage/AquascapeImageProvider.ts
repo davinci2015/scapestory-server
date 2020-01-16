@@ -8,7 +8,6 @@ import {AquascapeImageRepository} from 'db/repositories/AquascapeImage'
 
 export interface AquascapeImageProviderInterface {
     addAquascapeImage: (aquascapeId: number, file: Promise<FileUpload>) => Promise<AquascapeImage>
-
     deleteAquascapeImage: (aquascapeId: number, imageId: number) => Promise<number>
 }
 
@@ -16,18 +15,24 @@ export interface AquascapeImageProviderInterface {
 export class AquascapeImageProvider implements AquascapeImageProviderInterface {
     constructor(
         @Inject(tokens.AQUASCAPE_IMAGE_REPOSITORY)
-        private aquascapeImageRepository: AquascapeImageRepository,
+        private aquascapeImageRepository: AquascapeImageRepository
     ) {}
 
     async addAquascapeImage(aquascapeId: number, file: Promise<FileUpload>) {
-        const { createReadStream, filename } = await file
+        const {createReadStream, filename} = await file
         const result = await uploadStreamFile(createReadStream, filename)
 
-        return await this.aquascapeImageRepository.addImage(aquascapeId, result.public_id, result.secure_url)
+        return await this.aquascapeImageRepository.addImage(
+            aquascapeId,
+            result.public_id,
+            result.secure_url
+        )
     }
 
     async deleteAquascapeImage(aquascapeId: number, imageId: number) {
-        const image = await this.aquascapeImageRepository.findOne({where: {aquascapeId, id: imageId}})
+        const image = await this.aquascapeImageRepository.findOne({
+            where: {aquascapeId, id: imageId},
+        })
 
         // Image not found
         if (!image) {

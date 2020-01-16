@@ -5,6 +5,12 @@ import {AuthenticationContext} from 'api/context'
 import {authenticate} from 'api/guards'
 import {tokens} from 'di/tokens'
 import {QueryUserArgs, QueryUserBySlugArgs} from 'api/generated/types'
+import {UserInputError} from 'apollo-server'
+
+enum ImageVariant {
+    PROFILE = 'PROFILE',
+    COVER = 'COVER',
+}
 
 export const resolvers = {
     Query: {
@@ -25,8 +31,26 @@ export const resolvers = {
             return await provider.getAllUsers()
         },
     },
+    Mutation: {
+        async uploadUserImage(root, args, context: ModuleContext & AuthenticationContext) {
+            const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
+
+            if (args.imageVariant === ImageVariant.PROFILE) {
+                provider.uploadProfileImage(context.currentUserId, args.file)
+            } else if (args.imageVariant === ImageVariant.COVER) {
+                provider.uploadCoverImage(context.currentUserId, args.file)
+            } else {
+                throw new UserInputError('Wrong image variant provided')
+            }
+        },
+        async updateUserDetails(root, args, context: ModuleContext & AuthenticationContext) {
+            // TODO
+        },
+    },
 }
 
 export const resolversComposition = {
     'Query.me': [authenticate],
+    'Mutation.uploadUserImage': [authenticate],
+    'Mutation.updateUserDetails': [authenticate],
 }

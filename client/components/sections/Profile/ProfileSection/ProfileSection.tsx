@@ -1,3 +1,5 @@
+import React from 'react'
+
 import {UserBySlugQuery} from 'graphql/generated/queries'
 
 interface Props {

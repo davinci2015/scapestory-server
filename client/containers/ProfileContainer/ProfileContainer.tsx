@@ -1,6 +1,7 @@
-import {useContext} from 'react'
+import React, {useContext} from 'react'
 import {useRouter} from 'next/router'
 import {useQuery, useMutation} from 'react-apollo'
+
 import {USER_BY_SLUG} from 'containers/ProfileContainer/queries'
 import {UserBySlugQuery, UserBySlugQueryVariables} from 'graphql/generated/queries'
 import {
