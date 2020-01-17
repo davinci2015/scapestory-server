@@ -3,7 +3,7 @@ type User {
     email: String!
     slug: String!
     name: String!
-    description: String
+    about: String
     profileImage: String
     profileImagePublicId: String
     coverImage: String

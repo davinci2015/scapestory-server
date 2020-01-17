@@ -9,6 +9,7 @@ import {getUserName} from 'utils/mappers'
 import {AquascapeDetailsLink} from 'components/core'
 import {useRouter} from 'next/router'
 import routes, {createDynamicPath} from 'routes'
+import {UserWidgetSize, UserWidgetVariant} from 'components/molecules/UserWidget/UserWidget'
 
 interface Props {
     aquascape: FeaturedAquascapesQuery['featured']
@@ -57,8 +58,8 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
                                     {aquascape.user && (
                                         <UserWidget
                                             onClick={redirectToProfile}
-                                            size="large"
-                                            variant="border"
+                                            size={UserWidgetSize.s36}
+                                            variant={UserWidgetVariant.BORDER}
                                             image={aquascape.user.profileImage}
                                             text={
                                                 <Paragraph type="body" color={colors.WHITE}>

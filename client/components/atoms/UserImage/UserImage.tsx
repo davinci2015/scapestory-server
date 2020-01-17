@@ -8,39 +8,56 @@ const classes = {
     root: 'userImage',
 }
 
+export enum UserImageSize {
+    s24,
+    s36,
+    s148,
+}
+
+export enum UserImageVariant {
+    DEFAULT,
+    BORDER,
+}
+
 interface Props {
     image?: string | null
-    size?: 'default' | 'large'
-    variant?: 'default' | 'border'
+    size?: UserImageSize
+    variant?: UserImageVariant
+}
+
+const sizeMapping = {
+    [UserImageSize.s24]: '24px',
+    [UserImageSize.s36]: '36px',
+    [UserImageSize.s148]: '148px',
+}
+
+const borderSizeMapping = {
+    [UserImageSize.s24]: '1px',
+    [UserImageSize.s36]: '1px',
+    [UserImageSize.s148]: '3px',
 }
 
 const UserImage = ({
     image = '/static/placeholders/user.png',
-    size = 'default',
-    variant = 'default',
+    size = UserImageSize.s24,
+    variant = UserImageVariant.DEFAULT,
 }: Props) => (
     <>
         <div
             className={classnames(classes.root, {
-                large: size === 'large',
-                border: variant === 'border',
+                border: variant === UserImageVariant.BORDER,
             })}
         ></div>
         <style jsx>{`
             .${classes.root} {
-                width: 24px;
-                height: 24px;
+                width: ${sizeMapping[size]};
+                height: ${sizeMapping[size]};
                 border-radius: 50%;
                 ${backgroundImage(image || '')}
             }
 
-            .large {
-                width: 36px;
-                height: 36px;
-            }
-
             .border {
-                border: 1px solid ${colors.WHITE};
+                border: ${borderSizeMapping[size]} solid ${colors.WHITE};
             }
         `}</style>
     </>

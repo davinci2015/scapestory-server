@@ -4,7 +4,7 @@ import {tokens} from 'di/tokens'
 import {authenticate, authorizeAquascapeUpdate} from 'api/guards'
 import {Filter, Light, Substrate, Additive} from 'db/models'
 import {EquipmentProviderInterface} from './EquipmentProvider'
-import {MutationAddEquipmentArgs, MutationRemoveEquipmentArgs} from 'graphql/generated/types'
+import {MutationAddEquipmentArgs, MutationRemoveEquipmentArgs} from 'interfaces/graphql/types'
 
 enum EquipmentType {
     FILTER = 'FILTER',

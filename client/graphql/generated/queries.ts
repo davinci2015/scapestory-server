@@ -9,14 +9,14 @@ export type Scalars = {
   Upload: any,
 };
 
-export type Additive = {
+export type Additive = Equipment & {
    __typename?: 'Additive',
   id: Scalars['Int'],
   predefined: Scalars['Boolean'],
-  brand?: Maybe<Brand>,
   model: Scalars['String'],
   description?: Maybe<Scalars['String']>,
   image?: Maybe<Scalars['String']>,
+  brand?: Maybe<Brand>,
 };
 
 export type Aquascape = {
@@ -113,13 +113,12 @@ export enum CommentEntityType {
 }
 
 export type Equipment = {
-   __typename?: 'Equipment',
   id: Scalars['Int'],
   predefined: Scalars['Boolean'],
-  brand?: Maybe<Brand>,
   model: Scalars['String'],
   description?: Maybe<Scalars['String']>,
   image?: Maybe<Scalars['String']>,
+  brand?: Maybe<Brand>,
 };
 
 export type EquipmentArgs = {
@@ -135,14 +134,14 @@ export enum EquipmentType {
   Additives = 'ADDITIVES'
 }
 
-export type Filter = {
+export type Filter = Equipment & {
    __typename?: 'Filter',
   id: Scalars['Int'],
   predefined: Scalars['Boolean'],
-  brand?: Maybe<Brand>,
   model: Scalars['String'],
   description?: Maybe<Scalars['String']>,
   image?: Maybe<Scalars['String']>,
+  brand?: Maybe<Brand>,
 };
 
 export type Follow = {
@@ -171,11 +170,21 @@ export type Hardscape = {
   image?: Maybe<Scalars['String']>,
 };
 
-export type Light = {
+export type ImageUploadResult = {
+   __typename?: 'ImageUploadResult',
+  imageUrl: Scalars['String'],
+  imagePublicId: Scalars['String'],
+};
+
+export enum ImageVariant {
+  Profile = 'PROFILE',
+  Cover = 'COVER'
+}
+
+export type Light = Equipment & {
    __typename?: 'Light',
   id: Scalars['Int'],
   predefined: Scalars['Boolean'],
-  brand?: Maybe<Brand>,
   model: Scalars['String'],
   width?: Maybe<Scalars['Float']>,
   height?: Maybe<Scalars['Float']>,
@@ -188,6 +197,7 @@ export type Light = {
   dimmable?: Maybe<Scalars['Boolean']>,
   description?: Maybe<Scalars['String']>,
   image?: Maybe<Scalars['String']>,
+  brand?: Maybe<Brand>,
 };
 
 export type Like = {
@@ -221,6 +231,10 @@ export type MainImageUploadResult = {
 
 export type Mutation = {
    __typename?: 'Mutation',
+  uploadUserImage: ImageUploadResult,
+  updateUserDetails?: Maybe<User>,
+  addEquipment: Equipment,
+  removeEquipment?: Maybe<Equipment>,
   addLight: Light,
   removeLight?: Maybe<Light>,
   addPlant: Plant,
@@ -245,8 +259,29 @@ export type Mutation = {
   fbRegister?: Maybe<AuthPayload>,
   googleRegister?: Maybe<AuthPayload>,
   visitAquascape: VisitAquascapeResult,
-  addEquipment: Equipment,
-  removeEquipment?: Maybe<Equipment>,
+};
+
+
+export type MutationUploadUserImageArgs = {
+  file: Scalars['Upload'],
+  imageVariant: ImageVariant
+};
+
+
+export type MutationUpdateUserDetailsArgs = {
+  details: UserDetails
+};
+
+
+export type MutationAddEquipmentArgs = {
+  equipment: EquipmentArgs,
+  aquascapeId: Scalars['Int']
+};
+
+
+export type MutationRemoveEquipmentArgs = {
+  equipment: EquipmentArgs,
+  aquascapeId: Scalars['Int']
 };
 
 
@@ -387,18 +422,6 @@ export type MutationVisitAquascapeArgs = {
   aquascapeId: Scalars['Int']
 };
 
-
-export type MutationAddEquipmentArgs = {
-  equipment: EquipmentArgs,
-  aquascapeId: Scalars['Int']
-};
-
-
-export type MutationRemoveEquipmentArgs = {
-  equipment: EquipmentArgs,
-  aquascapeId: Scalars['Int']
-};
-
 export type Pagination = {
   limit: Scalars['Int'],
   cursor?: Maybe<Scalars['String']>,
@@ -426,7 +449,6 @@ export type Query = {
   userBySlug?: Maybe<User>,
   users: Array<Maybe<User>>,
   filters: Array<Filter>,
-  brands: Array<Brand>,
   lights: Array<Light>,
   plants: Array<Plant>,
   hardscape: Array<Hardscape>,
@@ -437,6 +459,7 @@ export type Query = {
   trendingAquascapes: Array<Aquascape>,
   featuredAquascape?: Maybe<Aquascape>,
   aquascape?: Maybe<Aquascape>,
+  brands: Array<Brand>,
   comments: Array<Comment>,
   userProfileSlugExists?: Maybe<Scalars['Boolean']>,
 };
@@ -480,14 +503,14 @@ export type QueryUserProfileSlugExistsArgs = {
   slug: Scalars['String']
 };
 
-export type Substrate = {
+export type Substrate = Equipment & {
    __typename?: 'Substrate',
   id: Scalars['Int'],
   predefined: Scalars['Boolean'],
-  brand?: Maybe<Brand>,
   model: Scalars['String'],
   description?: Maybe<Scalars['String']>,
   image?: Maybe<Scalars['String']>,
+  brand?: Maybe<Brand>,
 };
 
 export type Tag = {
@@ -514,10 +537,15 @@ export type User = {
   email: Scalars['String'],
   slug: Scalars['String'],
   name: Scalars['String'],
+  about?: Maybe<Scalars['String']>,
   profileImage?: Maybe<Scalars['String']>,
+  profileImagePublicId?: Maybe<Scalars['String']>,
+  coverImage?: Maybe<Scalars['String']>,
+  coverImagePublicId?: Maybe<Scalars['String']>,
   country?: Maybe<Scalars['String']>,
-  youtubeLink?: Maybe<Scalars['String']>,
-  instagramLink?: Maybe<Scalars['String']>,
+  youtubeUrl?: Maybe<Scalars['String']>,
+  instagramUrl?: Maybe<Scalars['String']>,
+  twitterUrl?: Maybe<Scalars['String']>,
   createdAt: Scalars['String'],
   updatedAt: Scalars['String'],
   aquascapes: AquascapesResult,
@@ -530,6 +558,14 @@ export type User = {
 export type UserAquascapesArgs = {
   pagination: Pagination,
   random?: Maybe<Scalars['Boolean']>
+};
+
+export type UserDetails = {
+  name: Scalars['String'],
+  about?: Maybe<Scalars['String']>,
+  facebookUrl?: Maybe<Scalars['String']>,
+  instagramUrl?: Maybe<Scalars['String']>,
+  twitterUrl?: Maybe<Scalars['String']>,
 };
 
 export type VisitAquascapeResult = {
@@ -790,7 +826,7 @@ export type UserBySlugQuery = (
   { __typename?: 'Query' }
   & { user: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'profileImage' | 'youtubeLink' | 'instagramLink' | 'followersCount' | 'followingCount' | 'isFollowedByMe'>
+    & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'about' | 'profileImage' | 'profileImagePublicId' | 'coverImage' | 'coverImagePublicId' | 'youtubeUrl' | 'instagramUrl' | 'twitterUrl' | 'followersCount' | 'followingCount' | 'isFollowedByMe'>
     & { aquascapes: (
       { __typename?: 'AquascapesResult' }
       & Pick<AquascapesResult, 'count'>

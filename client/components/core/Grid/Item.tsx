@@ -13,9 +13,9 @@ export interface ItemProps {
 const Item: React.FunctionComponent<ItemProps> = ({
     children,
     extraSmall = 12,
-    small,
-    medium,
     large,
+    medium,
+    small,
 }) => (
     <>
         <div className="item">{children}</div>

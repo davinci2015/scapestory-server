@@ -4,7 +4,7 @@ import {Injectable} from '@graphql-modules/di'
 import {User} from 'db/models/User'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
-import {UserDetails} from 'graphql/generated/types'
+import {UserDetails} from 'interfaces/graphql/types'
 
 export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
     findUserById(id: number): Promise<User | null>

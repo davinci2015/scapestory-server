@@ -3,21 +3,36 @@ import {spaces, media} from 'styles'
 import Row from 'components/core/Grid/Row'
 import Item, {ItemProps} from 'components/core/Grid/Item'
 
-export const GRID_MAX_WIDTH = '1470px'
+export const GRID_WIDTH_DEFAULT = '1470px'
+export const GRID_WIDTH_SMALL = '727px'
 export const GUTTER = 15
 export const COLUMNS = 12
 
-type GridInterface = React.FunctionComponent & {
+export enum GridWidth {
+    DEFAULT,
+    SMALL,
+}
+
+interface Props {
+    width?: GridWidth
+}
+
+type GridInterface = React.FunctionComponent<Props> & {
     Item: React.FunctionComponent<ItemProps>
     Row: React.FunctionComponent
 }
 
-const Grid: GridInterface = ({children}) => (
+const gridWidthMapping = {
+    [GridWidth.DEFAULT]: GRID_WIDTH_DEFAULT,
+    [GridWidth.SMALL]: GRID_WIDTH_SMALL,
+}
+
+const Grid: GridInterface = ({children, width = GridWidth.DEFAULT}) => (
     <>
         <div className="grid">{children}</div>
         <style jsx global>{`
             .grid {
-                max-width: ${GRID_MAX_WIDTH};
+                max-width: ${gridWidthMapping[width]};
                 margin: 0 auto;
                 padding-left: ${spaces.s16};
                 padding-right: ${spaces.s16};

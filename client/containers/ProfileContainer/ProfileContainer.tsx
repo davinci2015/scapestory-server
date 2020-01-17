@@ -1,29 +1,19 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {useRouter} from 'next/router'
-import {useQuery, useMutation} from 'react-apollo'
+import {useQuery} from 'react-apollo'
 
 import {USER_BY_SLUG} from 'containers/ProfileContainer/queries'
 import {UserBySlugQuery, UserBySlugQueryVariables} from 'graphql/generated/queries'
-import {
-    FollowUserMutation,
-    FollowUserMutationVariables,
-    UnfollowUserMutation,
-    UnfollowUserMutationVariables,
-} from 'graphql/generated/mutations'
-import {updateProfileCache, ProfileActions} from 'containers/ProfileContainer/cache'
-import {FOLLOW, UNFOLLOW} from 'graphql/mutations'
-import {AuthContext} from 'providers/AuthenticationProvider'
-import {ModalContext} from 'providers/ModalProvider'
 import {Content, Grid} from 'components/core'
-import ProfileSection from 'components/sections/Profile/ProfileSection'
 import {AquascapeCardList} from 'components/sections/shared'
 import {Headline, FormattedMessage} from 'components/atoms'
 import {renderAquascapeCards} from 'utils/render'
+import CoverSectionContainer from './CoverSectionContainer'
+import {GridWidth} from 'components/core/Grid'
+import UserSection from 'components/sections/Profile/UserSection'
 
 const ProfileContainer = () => {
     const router = useRouter()
-    const {isAuthenticated} = useContext(AuthContext)
-    const {openModal} = useContext(ModalContext)
     const slug = router.query.slug?.toString()
 
     if (!slug) return null
@@ -32,27 +22,6 @@ const ProfileContainer = () => {
         USER_BY_SLUG,
         {variables: {slug, pagination: {limit: 8, cursor: null}}, fetchPolicy: 'cache-and-network'}
     )
-
-    const [follow] = useMutation<FollowUserMutation, FollowUserMutationVariables>(FOLLOW, {
-        update: updateProfileCache(ProfileActions.FOLLOW, {slug}),
-    })
-
-    const [unfollow] = useMutation<UnfollowUserMutation, UnfollowUserMutationVariables>(UNFOLLOW, {
-        update: updateProfileCache(ProfileActions.UNFOLLOW, {slug}),
-    })
-
-    const toggleFollow = () => {
-        if (!userResult || !userResult.user) {
-            return
-        }
-
-        if (!isAuthenticated) {
-            return openModal('login')
-        }
-
-        const mutateFollow = userResult.user.isFollowedByMe ? unfollow : follow
-        mutateFollow({variables: {userId: userResult.user.id}})
-    }
 
     if (loading) {
         // TODO: handle loading properly
@@ -71,8 +40,9 @@ const ProfileContainer = () => {
 
     return (
         <Content>
-            <Grid>
-                <ProfileSection toggleFollow={toggleFollow} user={userResult.user} />
+            <CoverSectionContainer user={userResult.user} />
+            <Grid width={GridWidth.SMALL}>
+                <UserSection user={userResult.user} />
                 {!!userResult.user.aquascapes.rows.length && (
                     <AquascapeCardList
                         title={
@@ -85,7 +55,14 @@ const ProfileContainer = () => {
                             </Headline>
                         }
                     >
-                        <Grid.Row>{renderAquascapeCards(userResult.user.aquascapes.rows)}</Grid.Row>
+                        <Grid.Row>
+                            {renderAquascapeCards(userResult.user.aquascapes.rows, {
+                                large: 6,
+                                medium: 6,
+                                small: 12,
+                                extraSmall: 12,
+                            })}
+                        </Grid.Row>
                     </AquascapeCardList>
                 )}
             </Grid>

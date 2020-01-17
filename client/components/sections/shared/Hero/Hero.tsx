@@ -5,7 +5,7 @@ import {borderRadius, spaces, colors, zIndex, media, typography} from 'styles'
 import {Headline} from 'components/atoms'
 import {TopSection, TopLeft, TopRight} from 'components/sections/shared/Hero/TopSection'
 import {BottomSection, BottomLeft, BottomRight} from 'components/sections/shared/Hero/BottomSection'
-import {GRID_MAX_WIDTH} from 'components/core/Grid'
+import {GRID_WIDTH_DEFAULT} from 'components/core/Grid'
 
 interface Props {
     editMode?: boolean
@@ -20,13 +20,13 @@ interface Props {
 const IMAGE_PLACEHOLDER = ''
 
 const Hero = ({
+    bottomSection,
+    editMode,
     image,
+    onTitleChange,
     title,
     topSection,
-    bottomSection,
     variant = 'default',
-    editMode,
-    onTitleChange,
 }: Props) => (
     <div className="container">
         <img
@@ -147,7 +147,7 @@ const Hero = ({
             }
 
             .content--cover {
-                max-width: ${GRID_MAX_WIDTH};
+                max-width: ${GRID_WIDTH_DEFAULT};
                 margin: 0 auto;
                 padding: ${spaces.s36} ${spaces.s24} ${spaces.s48} ${spaces.s24};
             }

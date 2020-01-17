@@ -10,7 +10,7 @@ interface Props {
     loadMore?: VoidFunction
 }
 
-const AquascapeCardList = ({children, title, loadMore}: Props) => (
+const AquascapeCardList = ({children, loadMore, title}: Props) => (
     <>
         <div className="section">
             <div className="title">{title}</div>

@@ -9,6 +9,7 @@ export const USER_BY_SLUG = gql`
             slug
             name
             country
+            about
             profileImage
             profileImagePublicId
             coverImage

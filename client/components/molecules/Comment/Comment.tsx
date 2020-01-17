@@ -6,6 +6,7 @@ import {typography, spaces, colors} from 'styles'
 import {formatDate, dateFormats} from 'utils/date'
 import {CommentFieldsFragment} from 'graphql/generated/queries'
 import {ProfileLink} from 'components/core'
+import {UserImageSize} from 'components/atoms/UserImage/UserImage'
 
 const classes = {
     root: 'comment',
@@ -41,7 +42,7 @@ const Comment: CardInterface = ({
         <>
             <div className={classes.root}>
                 <ProfileLink slug={comment.user.slug}>
-                    <UserImage size="large" image={comment.user.profileImage} />
+                    <UserImage size={UserImageSize.s36} image={comment.user.profileImage} />
                 </ProfileLink>
                 <div className="wrapper">
                     <ProfileLink slug={comment.user.slug}>

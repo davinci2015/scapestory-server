@@ -15,6 +15,7 @@ import {UserWidget} from 'components/molecules'
 import {AquascapeDetailsQuery} from 'graphql/generated/queries'
 import {getUserName} from 'utils/mappers'
 import {ProfileLink} from 'components/core'
+import {UserWidgetSize, UserWidgetVariant} from 'components/molecules/UserWidget/UserWidget'
 
 interface Props {
     mineAquascape: boolean
@@ -44,8 +45,8 @@ const HeroSection: React.FunctionComponent<Props> = ({
                         <Hero.TopLeft>
                             <ProfileLink slug={aquascape.user.slug}>
                                 <UserWidget
-                                    size="large"
-                                    variant="border"
+                                    size={UserWidgetSize.s36}
+                                    variant={UserWidgetVariant.BORDER}
                                     image={aquascape.user.profileImage}
                                     text={
                                         <div>

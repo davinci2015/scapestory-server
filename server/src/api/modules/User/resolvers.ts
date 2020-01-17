@@ -10,7 +10,7 @@ import {
     MutationUploadUserImageArgs,
     ImageVariant,
     MutationUpdateUserDetailsArgs,
-} from 'graphql/generated/types'
+} from 'interfaces/graphql/types'
 
 export const resolvers = {
     Query: {

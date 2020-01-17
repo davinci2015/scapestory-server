@@ -6,10 +6,7 @@ import {LIKE, DISLIKE} from 'graphql/mutations'
 import {LikeEntityType, CommentEntityType} from 'graphql/generated/types'
 import {ModalContext} from 'providers/ModalProvider'
 import {AuthContext} from 'providers/AuthenticationProvider'
-import {
-    ADD_COMMENT,
-    REMOVE_COMMENT,
-} from 'containers/AquascapeDetailsContainer/CommentsContainer/mutations'
+import {ADD_COMMENT, REMOVE_COMMENT} from 'containers/AquascapeDetailsContainer/mutations'
 import {
     updateAquascapeDetailsCache,
     AquascapeDetailsActions,

@@ -9,6 +9,7 @@ import {Button, FormattedMessage, Icon, UserImage, Paragraph} from 'components/a
 import NavLink from './NavLink'
 import routes, {createDynamicPath} from 'routes'
 import {User_ProfileQuery} from 'graphql/generated/queries'
+import {UserImageSize} from 'components/atoms/UserImage/UserImage'
 
 interface Props {
     user: User_ProfileQuery['me'] | null
@@ -114,7 +115,7 @@ const Navigation = ({
                             href={routes.profile}
                         >
                             <div>
-                                <UserImage size="large" image={user.profileImage} />
+                                <UserImage size={UserImageSize.s36} image={user.profileImage} />
                             </div>
                         </NavLink>
                     )}

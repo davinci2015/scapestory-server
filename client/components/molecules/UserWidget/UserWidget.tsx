@@ -3,10 +3,17 @@ import classnames from 'classnames'
 
 import {UserImage} from 'components/atoms'
 import {spaces} from 'styles'
+import {UserImageSize, UserImageVariant} from 'components/atoms/UserImage/UserImage'
 
-export type UserWidgetSize = 'default' | 'large'
+export enum UserWidgetSize {
+    s24,
+    s36,
+}
 
-export type UserWidgetVariant = 'default' | 'border'
+export enum UserWidgetVariant {
+    DEFAULT,
+    BORDER,
+}
 
 interface Props {
     image?: string | null
@@ -16,18 +23,38 @@ interface Props {
     onClick?: (event: SyntheticEvent) => void
 }
 
+const userImageSizeMapping = {
+    [UserWidgetSize.s24]: UserImageSize.s24,
+    [UserWidgetSize.s36]: UserImageSize.s36,
+}
+
+const userImageVariantMapping = {
+    [UserWidgetVariant.DEFAULT]: UserImageVariant.DEFAULT,
+    [UserWidgetVariant.BORDER]: UserImageVariant.BORDER,
+}
+
 const classNames = {
     root: 'user-widget',
 }
 
-const UserWidget = ({image, onClick, size = 'default', variant = 'default', text}: Props) => (
+const UserWidget = ({
+    image,
+    onClick,
+    text,
+    size = UserWidgetSize.s24,
+    variant = UserWidgetVariant.DEFAULT,
+}: Props) => (
     <div
         onClick={onClick}
         className={classnames(classNames.root, {
-            large: size === 'large',
+            large: size === UserWidgetSize.s36,
         })}
     >
-        <UserImage variant={variant} size={size} image={image} />
+        <UserImage
+            variant={userImageVariantMapping[variant]}
+            size={userImageSizeMapping[size]}
+            image={image}
+        />
 
         {text}
 

@@ -6,7 +6,7 @@ import {tokens} from 'di/tokens'
 import {UserRepositoryInterface} from 'db/repositories/User'
 import {User} from 'db/models/User'
 import {uploadStreamFile} from 'services/cloudinary'
-import {UserDetails, ImageUploadResult} from 'graphql/generated/types'
+import {UserDetails, ImageUploadResult} from 'interfaces/graphql/types'
 
 export interface UsersProviderInterface {
     findUserById: (id: number) => Promise<User | null>

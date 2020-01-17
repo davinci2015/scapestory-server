@@ -2,6 +2,7 @@ import React, {FormEvent} from 'react'
 
 import {Textarea, InputAdornment, Button, UserImage} from 'components/atoms'
 import {spaces, typography} from 'styles'
+import {UserImageSize} from 'components/atoms/UserImage/UserImage'
 
 interface Props {
     userImage?: string | null
@@ -22,7 +23,7 @@ const CommentInput: React.FunctionComponent<Props> = ({
 }) => (
     <>
         <div className="textarea">
-            <UserImage size="large" image={userImage} />
+            <UserImage size={UserImageSize.s36} image={userImage} />
             <Textarea
                 rows={1}
                 value={value}
