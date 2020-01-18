@@ -69,7 +69,7 @@ const Footer = ({openModal}: Props) => (
                 </div>
                 <div className="social-icons">
                     <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer">
-                        <Icon d={Icon.FACEBOOK} viewBox="0 0 48 48" size={24} />
+                        <Icon d={Icon.FACEBOOK_OUTLINE} viewBox="0 0 48 48" size={24} />
                     </a>
                     <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer">
                         <Icon d={Icon.INSTAGRAM} viewBox="0 0 48 48" size={24} />

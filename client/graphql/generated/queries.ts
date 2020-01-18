@@ -543,6 +543,7 @@ export type User = {
   coverImage?: Maybe<Scalars['String']>,
   coverImagePublicId?: Maybe<Scalars['String']>,
   country?: Maybe<Scalars['String']>,
+  facebookUrl?: Maybe<Scalars['String']>,
   youtubeUrl?: Maybe<Scalars['String']>,
   instagramUrl?: Maybe<Scalars['String']>,
   twitterUrl?: Maybe<Scalars['String']>,
@@ -826,7 +827,7 @@ export type UserBySlugQuery = (
   { __typename?: 'Query' }
   & { user: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'about' | 'profileImage' | 'profileImagePublicId' | 'coverImage' | 'coverImagePublicId' | 'youtubeUrl' | 'instagramUrl' | 'twitterUrl' | 'followersCount' | 'followingCount' | 'isFollowedByMe'>
+    & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'about' | 'profileImage' | 'profileImagePublicId' | 'coverImage' | 'coverImagePublicId' | 'facebookUrl' | 'youtubeUrl' | 'instagramUrl' | 'twitterUrl' | 'followersCount' | 'followingCount' | 'isFollowedByMe'>
     & { aquascapes: (
       { __typename?: 'AquascapesResult' }
       & Pick<AquascapesResult, 'count'>

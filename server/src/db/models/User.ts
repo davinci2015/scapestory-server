@@ -38,6 +38,9 @@ export class User extends Model<User> {
     country: string
 
     @Column
+    facebookUrl: string
+
+    @Column
     youtubeUrl: string
 
     @Column

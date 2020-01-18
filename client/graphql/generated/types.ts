@@ -543,6 +543,7 @@ export type User = {
   coverImage?: Maybe<Scalars['String']>,
   coverImagePublicId?: Maybe<Scalars['String']>,
   country?: Maybe<Scalars['String']>,
+  facebookUrl?: Maybe<Scalars['String']>,
   youtubeUrl?: Maybe<Scalars['String']>,
   instagramUrl?: Maybe<Scalars['String']>,
   twitterUrl?: Maybe<Scalars['String']>,

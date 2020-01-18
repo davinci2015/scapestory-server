@@ -9,6 +9,7 @@ type User {
     coverImage: String
     coverImagePublicId: String
     country: String
+    facebookUrl: String
     youtubeUrl: String
     instagramUrl: String
     twitterUrl: String

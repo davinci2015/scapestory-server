@@ -104,8 +104,10 @@ const users = getEmptyArray(entriesCount.users).map((_, index) => ({
     name: faker.name.firstName(),
     profileImage: getProfileImage(),
     country: faker.address.country(),
-    youtubeLink: faker.internet.url(),
-    instagramLink: faker.internet.url(),
+    facebookUrl: faker.internet.url(),
+    youtubeZrl: faker.internet.url(),
+    twitterUrl: faker.internet.url(),
+    instagramUrl: faker.internet.url(),
 }))
 
 const brands = realBrands.map((brand, index) => ({

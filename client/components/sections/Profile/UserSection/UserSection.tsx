@@ -2,8 +2,10 @@ import React from 'react'
 
 import {UserBySlugQuery} from 'graphql/generated/queries'
 import {colors, spaces, typography} from 'styles'
-import {Headline, UserImage, FormattedMessage, Paragraph} from 'components/atoms'
+import {Headline, UserImage, FormattedMessage, Paragraph, Icon} from 'components/atoms'
 import {UserImageSize, UserImageVariant} from 'components/atoms/UserImage/UserImage'
+import TwitterIcon from 'assets/icons/twitter.svg'
+import YoutubeIcon from 'assets/icons/youtube.svg'
 
 interface Props {
     user: UserBySlugQuery['user']
@@ -68,6 +70,64 @@ const UserSection: React.FunctionComponent<Props> = ({user}) => {
                                 <Paragraph>{user.about}</Paragraph>
                             </div>
                         )}
+                        <div className="user-info__social">
+                            {user.facebookUrl && (
+                                <div className="social__block">
+                                    <Icon
+                                        d={Icon.FACEBOOK}
+                                        viewBox="0 0 24 24"
+                                        color={colors.PRIMARY}
+                                    />
+                                    <a
+                                        href={user.facebookUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {user.facebookUrl}
+                                    </a>
+                                </div>
+                            )}
+                            {user.youtubeUrl && (
+                                <div className="social__block youtube">
+                                    <YoutubeIcon />
+                                    <a
+                                        href={user.youtubeUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {user.youtubeUrl}
+                                    </a>
+                                </div>
+                            )}
+                            {user.instagramUrl && (
+                                <div className="social__block">
+                                    <Icon
+                                        d={Icon.INSTAGRAM}
+                                        viewBox="0 0 48 48"
+                                        color={colors.PRIMARY}
+                                    />
+                                    <a
+                                        href={user.instagramUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {user.instagramUrl}
+                                    </a>
+                                </div>
+                            )}
+                            {user.twitterUrl && (
+                                <div className="social__block twitter">
+                                    <TwitterIcon />
+                                    <a
+                                        href={user.twitterUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {user.twitterUrl}
+                                    </a>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,11 +163,36 @@ const UserSection: React.FunctionComponent<Props> = ({user}) => {
 
                 .user-info__about {
                     margin-top: ${spaces.s60};
-                    margin-bottom: ${spaces.s48};
+                    margin-bottom: ${spaces.s36};
                 }
 
                 .follow-count :global(.${Paragraph.classes.root}) {
                     font-size: ${typography.fontSize.fs20};
+                }
+
+                .user-info__social {
+                    margin-bottom: ${spaces.s60};
+                }
+
+                .social__block {
+                    display: flex;
+                    align-items: center;
+
+                    padding-top: ${spaces.s12};
+                    padding-bottom: ${spaces.s12};
+                }
+
+                .social__block :global(svg) {
+                    margin-right: ${spaces.s18};
+                }
+
+                .social__block.twitter :global(svg),
+                .social__block.youtube :global(svg) {
+                    stroke: ${colors.PRIMARY};
+                }
+
+                .social__block :global(a) {
+                    color: ${colors.BLACK};
                 }
             `}</style>
         </>
