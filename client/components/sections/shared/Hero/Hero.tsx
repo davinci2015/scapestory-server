@@ -10,11 +10,12 @@ import {GRID_WIDTH_DEFAULT} from 'components/core/Grid'
 interface Props {
     editMode?: boolean
     image?: string | null
-    title: string
+    title?: string
     topSection?: React.ReactNode
     bottomSection?: React.ReactNode
     onTitleChange?: (title: string) => void
     variant?: 'default' | 'cover'
+    height?: 'default' | 'compact'
 }
 
 const IMAGE_PLACEHOLDER = ''
@@ -22,13 +23,18 @@ const IMAGE_PLACEHOLDER = ''
 const Hero = ({
     bottomSection,
     editMode,
+    height = 'default',
     image,
     onTitleChange,
     title,
     topSection,
     variant = 'default',
 }: Props) => (
-    <div className="container">
+    <div
+        className={cx('container', {
+            'container--compact': height === 'compact',
+        })}
+    >
         <img
             className={cx('container-image', {
                 radius: variant === 'default',
@@ -58,9 +64,11 @@ const Hero = ({
                         onChange={e => onTitleChange && onTitleChange(e.target.value)}
                     />
                 ) : (
-                    <Headline as="h1" variant="h2" color={colors.WHITE}>
-                        {title}
-                    </Headline>
+                    title && (
+                        <Headline as="h1" variant="h2" color={colors.WHITE}>
+                            {title}
+                        </Headline>
+                    )
                 )}
                 {bottomSection}
             </div>
@@ -80,10 +88,18 @@ const Hero = ({
                 margin-right: -${spaces.s24};
             }
 
+            .container--compact {
+                height: 270px;
+            }
+
             @media ${media.up('medium')} {
                 .container {
                     height: 70vh;
                     margin: 0;
+                }
+
+                .container--compact {
+                    height: 270px;
                 }
             }
 

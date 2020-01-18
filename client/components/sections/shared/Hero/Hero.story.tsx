@@ -8,6 +8,7 @@ import mock from 'mocks/storybook'
 
 import {createTag} from 'components/atoms/Tag/Tag.story'
 import {createUserWidget} from 'components/molecules/UserWidget/UserWidget.story'
+import {UserWidgetSize, UserWidgetVariant} from 'components/molecules/UserWidget/UserWidget'
 
 storiesOf('Sections | Hero', module).add('default', () => (
     <Hero
@@ -34,8 +35,8 @@ storiesOf('Sections | Hero', module).add('default', () => (
                         <Paragraph type="body" color={colors.WHITE}>
                             by {mock.name}
                         </Paragraph>,
-                        'large',
-                        'border'
+                        UserWidgetSize.s36,
+                        UserWidgetVariant.BORDER
                     )}
 
                     <IconText icon={Icon.EYE_SHOW_FULL} text={10} color={colors.WHITE} />
