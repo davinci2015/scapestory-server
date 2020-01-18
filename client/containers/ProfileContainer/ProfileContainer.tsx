@@ -18,15 +18,10 @@ const ProfileContainer = () => {
 
     if (!slug) return null
 
-    const {data: userResult, error, loading} = useQuery<UserBySlugQuery, UserBySlugQueryVariables>(
+    const {data: userResult, error} = useQuery<UserBySlugQuery, UserBySlugQueryVariables>(
         USER_BY_SLUG,
-        {variables: {slug, pagination: {limit: 8, cursor: null}}}
+        {variables: {slug, pagination: {limit: 8, cursor: null}}, fetchPolicy: 'cache-and-network'}
     )
-
-    if (loading) {
-        // TODO: handle loading properly
-        return null
-    }
 
     if (error) {
         // TODO: handle error properly

@@ -21,7 +21,7 @@ interface Props {
 const CoverSectionContainer: React.FunctionComponent<Props> = ({user}) => {
     if (!user) return null
 
-    const {isAuthenticated} = useContext(AuthContext)
+    const {isAuthenticated, user: loggedInUser} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
 
     const [follow] = useMutation<FollowUserMutation, FollowUserMutationVariables>(FOLLOW, {
@@ -41,7 +41,13 @@ const CoverSectionContainer: React.FunctionComponent<Props> = ({user}) => {
         mutateFollow({variables: {userId: user.id}})
     }
 
-    return <CoverSection toggleFollow={toggleFollow} user={user} />
+    return (
+        <CoverSection
+            user={user}
+            toggleFollow={toggleFollow}
+            isMyProfile={loggedInUser?.id === user.id}
+        />
+    )
 }
 
 export default CoverSectionContainer

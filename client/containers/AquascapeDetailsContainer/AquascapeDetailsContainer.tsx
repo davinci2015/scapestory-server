@@ -72,10 +72,6 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
         }
     }, [aquascapeResult, loading])
 
-    if (loading) {
-        // TODO: Show loader
-    }
-
     if (error) {
         // TODO: Show error
         return null

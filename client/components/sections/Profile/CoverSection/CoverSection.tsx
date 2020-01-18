@@ -9,12 +9,40 @@ import UserUnfollowIcon from 'assets/icons/user-minus.svg'
 
 interface Props {
     user: UserBySlugQuery['user']
-    toggleFollow: () => void
+    toggleFollow: VoidFunction
+    isMyProfile: boolean
 }
 
 const COVER_PLACEHOLDER = 'https://ak9.picdn.net/shutterstock/videos/1014275129/thumb/1.jpg'
 
-const CoverSection: React.FunctionComponent<Props> = ({toggleFollow, user}) => {
+const FollowButton = ({
+    isFollowedByMe,
+    toggleFollow,
+}: {
+    isFollowedByMe: boolean
+    toggleFollow: VoidFunction
+}) =>
+    isFollowedByMe ? (
+        <Button
+            onClick={toggleFollow}
+            dimensions="extraSmall"
+            leftIcon={<UserUnfollowIcon />}
+            color="tertiary"
+        >
+            <FormattedMessage id="user_profile.unfollow" defaultMessage="Unfollow" />
+        </Button>
+    ) : (
+        <Button
+            onClick={toggleFollow}
+            dimensions="extraSmall"
+            leftIcon={<UserFollowIcon />}
+            color="tertiary"
+        >
+            <FormattedMessage id="user_profile.follow" defaultMessage="Follow" />
+        </Button>
+    )
+
+const CoverSection: React.FunctionComponent<Props> = ({isMyProfile, toggleFollow, user}) => {
     if (!user) return null
 
     return (
@@ -28,30 +56,11 @@ const CoverSection: React.FunctionComponent<Props> = ({toggleFollow, user}) => {
                         <Hero.TopSection>
                             <Hero.TopLeft></Hero.TopLeft>
                             <Hero.TopRight>
-                                {user.isFollowedByMe ? (
-                                    <Button
-                                        onClick={toggleFollow}
-                                        dimensions="extraSmall"
-                                        leftIcon={<UserUnfollowIcon />}
-                                        color="tertiary"
-                                    >
-                                        <FormattedMessage
-                                            id="user_profile.unfollow"
-                                            defaultMessage="Unfollow"
-                                        />
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        onClick={toggleFollow}
-                                        dimensions="extraSmall"
-                                        leftIcon={<UserFollowIcon />}
-                                        color="tertiary"
-                                    >
-                                        <FormattedMessage
-                                            id="user_profile.follow"
-                                            defaultMessage="Follow"
-                                        />
-                                    </Button>
+                                {!isMyProfile && (
+                                    <FollowButton
+                                        isFollowedByMe={user.isFollowedByMe}
+                                        toggleFollow={toggleFollow}
+                                    />
                                 )}
                             </Hero.TopRight>
                         </Hero.TopSection>
