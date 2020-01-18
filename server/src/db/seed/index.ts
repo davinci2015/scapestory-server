@@ -105,7 +105,7 @@ const users = getEmptyArray(entriesCount.users).map((_, index) => ({
     profileImage: getProfileImage(),
     country: faker.address.country(),
     facebookUrl: faker.internet.url(),
-    youtubeZrl: faker.internet.url(),
+    youtubeUrl: faker.internet.url(),
     twitterUrl: faker.internet.url(),
     instagramUrl: faker.internet.url(),
 }))
