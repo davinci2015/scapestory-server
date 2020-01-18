@@ -1,15 +1,16 @@
 import React from 'react'
 
 import {UserBySlugQuery} from 'graphql/generated/queries'
-import {zIndex} from 'styles'
+import {zIndex, colors} from 'styles'
 import {Hero} from 'components/sections/shared'
-import {Button, FormattedMessage} from 'components/atoms'
+import {Button, FormattedMessage, Icon} from 'components/atoms'
 import UserFollowIcon from 'assets/icons/user-plus.svg'
 import UserUnfollowIcon from 'assets/icons/user-minus.svg'
 
 interface Props {
     user: UserBySlugQuery['user']
     toggleFollow: VoidFunction
+    onEdit: VoidFunction
     isMyProfile: boolean
 }
 
@@ -42,7 +43,12 @@ const FollowButton = ({
         </Button>
     )
 
-const CoverSection: React.FunctionComponent<Props> = ({isMyProfile, toggleFollow, user}) => {
+const CoverSection: React.FunctionComponent<Props> = ({
+    isMyProfile,
+    onEdit,
+    toggleFollow,
+    user,
+}) => {
     if (!user) return null
 
     return (
@@ -61,6 +67,20 @@ const CoverSection: React.FunctionComponent<Props> = ({isMyProfile, toggleFollow
                                         isFollowedByMe={user.isFollowedByMe}
                                         toggleFollow={toggleFollow}
                                     />
+                                )}
+
+                                {isMyProfile && (
+                                    <Button
+                                        leftIcon={<Icon d={Icon.EDIT} color={colors.WHITE} />}
+                                        dimensions="extraSmall"
+                                        color="tertiary"
+                                        onClick={onEdit}
+                                    >
+                                        <FormattedMessage
+                                            id="user_profile.edit"
+                                            defaultMessage="Edit profile"
+                                        />
+                                    </Button>
                                 )}
                             </Hero.TopRight>
                         </Hero.TopSection>

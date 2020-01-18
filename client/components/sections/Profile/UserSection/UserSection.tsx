@@ -13,6 +13,13 @@ interface Props {
 
 const UserSection: React.FunctionComponent<Props> = ({user}) => {
     if (!user) return null
+    const isAboutEmpty = !(
+        user.about ||
+        user.facebookUrl ||
+        user.instagramUrl ||
+        user.twitterUrl ||
+        user.youtubeUrl
+    )
 
     return (
         <>
@@ -59,74 +66,81 @@ const UserSection: React.FunctionComponent<Props> = ({user}) => {
                                 </div>
                             </div>
                         </div>
-                        {user.about && (
-                            <div className="user-info__about">
-                                <Headline as="h5">
+                        <div className="user-info__about">
+                            <Headline as="h5">
+                                <FormattedMessage id="user_profile.about" defaultMessage="About" />
+                            </Headline>
+                            {user.about && (
+                                <div className="user-info__about-text">
+                                    <Paragraph>{user.about}</Paragraph>
+                                </div>
+                            )}
+                            {isAboutEmpty && (
+                                <Paragraph color={colors.SHADE_DEEP}>
                                     <FormattedMessage
-                                        id="user_profile.about"
-                                        defaultMessage="About"
+                                        id="user_profile.about_placeholder"
+                                        defaultMessage="No description nor social media links added yet."
                                     />
-                                </Headline>
-                                <Paragraph>{user.about}</Paragraph>
+                                </Paragraph>
+                            )}
+                            <div className="user-info__social">
+                                {user.facebookUrl && (
+                                    <div className="social__block">
+                                        <Icon
+                                            d={Icon.FACEBOOK}
+                                            viewBox="0 0 24 24"
+                                            color={colors.PRIMARY}
+                                        />
+                                        <a
+                                            href={user.facebookUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {user.facebookUrl}
+                                        </a>
+                                    </div>
+                                )}
+                                {user.youtubeUrl && (
+                                    <div className="social__block youtube">
+                                        <YoutubeIcon />
+                                        <a
+                                            href={user.youtubeUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {user.youtubeUrl}
+                                        </a>
+                                    </div>
+                                )}
+                                {user.instagramUrl && (
+                                    <div className="social__block">
+                                        <Icon
+                                            d={Icon.INSTAGRAM}
+                                            viewBox="0 0 48 48"
+                                            color={colors.PRIMARY}
+                                        />
+                                        <a
+                                            href={user.instagramUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {user.instagramUrl}
+                                        </a>
+                                    </div>
+                                )}
+                                {user.twitterUrl && (
+                                    <div className="social__block twitter">
+                                        <TwitterIcon />
+                                        <a
+                                            href={user.twitterUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {user.twitterUrl}
+                                        </a>
+                                    </div>
+                                )}
                             </div>
-                        )}
-                        <div className="user-info__social">
-                            {user.facebookUrl && (
-                                <div className="social__block">
-                                    <Icon
-                                        d={Icon.FACEBOOK}
-                                        viewBox="0 0 24 24"
-                                        color={colors.PRIMARY}
-                                    />
-                                    <a
-                                        href={user.facebookUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        {user.facebookUrl}
-                                    </a>
-                                </div>
-                            )}
-                            {user.youtubeUrl && (
-                                <div className="social__block youtube">
-                                    <YoutubeIcon />
-                                    <a
-                                        href={user.youtubeUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        {user.youtubeUrl}
-                                    </a>
-                                </div>
-                            )}
-                            {user.instagramUrl && (
-                                <div className="social__block">
-                                    <Icon
-                                        d={Icon.INSTAGRAM}
-                                        viewBox="0 0 48 48"
-                                        color={colors.PRIMARY}
-                                    />
-                                    <a
-                                        href={user.instagramUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        {user.instagramUrl}
-                                    </a>
-                                </div>
-                            )}
-                            {user.twitterUrl && (
-                                <div className="social__block twitter">
-                                    <TwitterIcon />
-                                    <a
-                                        href={user.twitterUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        {user.twitterUrl}
-                                    </a>
-                                </div>
-                            )}
                         </div>
                     </div>
                 </div>
@@ -162,16 +176,19 @@ const UserSection: React.FunctionComponent<Props> = ({user}) => {
                 }
 
                 .user-info__about {
-                    margin-top: ${spaces.s60};
-                    margin-bottom: ${spaces.s36};
+                    margin: ${spaces.s60} 0;
+                }
+
+                .user-info__about :global(.${Headline.classes.root}) {
+                    margin-bottom: ${spaces.s12};
+                }
+
+                .user-info__about-text {
+                    margin-bottom: ${spaces.s24};
                 }
 
                 .follow-count :global(.${Paragraph.classes.root}) {
                     font-size: ${typography.fontSize.fs20};
-                }
-
-                .user-info__social {
-                    margin-bottom: ${spaces.s60};
                 }
 
                 .social__block {

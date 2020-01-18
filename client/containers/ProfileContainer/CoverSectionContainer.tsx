@@ -45,6 +45,7 @@ const CoverSectionContainer: React.FunctionComponent<Props> = ({user}) => {
         <CoverSection
             user={user}
             toggleFollow={toggleFollow}
+            onEdit={() => null}
             isMyProfile={loggedInUser?.id === user.id}
         />
     )
