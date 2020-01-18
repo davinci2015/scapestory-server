@@ -53,9 +53,9 @@ export const resolvers = {
             context: ModuleContext & AuthenticationContext
         ) {
             const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
-            const [_, user] = await provider.updateUserDetails(context.currentUserId, args.details)
+            const [affected, user] = await provider.updateUserDetails(context.currentUserId, args.details)
 
-            if (!user) {
+            if (!affected || !user) {
                 throw new UserInputError('Updating user details error')
             }
 

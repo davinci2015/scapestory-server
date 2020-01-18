@@ -1,18 +1,26 @@
 import React from 'react'
+import classnames from 'classnames'
 
 import {FormattedMessage, Headline, Icon} from 'components/atoms'
 import {colors, spaces, media} from 'styles'
 import {AquascapeCard} from 'components/molecules'
 
+type CardListVariant = 'default' | 'condensed'
+
 interface Props {
     children: React.ReactNode
     title: React.ReactNode
     loadMore?: VoidFunction
+    variant?: CardListVariant
 }
 
-const AquascapeCardList = ({children, loadMore, title}: Props) => (
+const AquascapeCardList = ({children, loadMore, title, variant = 'default'}: Props) => (
     <>
-        <div className="section">
+        <div
+            className={classnames('section', {
+                'section--condensed': variant === 'condensed',
+            })}
+        >
             <div className="title">{title}</div>
             {children}
             {loadMore && (
@@ -35,9 +43,17 @@ const AquascapeCardList = ({children, loadMore, title}: Props) => (
                 margin: 36px 0;
             }
 
+            .section--condensed {
+                margin: 24px 0;
+            }
+
             @media ${media.up('medium')} {
                 .section {
                     margin: 75px 0;
+                }
+
+                .section--condensed {
+                    margin: 30px 0;
                 }
             }
 
@@ -46,8 +62,12 @@ const AquascapeCardList = ({children, loadMore, title}: Props) => (
                 margin-bottom: ${spaces.s16};
             }
 
-            .title {
+            .section .title {
                 margin-bottom: 40px;
+            }
+
+            .section--condensed .title {
+                margin-bottom: 14px;
             }
 
             .load-more {

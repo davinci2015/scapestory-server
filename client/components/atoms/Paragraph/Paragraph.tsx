@@ -1,8 +1,8 @@
 import React from 'react'
-import {typography} from 'styles'
+import {typography, colors} from 'styles'
 import cx from 'classnames'
 
-export type ParagraphTypes = 't1' | 's1' | 's2' | 'body'
+export type ParagraphTypes = 't1' | 's1' | 's2' | 's3' | 'body'
 
 interface Props {
     as?: 'p' | 'span'
@@ -19,7 +19,7 @@ const classes = {
 const Paragraph = ({
     as = 'p',
     children,
-    color,
+    color = colors.BLACK,
     type = 'body',
     weight = 'regular',
     ...props
@@ -61,6 +61,11 @@ const Paragraph = ({
                 .s2 {
                     font-size: ${typography.fontSize.fs13};
                     line-height: ${typography.lineHeight.lh18};
+                }
+
+                .s3 {
+                    font-size: ${typography.fontSize.fs20};
+                    line-height: ${typography.lineHeight.lh24};
                 }
 
                 .body {

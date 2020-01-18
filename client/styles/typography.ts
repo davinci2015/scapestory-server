@@ -6,7 +6,7 @@ export default {
     fontWeight: {
         regular: 500,
         semibold: 600,
-        bold: 800,
+        bold: 700,
         extraBold: 900,
     },
 

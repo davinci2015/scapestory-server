@@ -45,8 +45,9 @@ const ProfileContainer = () => {
                 <UserSection user={userResult.user} />
                 {!!userResult.user.aquascapes.rows.length && (
                     <AquascapeCardList
+                        variant="condensed"
                         title={
-                            <Headline as="h2" variant="h4">
+                            <Headline as="h2" variant="h5">
                                 <FormattedMessage
                                     id="home_list_title_explore"
                                     defaultMessage="{name}'s aquascapes"

@@ -1,8 +1,8 @@
 import React from 'react'
 
 import {UserBySlugQuery} from 'graphql/generated/queries'
-import {colors} from 'styles'
-import {Headline, UserImage} from 'components/atoms'
+import {colors, spaces, typography} from 'styles'
+import {Headline, UserImage, FormattedMessage, Paragraph} from 'components/atoms'
 import {UserImageSize, UserImageVariant} from 'components/atoms/UserImage/UserImage'
 
 interface Props {
@@ -28,6 +28,47 @@ const UserSection: React.FunctionComponent<Props> = ({user}) => {
                             {user.name}
                         </Headline>
                     </div>
+                    <div className="user-info">
+                        <div className="user-info__stats">
+                            <div className="user-info__block">
+                                <Paragraph as="p" weight="semibold">
+                                    <FormattedMessage
+                                        id="user_profile.followers"
+                                        defaultMessage="Followers"
+                                    />
+                                </Paragraph>
+                                <div className="follow-count">
+                                    <Paragraph as="span" weight="bold">
+                                        {user.followersCount}
+                                    </Paragraph>
+                                </div>
+                            </div>
+                            <div className="user-info__block">
+                                <Paragraph as="span" weight="semibold">
+                                    <FormattedMessage
+                                        id="user_profile.followers"
+                                        defaultMessage="Following"
+                                    />
+                                </Paragraph>
+                                <div className="follow-count">
+                                    <Paragraph as="span" weight="bold">
+                                        {user.followingCount}
+                                    </Paragraph>
+                                </div>
+                            </div>
+                        </div>
+                        {user.about && (
+                            <div className="user-info__about">
+                                <Headline as="h5">
+                                    <FormattedMessage
+                                        id="user_profile.about"
+                                        defaultMessage="About"
+                                    />
+                                </Headline>
+                                <Paragraph>{user.about}</Paragraph>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
             <style jsx>{`
@@ -43,6 +84,30 @@ const UserSection: React.FunctionComponent<Props> = ({user}) => {
 
                 .username {
                     padding-top: 14px;
+                    padding-bottom: 24px;
+                }
+
+                .user-info {
+                    margin-top: ${spaces.s36};
+                }
+
+                .user-info__stats {
+                    display: flex;
+                }
+
+                .user-info__block {
+                    display: flex;
+                    flex-direction: column;
+                    flex-basis: 33%;
+                }
+
+                .user-info__about {
+                    margin-top: ${spaces.s60};
+                    margin-bottom: ${spaces.s48};
+                }
+
+                .follow-count :global(.${Paragraph.classes.root}) {
+                    font-size: ${typography.fontSize.fs20};
                 }
             `}</style>
         </>
