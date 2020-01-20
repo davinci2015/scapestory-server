@@ -1,10 +1,10 @@
 import Bluebird from 'bluebird'
 import {FileUpload} from 'graphql-upload'
-
 import {Injectable, Inject} from '@graphql-modules/di'
+
 import {tokens} from 'di/tokens'
-import {UserRepositoryInterface} from 'db/repositories/User'
 import {User} from 'db/models/User'
+import {UserRepositoryInterface} from 'db/repositories/User'
 import {uploadStreamFile, deleteFile} from 'services/cloudinary'
 import {UserDetails, ImageUploadResult} from 'interfaces/graphql/types'
 
