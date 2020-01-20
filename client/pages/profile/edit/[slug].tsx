@@ -3,12 +3,12 @@ import withAuth from 'hocs/withAuth'
 import ModalProvider from 'providers/ModalProvider'
 import NavigationContainer from 'containers/NavigationContainer'
 import FooterContainer from 'containers/FooterContainer'
-import ProfileContainer from 'containers/ProfileContainer'
+import ProfileEditContainer from 'containers/ProfileEditContainer'
 
 const UserProfileEdit = () => (
     <ModalProvider>
         <NavigationContainer />
-        <ProfileContainer />
+        <ProfileEditContainer />
         <FooterContainer />
     </ModalProvider>
 )

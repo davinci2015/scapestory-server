@@ -13,11 +13,37 @@ import {FOLLOW, UNFOLLOW} from 'graphql/mutations'
 import {AuthContext} from 'providers/AuthenticationProvider'
 import {ModalContext} from 'providers/ModalProvider'
 import CoverSection from 'components/sections/Profile/CoverSection'
+import {Button, FormattedMessage, Icon} from 'components/atoms'
+import UserFollowIcon from 'assets/icons/user-plus.svg'
+import UserUnfollowIcon from 'assets/icons/user-minus.svg'
+import {colors} from 'styles'
 
 interface Props {
     user: UserBySlugQuery['user']
     onEdit: VoidFunction
 }
+
+const FollowButton = ({toggleFollow}: {toggleFollow: VoidFunction}) => (
+    <Button
+        onClick={toggleFollow}
+        dimensions="extraSmall"
+        leftIcon={<UserFollowIcon />}
+        color="tertiary"
+    >
+        <FormattedMessage id="user_profile.follow" defaultMessage="Follow" />
+    </Button>
+)
+
+const UnfollowButton = ({toggleFollow}: {toggleFollow: VoidFunction}) => (
+    <Button
+        onClick={toggleFollow}
+        dimensions="extraSmall"
+        leftIcon={<UserUnfollowIcon />}
+        color="tertiary"
+    >
+        <FormattedMessage id="user_profile.unfollow" defaultMessage="Unfollow" />
+    </Button>
+)
 
 const CoverSectionContainer: React.FunctionComponent<Props> = ({onEdit, user}) => {
     if (!user) return null
@@ -42,12 +68,35 @@ const CoverSectionContainer: React.FunctionComponent<Props> = ({onEdit, user}) =
         mutateFollow({variables: {userId: user.id}})
     }
 
+    const isMyProfile = loggedInUser?.id === user.id
+
     return (
         <CoverSection
-            user={user}
-            toggleFollow={toggleFollow}
-            onEdit={onEdit}
-            isMyProfile={loggedInUser?.id === user.id}
+            coverImage={user.coverImage}
+            actionButtons={
+                <>
+                    {!isMyProfile &&
+                        (user.isFollowedByMe ? (
+                            <UnfollowButton toggleFollow={toggleFollow} />
+                        ) : (
+                            <FollowButton toggleFollow={toggleFollow} />
+                        ))}
+
+                    {isMyProfile && (
+                        <Button
+                            leftIcon={<Icon d={Icon.EDIT} color={colors.WHITE} />}
+                            dimensions="extraSmall"
+                            color="tertiary"
+                            onClick={onEdit}
+                        >
+                            <FormattedMessage
+                                id="user_profile.edit"
+                                defaultMessage="Edit profile"
+                            />
+                        </Button>
+                    )}
+                </>
+            }
         />
     )
 }
