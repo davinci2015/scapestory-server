@@ -5,7 +5,7 @@ import {Injectable, Inject} from '@graphql-modules/di'
 import {tokens} from 'di/tokens'
 import {UserRepositoryInterface} from 'db/repositories/User'
 import {User} from 'db/models/User'
-import {uploadStreamFile} from 'services/cloudinary'
+import {uploadStreamFile, deleteFile} from 'services/cloudinary'
 import {UserDetails, ImageUploadResult} from 'interfaces/graphql/types'
 
 export interface UsersProviderInterface {
@@ -43,6 +43,12 @@ export class UsersProvider implements UsersProviderInterface {
     async uploadProfileImage(userId: number, file: Promise<FileUpload>) {
         const {createReadStream, filename} = await file
         const result = await uploadStreamFile(createReadStream, filename)
+        const user = await this.userRepository.findUserById(userId)
+
+        if (user?.coverImagePublicId) {
+            deleteFile(user.coverImagePublicId)
+        }
+
         await this.userRepository.updateProfileImage(userId, result.public_id, result.secure_url)
 
         return {imageUrl: result.secure_url, imagePublicId: result.public_id}
@@ -51,6 +57,12 @@ export class UsersProvider implements UsersProviderInterface {
     async uploadCoverImage(userId: number, file: Promise<FileUpload>) {
         const {createReadStream, filename} = await file
         const result = await uploadStreamFile(createReadStream, filename)
+        const user = await this.userRepository.findUserById(userId)
+
+        if (user?.coverImagePublicId) {
+            deleteFile(user.coverImagePublicId)
+        }
+
         await this.userRepository.updateCoverImage(userId, result.public_id, result.secure_url)
 
         return {imageUrl: result.secure_url, imagePublicId: result.public_id}

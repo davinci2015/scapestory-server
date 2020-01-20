@@ -51,3 +51,12 @@ export const VISIT = gql`
         }
     }
 `
+
+export const UPLOAD_USER_IMAGE = gql`
+    mutation uploadUserImage($file: Upload!, $imageVariant: ImageVariant!) {
+        uploadUserImage(file: $file, imageVariant: $imageVariant) {
+            imageUrl
+            imagePublicId
+        }
+    }
+`

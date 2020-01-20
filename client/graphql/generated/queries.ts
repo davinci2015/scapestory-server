@@ -817,28 +817,6 @@ export type AquascapeDetailsEditQuery = (
   )> }
 );
 
-export type UserBySlugQueryVariables = {
-  slug: Scalars['String'],
-  pagination: Pagination
-};
-
-
-export type UserBySlugQuery = (
-  { __typename?: 'Query' }
-  & { user: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'about' | 'profileImage' | 'profileImagePublicId' | 'coverImage' | 'coverImagePublicId' | 'facebookUrl' | 'youtubeUrl' | 'instagramUrl' | 'twitterUrl' | 'followersCount' | 'followingCount' | 'isFollowedByMe'>
-    & { aquascapes: (
-      { __typename?: 'AquascapesResult' }
-      & Pick<AquascapesResult, 'count'>
-      & { rows: Array<(
-        { __typename?: 'Aquascape' }
-        & AquascapeFieldsFragment
-      )> }
-    ) }
-  )> }
-);
-
 export type AquascapeFieldsFragment = (
   { __typename?: 'Aquascape' }
   & Pick<Aquascape, 'id' | 'createdAt' | 'title' | 'mainImageUrl' | 'viewsCount' | 'likesCount'>
@@ -913,5 +891,27 @@ export type TrendingAquascapesQuery = (
   & { trending: Array<(
     { __typename?: 'Aquascape' }
     & AquascapeFieldsFragment
+  )> }
+);
+
+export type UserBySlugQueryVariables = {
+  slug: Scalars['String'],
+  pagination: Pagination
+};
+
+
+export type UserBySlugQuery = (
+  { __typename?: 'Query' }
+  & { user: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'about' | 'profileImage' | 'profileImagePublicId' | 'coverImage' | 'coverImagePublicId' | 'facebookUrl' | 'youtubeUrl' | 'instagramUrl' | 'twitterUrl' | 'followersCount' | 'followingCount' | 'isFollowedByMe'>
+    & { aquascapes: (
+      { __typename?: 'AquascapesResult' }
+      & Pick<AquascapesResult, 'count'>
+      & { rows: Array<(
+        { __typename?: 'Aquascape' }
+        & AquascapeFieldsFragment
+      )> }
+    ) }
   )> }
 );

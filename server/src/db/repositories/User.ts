@@ -39,7 +39,7 @@ export class UserRepository extends BaseRepository<User> implements UserReposito
     updateProfileImage(userId: number, publicId: string, url: string) {
         return this.update(
             {
-                profileImageUrl: url,
+                profileImage: url,
                 profileImagePublicId: publicId,
             },
             {where: {id: userId}}
@@ -49,7 +49,7 @@ export class UserRepository extends BaseRepository<User> implements UserReposito
     updateCoverImage(userId: number, publicId: string, url: string) {
         return this.update(
             {
-                coverImageUrl: url,
+                coverImage: url,
                 coverImagePublicId: publicId,
             },
             {where: {id: userId}}

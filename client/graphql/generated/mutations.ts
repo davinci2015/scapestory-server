@@ -818,3 +818,17 @@ export type VisitAquascapeMutation = (
     ) }
   ) }
 );
+
+export type UploadUserImageMutationVariables = {
+  file: Scalars['Upload'],
+  imageVariant: ImageVariant
+};
+
+
+export type UploadUserImageMutation = (
+  { __typename?: 'Mutation' }
+  & { uploadUserImage: (
+    { __typename?: 'ImageUploadResult' }
+    & Pick<ImageUploadResult, 'imageUrl' | 'imagePublicId'>
+  ) }
+);

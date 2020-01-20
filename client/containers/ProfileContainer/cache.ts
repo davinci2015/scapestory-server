@@ -5,6 +5,7 @@ import gql from 'graphql-tag'
 export enum ProfileActions {
     FOLLOW,
     UNFOLLOW,
+    UPLOAD_COVER_IMAGE,
 }
 
 interface Payload {
@@ -49,6 +50,23 @@ export const updateProfileCache = (action: ProfileActions, payload: Payload) => 
                         ...data.userBySlug,
                         isFollowedByMe: false,
                         followersCount: data.userBySlug.followersCount - 1,
+                    },
+                },
+            })
+
+        case ProfileActions.UPLOAD_COVER_IMAGE:
+            query = gql`query { userBySlug(slug: "${payload.slug}") { id coverImage coverImagePublicId }}`
+            data = cache.readQuery<any>({query})
+
+            if (!mutationData.uploadUserImage.imageUrl) return
+
+            return cache.writeQuery({
+                query,
+                data: {
+                    userBySlug: {
+                        ...data.userBySlug,
+                        coverImage: mutationData.uploadUserImage.imageUrl,
+                        coverImagePublicId: mutationData.uploadUserImage.imagePublicId,
                     },
                 },
             })
