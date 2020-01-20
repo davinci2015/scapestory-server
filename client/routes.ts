@@ -10,6 +10,7 @@ export default {
     aquascapeDetails: '/aquascape/[title]/[id]',
     aquascapeDetailsEdit: '/aquascape/edit/[title]/[id]',
     profile: '/profile/[slug]',
+    editProfile: '/profile/edit/[slug]',
 }
 
 export const getAquascapeDetailsSlug = (title: string) =>
@@ -19,7 +20,7 @@ export const getAquascapeDetailsSlug = (title: string) =>
 
 export const createDynamicPath = (path: string, values: {[key: string]: string}) => {
     for (const property in values) {
-        if (values.hasOwnProperty(property)) {
+        if (values[property]) {
             path = path.replace(`[${property}]`, values[property])
         }
     }

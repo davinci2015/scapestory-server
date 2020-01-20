@@ -16,9 +16,10 @@ import CoverSection from 'components/sections/Profile/CoverSection'
 
 interface Props {
     user: UserBySlugQuery['user']
+    onEdit: VoidFunction
 }
 
-const CoverSectionContainer: React.FunctionComponent<Props> = ({user}) => {
+const CoverSectionContainer: React.FunctionComponent<Props> = ({onEdit, user}) => {
     if (!user) return null
 
     const {isAuthenticated, user: loggedInUser} = useContext(AuthContext)
@@ -45,7 +46,7 @@ const CoverSectionContainer: React.FunctionComponent<Props> = ({user}) => {
         <CoverSection
             user={user}
             toggleFollow={toggleFollow}
-            onEdit={() => null}
+            onEdit={onEdit}
             isMyProfile={loggedInUser?.id === user.id}
         />
     )
