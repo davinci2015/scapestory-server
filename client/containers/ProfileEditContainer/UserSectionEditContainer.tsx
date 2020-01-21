@@ -16,6 +16,7 @@ import {UPDATE_USER_DETAILS} from './mutations'
 import {UserDetails} from 'graphql/generated/types'
 import {isWebUri} from 'valid-url'
 import UsernameInput from 'components/sections/Profile/UserSection/UsernameInput'
+import {useIntl} from 'react-intl'
 
 interface Props {
     user: UserBySlugQuery['user']
@@ -62,6 +63,7 @@ const ABOUT_MAX_LEN = 200
 
 const UserSectionEditContainer: React.FunctionComponent<Props> = ({onChangeProfileImage, user}) => {
     const [urlErrors, setUrlError] = useState<{[key in SocialNetworkKey]?: boolean}>({})
+    const intl = useIntl()
 
     if (!user) return null
 
@@ -102,7 +104,10 @@ const UserSectionEditContainer: React.FunctionComponent<Props> = ({onChangeProfi
                 <UsernameInput
                     username={user.name}
                     onChange={updateName}
-                    placeholder="Enter your name"
+                    placeholder={intl.formatMessage({
+                        id: 'user_profile.placeholder_name',
+                        defaultMessage: 'Enter your name',
+                    })}
                 />
             }
             userImage={
@@ -145,19 +150,26 @@ const UserSectionEditContainer: React.FunctionComponent<Props> = ({onChangeProfi
                         <Textarea
                             defaultValue={user.about || ''}
                             maxLength={ABOUT_MAX_LEN}
-                            placeholder="Write something about yourself... [max. 200 characters]"
                             onChange={updateAbout}
+                            placeholder={intl.formatMessage({
+                                id: 'user_profile.placeholder_about',
+                                defaultMessage:
+                                    'Write something about yourself... [max. 200 characters]',
+                            })}
                         />
                     }
                     socialNetworkArea={socialNetworkInputs.map(network => (
                         <Input
                             key={network.key}
                             error={urlErrors[network.key]}
-                            errorMessage="URL is incorrectly formatted"
                             defaultValue={user[network.key] || ''}
                             placeholder={network.placeholder}
                             label={network.label}
                             onChange={updateNetworkUrl(network.key)}
+                            errorMessage={intl.formatMessage({
+                                id: 'user_profile.error_invalid_url',
+                                defaultMessage: 'URL is incorrectly formatted',
+                            })}
                             endAdornment={
                                 <InputAdornment>
                                     <network.Icon />
