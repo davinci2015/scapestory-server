@@ -3,7 +3,7 @@ import {useMutation} from 'react-apollo'
 import debounce from 'lodash.debounce'
 
 import {UserBySlugQuery, MutationUpdateUserDetailsArgs} from 'graphql/generated/queries'
-import {FormattedMessage, Textarea, Input, InputAdornment, Headline} from 'components/atoms'
+import {FormattedMessage, Textarea, Input, InputAdornment} from 'components/atoms'
 import UserSection from 'components/sections/Profile/UserSection'
 import UserStats from 'components/sections/Profile/UserStats'
 import UserAbout from 'components/sections/Profile/UserAbout'
@@ -15,7 +15,7 @@ import {
 import {UPDATE_USER_DETAILS} from './mutations'
 import {UserDetails} from 'graphql/generated/types'
 import {isWebUri} from 'valid-url'
-import {colors} from 'styles'
+import UsernameInput from 'components/sections/Profile/UserSection/UsernameInput'
 
 interface Props {
     user: UserBySlugQuery['user']
@@ -86,16 +86,24 @@ const UserSectionEditContainer: React.FunctionComponent<Props> = ({onChangeProfi
         debouncedDetailsUpdate({about: event.target.value.trim()})
     }
 
+    const updateName = (event: ChangeEvent<HTMLInputElement>) => {
+        if (!event.target.value.trim().length) return
+
+        debouncedDetailsUpdate({name: event.target.value.trim()})
+    }
+
     const debouncedDetailsUpdate = debounce((details: UserDetails) => {
         updateUserDetailsMutation({variables: {details}})
-    }, 1000)
+    }, 800)
 
     return (
         <UserSection
             username={
-                <Headline as="h1" variant="h4" color={colors.WHITE}>
-                    {user.name}
-                </Headline>
+                <UsernameInput
+                    username={user.name}
+                    onChange={updateName}
+                    placeholder="Enter your name"
+                />
             }
             userImage={
                 <EditableUserImage image={user.profileImage} onChange={onChangeProfileImage} />
