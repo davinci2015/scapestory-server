@@ -15,7 +15,7 @@ export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aq
         userId?: number,
         random?: boolean,
         include?: Includeable[]
-    ) => Promise<{rows: Aquascape[], count: number}>
+    ) => Promise<{rows: Aquascape[]; count: number}>
 
     getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape | null>
 

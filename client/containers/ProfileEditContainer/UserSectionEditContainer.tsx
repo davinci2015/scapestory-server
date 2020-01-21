@@ -1,29 +1,26 @@
 import React from 'react'
 
 import {UserBySlugQuery} from 'graphql/generated/queries'
-import {UserImage, FormattedMessage} from 'components/atoms'
-import {UserImageSize, UserImageVariant} from 'components/atoms/UserImage/UserImage'
+import {FormattedMessage} from 'components/atoms'
 import UserSection from 'components/sections/Profile/UserSection'
 import UserStats from 'components/sections/Profile/UserStats'
 import UserAbout from 'components/sections/Profile/UserAbout'
 import SocialLink, {SocialNetwork} from 'components/sections/Profile/UserAbout/SocialLink'
+import EditableUserImage from 'components/sections/Profile/UserSection/EditableUserImage'
 
 interface Props {
     user: UserBySlugQuery['user']
+    onChangeProfileImage: (files: FileList | null) => void
 }
 
-const UserSectionEditContainer: React.FunctionComponent<Props> = ({user}) => {
+const UserSectionEditContainer: React.FunctionComponent<Props> = ({onChangeProfileImage, user}) => {
     if (!user) return null
 
     return (
         <UserSection
             username={user.name}
             userImage={
-                <UserImage
-                    image={user.profileImage}
-                    size={UserImageSize.s148}
-                    variant={UserImageVariant.BORDER}
-                />
+                <EditableUserImage image={user.profileImage} onChange={onChangeProfileImage} />
             }
             stats={
                 <UserStats>

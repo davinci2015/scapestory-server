@@ -1,21 +1,27 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {useRouter} from 'next/router'
-import {useQuery} from 'react-apollo'
+import {useQuery, useMutation} from 'react-apollo'
 
-import {UserBySlugQuery, UserBySlugQueryVariables} from 'graphql/generated/queries'
+import {UserBySlugQuery, UserBySlugQueryVariables, ImageVariant} from 'graphql/generated/queries'
 import {Content, Grid} from 'components/core'
 import {AquascapeCardList} from 'components/sections/shared'
 import {Headline, FormattedMessage} from 'components/atoms'
 import {renderAquascapeCards} from 'utils/render'
 import {GridWidth} from 'components/core/Grid'
 import {USER_BY_SLUG} from 'graphql/queries'
+import {AuthContext} from 'providers/AuthenticationProvider'
+import routes from 'routes'
 
-import CoverSectionContainer from './CoverSectionEditContainer'
+import CoverSectionEditContainer from './CoverSectionEditContainer'
 import UserSectionEditContainer from './UserSectionEditContainer'
+import {MutationUploadUserImageArgs} from 'graphql/generated/mutations'
+import {UPLOAD_USER_IMAGE} from 'graphql/mutations'
+import {updateProfileCache, ProfileActions} from 'containers/ProfileContainer/cache'
 
 const ProfileContainer = () => {
     const router = useRouter()
     const slug = router.query.slug?.toString()
+    const {isAuthenticated, user: loggedInUser} = useContext(AuthContext)
 
     if (!slug) return null
 
@@ -23,6 +29,27 @@ const ProfileContainer = () => {
         USER_BY_SLUG,
         {variables: {slug, pagination: {limit: 8, cursor: null}}, fetchPolicy: 'cache-and-network'}
     )
+
+    const [uploadUserImage] = useMutation<MutationUploadUserImageArgs>(UPLOAD_USER_IMAGE)
+
+    const onImageUpload = (imageVariant: ImageVariant) => (files: FileList | null) => {
+        // TODO: Validate file extension
+        // TODO: Validate file size
+        if (!files || !files.length) return
+
+        const action = {
+            [ImageVariant.Cover]: ProfileActions.UPLOAD_COVER_IMAGE,
+            [ImageVariant.Profile]: ProfileActions.UPLOAD_PROFILE_IMAGE,
+        }
+
+        uploadUserImage({
+            variables: {
+                file: files[0],
+                imageVariant,
+            },
+            update: updateProfileCache(action[imageVariant], {slug}),
+        })
+    }
 
     if (error) {
         // TODO: handle error properly
@@ -34,11 +61,22 @@ const ProfileContainer = () => {
         return null
     }
 
+    if (!isAuthenticated || userResult.user.id !== loggedInUser?.id) {
+        router.push(routes.index)
+        return null
+    }
+
     return (
         <Content>
-            <CoverSectionContainer user={userResult.user} />
+            <CoverSectionEditContainer
+                onChangeCover={onImageUpload(ImageVariant.Cover)}
+                user={userResult.user}
+            />
             <Grid width={GridWidth.SMALL}>
-                <UserSectionEditContainer user={userResult.user} />
+                <UserSectionEditContainer
+                    onChangeProfileImage={onImageUpload(ImageVariant.Profile)}
+                    user={userResult.user}
+                />
                 {!!userResult.user.aquascapes.rows.length && (
                     <AquascapeCardList
                         variant="condensed"

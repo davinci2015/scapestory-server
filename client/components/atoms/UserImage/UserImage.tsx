@@ -1,7 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
 
-import {backgroundImage} from 'styles/mixins'
 import {colors} from 'styles'
 
 const classes = {
@@ -37,12 +36,14 @@ const borderSizeMapping = {
     [UserImageSize.s148]: '3px',
 }
 
+const IMAGE_PLACEHOLDER = '/static/placeholders/user.png'
+
 type UserImageType = React.FunctionComponent<Props> & {
     classes: typeof classes
 }
 
 const UserImage: UserImageType = ({
-    image = '/static/placeholders/user.png',
+    image,
     size = UserImageSize.s24,
     variant = UserImageVariant.DEFAULT,
     children,
@@ -53,6 +54,11 @@ const UserImage: UserImageType = ({
                 border: variant === UserImageVariant.BORDER,
             })}
         >
+            <img
+                className="image"
+                src={image || IMAGE_PLACEHOLDER}
+                alt="Aquascaper profile photo"
+            />
             {children}
         </div>
         <style jsx>{`
@@ -60,8 +66,16 @@ const UserImage: UserImageType = ({
                 position: relative;
                 width: ${sizeMapping[size]};
                 height: ${sizeMapping[size]};
+
                 border-radius: 50%;
-                ${backgroundImage(image || '')}
+                overflow: hidden;
+            }
+
+            .image {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
 
             .border {

@@ -1,7 +1,7 @@
 import React, {useRef} from 'react'
 
 export interface RenderProps {
-    openFinder: () => void
+    openFinder: VoidFunction
 }
 
 interface Props {

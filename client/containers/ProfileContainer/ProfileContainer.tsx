@@ -37,6 +37,8 @@ const ProfileContainer = () => {
 
     const onEdit = () => router.push(createDynamicPath(routes.editProfile, {slug}))
 
+    console.log('UserResult:')
+    console.log(userResult.user)
     return (
         <Content>
             <CoverSectionContainer user={userResult.user} onEdit={onEdit} />

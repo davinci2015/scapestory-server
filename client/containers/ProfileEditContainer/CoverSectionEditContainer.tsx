@@ -1,49 +1,22 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {useRouter} from 'next/router'
-import {useMutation} from 'react-apollo'
 
-import {UserBySlugQuery, MutationUploadUserImageArgs, ImageVariant} from 'graphql/generated/queries'
-import {AuthContext} from 'providers/AuthenticationProvider'
+import {UserBySlugQuery} from 'graphql/generated/queries'
 import routes, {createDynamicPath} from 'routes'
 import CoverSection from 'components/sections/Profile/CoverSection'
 import {Button, Icon, FormattedMessage} from 'components/atoms'
 import {colors} from 'styles'
 import {ImageUpload} from 'components/core'
-import {UPLOAD_USER_IMAGE} from 'graphql/mutations'
-import {updateProfileCache, ProfileActions} from 'containers/ProfileContainer/cache'
 
 interface Props {
     user: UserBySlugQuery['user']
+    onChangeCover: (files: FileList | null) => void
 }
 
-const CoverSectionContainer: React.FunctionComponent<Props> = ({user}) => {
+const CoverSectionEditContainer: React.FunctionComponent<Props> = ({onChangeCover, user}) => {
     const router = useRouter()
 
     if (!user) return null
-
-    const {isAuthenticated, user: loggedInUser} = useContext(AuthContext)
-
-    const [uploadUserImage] = useMutation<MutationUploadUserImageArgs>(UPLOAD_USER_IMAGE, {
-        update: updateProfileCache(ProfileActions.UPLOAD_COVER_IMAGE, {slug: user.slug}),
-    })
-
-    if (!isAuthenticated || user.id !== loggedInUser?.id) {
-        router.push(routes.index)
-        return null
-    }
-
-    const onChangeCover = (files: FileList | null) => {
-        // TODO: Validate file extension
-        // TODO: Validate file size
-        if (!files || !files.length) return
-
-        uploadUserImage({
-            variables: {
-                file: files[0],
-                imageVariant: ImageVariant.Cover,
-            },
-        })
-    }
 
     const onPreview = () => router.push(createDynamicPath(routes.profile, {slug: user.slug}))
 
@@ -85,4 +58,4 @@ const CoverSectionContainer: React.FunctionComponent<Props> = ({user}) => {
     )
 }
 
-export default CoverSectionContainer
+export default CoverSectionEditContainer

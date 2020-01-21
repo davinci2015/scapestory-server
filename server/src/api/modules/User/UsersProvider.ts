@@ -1,12 +1,13 @@
 import Bluebird from 'bluebird'
 import {FileUpload} from 'graphql-upload'
-import {Injectable, Inject} from '@graphql-modules/di'
+import {Injectable, Inject, ProviderScope} from '@graphql-modules/di'
 
 import {tokens} from 'di/tokens'
 import {User} from 'db/models/User'
 import {UserRepositoryInterface} from 'db/repositories/User'
 import {uploadStreamFile, deleteFile} from 'services/cloudinary'
 import {UserDetails, ImageUploadResult} from 'interfaces/graphql/types'
+import logger from 'logger'
 
 export interface UsersProviderInterface {
     findUserById: (id: number) => Promise<User | null>
@@ -17,7 +18,7 @@ export interface UsersProviderInterface {
     updateUserDetails: (userId: number, userDetails: UserDetails) => Promise<[number, User[]]>
 }
 
-@Injectable()
+@Injectable({scope: ProviderScope.Session})
 export class UsersProvider implements UsersProviderInterface {
     constructor(
         @Inject(tokens.USER_REPOSITORY)
@@ -45,8 +46,8 @@ export class UsersProvider implements UsersProviderInterface {
         const result = await uploadStreamFile(createReadStream, filename)
         const user = await this.userRepository.findUserById(userId)
 
-        if (user?.coverImagePublicId) {
-            deleteFile(user.coverImagePublicId)
+        if (user?.profileImagePublicId) {
+            deleteFile(user.profileImagePublicId).catch(error => logger.error(error))
         }
 
         await this.userRepository.updateProfileImage(userId, result.public_id, result.secure_url)
@@ -60,7 +61,7 @@ export class UsersProvider implements UsersProviderInterface {
         const user = await this.userRepository.findUserById(userId)
 
         if (user?.coverImagePublicId) {
-            deleteFile(user.coverImagePublicId)
+            deleteFile(user.coverImagePublicId).catch(error => logger.error(error))
         }
 
         await this.userRepository.updateCoverImage(userId, result.public_id, result.secure_url)

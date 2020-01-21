@@ -1,5 +1,5 @@
 import * as DataLoader from 'dataloader'
-import {Injectable} from '@graphql-modules/di'
+import {Injectable, ProviderScope} from '@graphql-modules/di'
 
 import {User} from 'db/models/User'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
@@ -15,7 +15,7 @@ export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
     updateUserDetails(userId: number, userDetails: UserDetails): Promise<[number, User[]]>
 }
 
-@Injectable()
+@Injectable({scope: ProviderScope.Session})
 export class UserRepository extends BaseRepository<User> implements UserRepositoryInterface {
     dataLoader: DataLoader<number, User>
 
@@ -24,7 +24,7 @@ export class UserRepository extends BaseRepository<User> implements UserReposito
         this.dataLoader = new DataLoader(this.batchGetUserById)
     }
 
-    findUserById(id: number): Promise<User | null> {
+    async findUserById(id: number): Promise<User | null> {
         return this.dataLoader.load(id)
     }
 
