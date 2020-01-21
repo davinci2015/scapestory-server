@@ -1,12 +1,12 @@
 import React from 'react'
 
 import {colors, spaces} from 'styles'
-import {Headline, FormattedMessage, Paragraph} from 'components/atoms'
+import {Headline, FormattedMessage, Paragraph, Input, Textarea} from 'components/atoms'
 
 interface Props {
     shouldDisplayPlaceholder?: boolean
     socialNetworkArea: React.ReactNode
-    about?: string
+    about?: React.ReactNode
 }
 
 const UserAbout: React.FunctionComponent<Props> = ({
@@ -20,11 +20,7 @@ const UserAbout: React.FunctionComponent<Props> = ({
                 <FormattedMessage id="user_profile.about" defaultMessage="About" />
             </Headline>
         </div>
-        {about && !shouldDisplayPlaceholder && (
-            <div className="about-text">
-                <Paragraph>{about}</Paragraph>
-            </div>
-        )}
+        {about && <div className="about-text">{about}</div>}
         {shouldDisplayPlaceholder && (
             <Paragraph color={colors.SHADE_DEEP}>
                 <FormattedMessage
@@ -33,14 +29,26 @@ const UserAbout: React.FunctionComponent<Props> = ({
                 />
             </Paragraph>
         )}
-        <div>{socialNetworkArea}</div>
+        <div className="social">{socialNetworkArea}</div>
         <style jsx>{`
             .about {
                 margin-bottom: ${spaces.s12};
             }
 
+            .about-text :global(.${Textarea.classes.textarea}) {
+                margin-bottom: ${spaces.s30};
+            }
+
             .about-text {
                 margin-bottom: ${spaces.s24};
+            }
+
+            .social :global(svg) {
+                color: ${colors.PRIMARY};
+            }
+
+            .social :global(.${Input.classes.inputContainer}) {
+                margin-bottom: ${spaces.s30};
             }
         `}</style>
     </>

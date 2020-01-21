@@ -28,9 +28,10 @@ enum ImageVariant {
 }
 
 input UserDetails {
-    name: String!
+    name: String
     about: String
     facebookUrl: String
+    youtubeUrl: String
     instagramUrl: String
     twitterUrl: String
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {UserBySlugQuery} from 'graphql/generated/queries'
-import {UserImage, FormattedMessage} from 'components/atoms'
+import {UserImage, FormattedMessage, Paragraph} from 'components/atoms'
 import {UserImageSize, UserImageVariant} from 'components/atoms/UserImage/UserImage'
 import UserSection from 'components/sections/Profile/UserSection'
 import UserStats from 'components/sections/Profile/UserStats'
@@ -58,6 +58,7 @@ const UserSectionContainer: React.FunctionComponent<Props> = ({user}) => {
             }
             about={
                 <UserAbout
+                    about={<Paragraph>{user.about}</Paragraph>}
                     socialNetworkArea={
                         <div>
                             {user.facebookUrl && (

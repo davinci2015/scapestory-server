@@ -1,5 +1,4 @@
 import React from 'react'
-import classnames from 'classnames'
 
 import {colors, spaces} from 'styles'
 import {Icon} from 'components/atoms'
@@ -21,7 +20,7 @@ interface Props {
 const FacebookIcon = () => <Icon d={Icon.FACEBOOK} viewBox="0 0 24 24" color={colors.PRIMARY} />
 const InstagramIcon = () => <Icon d={Icon.INSTAGRAM} viewBox="0 0 48 48" color={colors.PRIMARY} />
 
-const iconComponentMapping = {
+export const socialIconComponentMapping = {
     [SocialNetwork.FACEBOOK]: FacebookIcon,
     [SocialNetwork.YOUTUBE]: YoutubeIcon,
     [SocialNetwork.TWITTER]: TwitterIcon,
@@ -29,16 +28,11 @@ const iconComponentMapping = {
 }
 
 const SocialLink: React.FunctionComponent<Props> = ({network, url}) => {
-    const NetworkIcon = iconComponentMapping[network]
+    const NetworkIcon = socialIconComponentMapping[network]
 
     return (
         <>
-            <div
-                className={classnames('social', {
-                    twitter: network === SocialNetwork.TWITTER,
-                    youtube: network === SocialNetwork.YOUTUBE,
-                })}
-            >
+            <div className="social">
                 <NetworkIcon />
                 <a href={url} target="_blank" rel="noopener noreferrer">
                     {url}
@@ -58,9 +52,8 @@ const SocialLink: React.FunctionComponent<Props> = ({network, url}) => {
                     margin-right: ${spaces.s18};
                 }
 
-                .social.twitter :global(svg),
-                .social.youtube :global(svg) {
-                    stroke: ${colors.PRIMARY};
+                .social :global(svg) {
+                    color: ${colors.PRIMARY};
                 }
 
                 .social :global(a) {
