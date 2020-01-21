@@ -15,10 +15,6 @@ interface Props {
 const UserSectionContainer: React.FunctionComponent<Props> = ({user}) => {
     if (!user) return null
 
-    console.log('--------------------------------')
-    console.log(user)
-    console.log(user.profileImage)
-
     return (
         <UserSection
             username={user.name}

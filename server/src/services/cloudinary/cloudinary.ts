@@ -2,36 +2,55 @@
 /* eslint-disable camelcase */
 import environment from 'config/environment'
 import cloudinary = require('cloudinary')
-import {UploadApiOptions, TransformationOptions} from 'cloudinary'
+import {UploadApiOptions} from 'cloudinary'
 
-type ImageTypes = 'userProfileImage' | 'userCoverImage' | 'aquascapeImage'
+type ImageTypes = 'userProfileImage' | 'userCoverImage' | 'aquascapeImage' | 'aquascapeMainImage'
 
-type ImageTransformations = {
-    [key in ImageTypes]: TransformationOptions
+type ImageUploadOptions = {
+    [key in ImageTypes]: UploadApiOptions
 }
 
-type Folders = {
-    [key in ImageTypes]: string
-}
-
-export const folders: Folders = {
-    userProfileImage: 'profile_images',
-    userCoverImage: 'cover_images',
-    aquascapeImage: 'aquascapes',
-}
-
-export const imageTransformations: ImageTransformations = {
+export const imageUploadOptions: ImageUploadOptions = {
     userProfileImage: {
-        width: 142,
-        height: 142,
-        crop: 'fill',
+        folder: 'profile_images',
+        format: 'jpg',
+        transformation: {
+            width: 142,
+            height: 142,
+            crop: 'fill',
+            q: 'auto:good',
+        },
     },
     userCoverImage: {
-        width: 1366,
-        height: 270,
-        crop: 'fill',
+        folder: 'cover_images',
+        format: 'jpg',
+        transformation: {
+            width: 1470,
+            height: 270,
+            crop: 'lfill',
+            quality: 'auto:good',
+        },
     },
-    aquascapeImage: {},
+    aquascapeImage: {
+        folder: 'aquascape_images',
+        format: 'jpg',
+        transformation: {
+            width: 1024,
+            height: 768,
+            crop: 'lfill',
+            quality: 'auto:good',
+        },
+    },
+    aquascapeMainImage: {
+        folder: 'aquascape_main_images',
+        format: 'jpg',
+        transformation: {
+            width: 1440,
+            height: 900,
+            crop: 'lfill',
+            quality: 'auto:best',
+        },
+    },
 }
 
 export interface CloudinaryUploadResult {
@@ -69,7 +88,7 @@ export const getFile = (id: string) =>
         )
     })
 
-export const uploadStreamFile = (fileStream: any, filename: string, options?: UploadApiOptions) =>
+export const uploadStreamFile = (fileStream: any, options?: UploadApiOptions) =>
     new Promise<CloudinaryUploadResult>((resolve, reject) => {
         const readStream = fileStream()
         // @ts-ignore

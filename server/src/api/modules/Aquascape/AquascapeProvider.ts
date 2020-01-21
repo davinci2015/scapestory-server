@@ -1,6 +1,7 @@
 import {Injectable, Inject} from '@graphql-modules/di'
 import {Includeable} from 'sequelize/types'
-import * as Bluebird from 'bluebird'
+import Bluebird from 'bluebird'
+import {FileUpload} from 'graphql-upload'
 
 import {AquascapeRepositoryInterface} from 'db/repositories/Aquascape'
 import {Aquascape} from 'db/models/Aquascape'
@@ -8,8 +9,13 @@ import {AquascapeImage} from 'db/models/AquascapeImage'
 import {tokens} from 'di/tokens'
 
 import {Pagination} from 'api/generated/types'
-import {FileUpload} from 'graphql-upload'
-import {uploadStreamFile, CloudinaryUploadResult, deleteFile} from 'services/cloudinary'
+import {
+    uploadStreamFile,
+    CloudinaryUploadResult,
+    deleteFile,
+    imageUploadOptions,
+} from 'services/cloudinary'
+import logger from 'logger'
 
 export interface AquascapeProviderInterface {
     getAquascapes: (
@@ -17,11 +23,14 @@ export interface AquascapeProviderInterface {
         userId?: number | null,
         random?: boolean | null,
         include?: Includeable[]
-    ) => Promise<{rows: Aquascape[], count: number}>
+    ) => Promise<{rows: Aquascape[]; count: number}>
 
     getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape | null>
 
-    getTrendingAquascapes: (pagination: Pagination, include?: Includeable[]) => Bluebird<Aquascape[]>
+    getTrendingAquascapes: (
+        pagination: Pagination,
+        include?: Includeable[]
+    ) => Bluebird<Aquascape[]>
 
     getAquascapeById: (id: number, include?: Includeable[]) => Bluebird<Aquascape | null>
 
@@ -31,14 +40,17 @@ export interface AquascapeProviderInterface {
 
     updateAquascapeTitle: (aquascapeId: number, title: string) => Bluebird<[number, Aquascape[]]>
 
-    updateAquascapeMainImage: (aquascapeId: number, file: Promise<FileUpload>) => Promise<CloudinaryUploadResult>
+    updateAquascapeMainImage: (
+        aquascapeId: number,
+        file: Promise<FileUpload>
+    ) => Promise<CloudinaryUploadResult>
 }
 
 @Injectable()
 export class AquascapeProvider implements AquascapeProviderInterface {
     constructor(
         @Inject(tokens.AQUASCAPE_REPOSITORY)
-        private aquascapeRepository: AquascapeRepositoryInterface,
+        private aquascapeRepository: AquascapeRepositoryInterface
     ) {}
 
     getAquascapes(
@@ -47,12 +59,7 @@ export class AquascapeProvider implements AquascapeProviderInterface {
         random?: boolean,
         include?: Includeable[]
     ) {
-        return this.aquascapeRepository.getAquascapes(
-            pagination,
-            userId,
-            random,
-            include
-        )
+        return this.aquascapeRepository.getAquascapes(pagination, userId, random, include)
     }
 
     getFeaturedAquascape(include?: Includeable[]) {
@@ -60,10 +67,7 @@ export class AquascapeProvider implements AquascapeProviderInterface {
     }
 
     getTrendingAquascapes(pagination: Pagination, include?: Includeable[]) {
-        return this.aquascapeRepository.getTrendingAquascapes(
-            pagination,
-            include
-        )
+        return this.aquascapeRepository.getTrendingAquascapes(pagination, include)
     }
 
     getAquascapeById(id: number, include?: Includeable[]) {
@@ -84,18 +88,25 @@ export class AquascapeProvider implements AquascapeProviderInterface {
 
     async updateAquascapeMainImage(aquascapeId: number, file: Promise<FileUpload>) {
         const aquascape = await this.aquascapeRepository.getAquascapeById(aquascapeId)
-        const { createReadStream, filename } = await file
+        const {createReadStream} = await file
 
         // Upload new image
-        const result = await uploadStreamFile(createReadStream, filename)
+        const result = await uploadStreamFile(
+            createReadStream,
+            imageUploadOptions.aquascapeMainImage
+        )
 
         // Remove old image
         if (aquascape?.mainImagePublicId) {
-            deleteFile(aquascape.mainImagePublicId)
+            deleteFile(aquascape.mainImagePublicId).catch(error => logger.error(error))
         }
 
         // Update main image in db
-        await this.aquascapeRepository.updateAquascapeMainImage(aquascapeId, result.public_id, result.secure_url)
+        await this.aquascapeRepository.updateAquascapeMainImage(
+            aquascapeId,
+            result.public_id,
+            result.secure_url
+        )
 
         return result
     }

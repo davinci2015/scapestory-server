@@ -1,10 +1,11 @@
 import {Injectable, Inject} from '@graphql-modules/di'
+import {FileUpload} from 'graphql-upload'
+
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {tokens} from 'di/tokens'
-
-import {FileUpload} from 'graphql-upload'
-import {uploadStreamFile, deleteFile} from 'services/cloudinary'
+import {uploadStreamFile, deleteFile, imageUploadOptions} from 'services/cloudinary'
 import {AquascapeImageRepository} from 'db/repositories/AquascapeImage'
+import logger from 'logger'
 
 export interface AquascapeImageProviderInterface {
     addAquascapeImage: (aquascapeId: number, file: Promise<FileUpload>) => Promise<AquascapeImage>
@@ -19,8 +20,8 @@ export class AquascapeImageProvider implements AquascapeImageProviderInterface {
     ) {}
 
     async addAquascapeImage(aquascapeId: number, file: Promise<FileUpload>) {
-        const {createReadStream, filename} = await file
-        const result = await uploadStreamFile(createReadStream, filename)
+        const {createReadStream} = await file
+        const result = await uploadStreamFile(createReadStream, imageUploadOptions.aquascapeImage)
 
         return await this.aquascapeImageRepository.addImage(
             aquascapeId,
@@ -40,7 +41,7 @@ export class AquascapeImageProvider implements AquascapeImageProviderInterface {
         }
 
         // Remove image from cloudinary
-        deleteFile(image.publicId)
+        deleteFile(image.publicId).catch(error => logger.error(error))
 
         // Remove image from db
         return this.aquascapeImageRepository.removeImage(aquascapeId, imageId)
