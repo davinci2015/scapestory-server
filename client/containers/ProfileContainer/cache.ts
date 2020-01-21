@@ -77,11 +77,7 @@ export const updateProfileCache = (action: ProfileActions, payload: Payload) => 
             data = cache.readQuery<any>({query})
 
             if (!mutationData.uploadUserImage.imageUrl) return
-            console.log('writing to cache ', {
-                ...data.userBySlug,
-                profileImage: mutationData.uploadUserImage.imageUrl,
-                profileImagePublicId: mutationData.uploadUserImage.imagePublicId,
-            })
+
             return cache.writeQuery({
                 query,
                 data: {
