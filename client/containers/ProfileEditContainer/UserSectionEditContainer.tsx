@@ -1,4 +1,6 @@
 import React, {ChangeEvent, useState} from 'react'
+import {useMutation} from 'react-apollo'
+import debounce from 'lodash.debounce'
 
 import {UserBySlugQuery} from 'graphql/generated/queries'
 import {FormattedMessage, Textarea, Input, InputAdornment} from 'components/atoms'
@@ -10,6 +12,8 @@ import {
     SocialNetwork,
     socialIconComponentMapping,
 } from 'components/sections/Profile/UserAbout/SocialLink'
+import {UPDATE_USER_DETAILS} from './mutations'
+import {UserDetails} from 'graphql/generated/types'
 
 interface Props {
     user: UserBySlugQuery['user']
@@ -52,32 +56,29 @@ const socialNetworkInputs: SocialNetworkInput[] = [
     },
 ]
 
+const ABOUT_MAX_LEN = 200
+
 const UserSectionEditContainer: React.FunctionComponent<Props> = ({onChangeProfileImage, user}) => {
-    const [networkUrls, setNetworkUrl] = useState({})
-    const [about, setAbout] = useState()
+    const [networkUrls, setNetworkUrl] = useState<{[key in SocialNetworkKey]?: string}>({})
 
     if (!user) return null
+
+    const [updateUserDetailsMutation] = useMutation(UPDATE_USER_DETAILS)
 
     const updateNetworkUrl = (key: SocialNetworkKey) => (event: ChangeEvent<HTMLInputElement>) => {
         setNetworkUrl({...networkUrls, [key]: event.target.value})
     }
 
     const updateAbout = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setAbout(event.target.value)
+        const value = event.target.value.trim()
+        const about = !value ? undefined : value
+
+        debouncedDetailsUpdate({about})
     }
 
-    // const updateUserDetails = () => {
-    //     updateUserDetailsMutation({
-    //         variables: {
-    //             name: user.name,
-    //             about: user.about,
-    //             facebookUrl: user.facebookUrl,
-    //             youtubeUrl: user.youtubeUrl,
-    //             instagramUrl: user.instagramUrl,
-    //             twitterUrl: user.twitterUrl
-    //         }
-    //     })
-    // }
+    const debouncedDetailsUpdate = debounce((details: UserDetails) => {
+        updateUserDetailsMutation({variables: {details}})
+    }, 1000)
 
     return (
         <UserSection
@@ -120,6 +121,8 @@ const UserSectionEditContainer: React.FunctionComponent<Props> = ({onChangeProfi
                 <UserAbout
                     about={
                         <Textarea
+                            defaultValue={user.about || ''}
+                            maxLength={ABOUT_MAX_LEN}
                             placeholder="Write something about yourself... [max. 200 characters]"
                             onChange={updateAbout}
                         />

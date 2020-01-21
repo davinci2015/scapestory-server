@@ -34,6 +34,7 @@ const Paragraph = ({
                 .paragraph {
                     margin: 0;
                     color: ${color};
+                    white-space: pre-wrap;
                 }
 
                 .regular {

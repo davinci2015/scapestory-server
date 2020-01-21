@@ -562,9 +562,10 @@ export type UserAquascapesArgs = {
 };
 
 export type UserDetails = {
-  name: Scalars['String'],
+  name?: Maybe<Scalars['String']>,
   about?: Maybe<Scalars['String']>,
   facebookUrl?: Maybe<Scalars['String']>,
+  youtubeUrl?: Maybe<Scalars['String']>,
   instagramUrl?: Maybe<Scalars['String']>,
   twitterUrl?: Maybe<Scalars['String']>,
 };

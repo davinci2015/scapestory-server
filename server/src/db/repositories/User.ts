@@ -57,7 +57,7 @@ export class UserRepository extends BaseRepository<User> implements UserReposito
     }
 
     updateUserDetails(userId: number, userDetails: UserDetails) {
-        return this.update(userDetails, {where: {id: userId}})
+        return this.update(userDetails, {where: {id: userId}, returning: true})
     }
 
     private batchGetUserById = async (ids: number[]) => {

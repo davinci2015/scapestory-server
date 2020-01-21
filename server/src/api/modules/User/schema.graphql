@@ -47,5 +47,5 @@ type Query {
 
 type Mutation {
     uploadUserImage(file: Upload!, imageVariant: ImageVariant!): ImageUploadResult!
-    updateUserDetails(details: UserDetails!): User
+    updateUserDetails(details: UserDetails!): [User]
 }
