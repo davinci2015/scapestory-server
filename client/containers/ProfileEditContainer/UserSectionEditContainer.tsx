@@ -2,8 +2,8 @@ import React, {ChangeEvent, useState} from 'react'
 import {useMutation} from 'react-apollo'
 import debounce from 'lodash.debounce'
 
-import {UserBySlugQuery} from 'graphql/generated/queries'
-import {FormattedMessage, Textarea, Input, InputAdornment} from 'components/atoms'
+import {UserBySlugQuery, MutationUpdateUserDetailsArgs} from 'graphql/generated/queries'
+import {FormattedMessage, Textarea, Input, InputAdornment, Headline} from 'components/atoms'
 import UserSection from 'components/sections/Profile/UserSection'
 import UserStats from 'components/sections/Profile/UserStats'
 import UserAbout from 'components/sections/Profile/UserAbout'
@@ -14,6 +14,8 @@ import {
 } from 'components/sections/Profile/UserAbout/SocialLink'
 import {UPDATE_USER_DETAILS} from './mutations'
 import {UserDetails} from 'graphql/generated/types'
+import {isWebUri} from 'valid-url'
+import {colors} from 'styles'
 
 interface Props {
     user: UserBySlugQuery['user']
@@ -59,21 +61,29 @@ const socialNetworkInputs: SocialNetworkInput[] = [
 const ABOUT_MAX_LEN = 200
 
 const UserSectionEditContainer: React.FunctionComponent<Props> = ({onChangeProfileImage, user}) => {
-    const [networkUrls, setNetworkUrl] = useState<{[key in SocialNetworkKey]?: string}>({})
+    const [urlErrors, setUrlError] = useState<{[key in SocialNetworkKey]?: boolean}>({})
 
     if (!user) return null
 
-    const [updateUserDetailsMutation] = useMutation(UPDATE_USER_DETAILS)
+    const [updateUserDetailsMutation] = useMutation<MutationUpdateUserDetailsArgs>(
+        UPDATE_USER_DETAILS
+    )
 
     const updateNetworkUrl = (key: SocialNetworkKey) => (event: ChangeEvent<HTMLInputElement>) => {
-        setNetworkUrl({...networkUrls, [key]: event.target.value})
+        const url = event.target.value.trim()
+        const isValid = Boolean(isWebUri(url))
+
+        setUrlError({...urlErrors, [key]: !isValid})
+
+        if (isValid) {
+            debouncedDetailsUpdate({
+                [key]: event.target.value.trim(),
+            })
+        }
     }
 
     const updateAbout = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        const value = event.target.value.trim()
-        const about = !value ? undefined : value
-
-        debouncedDetailsUpdate({about})
+        debouncedDetailsUpdate({about: event.target.value.trim()})
     }
 
     const debouncedDetailsUpdate = debounce((details: UserDetails) => {
@@ -82,7 +92,11 @@ const UserSectionEditContainer: React.FunctionComponent<Props> = ({onChangeProfi
 
     return (
         <UserSection
-            username={user.name}
+            username={
+                <Headline as="h1" variant="h4" color={colors.WHITE}>
+                    {user.name}
+                </Headline>
+            }
             userImage={
                 <EditableUserImage image={user.profileImage} onChange={onChangeProfileImage} />
             }
@@ -130,10 +144,12 @@ const UserSectionEditContainer: React.FunctionComponent<Props> = ({onChangeProfi
                     socialNetworkArea={socialNetworkInputs.map(network => (
                         <Input
                             key={network.key}
+                            error={urlErrors[network.key]}
+                            errorMessage="URL is incorrectly formatted"
+                            defaultValue={user[network.key] || ''}
                             placeholder={network.placeholder}
                             label={network.label}
                             onChange={updateNetworkUrl(network.key)}
-                            value={user[network.key] || ''}
                             endAdornment={
                                 <InputAdornment>
                                     <network.Icon />

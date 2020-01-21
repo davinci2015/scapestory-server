@@ -1,11 +1,10 @@
 import React from 'react'
 
-import {colors, spaces} from 'styles'
-import {Headline} from 'components/atoms'
+import {spaces} from 'styles'
 
 interface Props {
     userImage: React.ReactNode
-    username: string
+    username: React.ReactNode
     stats: React.ReactNode
     about: React.ReactNode
 }
@@ -15,11 +14,7 @@ const UserSection: React.FunctionComponent<Props> = ({about, stats, userImage, u
         <div className="section">
             <div className="user-image">{userImage}</div>
             <div className="user">
-                <div className="username">
-                    <Headline as="h1" variant="h4" color={colors.WHITE}>
-                        {username}
-                    </Headline>
-                </div>
+                <div className="username">{username}</div>
                 <div className="user-info">
                     {stats}
                     <div className="user-info__about">{about}</div>

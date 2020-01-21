@@ -1,12 +1,13 @@
 import React from 'react'
 
 import {UserBySlugQuery} from 'graphql/generated/queries'
-import {UserImage, FormattedMessage, Paragraph} from 'components/atoms'
+import {UserImage, FormattedMessage, Paragraph, Headline} from 'components/atoms'
 import {UserImageSize, UserImageVariant} from 'components/atoms/UserImage/UserImage'
 import UserSection from 'components/sections/Profile/UserSection'
 import UserStats from 'components/sections/Profile/UserStats'
 import UserAbout from 'components/sections/Profile/UserAbout'
 import SocialLink, {SocialNetwork} from 'components/sections/Profile/UserAbout/SocialLink'
+import {colors} from 'styles'
 
 interface Props {
     user: UserBySlugQuery['user']
@@ -17,7 +18,11 @@ const UserSectionContainer: React.FunctionComponent<Props> = ({user}) => {
 
     return (
         <UserSection
-            username={user.name}
+            username={
+                <Headline as="h1" variant="h4" color={colors.WHITE}>
+                    {user.name}
+                </Headline>
+            }
             userImage={
                 <UserImage
                     image={user.profileImage}
