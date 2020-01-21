@@ -1,10 +1,12 @@
 import React from 'react'
 
 import {UserBySlugQuery} from 'graphql/generated/queries'
-import {colors, spaces, typography} from 'styles'
-import {Headline, UserImage, FormattedMessage, Paragraph} from 'components/atoms'
+import {colors, spaces} from 'styles'
+import {Headline, UserImage, FormattedMessage} from 'components/atoms'
 import {UserImageSize, UserImageVariant} from 'components/atoms/UserImage/UserImage'
 import UserAbout from '../UserAbout'
+import UserStats from '../UserStats'
+import SocialLink, {SocialNetwork} from '../UserAbout/SocialLink'
 
 interface Props {
     user: UserBySlugQuery['user']
@@ -30,36 +32,75 @@ const UserSection: React.FunctionComponent<Props> = ({user}) => {
                         </Headline>
                     </div>
                     <div className="user-info">
-                        <div className="user-info__stats">
-                            <div className="user-info__block">
-                                <Paragraph as="p" weight="semibold">
+                        <UserStats>
+                            <UserStats.Item
+                                title={
                                     <FormattedMessage
                                         id="user_profile.followers"
                                         defaultMessage="Followers"
                                     />
-                                </Paragraph>
-                                <div className="follow-count">
-                                    <Paragraph as="span" weight="bold">
-                                        {user.followersCount}
-                                    </Paragraph>
-                                </div>
-                            </div>
-                            <div className="user-info__block">
-                                <Paragraph as="span" weight="semibold">
+                                }
+                                value={user.followersCount}
+                            />
+                            <UserStats.Item
+                                title={
                                     <FormattedMessage
                                         id="user_profile.followers"
                                         defaultMessage="Following"
                                     />
-                                </Paragraph>
-                                <div className="follow-count">
-                                    <Paragraph as="span" weight="bold">
-                                        {user.followingCount}
-                                    </Paragraph>
-                                </div>
-                            </div>
-                        </div>
+                                }
+                                value={user.followingCount}
+                            />
+                            <UserStats.Item
+                                title={
+                                    <FormattedMessage
+                                        id="user_profile.no_aquascapes"
+                                        defaultMessage="Aquascapes"
+                                    />
+                                }
+                                value={user.aquascapes.count}
+                            />
+                        </UserStats>
                         <div className="user-info__about">
-                            <UserAbout user={user} />
+                            <UserAbout
+                                socialNetworkArea={
+                                    <div>
+                                        {user.facebookUrl && (
+                                            <SocialLink
+                                                network={SocialNetwork.FACEBOOK}
+                                                url={user.facebookUrl}
+                                            />
+                                        )}
+                                        {user.youtubeUrl && (
+                                            <SocialLink
+                                                network={SocialNetwork.YOUTUBE}
+                                                url={user.youtubeUrl}
+                                            />
+                                        )}
+                                        {user.instagramUrl && (
+                                            <SocialLink
+                                                network={SocialNetwork.INSTAGRAM}
+                                                url={user.instagramUrl}
+                                            />
+                                        )}
+                                        {user.twitterUrl && (
+                                            <SocialLink
+                                                network={SocialNetwork.TWITTER}
+                                                url={user.twitterUrl}
+                                            />
+                                        )}
+                                    </div>
+                                }
+                                shouldDisplayPlaceholder={
+                                    !(
+                                        user.about ||
+                                        user.facebookUrl ||
+                                        user.instagramUrl ||
+                                        user.twitterUrl ||
+                                        user.youtubeUrl
+                                    )
+                                }
+                            />
                         </div>
                     </div>
                 </div>
@@ -84,22 +125,8 @@ const UserSection: React.FunctionComponent<Props> = ({user}) => {
                     margin-top: ${spaces.s36};
                 }
 
-                .user-info__stats {
-                    display: flex;
-                }
-
-                .user-info__block {
-                    display: flex;
-                    flex-direction: column;
-                    flex-basis: 33%;
-                }
-
                 .user-info__about {
                     margin: ${spaces.s60} 0;
-                }
-
-                .follow-count :global(.${Paragraph.classes.root}) {
-                    font-size: ${typography.fontSize.fs20};
                 }
             `}</style>
         </>

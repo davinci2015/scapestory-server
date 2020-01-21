@@ -37,19 +37,27 @@ const borderSizeMapping = {
     [UserImageSize.s148]: '3px',
 }
 
-const UserImage = ({
+type UserImageType = React.FunctionComponent<Props> & {
+    classes: typeof classes
+}
+
+const UserImage: UserImageType = ({
     image = '/static/placeholders/user.png',
     size = UserImageSize.s24,
     variant = UserImageVariant.DEFAULT,
-}: Props) => (
+    children,
+}) => (
     <>
         <div
             className={classnames(classes.root, {
                 border: variant === UserImageVariant.BORDER,
             })}
-        ></div>
+        >
+            {children}
+        </div>
         <style jsx>{`
             .${classes.root} {
+                position: relative;
                 width: ${sizeMapping[size]};
                 height: ${sizeMapping[size]};
                 border-radius: 50%;
