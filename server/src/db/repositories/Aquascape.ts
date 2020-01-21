@@ -2,7 +2,7 @@ import {Injectable} from '@graphql-modules/di'
 import {Includeable, Order, WhereOptions} from 'sequelize/types'
 import {literal} from 'sequelize'
 import {Op} from 'sequelize'
-import * as Bluebird from 'bluebird'
+import Bluebird from 'bluebird'
 
 import {Aquascape} from 'db/models/Aquascape'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
