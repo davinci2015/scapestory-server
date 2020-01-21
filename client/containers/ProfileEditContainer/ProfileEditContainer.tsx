@@ -7,10 +7,11 @@ import {Content, Grid} from 'components/core'
 import {AquascapeCardList} from 'components/sections/shared'
 import {Headline, FormattedMessage} from 'components/atoms'
 import {renderAquascapeCards} from 'utils/render'
-import CoverSectionContainer from './CoverSectionEditContainer'
 import {GridWidth} from 'components/core/Grid'
-import UserSection from 'components/sections/Profile/UserSection'
 import {USER_BY_SLUG} from 'graphql/queries'
+
+import CoverSectionContainer from './CoverSectionEditContainer'
+import UserSectionEditContainer from './UserSectionEditContainer'
 
 const ProfileContainer = () => {
     const router = useRouter()
@@ -37,7 +38,7 @@ const ProfileContainer = () => {
         <Content>
             <CoverSectionContainer user={userResult.user} />
             <Grid width={GridWidth.SMALL}>
-                <UserSection user={userResult.user} />
+                <UserSectionEditContainer user={userResult.user} />
                 {!!userResult.user.aquascapes.rows.length && (
                     <AquascapeCardList
                         variant="condensed"
