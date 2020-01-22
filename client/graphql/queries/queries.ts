@@ -45,7 +45,6 @@ export const USER_PROFILE = gql`
     query USER_PROFILE {
         me {
             id
-            email
             slug
             name
             country

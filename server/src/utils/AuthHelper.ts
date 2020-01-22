@@ -1,4 +1,4 @@
-import moment from 'moment'
+import * as moment from 'moment'
 import {compareSync, hashSync} from 'bcrypt'
 import {encode, decode} from 'jwt-simple'
 

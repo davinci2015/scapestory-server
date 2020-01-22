@@ -1,14 +1,8 @@
 import React, {useState} from 'react'
-import {useMutation, useLazyQuery} from '@apollo/react-hooks'
+import {useMutation} from '@apollo/react-hooks'
 import {MessageDescriptor, useIntl} from 'react-intl'
 
-import {
-    Paragraph,
-    Button,
-    Input,
-    PasswordInput,
-    FormattedMessage,
-} from 'components/atoms'
+import {Paragraph, Button, Input, PasswordInput, FormattedMessage} from 'components/atoms'
 
 import validator from 'services/validator'
 import {spaces} from 'styles'
@@ -17,7 +11,6 @@ import {
     LoginResult,
     LoginVariables,
 } from 'components/modals/LoginModal/LoginForm/mutations'
-import {USER_PROFILE} from 'graphql/queries'
 
 const inputKeys = {
     email: 'email',
@@ -30,7 +23,6 @@ interface Props {
 
 const LoginForm = ({onSuccess}: Props) => {
     const intl = useIntl()
-    const [getUserProfile] = useLazyQuery(USER_PROFILE)
     const [login] = useMutation<LoginResult, LoginVariables>(LOGIN_MUTATION)
 
     const [errors, setError] = useState({
@@ -55,10 +47,7 @@ const LoginForm = ({onSuccess}: Props) => {
 
     const onSubmit = async () => {
         const {data} = await login({variables: {email, password}})
-        if (data) {
-            onSuccess(data.login.token)
-            getUserProfile()
-        }
+        if (data) onSuccess(data.login.token)
     }
 
     const validateEmail = (email: string) => {
@@ -136,9 +125,7 @@ const LoginForm = ({onSuccess}: Props) => {
                     onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
                         validateEmail(e.target.value)
                     }
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setEmail(e.target.value)
-                    }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 />
 
                 <PasswordInput
@@ -147,9 +134,7 @@ const LoginForm = ({onSuccess}: Props) => {
                     label={passwordLabel}
                     autoComplete="current-password"
                     value={password}
-                    error={
-                        dirty[inputKeys.password] && errors[inputKeys.password]
-                    }
+                    error={dirty[inputKeys.password] && errors[inputKeys.password]}
                     errorMessage={getErrorMessage(inputKeys.password)}
                     onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
                         validatePassword(e.target.value)
@@ -162,10 +147,7 @@ const LoginForm = ({onSuccess}: Props) => {
                 <div className="login-button">
                     <Button onClick={onSubmit} type="block">
                         <Paragraph as="span" weight="bold" color="light">
-                            <FormattedMessage
-                                id="login_submit_button"
-                                defaultMessage="Login"
-                            />
+                            <FormattedMessage id="login_submit_button" defaultMessage="Login" />
                         </Paragraph>
                     </Button>
                 </div>

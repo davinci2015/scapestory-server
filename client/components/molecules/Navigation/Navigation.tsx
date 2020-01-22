@@ -12,7 +12,7 @@ import {User_ProfileQuery} from 'graphql/generated/queries'
 import {UserImageSize} from 'components/atoms/UserImage/UserImage'
 
 interface Props {
-    user: User_ProfileQuery['me'] | null
+    user?: User_ProfileQuery['me']
     isAuthenticated: boolean
     openLoginModal: () => void
     openRegisterModal: () => void

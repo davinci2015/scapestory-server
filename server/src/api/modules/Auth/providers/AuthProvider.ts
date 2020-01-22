@@ -77,7 +77,7 @@ export class AuthProvider implements AuthProviderInterface {
             throw new UserInputError('User with provided email already exists')
         }
 
-        const slug = this.generateUniqueSlug()
+        const slug = await this.generateUniqueSlug()
 
         const user = await this.userRepository.create({
             name: slug,
@@ -126,7 +126,7 @@ export class AuthProvider implements AuthProviderInterface {
 
         return new Promise(async resolve => {
             while (!uniqueSlug) {
-                const randomNumber = Math.floor(Math.random() * 1000000 + 1)
+                const randomNumber = Math.floor(Math.random() * 100000 + 1)
                 const possibleSlug = `${base}${randomNumber}`
                 const slugExists = await this.userProfileSlugExists(possibleSlug)
 

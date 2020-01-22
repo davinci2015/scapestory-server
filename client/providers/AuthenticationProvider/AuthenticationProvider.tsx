@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {useQuery} from 'react-apollo'
 
 import {USER_PROFILE} from 'graphql/queries'
@@ -7,7 +7,7 @@ import {User_ProfileQuery} from 'graphql/generated/queries'
 
 interface AuthContextInterface {
     isAuthenticated: boolean
-    user: User_ProfileQuery['me'] | null
+    user?: User_ProfileQuery['me']
     setAuthenticated: (authenticated: boolean) => void
 }
 
@@ -18,34 +18,27 @@ export const AuthContext = React.createContext<AuthContextInterface>({
 })
 
 interface Props {
-    initialIsAuthenticated?: boolean
     children: React.ReactNode
 }
 
-const AuthenticationProvider: React.FunctionComponent<Props> = ({
-    children,
-    initialIsAuthenticated = false,
-}) => {
-    const [isAuthenticated, changeIsAuthenticated] = useState(initialIsAuthenticated)
+const AuthenticationProvider: React.FunctionComponent<Props> = ({children}) => {
     const {data, error, refetch} = useQuery(USER_PROFILE, {
+        fetchPolicy: 'cache-and-network',
         errorPolicy: 'ignore',
     })
 
-    const user = data ? data.me : null
+    if (error) logger.error(error)
 
-    if (error) {
-        logger.error(error)
-    }
+    const user = data?.me
 
-    const setAuthenticated = async (authenticated: boolean) => {
-        await refetch()
-        changeIsAuthenticated(authenticated)
+    const setAuthenticated = () => {
+        refetch()
     }
 
     return (
         <AuthContext.Provider
             value={{
-                isAuthenticated,
+                isAuthenticated: Boolean(user),
                 setAuthenticated,
                 user,
             }}

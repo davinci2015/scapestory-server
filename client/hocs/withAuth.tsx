@@ -9,22 +9,19 @@ interface WithAuthProps {
 }
 
 const withAuth = <P extends Object>(WrappedComponent: NextComponentType) =>
-    class extends React.Component<P & WithAuthProps> {
+    class WithAuth extends React.Component<P & WithAuthProps> {
         static async getInitialProps(ctx: NextPageContext) {
             const headers = ctx.req && ctx.req.headers
             const token = cookie.getAuthToken(headers)
             const pageProps =
-                WrappedComponent.getInitialProps &&
-                (await WrappedComponent.getInitialProps(ctx))
+                WrappedComponent.getInitialProps && (await WrappedComponent.getInitialProps(ctx))
 
             return {...pageProps, isAuthenticated: !!token}
         }
 
         render() {
             return (
-                <AuthenticationProvider
-                    initialIsAuthenticated={this.props.isAuthenticated}
-                >
+                <AuthenticationProvider>
                     <WrappedComponent {...this.props} />
                 </AuthenticationProvider>
             )
