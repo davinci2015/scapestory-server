@@ -62,7 +62,7 @@ type Aquascape {
 }
 
 input Pagination {
-    limit: Int!
+    limit: Int
     cursor: String
 }
 

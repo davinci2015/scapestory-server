@@ -421,7 +421,7 @@ export type MutationVisitAquascapeArgs = {
 };
 
 export type Pagination = {
-  limit: Scalars['Int'],
+  limit?: Maybe<Scalars['Int']>,
   cursor?: Maybe<Scalars['String']>,
 };
 
