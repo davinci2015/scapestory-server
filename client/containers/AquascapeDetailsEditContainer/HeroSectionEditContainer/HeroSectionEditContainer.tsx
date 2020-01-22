@@ -17,6 +17,7 @@ import {
     updateAquascapeDetailsCache,
     AquascapeDetailsActions,
 } from 'containers/AquascapeDetailsContainer/cache'
+import config from 'config'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -56,7 +57,9 @@ const HeroSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
         router.push(
             createDynamicPath(routes.aquascapeDetails, {
                 id: aquascape.id.toString(),
-                title: getAquascapeDetailsSlug(aquascape.title),
+                title: getAquascapeDetailsSlug(
+                    aquascape.title || config.EDIT_AQUASCAPE_URL_TITLE_PLACEHOLDER
+                ),
             })
         )
     }

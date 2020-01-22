@@ -831,3 +831,14 @@ export type UploadUserImageMutation = (
     & Pick<ImageUploadResult, 'imageUrl' | 'imagePublicId'>
   ) }
 );
+
+export type CreateAquascapeMutationVariables = {};
+
+
+export type CreateAquascapeMutation = (
+  { __typename?: 'Mutation' }
+  & { createAquascape: (
+    { __typename?: 'Aquascape' }
+    & Pick<Aquascape, 'id'>
+  ) }
+);

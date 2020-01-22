@@ -7,6 +7,7 @@ import {colors, spaces, borderRadius, media} from 'styles'
 import UserWidget from 'components/molecules/UserWidget'
 import {Tag as TagInterface} from 'graphql/generated/types'
 import {AquascapeDetailsLink, ProfileLink} from 'components/core'
+import config from 'config'
 
 interface Props {
     id: number
@@ -23,8 +24,6 @@ interface Props {
 const classes = {
     root: 'aquascape-card',
 }
-
-const IMAGE_PLACEHOLDER = ''
 
 const AquascapeCard = ({
     id,
@@ -43,7 +42,7 @@ const AquascapeCard = ({
                 <div className="header">
                     <img
                         className="header-image"
-                        src={image || IMAGE_PLACEHOLDER}
+                        src={image || config.AQUASCAPE_MAIN_IMAGE_PLACEHOLDER}
                         alt="Aquascape"
                     />
                     <div className="header-gradient"></div>
@@ -66,7 +65,9 @@ const AquascapeCard = ({
             <div className="body">
                 <div className="headline">
                     <Headline as="h2" variant="h5">
-                        <Truncate trimWhitespace>{title}</Truncate>
+                        <Truncate trimWhitespace>
+                            {title || config.AQUASCAPE_TITLE_PLACEHOLDER}
+                        </Truncate>
                     </Headline>
                 </div>
                 <div className="footer">

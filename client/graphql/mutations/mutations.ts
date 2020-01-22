@@ -60,3 +60,11 @@ export const UPLOAD_USER_IMAGE = gql`
         }
     }
 `
+
+export const CREATE_AQUASCAPE = gql`
+    mutation createAquascape {
+        createAquascape {
+            id
+        }
+    }
+`

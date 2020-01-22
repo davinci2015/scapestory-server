@@ -102,7 +102,7 @@ const HeroSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
             createDynamicPath(routes.aquascapeDetailsEdit, {
                 id: aquascape.id.toString(),
                 title: getAquascapeDetailsSlug(
-                    aquascape.title || config.AQUASCAPE_TITLE_PLACEHOLDER
+                    aquascape.title || config.EDIT_AQUASCAPE_URL_TITLE_PLACEHOLDER
                 ),
             })
         )

@@ -1,14 +1,7 @@
-import {useContext} from 'react'
+import React, {useContext} from 'react'
 
 import {FacebookLogin, GoogleLogin} from 'components/molecules'
-import {
-    Headline,
-    Paragraph,
-    FormattedMessage,
-    Bubble,
-    Button,
-    Icon,
-} from 'components/atoms'
+import {Headline, Paragraph, FormattedMessage, Bubble, Button, Icon} from 'components/atoms'
 import {FacebookProps} from 'components/molecules/FacebookLogin'
 import {GoogleProps} from 'components/molecules/GoogleLogin'
 import {colors, spaces, media} from 'styles'
@@ -22,7 +15,7 @@ interface Props {
     form: React.ReactNode
 }
 
-const AuthModal = ({title, subtitle, footer, form, onSuccess}: Props) => {
+const AuthModal = ({footer, form, onSuccess, subtitle, title}: Props) => {
     const {closeModal} = useContext(ModalContext)
 
     return (
@@ -36,11 +29,7 @@ const AuthModal = ({title, subtitle, footer, form, onSuccess}: Props) => {
                         <Bubble size="334px" />
                     </div>
                     <a onClick={closeModal} className="close-button">
-                        <Icon
-                            d={Icon.CLOSE}
-                            color={colors.DARK_GRAY}
-                            size={26}
-                        />
+                        <Icon d={Icon.CLOSE} color={colors.DARK_GRAY} size={26} />
                     </a>
                     <Headline as="h1" variant="h3">
                         {title}
@@ -187,8 +176,7 @@ const AuthModal = ({title, subtitle, footer, form, onSuccess}: Props) => {
                     }
                 }
 
-                .social-buttons
-                    > :global(.${Button.classes.root}):first-of-type {
+                .social-buttons > :global(.${Button.classes.root}):first-of-type {
                     margin-right: ${spaces.s30};
                     margin-bottom: ${spaces.s18};
                 }
@@ -198,8 +186,7 @@ const AuthModal = ({title, subtitle, footer, form, onSuccess}: Props) => {
                         flex-direction: row;
                     }
 
-                    .social-buttons
-                        > :global(.${Button.classes.root}):first-of-type {
+                    .social-buttons > :global(.${Button.classes.root}):first-of-type {
                         margin-right: ${spaces.s30};
                         margin-bottom: 0;
                     }
