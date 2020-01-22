@@ -1,6 +1,5 @@
 type User {
     id: Int!
-    email: String!
     slug: String!
     name: String!
     about: String

@@ -1,6 +1,6 @@
-import * as bcrypt from 'bcrypt'
-import * as moment from 'moment'
-import * as jwt from 'jwt-simple'
+import moment from 'moment'
+import {compareSync, hashSync} from 'bcrypt'
+import {encode, decode} from 'jwt-simple'
 
 export interface JWTTokenPayload {
     userId: number
@@ -8,20 +8,20 @@ export interface JWTTokenPayload {
 }
 
 export class AuthHelper {
-    static checkPassword(password: string, encryptedPassword: string): boolean {
-        return bcrypt.compareSync(password, encryptedPassword)
+    static checkPassword(password: string, encryptedPassword: string) {
+        return compareSync(password, encryptedPassword)
     }
 
-    static cryptPassword(rawPassword: string, rounds: number = 10): string {
-        return bcrypt.hashSync(rawPassword, rounds)
+    static cryptPassword(rawPassword: string, rounds: number = 10) {
+        return hashSync(rawPassword, rounds)
     }
 
     static createJWTToken(userId: number): string {
         const payload = {userId, iat: moment().unix()}
-        return jwt.encode(payload, process.env.SECURITY_TOKEN_SECRET || '')
+        return encode(payload, process.env.SECURITY_TOKEN_SECRET || '')
     }
 
     static decodeJWTToken(token: string): JWTTokenPayload | null {
-        return jwt.decode(token, process.env.SECURITY_TOKEN_SECRET || '')
+        return decode(token, process.env.SECURITY_TOKEN_SECRET || '')
     }
 }
