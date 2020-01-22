@@ -6,19 +6,18 @@ import {Headline} from 'components/atoms'
 import {TopSection, TopLeft, TopRight} from 'components/sections/shared/Hero/TopSection'
 import {BottomSection, BottomLeft, BottomRight} from 'components/sections/shared/Hero/BottomSection'
 import {GRID_WIDTH_DEFAULT} from 'components/core/Grid'
+import config from 'config'
 
 interface Props {
     editMode?: boolean
     image?: string | null
-    title?: string
+    title?: string | null
     topSection?: React.ReactNode
     bottomSection?: React.ReactNode
     onTitleChange?: (title: string) => void
     variant?: 'default' | 'cover'
     height?: 'default' | 'compact'
 }
-
-const IMAGE_PLACEHOLDER = ''
 
 const Hero = ({
     bottomSection,
@@ -39,8 +38,8 @@ const Hero = ({
             className={cx('container-image', {
                 radius: variant === 'default',
             })}
-            src={image || IMAGE_PLACEHOLDER}
-            alt={title}
+            src={image || config.AQUASCAPE_MAIN_IMAGE_PLACEHOLDER}
+            alt={title || config.AQUASCAPE_TITLE_PLACEHOLDER}
         />
 
         <div
@@ -59,7 +58,7 @@ const Hero = ({
                 {editMode ? (
                     <input
                         className="headline-input"
-                        defaultValue={title}
+                        defaultValue={title || config.AQUASCAPE_TITLE_PLACEHOLDER}
                         maxLength={40}
                         onChange={e => onTitleChange && onTitleChange(e.target.value)}
                     />

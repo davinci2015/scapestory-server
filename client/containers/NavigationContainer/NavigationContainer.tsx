@@ -6,7 +6,7 @@ import {AuthContext} from 'providers/AuthenticationProvider'
 
 const NavigationContainer = () => {
     const {openModal} = useContext(ModalContext)
-    const {user, isAuthenticated} = useContext(AuthContext)
+    const {isAuthenticated, user} = useContext(AuthContext)
     const openLoginModal = useCallback(() => openModal('login'), [])
     const openRegisterModal = useCallback(() => openModal('register'), [])
 

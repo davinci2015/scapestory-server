@@ -2,10 +2,11 @@ import React from 'react'
 import Link from 'next/link'
 
 import routes, {createDynamicPath, getAquascapeDetailsSlug} from 'routes'
+import config from 'config'
 
 interface Props {
     id: number
-    title: string
+    title?: string | null
 }
 
 const classes = {
@@ -22,7 +23,7 @@ const AquascapeDetailsLink: AquascapeDetailsLinkInterface = ({children, id, titl
             href={routes.aquascapeDetails}
             as={createDynamicPath(routes.aquascapeDetails, {
                 id: id.toString(),
-                title: getAquascapeDetailsSlug(title),
+                title: getAquascapeDetailsSlug(title || config.AQUASCAPE_TITLE_PLACEHOLDER),
             })}
         >
             <a className={classes.link}>{children}</a>

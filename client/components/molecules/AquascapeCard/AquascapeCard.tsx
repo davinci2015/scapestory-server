@@ -13,7 +13,7 @@ interface Props {
     profileSlug?: string
     image?: string | null
     userImage?: string | null
-    title: string
+    title?: string | null
     name: React.ReactNode
     viewsCount: number
     likesCount: number

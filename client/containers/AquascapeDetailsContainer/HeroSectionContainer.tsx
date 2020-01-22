@@ -23,6 +23,7 @@ import {
     UnfollowUserMutationVariables,
 } from 'graphql/generated/mutations'
 import routes, {createDynamicPath, getAquascapeDetailsSlug} from 'routes'
+import config from 'config'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -100,7 +101,9 @@ const HeroSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
         router.push(
             createDynamicPath(routes.aquascapeDetailsEdit, {
                 id: aquascape.id.toString(),
-                title: getAquascapeDetailsSlug(aquascape.title),
+                title: getAquascapeDetailsSlug(
+                    aquascape.title || config.AQUASCAPE_TITLE_PLACEHOLDER
+                ),
             })
         )
     }
