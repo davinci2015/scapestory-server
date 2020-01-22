@@ -1,4 +1,4 @@
-import {useContext} from 'react'
+import React, {useContext} from 'react'
 
 import {Paragraph, FormattedMessage} from 'components/atoms'
 import {RegistrationForm, AuthModal} from 'components/modals'
@@ -10,7 +10,7 @@ import {AuthContext} from 'providers/AuthenticationProvider'
 
 const RegistrationModal = () => {
     const {setAuthenticated} = useContext(AuthContext)
-    const {openModal, closeModal} = useContext(ModalContext)
+    const {closeModal, openModal} = useContext(ModalContext)
 
     const openLoginModal = () => openModal('login')
 
@@ -36,6 +36,14 @@ const RegistrationModal = () => {
                     defaultMessage="Create account to get the full Scapestory experience."
                 />
             }
+            socialText={
+                <Paragraph as="span" type="s1" color={colors.DARK_GRAY}>
+                    <FormattedMessage
+                        id="registration_social_login_agreement"
+                        defaultMessage="By continuing with Google or Facebook you automatically accept Terms & Conditions and Privacy Policy"
+                    />
+                </Paragraph>
+            }
             footer={
                 <Paragraph as="span" color={colors.SHADE_DEEP}>
                     <FormattedMessage
@@ -43,11 +51,7 @@ const RegistrationModal = () => {
                         defaultMessage="Already have an account?"
                     />{' '}
                     <a onClick={openLoginModal}>
-                        <Paragraph
-                            as="span"
-                            color={colors.PRIMARY}
-                            weight="bold"
-                        >
+                        <Paragraph as="span" color={colors.PRIMARY} weight="bold">
                             <FormattedMessage
                                 id="registration_footer_sign_up"
                                 defaultMessage="Login"

@@ -1,4 +1,4 @@
-import {useContext} from 'react'
+import React, {useContext} from 'react'
 
 import {LoginForm, AuthModal} from 'components/modals'
 import {Paragraph, FormattedMessage} from 'components/atoms'
@@ -10,7 +10,7 @@ import {AuthContext} from 'providers/AuthenticationProvider'
 
 const LoginModal = () => {
     const {setAuthenticated} = useContext(AuthContext)
-    const {openModal, closeModal} = useContext(ModalContext)
+    const {closeModal, openModal} = useContext(ModalContext)
 
     const openRegistrationModal = () => openModal('register')
 
@@ -43,15 +43,8 @@ const LoginModal = () => {
                         defaultMessage="Not a member yet?"
                     />{' '}
                     <a onClick={openRegistrationModal}>
-                        <Paragraph
-                            as="span"
-                            color={colors.PRIMARY}
-                            weight="bold"
-                        >
-                            <FormattedMessage
-                                id="login_footer_sign_up"
-                                defaultMessage="Sign up"
-                            />
+                        <Paragraph as="span" color={colors.PRIMARY} weight="bold">
+                            <FormattedMessage id="login_footer_sign_up" defaultMessage="Sign up" />
                         </Paragraph>
                     </a>
                 </Paragraph>

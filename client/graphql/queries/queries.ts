@@ -88,10 +88,8 @@ export const USER_BY_SLUG = gql`
     query UserBySlug($slug: String!, $pagination: Pagination!) {
         user: userBySlug(slug: $slug) {
             id
-            email
             slug
             name
-            country
             about
 
             profileImage

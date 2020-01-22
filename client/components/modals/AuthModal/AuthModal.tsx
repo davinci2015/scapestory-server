@@ -13,9 +13,10 @@ interface Props {
     subtitle: React.ReactNode
     footer: React.ReactNode
     form: React.ReactNode
+    socialText?: React.ReactNode
 }
 
-const AuthModal = ({footer, form, onSuccess, subtitle, title}: Props) => {
+const AuthModal = ({footer, form, onSuccess, socialText, subtitle, title}: Props) => {
     const {closeModal} = useContext(ModalContext)
 
     return (
@@ -89,6 +90,9 @@ const AuthModal = ({footer, form, onSuccess, subtitle, title}: Props) => {
                                 )}
                             </FacebookLogin>
                         </div>
+                        {socialText && (
+                            <div className="social-text social-text--small">{socialText}</div>
+                        )}
                     </div>
                 </div>
                 <div className="footer">
@@ -162,6 +166,10 @@ const AuthModal = ({footer, form, onSuccess, subtitle, title}: Props) => {
 
                 .social-text {
                     margin: ${spaces.s24} 0;
+                }
+
+                .social-text--small {
+                    margin: ${spaces.s12} 0;
                 }
 
                 .social-buttons {
