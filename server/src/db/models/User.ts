@@ -1,4 +1,4 @@
-import {Table, Column, Model, Unique, HasMany} from 'sequelize-typescript'
+import {Table, Column, Model, Unique, HasMany, Default} from 'sequelize-typescript'
 import {Aquascape} from 'db/models/Aquascape'
 import {SocialLogin} from 'db/models/SocialLogin'
 import {Follow} from 'db/models/Follow'
@@ -11,6 +11,10 @@ export class User extends Model<User> {
 
     @Column
     password: string
+
+    @Default(false)
+    @Column
+    emailConfirmed: boolean
 
     @Unique
     @Column

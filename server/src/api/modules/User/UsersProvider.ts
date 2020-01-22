@@ -8,6 +8,7 @@ import {UserRepositoryInterface} from 'db/repositories/User'
 import {uploadStreamFile, deleteFile, imageUploadOptions} from 'services/cloudinary'
 import {UserDetails, ImageUploadResult} from 'interfaces/graphql/types'
 import logger from 'logger'
+import {EmailConfirmationRepositoryInterface} from 'db/repositories/EmailConfirmation'
 
 export interface UsersProviderInterface {
     findUserById: (id: number) => Promise<User | null>
@@ -16,13 +17,16 @@ export interface UsersProviderInterface {
     uploadProfileImage: (userId: number, file: Promise<FileUpload>) => Promise<ImageUploadResult>
     uploadCoverImage: (userId: number, file: Promise<FileUpload>) => Promise<ImageUploadResult>
     updateUserDetails: (userId: number, userDetails: UserDetails) => Promise<[number, User[]]>
+    confirmEmail: (userId: number, key: string) => Promise<boolean>
 }
 
 @Injectable({scope: ProviderScope.Session})
 export class UsersProvider implements UsersProviderInterface {
     constructor(
         @Inject(tokens.USER_REPOSITORY)
-        private userRepository: UserRepositoryInterface
+        private userRepository: UserRepositoryInterface,
+        @Inject(tokens.EMAIL_CONFIRMATION_REPOSITORY)
+        private emailConfirmationRepository: EmailConfirmationRepositoryInterface
     ) {}
 
     findUserById(id: number) {
@@ -39,6 +43,16 @@ export class UsersProvider implements UsersProviderInterface {
 
     updateUserDetails(userId: number, userDetails: UserDetails) {
         return this.userRepository.updateUserDetails(userId, userDetails)
+    }
+
+    async confirmEmail(userId: number, key: string) {
+        const confirmed = await this.emailConfirmationRepository.confirmEmail(userId, key)
+
+        if (confirmed) {
+            await this.userRepository.update({emailConfirmed: true}, {where: {id: userId}})
+        }
+
+        return confirmed
     }
 
     async uploadProfileImage(userId: number, file: Promise<FileUpload>) {

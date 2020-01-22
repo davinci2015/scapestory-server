@@ -13,7 +13,7 @@ interface Props {
 
 class MyApp extends App<Props> {
     render() {
-        const {Component, pageProps, apollo} = this.props
+        const {Component, apollo, pageProps} = this.props
 
         return (
             <IntlProvider locale="en">

@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import React, {useEffect} from 'react'
 import Modal from 'react-modal'
 import ScrollLock from 'react-scrolllock'
 

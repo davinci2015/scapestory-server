@@ -12,6 +12,7 @@ import {AuthHelper} from 'utils/AuthHelper'
 import {tokens} from 'di/tokens'
 import {SocialLoginRepositoryInterface} from 'db/repositories/SocialLogin'
 import socialProviders from 'constants/socialProviders'
+import {EmailConfirmationRepositoryInterface} from 'db/repositories/EmailConfirmation'
 
 export type AuthPayload = {
     token: string
@@ -20,7 +21,7 @@ export type AuthPayload = {
 
 export interface AuthProviderInterface {
     login: (email: string, password: string) => Promise<AuthPayload>
-    register: (email: string, password: string) => Promise<AuthPayload>
+    register: (email: string, password: string) => Promise<User>
     facebookRegister: (
         token: string,
         req: Request,
@@ -44,7 +45,9 @@ export class AuthProvider implements AuthProviderInterface {
         @Inject(tokens.USER_REPOSITORY)
         private userRepository: UserRepositoryInterface,
         @Inject(tokens.SOCIAL_LOGIN_REPOSITORY)
-        private socialLoginRepository: SocialLoginRepositoryInterface
+        private socialLoginRepository: SocialLoginRepositoryInterface,
+        @Inject(tokens.EMAIL_CONFIRMATION_REPOSITORY)
+        private emailConfirmationRepository: EmailConfirmationRepositoryInterface
     ) {}
 
     async userProfileSlugExists(slug: string) {
@@ -86,7 +89,10 @@ export class AuthProvider implements AuthProviderInterface {
             password: AuthHelper.cryptPassword(password),
         })
 
-        return {token: AuthHelper.createJWTToken(user.id), user}
+        this.emailConfirmationRepository.createConfirmationKey(user.id)
+        // Send email
+
+        return user
     }
 
     async facebookRegister(token: string, req: Request, res: Response) {
@@ -157,6 +163,7 @@ export class AuthProvider implements AuthProviderInterface {
             name: data.name,
             email: data.email,
             profileImage: data.profileImage,
+            emailConfirmed: true,
         }
 
         const social = await this.socialLoginRepository.findSocialLogin(data.socialProfileId)

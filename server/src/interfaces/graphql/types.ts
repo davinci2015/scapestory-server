@@ -29,16 +29,14 @@ export type Aquascape = {
   id: Scalars['Int'],
   createdAt: Scalars['String'],
   updatedAt: Scalars['String'],
-  title: Scalars['String'],
+  title?: Maybe<Scalars['String']>,
   featured: Scalars['Boolean'],
   trending: Scalars['Boolean'],
-  slug: Scalars['String'],
   description?: Maybe<Scalars['String']>,
   userId: Scalars['Int'],
   user?: Maybe<User>,
   co2?: Maybe<Co2>,
   tank?: Maybe<Tank>,
-  photoperiod: Scalars['Int'],
   mainImageUrl?: Maybe<Scalars['String']>,
   mainImagePublicId?: Maybe<Scalars['String']>,
   images: Array<AquascapeImage>,
@@ -235,7 +233,8 @@ export type MainImageUploadResult = {
 export type Mutation = {
   __typename?: 'Mutation',
   uploadUserImage: ImageUploadResult,
-  updateUserDetails?: Maybe<User>,
+  updateUserDetails?: Maybe<Array<Maybe<User>>>,
+  confirmEmail?: Maybe<Scalars['Boolean']>,
   addEquipment: Equipment,
   removeEquipment?: Maybe<Equipment>,
   addLight: Light,
@@ -273,6 +272,12 @@ export type MutationUploadUserImageArgs = {
 
 export type MutationUpdateUserDetailsArgs = {
   details: UserDetails
+};
+
+
+export type MutationConfirmEmailArgs = {
+  userId: Scalars['Int'],
+  key: Scalars['String']
 };
 
 
@@ -426,7 +431,7 @@ export type MutationVisitAquascapeArgs = {
 };
 
 export type Pagination = {
-  limit: Scalars['Int'],
+  limit?: Maybe<Scalars['Int']>,
   cursor?: Maybe<Scalars['String']>,
 };
 
@@ -537,7 +542,6 @@ export type Tank = {
 export type User = {
   __typename?: 'User',
   id: Scalars['Int'],
-  email: Scalars['String'],
   slug: Scalars['String'],
   name: Scalars['String'],
   about?: Maybe<Scalars['String']>,
@@ -749,16 +753,14 @@ export type AquascapeResolvers<ContextType = any, ParentType = ResolversParentTy
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   featured?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   trending?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  slug?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
   co2?: Resolver<Maybe<ResolversTypes['CO2']>, ParentType, ContextType>,
   tank?: Resolver<Maybe<ResolversTypes['Tank']>, ParentType, ContextType>,
-  photoperiod?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   mainImageUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   mainImagePublicId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   images?: Resolver<Array<ResolversTypes['AquascapeImage']>, ParentType, ContextType>,
@@ -907,7 +909,8 @@ export type MainImageUploadResultResolvers<ContextType = any, ParentType = Resol
 
 export type MutationResolvers<ContextType = any, ParentType = ResolversParentTypes['Mutation']> = {
   uploadUserImage?: Resolver<ResolversTypes['ImageUploadResult'], ParentType, ContextType, MutationUploadUserImageArgs>,
-  updateUserDetails?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationUpdateUserDetailsArgs>,
+  updateUserDetails?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType, MutationUpdateUserDetailsArgs>,
+  confirmEmail?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, MutationConfirmEmailArgs>,
   addEquipment?: Resolver<ResolversTypes['Equipment'], ParentType, ContextType, MutationAddEquipmentArgs>,
   removeEquipment?: Resolver<Maybe<ResolversTypes['Equipment']>, ParentType, ContextType, MutationRemoveEquipmentArgs>,
   addLight?: Resolver<ResolversTypes['Light'], ParentType, ContextType, MutationAddLightArgs>,
@@ -1001,7 +1004,6 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 
 export type UserResolvers<ContextType = any, ParentType = ResolversParentTypes['User']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   slug?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   about?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,

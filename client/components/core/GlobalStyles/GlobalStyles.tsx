@@ -15,6 +15,17 @@ const GlobalStyles = () => (
             font-size: ${typography.fontSize.fs16};
             background-color: ${colors.BG};
         }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        #__next {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
     `}</style>
 )
 

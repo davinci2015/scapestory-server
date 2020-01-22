@@ -40,6 +40,8 @@ const sections = {
     COMMENTS: 'COMMENTS',
 }
 
+let visited = false
+
 const AquascapeDetailsContainer: React.FunctionComponent = () => {
     const router = useRouter()
     const aquascapeId = Number(router.query.id)
@@ -61,15 +63,14 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
     useEffect(() => {
         const visitAquascape = async () => {
             const {data} = await visit({variables: {aquascapeId}})
+            visited = true
 
             if (data.visitAquascape && !cookie.getVisitorId()) {
                 cookie.persistVisitorId(data.visitAquascape.visitor.visitorId)
             }
         }
 
-        if (aquascapeResult && !loading) {
-            visitAquascape()
-        }
+        if (aquascapeResult && !loading && !visited) visitAquascape()
     }, [aquascapeResult, loading])
 
     if (error) {
