@@ -46,9 +46,6 @@ export class Aquascape extends Model<Aquascape> {
     trending: boolean
 
     @Column
-    slug: string
-
-    @Column
     description: string
 
     @Column
@@ -77,10 +74,6 @@ export class Aquascape extends Model<Aquascape> {
 
     @BelongsTo(() => Tank)
     tank: Tank
-
-    @Default(8)
-    @Column
-    photoperiod: number
 
     @HasMany(() => AquascapeImage)
     images: AquascapeImage[]

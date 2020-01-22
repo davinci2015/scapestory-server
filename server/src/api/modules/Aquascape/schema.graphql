@@ -40,16 +40,14 @@ type Aquascape {
     id: Int!
     createdAt: String!
     updatedAt: String!
-    title: String!
+    title: String
     featured: Boolean!
     trending: Boolean!
-    slug: String!
     description: String
     userId: Int!
     user: User
     co2: CO2
     tank: Tank
-    photoperiod: Int!
     mainImageUrl: String
     mainImagePublicId: String
     images: [AquascapeImage!]!
