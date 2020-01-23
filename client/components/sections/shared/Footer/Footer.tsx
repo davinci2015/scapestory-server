@@ -11,9 +11,11 @@ const Footer: React.FunctionComponent<Props> = () => (
     <>
         <div className="footer">
             <div className="top">
-                <div>
-                    <img className="logo" src="/static/logo.svg" />
-                </div>
+                <Link href={routes.index}>
+                    <a>
+                        <img className="logo" src="/static/logo.svg" />
+                    </a>
+                </Link>
                 <div>
                     <ul>
                         <li>
