@@ -5,11 +5,11 @@ import {colors, spaces} from 'styles'
 import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
 import {FeaturedAquascapesQuery} from 'graphql/generated/queries'
-import {getUserName} from 'utils/mappers'
 import {AquascapeDetailsLink} from 'components/core'
 import {useRouter} from 'next/router'
-import routes, {createDynamicPath} from 'routes'
+import routes, {createDynamicPath, getAquascapeDetailsSlug} from 'routes'
 import {UserWidgetSize, UserWidgetVariant} from 'components/molecules/UserWidget/UserWidget'
+import config from 'config'
 
 interface Props {
     aquascape: FeaturedAquascapesQuery['featured']
@@ -28,10 +28,17 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
         [aquascape]
     )
 
+    const detailsLink = createDynamicPath(routes.aquascapeDetails, {
+        id: aquascape.id.toString(),
+        title: getAquascapeDetailsSlug(
+            aquascape.title || config.EDIT_AQUASCAPE_URL_TITLE_PLACEHOLDER
+        ),
+    })
+
     return (
         <>
             <div className="section">
-                <AquascapeDetailsLink id={aquascape.id} title={aquascape.title}>
+                <AquascapeDetailsLink href={detailsLink} as={detailsLink}>
                     <Hero
                         title={aquascape.title}
                         image={aquascape.mainImageUrl}
@@ -66,9 +73,7 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
                                                     <FormattedMessage
                                                         id="hero_section.aquascape_author"
                                                         defaultMessage="by {username}"
-                                                        values={{
-                                                            username: getUserName(aquascape.user),
-                                                        }}
+                                                        values={{username: aquascape.user.name}}
                                                     />
                                                 </Paragraph>
                                             }

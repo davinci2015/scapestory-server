@@ -1,7 +1,14 @@
 import gql from 'graphql-tag'
+import {fragments} from 'graphql/queries'
 
 export const AQUASCAPE_DETAILS_EDIT = gql`
     query AquascapeDetailsEdit($id: Int!) {
+        aquascapes(pagination: {limit: 4}, random: true) {
+            rows {
+                ...AquascapeFields
+            }
+        }
+
         aquascape(id: $id) {
             id
             title
@@ -84,6 +91,13 @@ export const AQUASCAPE_DETAILS_EDIT = gql`
                 profileImage
                 slug
             }
+
+            comments {
+                ...CommentFields
+            }
         }
     }
+
+    ${fragments.aquascape}
+    ${fragments.comments}
 `

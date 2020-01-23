@@ -5,7 +5,6 @@ import {colors, spaces} from 'styles'
 import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
 import {AquascapeDetailsQuery} from 'graphql/generated/queries'
-import {getUserName} from 'utils/mappers'
 import {ProfileLink, ImageUpload} from 'components/core'
 import {UserWidgetSize, UserWidgetVariant} from 'components/molecules/UserWidget/UserWidget'
 
@@ -50,7 +49,7 @@ const HeroSection: React.FunctionComponent<Props> = ({
                                                 <FormattedMessage
                                                     id="aquascape.hero_section.username"
                                                     defaultMessage="by {username}"
-                                                    values={{username: getUserName(aquascape.user)}}
+                                                    values={{username: aquascape.user.name}}
                                                 />
                                             </Paragraph>
                                         </div>

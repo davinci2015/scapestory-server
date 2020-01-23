@@ -16,6 +16,8 @@ import HeroSectionEditContainer from 'containers/AquascapeDetailsEditContainer/H
 import FloraSectionEditContainer from 'containers/AquascapeDetailsEditContainer/FloraSectionEditContainer'
 import PhotoSectionEditContainer from 'containers/AquascapeDetailsEditContainer/PhotoSectionEditContainer'
 import EquipmentSectionEditContainer from 'containers/AquascapeDetailsEditContainer/EquipmentSectionEditContainer'
+import CommentsContainer from 'containers/AquascapeDetailsContainer/CommentsContainer'
+import {OtherAquascapesSection} from 'components/sections/AquascapeDetails'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -93,6 +95,13 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
                         defaultMessage="Equipment"
                     />
                 </SubNavigation.Item>
+                <SubNavigation.Item id={sections.COMMENTS}>
+                    <FormattedMessage
+                        id="aquascape.subnavigation.comments"
+                        defaultMessage="Comments ({count})"
+                        values={{count: aquascapeResult.aquascape.comments.length}}
+                    />
+                </SubNavigation.Item>
             </SubNavigation>
             <Grid>
                 <Element name={sections.PHOTO_POSTS}>
@@ -113,6 +122,22 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
                 <Element name={sections.EQUIPMENT}>
                     <EquipmentSectionEditContainer aquascape={aquascapeResult.aquascape} />
                 </Element>
+
+                <Divider />
+
+                <Element name={sections.COMMENTS}>
+                    <CommentsContainer
+                        aquascapeId={aquascapeId}
+                        comments={aquascapeResult.aquascape.comments}
+                    />
+                </Element>
+
+                {aquascapeResult.aquascapes && Boolean(aquascapeResult.aquascapes.rows.length) && (
+                    <>
+                        <Divider />
+                        <OtherAquascapesSection aquascapes={aquascapeResult.aquascapes.rows} />
+                    </>
+                )}
             </Grid>
         </Content>
     )

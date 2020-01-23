@@ -3,7 +3,6 @@ import React from 'react'
 import {AquascapeCard} from 'components/molecules'
 import {Grid} from 'components/core'
 import {AquascapeFieldsFragment} from 'graphql/generated/queries'
-import {getUserName} from 'utils/mappers'
 import {ItemProps} from 'components/core/Grid/Item'
 
 export const renderAquascapeCards = (
@@ -19,12 +18,10 @@ export const renderAquascapeCards = (
         <Grid.Item key={scape.id} {...itemProps}>
             <AquascapeCard
                 id={scape.id}
-                profileSlug={scape.user?.slug}
-                name={getUserName(scape.user)}
+                user={scape.user}
                 title={scape.title}
                 viewsCount={scape.viewsCount}
                 likesCount={scape.likesCount}
-                userImage={scape.user?.profileImage}
                 image={scape.mainImageUrl}
                 tags={scape.tags}
             />

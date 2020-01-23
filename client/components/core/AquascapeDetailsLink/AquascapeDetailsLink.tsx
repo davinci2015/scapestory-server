@@ -1,12 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
 
-import routes, {createDynamicPath, getAquascapeDetailsSlug} from 'routes'
-import config from 'config'
-
 interface Props {
-    id: number
-    title?: string | null
+    href: string
+    as: string
 }
 
 const classes = {
@@ -17,15 +14,9 @@ type AquascapeDetailsLinkInterface = React.FunctionComponent<Props> & {
     classes: typeof classes
 }
 
-const AquascapeDetailsLink: AquascapeDetailsLinkInterface = ({children, id, title}) => (
+const AquascapeDetailsLink: AquascapeDetailsLinkInterface = ({as, children, href}) => (
     <>
-        <Link
-            href={routes.aquascapeDetails}
-            as={createDynamicPath(routes.aquascapeDetails, {
-                id: id.toString(),
-                title: getAquascapeDetailsSlug(title || config.AQUASCAPE_TITLE_PLACEHOLDER),
-            })}
-        >
+        <Link href={href} as={as}>
             <a className={classes.link}>{children}</a>
         </Link>
         <style jsx>{`

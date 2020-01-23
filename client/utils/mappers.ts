@@ -1,10 +1,7 @@
-import {User} from 'graphql/generated/types'
 import {
     EquipmentOptionType,
     EquipmentInterface,
 } from 'containers/AquascapeDetailsEditContainer/EquipmentSectionEditContainer'
-
-export const getUserName = (user: Pick<User, 'name'> | null) => (user ? user.name : 'Unknown user')
 
 export const groupEquipmentByBrand = (equipment: EquipmentInterface[]) => {
     let brand: string
