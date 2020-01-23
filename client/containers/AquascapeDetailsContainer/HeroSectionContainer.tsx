@@ -70,7 +70,7 @@ const HeroSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
         }
 
         if (!isAuthenticated) {
-            return openModal('login')
+            return openModal('register')
         }
 
         const mutateLike = aquascape.isLikedByMe ? dislike : like
@@ -88,7 +88,7 @@ const HeroSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
         }
 
         if (!isAuthenticated) {
-            return openModal('login')
+            return openModal('register')
         }
 
         const mutateFollow = aquascape.user.isFollowedByMe ? unfollow : follow

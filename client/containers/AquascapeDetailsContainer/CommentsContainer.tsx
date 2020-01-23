@@ -103,7 +103,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
     const toggleLike = useCallback(
         (comment: CommentFieldsFragment) => {
             if (!isAuthenticated || !user) {
-                return openModal('login')
+                return openModal('register')
             }
 
             const alreadyLiked = comment.likes.some(like => like.userId === user.id)

@@ -72,7 +72,7 @@ const CoverSectionContainer: React.FunctionComponent<Props> = ({onEdit, user}) =
 
     const toggleFollow = () => {
         if (!isAuthenticated) {
-            return openModal('login')
+            return openModal('register')
         }
 
         const mutateFollow = user.isFollowedByMe ? unfollow : follow
