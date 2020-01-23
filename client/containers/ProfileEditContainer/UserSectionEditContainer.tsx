@@ -35,25 +35,25 @@ interface SocialNetworkInput {
 const socialNetworkInputs: SocialNetworkInput[] = [
     {
         key: 'facebookUrl',
-        placeholder: 'Facebook URL',
+        placeholder: 'Facebook Profile URL',
         label: 'Facebook',
         Icon: socialIconComponentMapping[SocialNetwork.FACEBOOK],
     },
     {
         key: 'instagramUrl',
-        placeholder: 'Instagram URL',
+        placeholder: 'Instagram Profile URL',
         label: 'Instagram',
         Icon: socialIconComponentMapping[SocialNetwork.INSTAGRAM],
     },
     {
         key: 'youtubeUrl',
-        placeholder: 'Youtube URL',
+        placeholder: 'Youtube Profile URL',
         label: 'Youtube',
         Icon: socialIconComponentMapping[SocialNetwork.YOUTUBE],
     },
     {
         key: 'twitterUrl',
-        placeholder: 'Twitter URL',
+        placeholder: 'Twitter Profile URL',
         label: 'Twitter',
         Icon: socialIconComponentMapping[SocialNetwork.TWITTER],
     },
