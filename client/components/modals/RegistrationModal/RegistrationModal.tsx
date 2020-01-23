@@ -27,7 +27,7 @@ const RegistrationModal = () => {
             title={
                 <FormattedMessage
                     id="registration_title"
-                    defaultMessage="Don’t be shy! Sign up to share your scapestory."
+                    defaultMessage="Don’t be shy! Sign up and share your scapestory."
                 />
             }
             subtitle={
