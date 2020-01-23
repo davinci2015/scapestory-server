@@ -72,8 +72,8 @@ export type AquascapesResult = {
 
 export type AuthPayload = {
    __typename?: 'AuthPayload',
-  token?: Maybe<Scalars['String']>,
-  user?: Maybe<User>,
+  token: Scalars['String'],
+  user: User,
 };
 
 export type Brand = {

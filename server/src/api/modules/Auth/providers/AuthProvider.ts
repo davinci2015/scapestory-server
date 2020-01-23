@@ -95,7 +95,7 @@ export class AuthProvider implements AuthProviderInterface {
         })
 
         const confirmation = await this.emailConfirmationRepository.createConfirmationKey(email)
-        const token = AuthHelper.createJWTToken({email, key: confirmation.code})
+        const token = AuthHelper.createEmailConfirmationToken(email, confirmation.code)
         await sendConfirmationMail(email, token)
 
         return user

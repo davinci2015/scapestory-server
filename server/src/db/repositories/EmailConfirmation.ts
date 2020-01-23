@@ -27,7 +27,9 @@ export class EmailConfirmationRepository extends BaseRepository<EmailConfirmatio
     }
 
     async confirmEmail(email: string, code: string) {
-        if (!this.isValidCode(email, code)) {
+        const isValidCode = await this.isValidCode(email, code)
+
+        if (!isValidCode) {
             return false
         }
 
@@ -38,6 +40,6 @@ export class EmailConfirmationRepository extends BaseRepository<EmailConfirmatio
 
     private async isValidCode(email: string, code: string) {
         const confirmation = await this.findOne({where: {email, code}})
-        return confirmation && moment(confirmation.expiresAt).isBefore(moment())
+        return confirmation && moment(confirmation.expiresAt).isAfter(moment())
     }
 }

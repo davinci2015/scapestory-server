@@ -22,6 +22,7 @@
             "plugins": ["typescript", "typescript-operations"],
             "documents": [
                 "./graphql/mutations/mutations.ts",
+                "./containers/EmailConfirmationContainer/mutations.ts",
                 "./containers/AquascapeDetailsContainer/mutations.ts",
                 "./containers/AquascapeDetailsEditContainer/HeroSectionEditContainer/mutations.ts",
                 "./containers/AquascapeDetailsEditContainer/FloraSectionEditContainer/mutations.ts",

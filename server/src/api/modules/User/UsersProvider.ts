@@ -12,14 +12,14 @@ import {EmailConfirmationRepositoryInterface} from 'db/repositories/EmailConfirm
 import {AuthHelper, EmailConfirmationPayload} from 'utils/AuthHelper'
 
 export interface UsersProviderInterface {
-    findUserById: (id: number) => Promise<User | null>
-    findUserBySlug: (slug: string) => Promise<User | null>
-    findUserByEmail(email: string): Promise<User | null>
     getAllUsers: () => Bluebird<User[]>
     uploadProfileImage: (userId: number, file: Promise<FileUpload>) => Promise<ImageUploadResult>
     uploadCoverImage: (userId: number, file: Promise<FileUpload>) => Promise<ImageUploadResult>
+    findUserById: (id: number) => Promise<User | null>
     updateUserDetails: (userId: number, userDetails: UserDetails) => Promise<[number, User[]]>
+    findUserBySlug: (slug: string) => Promise<User | null>
     confirmEmail: (token: string) => Promise<[boolean, string?]>
+    findUserByEmail(email: string): Promise<User | null>
 }
 
 @Injectable({scope: ProviderScope.Session})
@@ -63,12 +63,11 @@ export class UsersProvider implements UsersProviderInterface {
             payload.code
         )
 
-        if (confirmed) {
-            await this.userRepository.update(
-                {emailConfirmed: true},
-                {where: {email: payload.email}}
-            )
+        if (!confirmed) {
+            return [false, undefined] as [boolean, undefined]
         }
+
+        await this.userRepository.update({emailConfirmed: true}, {where: {email: payload.email}})
 
         return [confirmed, payload.email] as [boolean, string]
     }

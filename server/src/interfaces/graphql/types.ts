@@ -75,8 +75,8 @@ export type AquascapesResult = {
 
 export type AuthPayload = {
   __typename?: 'AuthPayload',
-  token?: Maybe<Scalars['String']>,
-  user?: Maybe<User>,
+  token: Scalars['String'],
+  user: User,
 };
 
 export type Brand = {
@@ -791,8 +791,8 @@ export type AquascapesResultResolvers<ContextType = any, ParentType = ResolversP
 };
 
 export type AuthPayloadResolvers<ContextType = any, ParentType = ResolversParentTypes['AuthPayload']> = {
-  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
 };
 
 export type BrandResolvers<ContextType = any, ParentType = ResolversParentTypes['Brand']> = {

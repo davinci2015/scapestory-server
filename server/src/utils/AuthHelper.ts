@@ -32,6 +32,10 @@ export class AuthHelper {
         return AuthHelper.createJWTToken({userId})
     }
 
+    static createEmailConfirmationToken(email: string, code: string) {
+        return AuthHelper.createJWTToken({email, code})
+    }
+
     static decodeJWTToken<PayloadType>(token: string): PayloadType | null {
         return decode(token, environment.SECURITY_TOKEN_SECRET)
     }

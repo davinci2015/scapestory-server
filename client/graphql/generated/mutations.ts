@@ -72,8 +72,8 @@ export type AquascapesResult = {
 
 export type AuthPayload = {
    __typename?: 'AuthPayload',
-  token?: Maybe<Scalars['String']>,
-  user?: Maybe<User>,
+  token: Scalars['String'],
+  user: User,
 };
 
 export type Brand = {
@@ -750,6 +750,23 @@ export type AddAquascapeImageMutation = (
     { __typename?: 'AquascapeImage' }
     & Pick<AquascapeImage, 'id' | 'url' | 'title' | 'createdAt'>
   ) }
+);
+
+export type ConfirmEmailMutationVariables = {
+  token: Scalars['String']
+};
+
+
+export type ConfirmEmailMutation = (
+  { __typename?: 'Mutation' }
+  & { confirmEmail: Maybe<(
+    { __typename?: 'AuthPayload' }
+    & Pick<AuthPayload, 'token'>
+    & { user: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'slug'>
+    ) }
+  )> }
 );
 
 export type LikeMutationVariables = {

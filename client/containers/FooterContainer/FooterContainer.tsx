@@ -1,7 +1,9 @@
 import React from 'react'
 
-const EmailConfirmationContainer = () => {
-    return null
+import {Footer} from 'components/sections/shared'
+
+const FooterContainer = () => {
+    return <Footer />
 }
 
-export default EmailConfirmationContainer
+export default FooterContainer
