@@ -3,13 +3,20 @@ import appConstants from 'appConstants'
 import {IncomingHttpHeaders} from 'http2'
 import {addYears} from 'date-fns'
 
+const path = '/'
+
 export default {
     persistAuthToken(token: string) {
         const cookies = new Cookies()
         cookies.set(appConstants.COOKIE_AUTH, token, {
             expires: addYears(Date.now(), 10),
-            path: '/',
+            path,
         })
+    },
+
+    removeAuthToken() {
+        const cookies = new Cookies()
+        cookies.remove(appConstants.COOKIE_AUTH, {path})
     },
 
     getAuthToken(headers?: IncomingHttpHeaders) {

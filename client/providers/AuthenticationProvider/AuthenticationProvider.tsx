@@ -8,13 +8,13 @@ import {User_ProfileQuery} from 'graphql/generated/queries'
 interface AuthContextInterface {
     isAuthenticated: boolean
     user?: User_ProfileQuery['me']
-    setAuthenticated: (authenticated: boolean) => void
+    refreshAuthentication: () => void
 }
 
 export const AuthContext = React.createContext<AuthContextInterface>({
     isAuthenticated: false,
     user: null,
-    setAuthenticated: () => new Error('setAuthenticated is not implemented'),
+    refreshAuthentication: () => new Error('setAuthenticated is not implemented'),
 })
 
 interface Props {
@@ -39,7 +39,7 @@ const AuthenticationProvider: React.FunctionComponent<Props> = ({children}) => {
         <AuthContext.Provider
             value={{
                 isAuthenticated: Boolean(user),
-                setAuthenticated,
+                refreshAuthentication: setAuthenticated,
                 user,
             }}
         >

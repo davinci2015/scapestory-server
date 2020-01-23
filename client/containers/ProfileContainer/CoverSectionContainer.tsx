@@ -16,7 +16,9 @@ import CoverSection from 'components/sections/Profile/CoverSection'
 import {Button, FormattedMessage, Icon} from 'components/atoms'
 import UserFollowIcon from 'assets/icons/user-plus.svg'
 import UserUnfollowIcon from 'assets/icons/user-minus.svg'
+import LogoutIcon from 'assets/icons/log-out.svg'
 import {colors} from 'styles'
+import cookie from 'services/cookie'
 
 interface Props {
     user: UserBySlugQuery['user']
@@ -48,7 +50,7 @@ const UnfollowButton = ({toggleFollow}: {toggleFollow: VoidFunction}) => (
 const CoverSectionContainer: React.FunctionComponent<Props> = ({onEdit, user}) => {
     if (!user) return null
 
-    const {isAuthenticated, user: loggedInUser} = useContext(AuthContext)
+    const {isAuthenticated, refreshAuthentication, user: loggedInUser} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
 
     const [follow] = useMutation<FollowUserMutation, FollowUserMutationVariables>(FOLLOW, {
@@ -58,6 +60,11 @@ const CoverSectionContainer: React.FunctionComponent<Props> = ({onEdit, user}) =
     const [unfollow] = useMutation<UnfollowUserMutation, UnfollowUserMutationVariables>(UNFOLLOW, {
         update: updateProfileCache(ProfileActions.UNFOLLOW, {slug: user.slug}),
     })
+
+    const onLogout = () => {
+        cookie.removeAuthToken()
+        refreshAuthentication()
+    }
 
     const toggleFollow = () => {
         if (!isAuthenticated) {
@@ -83,17 +90,30 @@ const CoverSectionContainer: React.FunctionComponent<Props> = ({onEdit, user}) =
                         ))}
 
                     {isMyProfile && (
-                        <Button
-                            leftIcon={<Icon d={Icon.EDIT} color={colors.WHITE} />}
-                            dimensions="extraSmall"
-                            color="tertiary"
-                            onClick={onEdit}
-                        >
-                            <FormattedMessage
-                                id="user_profile.edit"
-                                defaultMessage="Edit profile"
-                            />
-                        </Button>
+                        <>
+                            <Button
+                                leftIcon={<Icon d={Icon.EDIT} color={colors.WHITE} />}
+                                dimensions="extraSmall"
+                                color="tertiary"
+                                onClick={onEdit}
+                            >
+                                <FormattedMessage
+                                    id="user_profile.edit"
+                                    defaultMessage="Edit profile"
+                                />
+                            </Button>
+                            <Button
+                                leftIcon={<LogoutIcon />}
+                                dimensions="extraSmall"
+                                color="tertiary"
+                                onClick={onLogout}
+                            >
+                                <FormattedMessage
+                                    id="user_profile.logout"
+                                    defaultMessage="Logout"
+                                />
+                            </Button>
+                        </>
                     )}
                 </>
             }

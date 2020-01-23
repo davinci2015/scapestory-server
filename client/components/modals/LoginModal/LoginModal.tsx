@@ -9,14 +9,14 @@ import cookie from 'services/cookie'
 import {AuthContext} from 'providers/AuthenticationProvider'
 
 const LoginModal = () => {
-    const {setAuthenticated} = useContext(AuthContext)
+    const {refreshAuthentication} = useContext(AuthContext)
     const {closeModal, openModal} = useContext(ModalContext)
 
     const openRegistrationModal = () => openModal('register')
 
     const handleSuccess = (token: string) => {
         cookie.persistAuthToken(token)
-        setAuthenticated(true)
+        refreshAuthentication()
         closeModal()
     }
 
