@@ -78,11 +78,19 @@ export class AuthProvider implements AuthProviderInterface {
 
     async register(email: string, password: string) {
         if (await this.emailExists(email)) {
-            // TODO:
-            // Check if email exists and confirmation is expired
-            // If yes then user.destroy() and emailConfirmation.destroy()
-            // If no then return UserInputError
-            throw new UserInputError('User with provided email already exists')
+            const zombieUser = await this.userRepository.findUserByEmail(email)
+            const expired = await this.emailConfirmationRepository.confirmationExpired(email)
+
+            // Zombie user is a registered user who didn't confirm his email address and confirmation expired
+            if (zombieUser && !zombieUser.emailConfirmed && expired) {
+                // Such user and confirmation should be destroyed
+                await Promise.all([
+                    zombieUser.destroy(),
+                    this.emailConfirmationRepository.destroy({where: {email}}),
+                ])
+            } else {
+                throw new UserInputError('User with provided email already exists')
+            }
         }
 
         const slug = await this.generateUniqueSlug()
