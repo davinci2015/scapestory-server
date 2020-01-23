@@ -1,24 +1,24 @@
 import React from 'react'
-import {useRouter} from 'next/router'
 
 import {UserBySlugQuery} from 'graphql/generated/queries'
-import routes, {createDynamicPath} from 'routes'
 import CoverSection from 'components/sections/Profile/CoverSection'
 import {Button, Icon, FormattedMessage} from 'components/atoms'
 import {colors} from 'styles'
 import {ImageUpload} from 'components/core'
+import SaveIcon from 'assets/icons/save.svg'
 
 interface Props {
     user: UserBySlugQuery['user']
     onChangeCover: (files: FileList | null) => void
+    onSave: VoidFunction
 }
 
-const CoverSectionEditContainer: React.FunctionComponent<Props> = ({onChangeCover, user}) => {
-    const router = useRouter()
-
+const CoverSectionEditContainer: React.FunctionComponent<Props> = ({
+    onChangeCover,
+    onSave,
+    user,
+}) => {
     if (!user) return null
-
-    const onPreview = () => router.push(createDynamicPath(routes.profile, {slug: user.slug}))
 
     return (
         <CoverSection
@@ -43,14 +43,12 @@ const CoverSectionEditContainer: React.FunctionComponent<Props> = ({onChangeCove
                     />
 
                     <Button
-                        leftIcon={
-                            <Icon d={Icon.EYE_SHOW} color={colors.WHITE} viewBox="0 0 48 48" />
-                        }
+                        leftIcon={<SaveIcon />}
                         dimensions="extraSmall"
                         color="tertiary"
-                        onClick={onPreview}
+                        onClick={onSave}
                     >
-                        <FormattedMessage id="user_profile.preview" defaultMessage="Preview" />
+                        <FormattedMessage id="user_profile.save" defaultMessage="Save changes" />
                     </Button>
                 </>
             }

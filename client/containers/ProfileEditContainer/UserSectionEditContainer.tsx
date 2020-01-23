@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useState} from 'react'
-import {useMutation} from 'react-apollo'
-import debounce from 'lodash.debounce'
+import {isWebUri} from 'valid-url'
+import {useIntl} from 'react-intl'
 
-import {UserBySlugQuery, MutationUpdateUserDetailsArgs} from 'graphql/generated/queries'
+import {UserBySlugQuery} from 'graphql/generated/queries'
 import {FormattedMessage, Textarea, Input, InputAdornment} from 'components/atoms'
 import UserSection from 'components/sections/Profile/UserSection'
 import UserStats from 'components/sections/Profile/UserStats'
@@ -12,14 +12,11 @@ import {
     SocialNetwork,
     socialIconComponentMapping,
 } from 'components/sections/Profile/UserAbout/SocialLink'
-import {UPDATE_USER_DETAILS} from './mutations'
-import {UserDetails} from 'graphql/generated/types'
-import {isWebUri} from 'valid-url'
 import UsernameInput from 'components/sections/Profile/UserSection/UsernameInput'
-import {useIntl} from 'react-intl'
 
 interface Props {
     user: UserBySlugQuery['user']
+    updateField: (key: string, value: string) => void
     onChangeProfileImage: (files: FileList | null) => void
 }
 
@@ -61,42 +58,36 @@ const socialNetworkInputs: SocialNetworkInput[] = [
 
 const ABOUT_MAX_LEN = 200
 
-const UserSectionEditContainer: React.FunctionComponent<Props> = ({onChangeProfileImage, user}) => {
+const UserSectionEditContainer: React.FunctionComponent<Props> = ({
+    onChangeProfileImage,
+    updateField,
+    user,
+}) => {
     const [urlErrors, setUrlError] = useState<{[key in SocialNetworkKey]?: boolean}>({})
     const intl = useIntl()
 
     if (!user) return null
 
-    const [updateUserDetailsMutation] = useMutation<MutationUpdateUserDetailsArgs>(
-        UPDATE_USER_DETAILS
-    )
-
     const updateNetworkUrl = (key: SocialNetworkKey) => (event: ChangeEvent<HTMLInputElement>) => {
         const url = event.target.value.trim()
-        const isValid = Boolean(isWebUri(url))
+        if (url === '') return updateField(key, url)
 
+        const isValid = Boolean(isWebUri(url))
         setUrlError({...urlErrors, [key]: !isValid})
 
-        if (isValid) {
-            debouncedDetailsUpdate({
-                [key]: event.target.value.trim(),
-            })
-        }
+        if (isValid) updateField(key, url)
     }
 
     const updateAbout = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        debouncedDetailsUpdate({about: event.target.value.trim()})
+        updateField('about', event.target.value.trim())
     }
 
     const updateName = (event: ChangeEvent<HTMLInputElement>) => {
-        if (!event.target.value.trim().length) return
+        const name = event.target.value.trim()
+        if (name === '') return
 
-        debouncedDetailsUpdate({name: event.target.value.trim()})
+        updateField('name', event.target.value.trim())
     }
-
-    const debouncedDetailsUpdate = debounce((details: UserDetails) => {
-        updateUserDetailsMutation({variables: {details}})
-    }, 800)
 
     return (
         <UserSection

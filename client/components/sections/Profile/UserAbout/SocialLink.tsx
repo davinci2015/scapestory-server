@@ -4,6 +4,7 @@ import {colors, spaces} from 'styles'
 import {Icon} from 'components/atoms'
 import TwitterIcon from 'assets/icons/twitter.svg'
 import YoutubeIcon from 'assets/icons/youtube.svg'
+import Truncate from 'react-truncate'
 
 export enum SocialNetwork {
     FACEBOOK,
@@ -35,7 +36,9 @@ const SocialLink: React.FunctionComponent<Props> = ({network, url}) => {
             <div className="social">
                 <NetworkIcon />
                 <a href={url} target="_blank" rel="noopener noreferrer">
-                    {url}
+                    <Truncate lines={1} trimWhitespace>
+                        {url}
+                    </Truncate>
                 </a>
             </div>
 

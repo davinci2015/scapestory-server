@@ -43,6 +43,10 @@ const UserAbout: React.FunctionComponent<Props> = ({
                 margin-bottom: ${spaces.s24};
             }
 
+            .social {
+                word-break: break-word;
+            }
+
             .social :global(svg) {
                 color: ${colors.PRIMARY};
             }

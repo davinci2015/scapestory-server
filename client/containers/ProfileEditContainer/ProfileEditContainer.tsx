@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import {useRouter} from 'next/router'
 import {useQuery, useMutation} from 'react-apollo'
 
@@ -10,18 +10,24 @@ import {renderAquascapeCards} from 'utils/render'
 import {GridWidth} from 'components/core/Grid'
 import {USER_BY_SLUG} from 'graphql/queries'
 import {AuthContext} from 'providers/AuthenticationProvider'
-import routes from 'routes'
+import routes, {createDynamicPath} from 'routes'
 
-import CoverSectionEditContainer from './CoverSectionEditContainer'
-import UserSectionEditContainer from './UserSectionEditContainer'
-import {MutationUploadUserImageArgs} from 'graphql/generated/mutations'
+import {
+    MutationUploadUserImageArgs,
+    MutationUpdateUserDetailsArgs,
+} from 'graphql/generated/mutations'
 import {UPLOAD_USER_IMAGE} from 'graphql/mutations'
 import {updateProfileCache, ProfileActions} from 'containers/ProfileContainer/cache'
+import {User} from 'graphql/generated/types'
+import CoverSectionEditContainer from './CoverSectionEditContainer'
+import UserSectionEditContainer from './UserSectionEditContainer'
+import {UPDATE_USER_DETAILS} from './mutations'
 
 const ProfileContainer = () => {
     const router = useRouter()
     const slug = router.query.slug?.toString()
     const {isAuthenticated, user: loggedInUser} = useContext(AuthContext)
+    const [userDetails, setUserDetails] = useState({})
 
     if (!slug) return null
 
@@ -31,6 +37,10 @@ const ProfileContainer = () => {
     )
 
     const [uploadUserImage] = useMutation<MutationUploadUserImageArgs>(UPLOAD_USER_IMAGE)
+
+    const [updateUserDetailsMutation] = useMutation<User | null, MutationUpdateUserDetailsArgs>(
+        UPDATE_USER_DETAILS
+    )
 
     const onImageUpload = (imageVariant: ImageVariant) => (files: FileList | null) => {
         // TODO: Validate file extension
@@ -51,6 +61,22 @@ const ProfileContainer = () => {
         })
     }
 
+    const redirectToProfile = () => {
+        router.push(createDynamicPath(routes.profile, {slug}))
+    }
+
+    const onSave = () => {
+        if (!Object.keys(userDetails).length) {
+            redirectToProfile()
+        }
+
+        updateUserDetailsMutation({variables: {details: userDetails}}).finally(redirectToProfile)
+    }
+
+    const updateField = (key: string, value: string) => {
+        setUserDetails({...userDetails, [key]: value})
+    }
+
     if (error) {
         // TODO: handle error properly
         return null
@@ -69,11 +95,13 @@ const ProfileContainer = () => {
     return (
         <Content>
             <CoverSectionEditContainer
+                onSave={onSave}
                 onChangeCover={onImageUpload(ImageVariant.Cover)}
                 user={userResult.user}
             />
             <Grid width={GridWidth.SMALL}>
                 <UserSectionEditContainer
+                    updateField={updateField}
                     onChangeProfileImage={onImageUpload(ImageVariant.Profile)}
                     user={userResult.user}
                 />
