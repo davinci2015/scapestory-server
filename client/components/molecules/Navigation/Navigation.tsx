@@ -61,33 +61,33 @@ const Navigation = ({
                             <div className="text">
                                 <Paragraph as="span" color={styles.colors.SHADE_DEEP}>
                                     <FormattedMessage
-                                        id="navigation_not_member_yet"
-                                        defaultMessage="Not a member yet?"
+                                        id="navigation.already_member"
+                                        defaultMessage="Already a member?"
                                     />
                                 </Paragraph>
-                                <div className="signup" onClick={openRegisterModal}>
+                                <div className="signup" onClick={openLoginModal}>
                                     <Paragraph
                                         as="span"
                                         color={styles.colors.PRIMARY}
                                         weight="bold"
                                     >
                                         <FormattedMessage
-                                            id="navigation_sign_up"
-                                            defaultMessage="Sign Up"
+                                            id="navigation.login"
+                                            defaultMessage="Login"
                                         />
                                     </Paragraph>
                                 </div>
                             </div>
-                            <div className="login-btn">
+                            <div className="sign-up-btn">
                                 <Button
                                     color="secondary"
                                     variant="outlined"
                                     dimensions="small"
-                                    onClick={openLoginModal}
+                                    onClick={openRegisterModal}
                                 >
                                     <FormattedMessage
-                                        id="navigation_login"
-                                        defaultMessage="Login"
+                                        id="navigation.sign_up"
+                                        defaultMessage="Sign Up"
                                     />
                                 </Button>
                             </div>
@@ -167,7 +167,7 @@ const Navigation = ({
                     cursor: pointer;
                 }
 
-                .right .login-btn {
+                .right .sign-up-btn {
                     flex: 0;
                     margin-right: ${styles.spaces.s24};
                     margin-left: ${styles.spaces.s36};
