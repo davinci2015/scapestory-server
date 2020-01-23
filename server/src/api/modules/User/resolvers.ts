@@ -10,6 +10,7 @@ import {
     MutationUploadUserImageArgs,
     ImageVariant,
     MutationUpdateUserDetailsArgs,
+    MutationConfirmEmailArgs,
 } from 'interfaces/graphql/types'
 import {AuthHelper} from 'utils/AuthHelper'
 
@@ -58,12 +59,12 @@ export const resolvers = {
 
             return users
         },
-        async confirmEmail(root, args, context: ModuleContext) {
+        async confirmEmail(root, args: MutationConfirmEmailArgs, context: ModuleContext) {
             const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
-            const confirmed = await provider.confirmEmail(args.email, args.key)
+            const [confirmed, email] = await provider.confirmEmail(args.token)
 
-            if (confirmed) {
-                const user = await provider.findUserById(args.userId)
+            if (confirmed && email) {
+                const user = await provider.findUserByEmail(email)
 
                 if (user) {
                     return {token: AuthHelper.createAuthToken(user.id), user}

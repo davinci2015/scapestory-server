@@ -9,6 +9,7 @@ import {UserDetails} from 'interfaces/graphql/types'
 export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
     findUserById(id: number): Promise<User | null>
     findUserByEmail(email: string): Promise<User | null>
+    findUserByEmail(email: string): Promise<User | null>
     findUserBySlug(slug: string): Promise<User | null>
     updateProfileImage(userId: number, publicId: string, url: string): Promise<[number, User[]]>
     updateCoverImage(userId: number, publicId: string, url: string): Promise<[number, User[]]>

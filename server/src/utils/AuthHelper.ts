@@ -3,8 +3,14 @@ import {compareSync, hashSync} from 'bcrypt'
 import {encode, decode} from 'jwt-simple'
 import environment from 'config/environment'
 
-export interface JWTTokenPayload {
+export interface AuthTokenPayload {
     userId: number
+    iat: number
+}
+
+export interface EmailConfirmationPayload {
+    email: string
+    code: string
     iat: number
 }
 
@@ -26,7 +32,7 @@ export class AuthHelper {
         return AuthHelper.createJWTToken({userId})
     }
 
-    static decodeJWTToken(token: string): JWTTokenPayload | null {
+    static decodeJWTToken<PayloadType>(token: string): PayloadType | null {
         return decode(token, environment.SECURITY_TOKEN_SECRET)
     }
 }

@@ -234,7 +234,7 @@ export type Mutation = {
   __typename?: 'Mutation',
   uploadUserImage: ImageUploadResult,
   updateUserDetails?: Maybe<Array<Maybe<User>>>,
-  confirmEmail?: Maybe<Scalars['Boolean']>,
+  confirmEmail?: Maybe<AuthPayload>,
   addEquipment: Equipment,
   removeEquipment?: Maybe<Equipment>,
   addLight: Light,
@@ -257,7 +257,7 @@ export type Mutation = {
   followUser?: Maybe<User>,
   unfollowUser?: Maybe<User>,
   login?: Maybe<AuthPayload>,
-  register?: Maybe<AuthPayload>,
+  register?: Maybe<User>,
   fbRegister?: Maybe<AuthPayload>,
   googleRegister?: Maybe<AuthPayload>,
   visitAquascape: VisitAquascapeResult,
@@ -276,8 +276,7 @@ export type MutationUpdateUserDetailsArgs = {
 
 
 export type MutationConfirmEmailArgs = {
-  userId: Scalars['Int'],
-  key: Scalars['String']
+  token: Scalars['String']
 };
 
 
@@ -682,11 +681,11 @@ export type ResolversTypes = {
   ImageVariant: ResolverTypeWrapper<Partial<ImageVariant>>,
   ImageUploadResult: ResolverTypeWrapper<Partial<ImageUploadResult>>,
   UserDetails: ResolverTypeWrapper<Partial<UserDetails>>,
+  AuthPayload: ResolverTypeWrapper<Partial<AuthPayload>>,
   EquipmentArgs: ResolverTypeWrapper<Partial<EquipmentArgs>>,
   EquipmentType: ResolverTypeWrapper<Partial<EquipmentType>>,
   LikeEntityType: ResolverTypeWrapper<Partial<LikeEntityType>>,
   MainImageUploadResult: ResolverTypeWrapper<Partial<MainImageUploadResult>>,
-  AuthPayload: ResolverTypeWrapper<Partial<AuthPayload>>,
   VisitAquascapeResult: ResolverTypeWrapper<Partial<VisitAquascapeResult>>,
   Visitor: ResolverTypeWrapper<Partial<Visitor>>,
   AquascapesFilter: ResolverTypeWrapper<Partial<AquascapesFilter>>,
@@ -726,11 +725,11 @@ export type ResolversParentTypes = {
   ImageVariant: Partial<ImageVariant>,
   ImageUploadResult: Partial<ImageUploadResult>,
   UserDetails: Partial<UserDetails>,
+  AuthPayload: Partial<AuthPayload>,
   EquipmentArgs: Partial<EquipmentArgs>,
   EquipmentType: Partial<EquipmentType>,
   LikeEntityType: Partial<LikeEntityType>,
   MainImageUploadResult: Partial<MainImageUploadResult>,
-  AuthPayload: Partial<AuthPayload>,
   VisitAquascapeResult: Partial<VisitAquascapeResult>,
   Visitor: Partial<Visitor>,
   AquascapesFilter: Partial<AquascapesFilter>,
@@ -910,7 +909,7 @@ export type MainImageUploadResultResolvers<ContextType = any, ParentType = Resol
 export type MutationResolvers<ContextType = any, ParentType = ResolversParentTypes['Mutation']> = {
   uploadUserImage?: Resolver<ResolversTypes['ImageUploadResult'], ParentType, ContextType, MutationUploadUserImageArgs>,
   updateUserDetails?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType, MutationUpdateUserDetailsArgs>,
-  confirmEmail?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, MutationConfirmEmailArgs>,
+  confirmEmail?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationConfirmEmailArgs>,
   addEquipment?: Resolver<ResolversTypes['Equipment'], ParentType, ContextType, MutationAddEquipmentArgs>,
   removeEquipment?: Resolver<Maybe<ResolversTypes['Equipment']>, ParentType, ContextType, MutationRemoveEquipmentArgs>,
   addLight?: Resolver<ResolversTypes['Light'], ParentType, ContextType, MutationAddLightArgs>,
@@ -933,7 +932,7 @@ export type MutationResolvers<ContextType = any, ParentType = ResolversParentTyp
   followUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationFollowUserArgs>,
   unfollowUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationUnfollowUserArgs>,
   login?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationLoginArgs>,
-  register?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationRegisterArgs>,
+  register?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationRegisterArgs>,
   fbRegister?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationFbRegisterArgs>,
   googleRegister?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationGoogleRegisterArgs>,
   visitAquascape?: Resolver<ResolversTypes['VisitAquascapeResult'], ParentType, ContextType, MutationVisitAquascapeArgs>,

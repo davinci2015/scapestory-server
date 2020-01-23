@@ -2,8 +2,9 @@ import {ModuleContext, BuildContextFn, ModuleSessionInfo} from '@graphql-modules
 import {Config} from 'apollo-server'
 
 import headers from 'constants/headers'
-import {AuthHelper} from 'utils/AuthHelper'
+import {AuthHelper, AuthTokenPayload} from 'utils/AuthHelper'
 import {SessionInterface} from 'interfaces'
+import logger from 'logger'
 
 export type AuthenticationContext = {
     currentUserId: number
@@ -11,31 +12,39 @@ export type AuthenticationContext = {
 
 export type SessionContext = SessionInterface
 
-export const composeContext = (contexts: Function[]): BuildContextFn<Config, ModuleSessionInfo, ModuleContext> =>
-    (session: ModuleSessionInfo, currentContext: ModuleContext, moduleSessionInfo: ModuleSessionInfo) =>
-        contexts.reduce((acc, ctx) => (
-            {
-                ...acc,
-                ...ctx(session, currentContext, moduleSessionInfo),
-            }
-        ), {})
+export const composeContext = (
+    contexts: Function[]
+): BuildContextFn<Config, ModuleSessionInfo, ModuleContext> => (
+    session: ModuleSessionInfo,
+    currentContext: ModuleContext,
+    moduleSessionInfo: ModuleSessionInfo
+) =>
+    contexts.reduce(
+        (acc, ctx) => ({
+            ...acc,
+            ...ctx(session, currentContext, moduleSessionInfo),
+        }),
+        {}
+    )
 
-export const attachCurrentUserId = (session: SessionInterface): {currentUserId: number} | object => {
+export const attachCurrentUserId = (
+    session: SessionInterface
+): {currentUserId: number} | object => {
     const authToken = session.req.headers[headers.AUTH_TOKEN]
     if (!authToken || typeof authToken !== 'string') {
         return {}
     }
 
     try {
-        const jwtPayload = AuthHelper.decodeJWTToken(authToken)
+        const payload = AuthHelper.decodeJWTToken<AuthTokenPayload>(authToken)
 
-        if (!jwtPayload) {
+        if (!payload) {
             throw Error()
         }
 
-        return {currentUserId: jwtPayload.userId}
+        return {currentUserId: payload.userId}
     } catch (e) {
-        console.log('Invalid JWT token')
+        logger.warn('Invalid JWT token')
     }
 
     return {}

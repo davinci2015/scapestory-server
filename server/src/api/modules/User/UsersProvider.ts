@@ -9,15 +9,17 @@ import {uploadStreamFile, deleteFile, imageUploadOptions} from 'services/cloudin
 import {UserDetails, ImageUploadResult} from 'interfaces/graphql/types'
 import logger from 'logger'
 import {EmailConfirmationRepositoryInterface} from 'db/repositories/EmailConfirmation'
+import {AuthHelper, EmailConfirmationPayload} from 'utils/AuthHelper'
 
 export interface UsersProviderInterface {
     findUserById: (id: number) => Promise<User | null>
     findUserBySlug: (slug: string) => Promise<User | null>
+    findUserByEmail(email: string): Promise<User | null>
     getAllUsers: () => Bluebird<User[]>
     uploadProfileImage: (userId: number, file: Promise<FileUpload>) => Promise<ImageUploadResult>
     uploadCoverImage: (userId: number, file: Promise<FileUpload>) => Promise<ImageUploadResult>
     updateUserDetails: (userId: number, userDetails: UserDetails) => Promise<[number, User[]]>
-    confirmEmail: (email: string, key: string) => Promise<boolean>
+    confirmEmail: (token: string) => Promise<[boolean, string?]>
 }
 
 @Injectable({scope: ProviderScope.Session})
@@ -37,6 +39,10 @@ export class UsersProvider implements UsersProviderInterface {
         return this.userRepository.findUserBySlug(slug)
     }
 
+    findUserByEmail(email: string) {
+        return this.userRepository.findUserByEmail(email)
+    }
+
     getAllUsers() {
         return this.userRepository.findAll()
     }
@@ -45,14 +51,26 @@ export class UsersProvider implements UsersProviderInterface {
         return this.userRepository.updateUserDetails(userId, userDetails)
     }
 
-    async confirmEmail(email: string, key: string) {
-        const confirmed = await this.emailConfirmationRepository.confirmEmail(email, key)
+    async confirmEmail(token: string) {
+        const payload = AuthHelper.decodeJWTToken<EmailConfirmationPayload>(token)
 
-        if (confirmed) {
-            await this.userRepository.update({emailConfirmed: true}, {where: {email}})
+        if (!payload) {
+            return [false, undefined] as [boolean, undefined]
         }
 
-        return confirmed
+        const confirmed = await this.emailConfirmationRepository.confirmEmail(
+            payload.email,
+            payload.code
+        )
+
+        if (confirmed) {
+            await this.userRepository.update(
+                {emailConfirmed: true},
+                {where: {email: payload.email}}
+            )
+        }
+
+        return [confirmed, payload.email] as [boolean, string]
     }
 
     async uploadProfileImage(userId: number, file: Promise<FileUpload>) {
