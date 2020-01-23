@@ -63,11 +63,9 @@ const Hero = ({
                         onChange={e => onTitleChange && onTitleChange(e.target.value)}
                     />
                 ) : (
-                    title && (
-                        <Headline as="h1" variant="h2" color={colors.WHITE}>
-                            {title}
-                        </Headline>
-                    )
+                    <Headline as="h1" variant="h2" color={colors.WHITE}>
+                        {title || config.AQUASCAPE_TITLE_PLACEHOLDER}
+                    </Headline>
                 )}
                 {bottomSection}
             </div>

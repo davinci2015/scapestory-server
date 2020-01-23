@@ -19,6 +19,8 @@ import UserUnfollowIcon from 'assets/icons/user-minus.svg'
 import LogoutIcon from 'assets/icons/log-out.svg'
 import {colors} from 'styles'
 import cookie from 'services/cookie'
+import {useRouter} from 'next/router'
+import routes from 'routes'
 
 interface Props {
     user: UserBySlugQuery['user']
@@ -48,10 +50,11 @@ const UnfollowButton = ({toggleFollow}: {toggleFollow: VoidFunction}) => (
 )
 
 const CoverSectionContainer: React.FunctionComponent<Props> = ({onEdit, user}) => {
-    if (!user) return null
-
     const {isAuthenticated, refreshAuthentication, user: loggedInUser} = useContext(AuthContext)
     const {openModal} = useContext(ModalContext)
+    const router = useRouter()
+
+    if (!user) return null
 
     const [follow] = useMutation<FollowUserMutation, FollowUserMutationVariables>(FOLLOW, {
         update: updateProfileCache(ProfileActions.FOLLOW, {slug: user.slug}),
@@ -64,6 +67,7 @@ const CoverSectionContainer: React.FunctionComponent<Props> = ({onEdit, user}) =
     const onLogout = () => {
         cookie.removeAuthToken()
         refreshAuthentication()
+        router.push(routes.index)
     }
 
     const toggleFollow = () => {
