@@ -20,8 +20,6 @@ export interface InputProps extends React.HTMLProps<HTMLInputElement> {
 const Input = ({endAdornment, error, errorMessage, label, ...props}: InputProps) => {
     const inputRef = React.createRef<HTMLInputElement>()
 
-    const setFocus = () => inputRef && inputRef.current && inputRef.current.focus()
-
     return (
         <>
             <div className={classes.inputContainer}>
@@ -29,7 +27,7 @@ const Input = ({endAdornment, error, errorMessage, label, ...props}: InputProps)
                     <div className="root">
                         <input ref={inputRef} {...props} />
                         <label>{label}</label>
-                        <fieldset onClick={setFocus} className="outline"></fieldset>
+                        <fieldset className="outline"></fieldset>
                         <div className="highlighter"></div>
                     </div>
                     {endAdornment}
@@ -91,7 +89,7 @@ const Input = ({endAdornment, error, errorMessage, label, ...props}: InputProps)
                 }
 
                 .outline {
-                    cursor: pointer;
+                    pointer-events: none;
                     position: absolute;
                     margin: 0;
                     left: 0;
