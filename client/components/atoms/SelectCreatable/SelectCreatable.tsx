@@ -1,5 +1,6 @@
 import React, {CSSProperties} from 'react'
 import CreatableSelect from 'react-select/creatable'
+import {Option} from 'react-select/src/filters'
 import {
     ActionMeta,
     ValueType,
@@ -10,7 +11,6 @@ import {
 } from 'react-select'
 
 import {colors} from 'styles'
-import {Option} from 'react-select/src/filters'
 
 export interface Props<OptionType> {
     options: GroupedOptionsType<OptionType> | OptionsType<OptionType>
@@ -50,6 +50,7 @@ const SelectCreatable = function<OptionType>({
 }: Props<OptionType>) {
     return (
         <CreatableSelect
+            controlShouldRenderValue={false}
             onChange={onChange}
             options={options}
             onCreateOption={onCreateOption}
