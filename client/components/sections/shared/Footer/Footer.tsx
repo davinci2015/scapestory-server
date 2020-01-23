@@ -3,14 +3,11 @@ import Link from 'next/link'
 
 import {colors, spaces, media} from 'styles'
 import {Paragraph, FormattedMessage, Icon} from 'components/atoms'
-import {ModalType} from 'providers/ModalProvider'
 import routes from 'routes'
 
-interface Props {
-    openModal: (type: ModalType) => void
-}
+interface Props {}
 
-const Footer = ({openModal}: Props) => (
+const Footer: React.FunctionComponent<Props> = () => (
     <>
         <div className="footer">
             <div className="top">
@@ -30,16 +27,6 @@ const Footer = ({openModal}: Props) => (
                                     </Paragraph>
                                 </a>
                             </Link>
-                        </li>
-                        <li>
-                            <a onClick={() => openModal('feedback')}>
-                                <Paragraph weight="bold">
-                                    <FormattedMessage
-                                        id="footer.feedback"
-                                        defaultMessage="Feedback"
-                                    />
-                                </Paragraph>
-                            </a>
                         </li>
                         <li>
                             <Link href={routes.privacyPolicy}>

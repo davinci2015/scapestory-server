@@ -1,6 +1,5 @@
 import React from 'react'
 
-import NavigationContainer from 'containers/NavigationContainer'
 import FooterContainer from 'containers/FooterContainer'
 import {Paragraph, FormattedMessage, Headline} from 'components/atoms'
 import {Content, Grid} from 'components/core'
@@ -8,7 +7,6 @@ import {spaces} from 'styles'
 
 const RegisterSuccess = () => (
     <>
-        <NavigationContainer />
         <Content>
             <Grid>
                 <div className="content">
@@ -24,13 +22,25 @@ const RegisterSuccess = () => (
                             defaultMessage="We've sent you an email. Open it up to activate your account."
                         />
                     </Paragraph>
+                    <div className="note">
+                        <Paragraph type="s1">
+                            <FormattedMessage
+                                id="register_success.description"
+                                defaultMessage="Note: Confirmation link expires in 3 hours."
+                            />
+                        </Paragraph>
+                    </div>
                 </div>
             </Grid>
         </Content>
         <FooterContainer />
         <style jsx>{`
             .content {
-                margin: ${spaces.s90} 0;
+                margin-bottom: ${spaces.s90};
+            }
+
+            .note {
+                margin-top: ${spaces.s30};
             }
         `}</style>
     </>

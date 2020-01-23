@@ -2,8 +2,8 @@ import slugify from 'slugify'
 
 export default {
     index: '/',
-    signUp: '/signup',
-    signUpEmail: '/signup/email',
+    registerSuccess: '/register/success',
+    registerValidate: '/register/validate/[token]',
     about: '/about',
     privacyPolicy: '/privacy',
     termsAndConditions: '/terms',

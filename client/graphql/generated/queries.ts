@@ -231,6 +231,7 @@ export type Mutation = {
    __typename?: 'Mutation',
   uploadUserImage: ImageUploadResult,
   updateUserDetails?: Maybe<Array<Maybe<User>>>,
+  confirmEmail?: Maybe<AuthPayload>,
   addEquipment: Equipment,
   removeEquipment?: Maybe<Equipment>,
   addLight: Light,
@@ -253,7 +254,7 @@ export type Mutation = {
   followUser?: Maybe<User>,
   unfollowUser?: Maybe<User>,
   login?: Maybe<AuthPayload>,
-  register?: Maybe<AuthPayload>,
+  register?: Maybe<User>,
   fbRegister?: Maybe<AuthPayload>,
   googleRegister?: Maybe<AuthPayload>,
   visitAquascape: VisitAquascapeResult,
@@ -268,6 +269,11 @@ export type MutationUploadUserImageArgs = {
 
 export type MutationUpdateUserDetailsArgs = {
   details: UserDetails
+};
+
+
+export type MutationConfirmEmailArgs = {
+  token: Scalars['String']
 };
 
 
@@ -532,7 +538,6 @@ export type Tank = {
 export type User = {
    __typename?: 'User',
   id: Scalars['Int'],
-  email: Scalars['String'],
   slug: Scalars['String'],
   name: Scalars['String'],
   about?: Maybe<Scalars['String']>,
@@ -847,7 +852,7 @@ export type User_ProfileQuery = (
   { __typename?: 'Query' }
   & { me: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'profileImage'>
+    & Pick<User, 'id' | 'slug' | 'name' | 'country' | 'profileImage'>
   )> }
 );
 
@@ -903,7 +908,7 @@ export type UserBySlugQuery = (
   { __typename?: 'Query' }
   & { user: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'email' | 'slug' | 'name' | 'country' | 'about' | 'profileImage' | 'profileImagePublicId' | 'coverImage' | 'coverImagePublicId' | 'facebookUrl' | 'youtubeUrl' | 'instagramUrl' | 'twitterUrl' | 'followersCount' | 'followingCount' | 'isFollowedByMe'>
+    & Pick<User, 'id' | 'slug' | 'name' | 'about' | 'profileImage' | 'profileImagePublicId' | 'coverImage' | 'coverImagePublicId' | 'facebookUrl' | 'youtubeUrl' | 'instagramUrl' | 'twitterUrl' | 'followersCount' | 'followingCount' | 'isFollowedByMe'>
     & { aquascapes: (
       { __typename?: 'AquascapesResult' }
       & Pick<AquascapesResult, 'count'>

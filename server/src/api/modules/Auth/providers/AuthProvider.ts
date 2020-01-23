@@ -13,6 +13,7 @@ import {tokens} from 'di/tokens'
 import {SocialLoginRepositoryInterface} from 'db/repositories/SocialLogin'
 import socialProviders from 'constants/socialProviders'
 import {EmailConfirmationRepositoryInterface} from 'db/repositories/EmailConfirmation'
+import {sendConfirmationMail} from 'services/mail/mail'
 
 export type AuthPayload = {
     token: string
@@ -72,11 +73,15 @@ export class AuthProvider implements AuthProviderInterface {
             throw new AuthenticationError('Unauthorized')
         }
 
-        return {token: AuthHelper.createJWTToken(user.id), user}
+        return {token: AuthHelper.createAuthToken(user.id), user}
     }
 
     async register(email: string, password: string) {
         if (await this.emailExists(email)) {
+            // TODO:
+            // Check if email exists and confirmation is expired
+            // If yes then user.destroy() and emailConfirmation.destroy()
+            // If no then return UserInputError
             throw new UserInputError('User with provided email already exists')
         }
 
@@ -89,8 +94,9 @@ export class AuthProvider implements AuthProviderInterface {
             password: AuthHelper.cryptPassword(password),
         })
 
-        this.emailConfirmationRepository.createConfirmationKey(user.id)
-        // Send email
+        const confirmation = await this.emailConfirmationRepository.createConfirmationKey(email)
+        const token = AuthHelper.createJWTToken({email, key: confirmation.code})
+        await sendConfirmationMail(email, token)
 
         return user
     }
@@ -175,7 +181,7 @@ export class AuthProvider implements AuthProviderInterface {
                 user = await this.userRepository.create(userToCreate)
             }
 
-            return {user, token: AuthHelper.createJWTToken(user.id)}
+            return {user, token: AuthHelper.createAuthToken(user.id)}
         } else {
             user = await this.userRepository.findUserByEmail(data.email)
 
@@ -189,7 +195,7 @@ export class AuthProvider implements AuthProviderInterface {
                 provider: data.provider,
             })
 
-            return {user, token: AuthHelper.createJWTToken(user.id)}
+            return {user, token: AuthHelper.createAuthToken(user.id)}
         }
     }
 }

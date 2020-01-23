@@ -18,6 +18,9 @@ interface EnvironmentVariables {
     CLOUDINARY_CLOUD_NAME: string
     CLOUDINARY_API_KEY: string
     CLOUDINARY_API_SECRET: string
+    EMAIL_SENDER: string
+    HOST: string
+    SENDGRID_API_KEY: string
 }
 
 const environment = {
@@ -35,6 +38,9 @@ const environment = {
     CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
+    EMAIL_SENDER: process.env.EMAIL_SENDER,
+    HOST: process.env.HOST,
+    SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
 } as EnvironmentVariables
 
 const checkVariables = (variables: EnvironmentVariables) => {

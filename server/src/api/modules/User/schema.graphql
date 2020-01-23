@@ -52,5 +52,5 @@ type Query {
 type Mutation {
     uploadUserImage(file: Upload!, imageVariant: ImageVariant!): ImageUploadResult!
     updateUserDetails(details: UserDetails!): [User]
-    confirmEmail(userId: Int!, key: String!): AuthPayload
+    confirmEmail(token: String!): AuthPayload
 }

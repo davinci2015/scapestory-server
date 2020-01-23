@@ -1,6 +1,7 @@
 import * as moment from 'moment'
 import {compareSync, hashSync} from 'bcrypt'
 import {encode, decode} from 'jwt-simple'
+import environment from 'config/environment'
 
 export interface JWTTokenPayload {
     userId: number
@@ -16,12 +17,16 @@ export class AuthHelper {
         return hashSync(rawPassword, rounds)
     }
 
-    static createJWTToken(userId: number): string {
-        const payload = {userId, iat: moment().unix()}
-        return encode(payload, process.env.SECURITY_TOKEN_SECRET || '')
+    static createJWTToken(payload: {[key: string]: string | number}): string {
+        const load = {...payload, iat: moment().unix()}
+        return encode(load, environment.SECURITY_TOKEN_SECRET)
+    }
+
+    static createAuthToken(userId: number) {
+        return AuthHelper.createJWTToken({userId})
     }
 
     static decodeJWTToken(token: string): JWTTokenPayload | null {
-        return decode(token, process.env.SECURITY_TOKEN_SECRET || '')
+        return decode(token, environment.SECURITY_TOKEN_SECRET)
     }
 }

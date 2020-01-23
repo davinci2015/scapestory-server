@@ -29,6 +29,7 @@ import {
     AquascapeLivestock,
     AquascapePlant,
     AquascapeSubstrate,
+    EmailConfirmation,
 } from 'db/models'
 import {Brand} from 'db/models/Brand'
 
@@ -80,6 +81,7 @@ export class SequelizeAdapter implements DatabaseAdapter {
                 AquascapeLivestock,
                 AquascapePlant,
                 AquascapeSubstrate,
+                EmailConfirmation,
             ],
         })
     }

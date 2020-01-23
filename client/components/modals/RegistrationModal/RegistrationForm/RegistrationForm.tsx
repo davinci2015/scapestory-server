@@ -1,16 +1,16 @@
 import React, {useState} from 'react'
 import {useIntl, MessageDescriptor} from 'react-intl'
 import {useMutation} from '@apollo/react-hooks'
+import {useRouter} from 'next/router'
 import Link from 'next/link'
+
 import {Paragraph, Button, Input, PasswordInput, FormattedMessage, Checkbox} from 'components/atoms'
-import {
-    RegisterResult,
-    RegisterVariables,
-    SIGN_UP_MUTATION,
-} from 'components/modals/RegistrationModal/RegistrationForm/mutations'
+import {SIGN_UP_MUTATION} from 'components/modals/RegistrationModal/RegistrationForm/mutations'
 import validator from 'services/validator'
 import {spaces} from 'styles'
 import routes from 'routes'
+import {MutationRegisterArgs} from 'graphql/generated/queries'
+import {User} from 'graphql/generated/types'
 
 const inputKeys = {
     email: 'email',
@@ -18,12 +18,13 @@ const inputKeys = {
 }
 
 const PASSWORD_MIN_LENGTH = 6
-interface Props {
-    onSuccess: (token: string) => void
-}
 
-const RegistrationForm = ({onSuccess}: Props) => {
+interface Props {}
+
+const RegistrationForm: React.FunctionComponent<Props> = () => {
     const intl = useIntl()
+    const router = useRouter()
+
     const [termsAccepted, setTermsAccepted] = useState(false)
 
     const [errors, setError] = useState({
@@ -46,12 +47,12 @@ const RegistrationForm = ({onSuccess}: Props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const [register] = useMutation<RegisterResult, RegisterVariables>(SIGN_UP_MUTATION)
+    const [register] = useMutation<User | null, MutationRegisterArgs>(SIGN_UP_MUTATION)
 
     const onSubmit = async () => {
         const {data} = await register({variables: {email, password}})
         if (data) {
-            onSuccess(data.register.token)
+            router.push(routes.registerSuccess)
         }
     }
 

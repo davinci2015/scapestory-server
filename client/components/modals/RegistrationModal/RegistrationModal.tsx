@@ -23,7 +23,7 @@ const RegistrationModal = () => {
     return (
         <AuthModal
             onSuccess={handleSuccess}
-            form={<RegistrationForm onSuccess={handleSuccess} />}
+            form={<RegistrationForm />}
             title={
                 <FormattedMessage
                     id="registration_title"

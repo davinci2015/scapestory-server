@@ -17,7 +17,7 @@ export interface UsersProviderInterface {
     uploadProfileImage: (userId: number, file: Promise<FileUpload>) => Promise<ImageUploadResult>
     uploadCoverImage: (userId: number, file: Promise<FileUpload>) => Promise<ImageUploadResult>
     updateUserDetails: (userId: number, userDetails: UserDetails) => Promise<[number, User[]]>
-    confirmEmail: (userId: number, key: string) => Promise<boolean>
+    confirmEmail: (email: string, key: string) => Promise<boolean>
 }
 
 @Injectable({scope: ProviderScope.Session})
@@ -45,11 +45,11 @@ export class UsersProvider implements UsersProviderInterface {
         return this.userRepository.updateUserDetails(userId, userDetails)
     }
 
-    async confirmEmail(userId: number, key: string) {
-        const confirmed = await this.emailConfirmationRepository.confirmEmail(userId, key)
+    async confirmEmail(email: string, key: string) {
+        const confirmed = await this.emailConfirmationRepository.confirmEmail(email, key)
 
         if (confirmed) {
-            await this.userRepository.update({emailConfirmed: true}, {where: {id: userId}})
+            await this.userRepository.update({emailConfirmed: true}, {where: {email}})
         }
 
         return confirmed

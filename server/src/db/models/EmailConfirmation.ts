@@ -3,10 +3,10 @@ import {Table, Column, Model} from 'sequelize-typescript'
 @Table
 export class EmailConfirmation extends Model<EmailConfirmation> {
     @Column
-    userId: number
+    email: string
 
     @Column
-    confirmationKey: boolean
+    code: string
 
     @Column
     expiresAt: Date
