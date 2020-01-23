@@ -21,7 +21,7 @@ const NavigationContainer = () => {
 
     const onCreateAquascape = () => {
         if (!isAuthenticated) {
-            openLoginModal()
+            openRegisterModal()
             return
         }
 
