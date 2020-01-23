@@ -16,6 +16,7 @@ import {AquascapeDetailsQuery} from 'graphql/generated/queries'
 import {getUserName} from 'utils/mappers'
 import {ProfileLink} from 'components/core'
 import {UserWidgetSize, UserWidgetVariant} from 'components/molecules/UserWidget/UserWidget'
+import config from 'config'
 
 interface Props {
     mineAquascape: boolean
@@ -38,7 +39,7 @@ const HeroSection: React.FunctionComponent<Props> = ({
         <>
             <Hero
                 variant="cover"
-                title={aquascape.title}
+                title={aquascape.title || config.AQUASCAPE_TITLE_PLACEHOLDER}
                 image={aquascape.mainImageUrl}
                 topSection={
                     <Hero.TopSection>
