@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 
 import {FacebookLogin, GoogleLogin} from 'components/molecules'
-import {Headline, Paragraph, FormattedMessage, Bubble, Button, Icon} from 'components/atoms'
+import {Headline, Paragraph, Bubble, Button, Icon} from 'components/atoms'
 import {FacebookProps} from 'components/molecules/FacebookLogin'
 import {GoogleProps} from 'components/molecules/GoogleLogin'
 import {colors, spaces, media} from 'styles'
@@ -40,60 +40,50 @@ const AuthModal = ({footer, form, onSuccess, socialText, subtitle, title}: Props
                             {subtitle}
                         </Paragraph>
                     </div>
-                    <div className="form">{form}</div>
-                    <div className="social">
-                        <div className="social-text">
-                            <Paragraph as="span" color={colors.DARK_GRAY}>
-                                <FormattedMessage
-                                    id="login_social_login_continue"
-                                    defaultMessage="Or continue with"
-                                />
-                            </Paragraph>
-                        </div>
-                        <div className="social-buttons">
-                            <GoogleLogin onSuccess={onSuccess}>
-                                {(props: GoogleProps) => (
-                                    <Button
-                                        type="block"
-                                        leftIcon={
-                                            <img
-                                                src="/static/icons/icon-google.png"
-                                                alt="Google Login"
-                                            />
-                                        }
-                                        color="secondary"
-                                        onClick={props.onClick}
-                                    >
-                                        <Paragraph weight="bold" as="span">
-                                            Google
-                                        </Paragraph>
-                                    </Button>
-                                )}
-                            </GoogleLogin>
-                            <FacebookLogin onSuccess={onSuccess}>
-                                {(props: FacebookProps) => (
-                                    <Button
-                                        type="block"
-                                        leftIcon={
-                                            <img
-                                                src="/static/icons/icon-facebook.png"
-                                                alt="Facebook Login"
-                                            />
-                                        }
-                                        color="secondary"
-                                        onClick={props.onClick}
-                                    >
-                                        <Paragraph weight="bold" as="span">
-                                            Facebook
-                                        </Paragraph>
-                                    </Button>
-                                )}
-                            </FacebookLogin>
-                        </div>
-                        {socialText && (
-                            <div className="social-text social-text--small">{socialText}</div>
-                        )}
+                    <div className="social-buttons">
+                        <GoogleLogin onSuccess={onSuccess}>
+                            {(props: GoogleProps) => (
+                                <Button
+                                    type="block"
+                                    leftIcon={
+                                        <img
+                                            src="/static/icons/icon-google.png"
+                                            alt="Google Login"
+                                        />
+                                    }
+                                    color="secondary"
+                                    onClick={props.onClick}
+                                >
+                                    <Paragraph weight="bold" as="span">
+                                        Google
+                                    </Paragraph>
+                                </Button>
+                            )}
+                        </GoogleLogin>
+                        <FacebookLogin onSuccess={onSuccess}>
+                            {(props: FacebookProps) => (
+                                <Button
+                                    type="block"
+                                    leftIcon={
+                                        <img
+                                            src="/static/icons/icon-facebook.png"
+                                            alt="Facebook Login"
+                                        />
+                                    }
+                                    color="secondary"
+                                    onClick={props.onClick}
+                                >
+                                    <Paragraph weight="bold" as="span">
+                                        Facebook
+                                    </Paragraph>
+                                </Button>
+                            )}
+                        </FacebookLogin>
                     </div>
+                    {socialText && (
+                        <div className="social-text social-text--small">{socialText}</div>
+                    )}
+                    <div className="form">{form}</div>
                 </div>
                 <div className="footer">
                     <Paragraph as="span" color={colors.SHADE_DEEP}>
@@ -111,6 +101,7 @@ const AuthModal = ({footer, form, onSuccess, socialText, subtitle, title}: Props
                 }
 
                 .body {
+                    height: 100%;
                     padding: ${spaces.s36} ${spaces.s12} 0 ${spaces.s12};
                     position: relative;
                     overflow-x: hidden;
@@ -136,7 +127,7 @@ const AuthModal = ({footer, form, onSuccess, socialText, subtitle, title}: Props
                 }
 
                 .form {
-                    margin-bottom: ${spaces.s24};
+                    margin-bottom: ${spaces.s42};
                 }
 
                 .close-button {
@@ -169,7 +160,7 @@ const AuthModal = ({footer, form, onSuccess, socialText, subtitle, title}: Props
                 }
 
                 .social-text--small {
-                    margin: ${spaces.s12} 0;
+                    margin: ${spaces.s12} 0 ${spaces.s42} 0;
                 }
 
                 .social-buttons {

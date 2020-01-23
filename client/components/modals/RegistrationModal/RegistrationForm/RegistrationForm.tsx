@@ -1,18 +1,19 @@
 import React, {useState} from 'react'
-import {useIntl, MessageDescriptor} from 'react-intl'
+import {useIntl, MessageDescriptor, FormattedMessage} from 'react-intl'
 import {useMutation} from '@apollo/react-hooks'
 import {useRouter} from 'next/router'
-import Link from 'next/link'
 
-import {Paragraph, Button, Input, PasswordInput, FormattedMessage, Checkbox} from 'components/atoms'
+import {Paragraph, Button, Input, PasswordInput, Checkbox} from 'components/atoms'
 import {SIGN_UP_MUTATION} from 'components/modals/RegistrationModal/RegistrationForm/mutations'
 import validator from 'services/validator'
 import {spaces} from 'styles'
 import routes from 'routes'
 import {MutationRegisterArgs} from 'graphql/generated/queries'
 import {User} from 'graphql/generated/types'
+import {renderInnerLink} from '../RegistrationModal'
 
 const inputKeys = {
+    name: 'name',
     email: 'email',
     password: 'password',
 }
@@ -45,12 +46,13 @@ const RegistrationForm: React.FunctionComponent<Props> = () => {
     })
 
     const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
     const [password, setPassword] = useState('')
 
     const [register] = useMutation<User | null, MutationRegisterArgs>(SIGN_UP_MUTATION)
 
     const onSubmit = async () => {
-        const {data} = await register({variables: {email, password}})
+        const {data} = await register({variables: {email, password, name}})
         if (data) {
             router.push(routes.registerSuccess)
         }
@@ -63,7 +65,7 @@ const RegistrationForm: React.FunctionComponent<Props> = () => {
             setErrorMessage({
                 ...errorMessages,
                 [inputKeys.email]: {
-                    id: 'general_error_empty_email',
+                    id: 'general_error.empty_email',
                     defaultMessage: 'Please enter your email',
                 },
             })
@@ -75,7 +77,7 @@ const RegistrationForm: React.FunctionComponent<Props> = () => {
             setErrorMessage({
                 ...errorMessages,
                 [inputKeys.email]: {
-                    id: 'general_error_invalid_email',
+                    id: 'general_error.invalid_email',
                     defaultMessage: 'Please enter valid email',
                 },
             })
@@ -93,7 +95,7 @@ const RegistrationForm: React.FunctionComponent<Props> = () => {
             setErrorMessage({
                 ...errorMessages,
                 [inputKeys.password]: {
-                    id: 'general_error_empty_password',
+                    id: 'general_error.empty_password',
                     defaultMessage: 'Please enter your password',
                 },
             })
@@ -104,7 +106,7 @@ const RegistrationForm: React.FunctionComponent<Props> = () => {
             setErrorMessage({
                 ...errorMessages,
                 [inputKeys.password]: {
-                    id: 'general_error_password_length',
+                    id: 'general_error.password_length',
                     defaultMessage: 'Your password must be at least 6 characters',
                 },
             })
@@ -114,23 +116,59 @@ const RegistrationForm: React.FunctionComponent<Props> = () => {
         setError({...errors, [inputKeys.password]: false})
     }
 
+    const validateName = (name: string) => {
+        setDirty({...dirty, [inputKeys.name]: true})
+
+        if (validator.isEmpty(name)) {
+            setErrorMessage({
+                ...errorMessages,
+                [inputKeys.name]: {
+                    id: 'general_error.empty_name',
+                    defaultMessage: 'Please enter your name',
+                },
+            })
+            return setError({...errors, [inputKeys.name]: true})
+        }
+
+        setError({...errors, [inputKeys.name]: false})
+    }
+
     const getErrorMessage = (inputKey: string) => {
         const message = errorMessages[inputKey]
         return message ? <FormattedMessage {...message} /> : null
     }
 
+    const nameLabel = intl.formatMessage({
+        id: 'registration.input_label_name',
+        defaultMessage: 'Your name',
+    })
+
     const emailLabel = intl.formatMessage({
-        id: 'registration_input_label_email',
+        id: 'registration.input_label_email',
         defaultMessage: 'Email',
     })
+
     const passwordLabel = intl.formatMessage({
-        id: 'registration_input_label_password',
+        id: 'registration.input_label_password',
         defaultMessage: 'Password',
     })
 
     return (
         <>
             <form className="form">
+                <Input
+                    id={inputKeys.name}
+                    placeholder={nameLabel}
+                    label={nameLabel}
+                    value={name}
+                    error={dirty[inputKeys.name] && errors[inputKeys.name]}
+                    errorMessage={getErrorMessage(inputKeys.name)}
+                    onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        validateName(e.target.value)
+                    }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                />
+
                 <Input
                     id={inputKeys.email}
                     placeholder={emailLabel}
@@ -160,24 +198,14 @@ const RegistrationForm: React.FunctionComponent<Props> = () => {
                 />
 
                 <Checkbox id="terms" onChange={setTermsAccepted}>
-                    <FormattedMessage id="registration_terms_i_accept" defaultMessage="I accept" />{' '}
-                    <Link href={routes.termsAndConditions}>
-                        <a>
-                            <FormattedMessage
-                                id="registration_terms_text"
-                                defaultMessage="Terms & Conditions"
-                            />
-                        </a>
-                    </Link>{' '}
-                    <FormattedMessage id="registration_terms_and" defaultMessage="and" />{' '}
-                    <Link href={routes.privacyPolicy}>
-                        <a>
-                            <FormattedMessage
-                                id="registration_privacy_text"
-                                defaultMessage="Privacy Policy"
-                            />
-                        </a>
-                    </Link>
+                    <FormattedMessage
+                        id="registration.terms_i_accept"
+                        defaultMessage="I accept <terms>Terms & Conditions</terms> and <privacy>Privacy Policy</privacy>"
+                        values={{
+                            terms: renderInnerLink(routes.termsAndConditions),
+                            privacy: renderInnerLink(routes.privacyPolicy),
+                        }}
+                    />
                 </Checkbox>
 
                 <div className="submit-button">
@@ -190,7 +218,7 @@ const RegistrationForm: React.FunctionComponent<Props> = () => {
                     >
                         <Paragraph as="span" weight="bold" color="light">
                             <FormattedMessage
-                                id="registration_submit_button"
+                                id="registration.submit_button"
                                 defaultMessage="Create Account"
                             />
                         </Paragraph>

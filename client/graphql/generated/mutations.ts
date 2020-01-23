@@ -408,7 +408,8 @@ export type MutationLoginArgs = {
 
 export type MutationRegisterArgs = {
   email: Scalars['String'],
-  password: Scalars['String']
+  password: Scalars['String'],
+  name: Scalars['String']
 };
 
 

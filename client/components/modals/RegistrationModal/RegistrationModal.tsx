@@ -1,12 +1,21 @@
 import React, {useContext} from 'react'
+import {FormattedMessage} from 'react-intl'
 
-import {Paragraph, FormattedMessage} from 'components/atoms'
+import {Paragraph} from 'components/atoms'
 import {RegistrationForm, AuthModal} from 'components/modals'
 
 import {colors} from 'styles'
 import {ModalContext} from 'providers/ModalProvider'
 import cookie from 'services/cookie'
 import {AuthContext} from 'providers/AuthenticationProvider'
+import Link from 'next/link'
+import routes from 'routes'
+
+export const renderInnerLink = (href: string) => (text: string) => (
+    <Link href={href}>
+        <a>{text}</a>
+    </Link>
+)
 
 const RegistrationModal = () => {
     const {refreshAuthentication} = useContext(AuthContext)
@@ -40,7 +49,11 @@ const RegistrationModal = () => {
                 <Paragraph as="span" type="s1" color={colors.DARK_GRAY}>
                     <FormattedMessage
                         id="registration_social_login_agreement"
-                        defaultMessage="By continuing with Google or Facebook you automatically accept Terms & Conditions and Privacy Policy"
+                        defaultMessage="By continuing with Google or Facebook you automatically accept <terms>Terms & Conditions</terms> and <privacy>Privacy Policy</privacy>"
+                        values={{
+                            terms: renderInnerLink(routes.termsAndConditions),
+                            privacy: renderInnerLink(routes.privacyPolicy),
+                        }}
                     />
                 </Paragraph>
             }

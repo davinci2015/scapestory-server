@@ -22,7 +22,7 @@ export type AuthPayload = {
 
 export interface AuthProviderInterface {
     login: (email: string, password: string) => Promise<AuthPayload>
-    register: (email: string, password: string) => Promise<User>
+    register: (email: string, password: string, name: string) => Promise<User>
     facebookRegister: (
         token: string,
         req: Request,
@@ -76,7 +76,7 @@ export class AuthProvider implements AuthProviderInterface {
         return {token: AuthHelper.createAuthToken(user.id), user}
     }
 
-    async register(email: string, password: string) {
+    async register(email: string, password: string, name: string) {
         if (await this.emailExists(email)) {
             const zombieUser = await this.userRepository.findUserByEmail(email)
             const expired = await this.emailConfirmationRepository.confirmationExpired(email)
@@ -93,12 +93,10 @@ export class AuthProvider implements AuthProviderInterface {
             }
         }
 
-        const slug = await this.generateUniqueSlug()
-
         const user = await this.userRepository.create({
-            name: slug,
+            name,
             email,
-            slug,
+            slug: await this.generateUniqueSlug(),
             password: AuthHelper.cryptPassword(password),
         })
 
