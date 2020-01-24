@@ -64,6 +64,7 @@ type Aquascape {
 input Pagination {
     limit: Int
     cursor: String
+    offset: Int
 }
 
 input AquascapesFilter {

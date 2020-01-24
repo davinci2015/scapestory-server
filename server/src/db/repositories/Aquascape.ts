@@ -51,8 +51,12 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
         include?: Includeable[]
     ) {
         const where: WhereOptions = {}
-        const defaultOrder: Order = [['createdAt', 'DESC']]
         const randomOrder: Order = literal('random()')
+        const offset = pagination.offset || 0
+        const defaultOrder: Order = [
+            ['createdAt', 'DESC'],
+            ['id', 'DESC'],
+        ]
 
         if (userId) {
             where.userId = userId
@@ -71,6 +75,7 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
             include,
             order: random ? randomOrder : defaultOrder,
             limit: pagination.limit,
+            offset,
         })
 
         return {rows, count}

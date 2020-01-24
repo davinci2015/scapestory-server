@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
 import numeral from 'numeral'
 import Truncate from 'react-truncate'
+import classnames from 'classnames'
 
 import {Headline, Tag, IconText, Icon, Paragraph} from 'components/atoms'
 import {colors, spaces, borderRadius, media} from 'styles'
@@ -11,6 +12,8 @@ import config from 'config'
 import {AquascapeFieldsFragment} from 'graphql/generated/queries'
 import {AuthContext} from 'providers/AuthenticationProvider'
 import routes, {createDynamicPath, getAquascapeDetailsSlug} from 'routes'
+import {Transition} from 'react-transition-group'
+import {TransitionStatus} from 'react-transition-group/Transition'
 
 interface Props {
     id: number
@@ -49,71 +52,80 @@ const AquascapeCard = ({
 
     return (
         <>
-            <div className={classes.root}>
-                <AquascapeDetailsLink href={href} as={as}>
-                    <div className="header">
-                        <img
-                            className="header-image"
-                            src={image || config.AQUASCAPE_MAIN_IMAGE_PLACEHOLDER}
-                            alt="Aquascape"
-                        />
-                        <div className="header-gradient"></div>
-                        <div className="icons">
-                            <IconText
-                                icon={Icon.EYE_SHOW_FULL}
-                                text={numeral(viewsCount).format('0a')}
-                                color={colors.WHITE}
-                                size="small"
-                            />
-                            <IconText
-                                icon={Icon.HEART}
-                                text={numeral(likesCount).format('0a')}
-                                color={colors.WHITE}
-                                size="small"
-                            />
+            <Transition in timeout={400} appear>
+                {(state: TransitionStatus) => (
+                    <div className={classnames(classes.root, state)}>
+                        <AquascapeDetailsLink href={href} as={as}>
+                            <div className="header">
+                                <img
+                                    className="header-image"
+                                    src={image || config.AQUASCAPE_MAIN_IMAGE_PLACEHOLDER}
+                                    alt="Aquascape"
+                                />
+                                <div className="header-gradient"></div>
+                                <div className="icons">
+                                    <IconText
+                                        icon={Icon.EYE_SHOW_FULL}
+                                        text={numeral(viewsCount).format('0a')}
+                                        color={colors.WHITE}
+                                        size="small"
+                                    />
+                                    <IconText
+                                        icon={Icon.HEART}
+                                        text={numeral(likesCount).format('0a')}
+                                        color={colors.WHITE}
+                                        size="small"
+                                    />
+                                </div>
+                            </div>
+                        </AquascapeDetailsLink>
+                        <div className="body">
+                            <div className="headline">
+                                <Headline as="h2" variant="h5">
+                                    <Truncate trimWhitespace>
+                                        {title || config.AQUASCAPE_TITLE_PLACEHOLDER}
+                                    </Truncate>
+                                </Headline>
+                            </div>
+                            <div className="footer">
+                                <ProfileLink slug={user?.slug || ''}>
+                                    <UserWidget
+                                        image={user?.profileImage}
+                                        text={
+                                            <Paragraph type="t1" color={colors.SHADE_DEEP}>
+                                                {user?.name}
+                                            </Paragraph>
+                                        }
+                                    />
+                                </ProfileLink>
+                                <div className="tags">
+                                    {tags.map((tag, index) => (
+                                        <Tag key={index} text={tag.name} variant="primary" />
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </AquascapeDetailsLink>
-                <div className="body">
-                    <div className="headline">
-                        <Headline as="h2" variant="h5">
-                            <Truncate trimWhitespace>
-                                {title || config.AQUASCAPE_TITLE_PLACEHOLDER}
-                            </Truncate>
-                        </Headline>
-                    </div>
-                    <div className="footer">
-                        <ProfileLink slug={user?.slug || ''}>
-                            <UserWidget
-                                image={user?.profileImage}
-                                text={
-                                    <Paragraph type="t1" color={colors.SHADE_DEEP}>
-                                        {user?.name}
-                                    </Paragraph>
-                                }
-                            />
-                        </ProfileLink>
-                        <div className="tags">
-                            {tags.map((tag, index) => (
-                                <Tag key={index} text={tag.name} variant="primary" />
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
+                )}
+            </Transition>
 
             <style jsx>{`
                 .aquascape-card {
                     position: relative;
                     background-color: ${colors.WHITE};
                     width: 100%;
+                    opacity: 0;
 
                     border: 1px solid ${colors.SHADE_EXTRA_LIGHT};
                     border-radius: ${borderRadius.TERTIARY};
 
                     box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.04);
                     text-decoration: none;
-                    transition: box-shadow 200ms ease-in;
+                    transition: box-shadow 200ms ease-in, opacity 400ms ease-in-out;
+                }
+
+                .aquascape-card.entered {
+                    opacity: 1;
                 }
 
                 .aquascape-card:hover {

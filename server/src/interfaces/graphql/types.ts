@@ -433,6 +433,7 @@ export type MutationVisitAquascapeArgs = {
 export type Pagination = {
   limit?: Maybe<Scalars['Int']>,
   cursor?: Maybe<Scalars['String']>,
+  offset?: Maybe<Scalars['Int']>,
 };
 
 export type Plant = {

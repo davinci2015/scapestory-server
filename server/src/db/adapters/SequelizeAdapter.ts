@@ -52,7 +52,7 @@ export class SequelizeAdapter implements DatabaseAdapter {
             username: params.username,
             password: params.password,
             dialect: 'postgres',
-            logging: false,
+            // Logging: false,
             models: [
                 Additive,
                 Aquascape,
