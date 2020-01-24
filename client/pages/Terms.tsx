@@ -9,6 +9,7 @@ import ModalProvider from 'providers/ModalProvider'
 import NavigationContainer from 'containers/NavigationContainer'
 import ArrowBackIcon from 'assets/icons/arrow-left.svg'
 import routes from 'routes'
+import withAuth from 'hocs/withAuth'
 
 const Terms = () => {
     const router = useRouter()
@@ -152,4 +153,4 @@ const Terms = () => {
     )
 }
 
-export default Terms
+export default withAuth(Terms)

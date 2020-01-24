@@ -9,6 +9,7 @@ import ModalProvider from 'providers/ModalProvider'
 import NavigationContainer from 'containers/NavigationContainer'
 import ArrowBackIcon from 'assets/icons/arrow-left.svg'
 import routes from 'routes'
+import withAuth from 'hocs/withAuth'
 
 const PrivacyPolicy = () => {
     const router = useRouter()
@@ -151,4 +152,4 @@ const PrivacyPolicy = () => {
     )
 }
 
-export default PrivacyPolicy
+export default withAuth(PrivacyPolicy)
