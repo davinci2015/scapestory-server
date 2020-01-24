@@ -11,6 +11,7 @@ import {
     LoginResult,
     LoginVariables,
 } from 'components/modals/LoginModal/LoginForm/mutations'
+import logger from 'services/logger'
 
 const inputKeys = {
     email: 'email',
@@ -46,8 +47,12 @@ const LoginForm = ({onSuccess}: Props) => {
     const [password, setPassword] = useState('')
 
     const onSubmit = async () => {
-        const {data} = await login({variables: {email, password}})
-        if (data) onSuccess(data.login.token)
+        try {
+            const {data} = await login({variables: {email, password}})
+            if (data) onSuccess(data.login.token)
+        } catch (e) {
+            logger.error(e)
+        }
     }
 
     const validateEmail = (email: string) => {

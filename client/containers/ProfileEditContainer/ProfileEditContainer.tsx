@@ -5,7 +5,7 @@ import {useQuery, useMutation} from 'react-apollo'
 import {UserBySlugQuery, UserBySlugQueryVariables, ImageVariant} from 'graphql/generated/queries'
 import {Content, Grid} from 'components/core'
 import {AquascapeCardList} from 'components/sections/shared'
-import {Headline, FormattedMessage} from 'components/atoms'
+import {Headline, FormattedMessage, ToastMessage} from 'components/atoms'
 import {renderAquascapeCards} from 'utils/render'
 import {GridWidth} from 'components/core/Grid'
 import {USER_BY_SLUG} from 'graphql/queries'
@@ -22,6 +22,8 @@ import {User} from 'graphql/generated/types'
 import CoverSectionEditContainer from './CoverSectionEditContainer'
 import UserSectionEditContainer from './UserSectionEditContainer'
 import {UPDATE_USER_DETAILS} from './mutations'
+import logger from 'services/logger'
+import {toast} from 'react-toastify'
 
 const ProfileContainer = () => {
     const router = useRouter()
@@ -52,6 +54,19 @@ const ProfileContainer = () => {
             [ImageVariant.Profile]: ProfileActions.UPLOAD_PROFILE_IMAGE,
         }
 
+        toast.info(
+            <ToastMessage>
+                <FormattedMessage
+                    id="user_profile.upload_image_loading"
+                    defaultMessage="Uploading image, please wait..."
+                />
+            </ToastMessage>,
+            {
+                hideProgressBar: true,
+                autoClose: 2000,
+            }
+        )
+
         uploadUserImage({
             variables: {
                 file: files[0],
@@ -70,7 +85,9 @@ const ProfileContainer = () => {
             redirectToProfile()
         }
 
-        updateUserDetailsMutation({variables: {details: userDetails}}).finally(redirectToProfile)
+        updateUserDetailsMutation({variables: {details: userDetails}})
+            .catch(logger.error)
+            .finally(redirectToProfile)
     }
 
     const updateField = (key: string, value: string) => {

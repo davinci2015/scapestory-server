@@ -14,6 +14,7 @@ import {SocialLoginRepositoryInterface} from 'db/repositories/SocialLogin'
 import socialProviders from 'constants/socialProviders'
 import {EmailConfirmationRepositoryInterface} from 'db/repositories/EmailConfirmation'
 import {sendConfirmationMail} from 'services/mail/mail'
+import errors from 'constants/errors'
 
 export type AuthPayload = {
     token: string
@@ -66,11 +67,11 @@ export class AuthProvider implements AuthProviderInterface {
         })
 
         if (!user) {
-            throw new AuthenticationError('Unauthorized')
+            throw new AuthenticationError(errors.INVALID_CREDENTIALS)
         }
 
         if (!AuthHelper.checkPassword(password, user.password)) {
-            throw new AuthenticationError('Unauthorized')
+            throw new AuthenticationError(errors.INVALID_CREDENTIALS)
         }
 
         return {token: AuthHelper.createAuthToken(user.id), user}
@@ -89,7 +90,7 @@ export class AuthProvider implements AuthProviderInterface {
                     this.emailConfirmationRepository.destroy({where: {email}}),
                 ])
             } else {
-                throw new UserInputError('User with provided email already exists')
+                throw new UserInputError(errors.EMAIL_ALREADY_EXISTS)
             }
         }
 

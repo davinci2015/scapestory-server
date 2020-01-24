@@ -2,6 +2,7 @@ import React from 'react'
 import {useMutation} from 'react-apollo'
 import debounce from 'lodash.debounce'
 import {useRouter} from 'next/router'
+import {toast} from 'react-toastify'
 
 import {AquascapeDetailsQuery} from 'graphql/generated/queries'
 import {HeroSectionEdit} from 'components/sections/AquascapeDetails'
@@ -18,6 +19,7 @@ import {
     AquascapeDetailsActions,
 } from 'containers/AquascapeDetailsContainer/cache'
 import config from 'config'
+import {ToastMessage, FormattedMessage} from 'components/atoms'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -68,6 +70,19 @@ const HeroSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
         // TODO: Validate file extension
         // TODO: Validate file size
         if (!files || !files.length) return
+
+        toast.info(
+            <ToastMessage>
+                <FormattedMessage
+                    id="user_profile.upload_image_loading"
+                    defaultMessage="Uploading image, please wait..."
+                />
+            </ToastMessage>,
+            {
+                hideProgressBar: true,
+                autoClose: 2000,
+            }
+        )
 
         updateMainImage({variables: {aquascapeId: aquascape.id, file: files[0]}})
     }

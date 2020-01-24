@@ -30,7 +30,7 @@ const CustomModal = ({children, ...rest}: Props) => {
                     overflow: auto;
                     outline: none;
                     background-color: ${colors.WHITE};
-                    z-index: ${zIndex.HIGHEST};
+                    z-index: ${zIndex.HIGH};
                 }
 
                 @media ${media.up('small')} {
@@ -55,7 +55,7 @@ const CustomModal = ({children, ...rest}: Props) => {
                     right: 0px;
                     bottom: 0px;
                     background-color: rgba(0, 0, 0, 0.7);
-                    z-index: ${zIndex.HIGHEST};
+                    z-index: ${zIndex.HIGH};
                 }
             `}</style>
         </>

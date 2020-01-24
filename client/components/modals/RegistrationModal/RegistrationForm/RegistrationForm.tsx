@@ -11,6 +11,7 @@ import routes from 'routes'
 import {MutationRegisterArgs} from 'graphql/generated/queries'
 import {User} from 'graphql/generated/types'
 import {renderInnerLink} from '../RegistrationModal'
+import logger from 'services/logger'
 
 const inputKeys = {
     name: 'name',
@@ -52,9 +53,11 @@ const RegistrationForm: React.FunctionComponent<Props> = () => {
     const [register] = useMutation<User | null, MutationRegisterArgs>(SIGN_UP_MUTATION)
 
     const onSubmit = async () => {
-        const {data} = await register({variables: {email, password, name}})
-        if (data) {
-            router.push(routes.registerSuccess)
+        try {
+            const {data} = await register({variables: {email, password, name}})
+            if (data) router.push(routes.registerSuccess)
+        } catch (e) {
+            logger.error(e)
         }
     }
 

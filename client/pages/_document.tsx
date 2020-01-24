@@ -20,6 +20,7 @@ class MyDocument extends Document {
                         href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,600,800,900&display=swap&subset=latin-ext"
                         rel="stylesheet"
                     />
+                    <link href="/static/ReactToastify.min.css" rel="stylesheet" />
                     {flush()}
                 </Head>
                 <body>

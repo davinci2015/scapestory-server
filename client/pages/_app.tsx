@@ -3,7 +3,7 @@ import {ApolloClient, NormalizedCacheObject} from 'apollo-boost'
 import App from 'next/app'
 import {ApolloProvider} from 'react-apollo'
 import {IntlProvider} from 'react-intl'
-
+import {ToastContainer} from 'react-toastify'
 import {GlobalStyles} from 'components/core'
 import withApollo from 'lib/withApollo'
 
@@ -20,6 +20,7 @@ class MyApp extends App<Props> {
                 <GlobalStyles />
                 <ApolloProvider client={apollo}>
                     <Component {...pageProps} />
+                    <ToastContainer position="bottom-right" />
                 </ApolloProvider>
             </IntlProvider>
         )

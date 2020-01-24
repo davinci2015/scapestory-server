@@ -39,7 +39,7 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
 
     if (!aquascapeId || !user) return null
 
-    const {data: aquascapeResult, error, loading} = useQuery<
+    const {data: aquascapeResult, error} = useQuery<
         AquascapeDetailsQuery,
         AquascapeDetailsQueryVariables
     >(AQUASCAPE_DETAILS_EDIT, {variables: {id: aquascapeId}})
@@ -53,11 +53,6 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
             router.push(routes.index)
         }
     }, [aquascapeResult])
-
-    if (loading) {
-        // TODO: Show loader
-        return null
-    }
 
     if (error) {
         // TODO: Show error
