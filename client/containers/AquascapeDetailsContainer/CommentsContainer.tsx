@@ -81,7 +81,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
             variables: {
                 entity: CommentEntityType.Aquascape,
                 entityId: aquascapeId,
-                content: comment,
+                content: comment.trim(),
             },
         })
     }
@@ -94,7 +94,7 @@ const CommentsContainer: React.FunctionComponent<Props> = ({aquascapeId, comment
             variables: {
                 entity: CommentEntityType.Aquascape,
                 entityId: aquascapeId,
-                content: reply,
+                content: reply.trim(),
                 parentCommentId: commentId,
             },
         }).finally(() => setReply({...replies, [commentId]: ''}))
