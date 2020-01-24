@@ -7,7 +7,7 @@ import {PhotoSection} from 'components/sections/AquascapeDetails'
 import {ADD_AQUASCAPE_IMAGE, DELETE_AQUASCAPE_IMAGE} from './mutations'
 import {MutationDeleteAquascapeImageArgs} from 'graphql/generated/queries'
 import {updateAquascapeImageCache, AquascapeImageActions} from './cache'
-import {ToastMessage, FormattedMessage} from 'components/atoms'
+import {showUploadImageToast} from 'utils/render'
 
 interface Props {
     aquascapeId: number
@@ -36,25 +36,14 @@ const PhotoSectionEditContainer: React.FunctionComponent<Props> = ({aquascapeId,
         // TODO: Validate file size
         if (!files || !files.length) return
 
-        toast.info(
-            <ToastMessage>
-                <FormattedMessage
-                    id="photo_diary.upload_image_loading"
-                    defaultMessage="Uploading image, please wait..."
-                />
-            </ToastMessage>,
-            {
-                hideProgressBar: true,
-                autoClose: 2000,
-            }
-        )
+        const toastRef = showUploadImageToast()
 
         addImage({
             variables: {aquascapeId, file: files[0]},
             update: updateAquascapeImageCache(AquascapeImageActions.AQUASCAPE_ADD_IMAGE, {
                 aquascapeId,
             }),
-        })
+        }).finally(() => toast.dismiss(toastRef))
     }
 
     return (

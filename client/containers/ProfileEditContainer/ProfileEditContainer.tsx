@@ -5,8 +5,8 @@ import {useQuery, useMutation} from 'react-apollo'
 import {UserBySlugQuery, UserBySlugQueryVariables, ImageVariant} from 'graphql/generated/queries'
 import {Content, Grid} from 'components/core'
 import {AquascapeCardList} from 'components/sections/shared'
-import {Headline, FormattedMessage, ToastMessage} from 'components/atoms'
-import {renderAquascapeCards} from 'utils/render'
+import {Headline, FormattedMessage} from 'components/atoms'
+import {renderAquascapeCards, showUploadImageToast} from 'utils/render'
 import {GridWidth} from 'components/core/Grid'
 import {USER_BY_SLUG} from 'graphql/queries'
 import {AuthContext} from 'providers/AuthenticationProvider'
@@ -54,18 +54,7 @@ const ProfileContainer = () => {
             [ImageVariant.Profile]: ProfileActions.UPLOAD_PROFILE_IMAGE,
         }
 
-        toast.info(
-            <ToastMessage>
-                <FormattedMessage
-                    id="user_profile.upload_image_loading"
-                    defaultMessage="Uploading image, please wait..."
-                />
-            </ToastMessage>,
-            {
-                hideProgressBar: true,
-                autoClose: 2000,
-            }
-        )
+        const toastRef = showUploadImageToast()
 
         uploadUserImage({
             variables: {
@@ -73,7 +62,7 @@ const ProfileContainer = () => {
                 imageVariant,
             },
             update: updateProfileCache(action[imageVariant], {slug}),
-        })
+        }).finally(() => toast.dismiss(toastRef))
     }
 
     const redirectToProfile = () => {

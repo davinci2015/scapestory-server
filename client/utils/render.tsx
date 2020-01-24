@@ -4,6 +4,8 @@ import {AquascapeCard} from 'components/molecules'
 import {Grid} from 'components/core'
 import {AquascapeFieldsFragment} from 'graphql/generated/queries'
 import {ItemProps} from 'components/core/Grid/Item'
+import {toast} from 'react-toastify'
+import {ToastMessage, FormattedMessage} from 'components/atoms'
 
 export const renderAquascapeCards = (
     aquascapes: AquascapeFieldsFragment[],
@@ -27,3 +29,17 @@ export const renderAquascapeCards = (
             />
         </Grid.Item>
     ))
+
+export const showUploadImageToast = () =>
+    toast.info(
+        <ToastMessage showLoader>
+            <FormattedMessage
+                id="upload_image_loading"
+                defaultMessage="Uploading image, please wait..."
+            />
+        </ToastMessage>,
+        {
+            hideProgressBar: true,
+            autoClose: false,
+        }
+    )

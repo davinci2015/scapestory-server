@@ -19,7 +19,7 @@ import {
     AquascapeDetailsActions,
 } from 'containers/AquascapeDetailsContainer/cache'
 import config from 'config'
-import {ToastMessage, FormattedMessage} from 'components/atoms'
+import {showUploadImageToast} from 'utils/render'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -71,20 +71,10 @@ const HeroSectionContainer: React.FunctionComponent<Props> = ({aquascape}) => {
         // TODO: Validate file size
         if (!files || !files.length) return
 
-        toast.info(
-            <ToastMessage>
-                <FormattedMessage
-                    id="user_profile.upload_image_loading"
-                    defaultMessage="Uploading image, please wait..."
-                />
-            </ToastMessage>,
-            {
-                hideProgressBar: true,
-                autoClose: 2000,
-            }
+        const toastRef = showUploadImageToast()
+        updateMainImage({variables: {aquascapeId: aquascape.id, file: files[0]}}).finally(() =>
+            toast.dismiss(toastRef)
         )
-
-        updateMainImage({variables: {aquascapeId: aquascape.id, file: files[0]}})
     }
 
     return (
