@@ -134,6 +134,8 @@ const Comment: CardInterface = ({
                     display: block;
                     margin: ${spaces.s12} 0;
                     font-size: ${typography.fontSize.fs20};
+                    word-break: break-word;
+                    white-space: pre-wrap;
                 }
 
                 .bottom :global(span) {

@@ -32,7 +32,7 @@ import {Filter} from 'db/models/Filter'
 import {Livestock} from 'db/models/Livestock'
 import {Tank} from 'db/models/Tank'
 
-@Table
+@Table({paranoid: true})
 export class Aquascape extends Model<Aquascape> {
     @Column
     title: string

@@ -56,7 +56,7 @@ const socialNetworkInputs: SocialNetworkInput[] = [
     },
 ]
 
-const ABOUT_MAX_LEN = 200
+const ABOUT_MAX_LEN = 500
 
 const UserSectionEditContainer: React.FunctionComponent<Props> = ({
     onChangeProfileImage,
@@ -144,8 +144,7 @@ const UserSectionEditContainer: React.FunctionComponent<Props> = ({
                             onChange={updateAbout}
                             placeholder={intl.formatMessage({
                                 id: 'user_profile.placeholder_about',
-                                defaultMessage:
-                                    'Write something about yourself... [max. 200 characters]',
+                                defaultMessage: `Write something about yourself... [max. ${ABOUT_MAX_LEN} characters]`,
                             })}
                         />
                     }

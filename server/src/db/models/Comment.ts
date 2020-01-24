@@ -1,19 +1,12 @@
-import {
-    Table,
-    Column,
-    Model,
-    ForeignKey,
-    BelongsTo,
-    HasMany,
-} from 'sequelize-typescript'
+import {Table, Column, Model, ForeignKey, BelongsTo, HasMany, DataType} from 'sequelize-typescript'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {Aquascape} from 'db/models/Aquascape'
 import {User} from 'db/models/User'
 import {Like} from 'db/models/Like'
 
-@Table
+@Table({paranoid: true})
 export class Comment extends Model<Comment> {
-    @Column
+    @Column(DataType.TEXT)
     content: string
 
     @ForeignKey(() => Comment)

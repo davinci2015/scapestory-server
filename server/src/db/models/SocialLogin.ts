@@ -2,7 +2,7 @@ import socialProviders from 'constants/socialProviders'
 import {User} from 'db/models/User'
 import {Table, Column, Model, ForeignKey, DataType} from 'sequelize-typescript'
 
-@Table
+@Table({paranoid: true})
 export class SocialLogin extends Model<SocialLogin> {
     @ForeignKey(() => User)
     @Column

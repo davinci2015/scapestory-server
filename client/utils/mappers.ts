@@ -28,6 +28,6 @@ export const errorMaper: {[key: string]: MessageDescriptor} = {
     },
     BAD_REQUEST: {
         id: 'error.bad_request',
-        defaultMessage: 'Something went wrong. Please check your data',
+        defaultMessage: 'Something went wrong. Please try again.',
     },
 }

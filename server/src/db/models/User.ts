@@ -1,10 +1,10 @@
-import {Table, Column, Model, Unique, HasMany, Default} from 'sequelize-typescript'
+import {Table, Column, Model, Unique, HasMany, Default, DataType} from 'sequelize-typescript'
 import {Aquascape} from 'db/models/Aquascape'
 import {SocialLogin} from 'db/models/SocialLogin'
 import {Follow} from 'db/models/Follow'
 import {Like} from 'db/models/Like'
 
-@Table
+@Table({paranoid: true})
 export class User extends Model<User> {
     @Column
     email: string
@@ -23,7 +23,7 @@ export class User extends Model<User> {
     @Column
     name: string
 
-    @Column
+    @Column({type: DataType.STRING(500)})
     about: string
 
     @Column
@@ -41,16 +41,16 @@ export class User extends Model<User> {
     @Column
     country: string
 
-    @Column
+    @Column({type: DataType.TEXT})
     facebookUrl: string
 
-    @Column
+    @Column({type: DataType.TEXT})
     youtubeUrl: string
 
-    @Column
+    @Column({type: DataType.TEXT})
     instagramUrl: string
 
-    @Column
+    @Column({type: DataType.TEXT})
     twitterUrl: string
 
     @HasMany(() => SocialLogin)

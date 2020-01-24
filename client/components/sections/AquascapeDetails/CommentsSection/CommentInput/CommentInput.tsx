@@ -29,6 +29,7 @@ const CommentInput: React.FunctionComponent<Props> = ({
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
+                maxLength={400}
                 endAdornment={
                     <InputAdornment>
                         <Button dimensions="small" onClick={onSubmit}>

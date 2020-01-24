@@ -41,6 +41,7 @@ const UserAbout: React.FunctionComponent<Props> = ({
 
             .about-text {
                 margin-bottom: ${spaces.s24};
+                word-break: break-word;
             }
 
             .social {

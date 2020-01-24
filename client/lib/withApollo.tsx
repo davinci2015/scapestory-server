@@ -28,8 +28,11 @@ export default withApollo(({headers, initialState}) => {
 
     const link = onError(({graphQLErrors, networkError}) => {
         if (graphQLErrors) {
-            graphQLErrors.forEach(({message}) => {
-                const intlMessage = errorMaper[message]
+            graphQLErrors.forEach(({message, path}) => {
+                // Don't show error toast when user queries "me"
+                if (path?.includes('me')) return
+
+                const intlMessage = errorMaper[message] || errorMaper.BAD_REQUEST
                 if (intlMessage) {
                     toast.error(
                         <Paragraph color={colors.WHITE}>
