@@ -4,6 +4,7 @@ import Link from 'next/link'
 import {colors, spaces, media} from 'styles'
 import {Paragraph, FormattedMessage, Icon} from 'components/atoms'
 import routes from 'routes'
+import config from 'config'
 
 interface Props {}
 
@@ -13,7 +14,7 @@ const Footer: React.FunctionComponent<Props> = () => (
             <div className="top">
                 <Link href={routes.index}>
                     <a>
-                        <img className="logo" src="/static/logo.svg" />
+                        <img className="logo" src="/static/logo-simple.svg" />
                     </a>
                 </Link>
                 <div>
@@ -53,6 +54,16 @@ const Footer: React.FunctionComponent<Props> = () => (
                                     </Paragraph>
                                 </a>
                             </Link>
+                        </li>
+                        <li>
+                            <a href={`mailto:${config.CONTACT_EMAIL}`}>
+                                <Paragraph weight="bold">
+                                    <FormattedMessage
+                                        id="footer.contact"
+                                        defaultMessage="Contact"
+                                    />
+                                </Paragraph>
+                            </a>
                         </li>
                     </ul>
                 </div>

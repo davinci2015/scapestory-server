@@ -49,7 +49,7 @@ const AquascapeCardList = ({children, loadMore, title, variant = 'default'}: Pro
 
             @media ${media.up('medium')} {
                 .section {
-                    margin: 75px 0;
+                    margin: ${spaces.s90} 0;
                 }
 
                 .section--condensed {
