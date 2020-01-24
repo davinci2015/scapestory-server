@@ -25,6 +25,7 @@ type SocialNetworkKey = 'facebookUrl' | 'instagramUrl' | 'youtubeUrl' | 'twitter
 interface SocialNetworkInput {
     key: SocialNetworkKey
     placeholder: string
+    defaultValue?: string
     label: string
     Icon: () => JSX.Element
 }
@@ -32,26 +33,30 @@ interface SocialNetworkInput {
 const socialNetworkInputs: SocialNetworkInput[] = [
     {
         key: 'facebookUrl',
-        placeholder: 'Facebook Profile URL',
-        label: 'Facebook',
+        placeholder: 'https://www.facebook.com/YOUR-USERNAME',
+        defaultValue: 'https://www.facebook.com/YOUR-USERNAME',
+        label: 'Facebook Profile URL',
         Icon: socialIconComponentMapping[SocialNetwork.FACEBOOK],
     },
     {
         key: 'instagramUrl',
-        placeholder: 'Instagram Profile URL',
-        label: 'Instagram',
+        placeholder: 'https://www.instagram.com/YOUR-USERNAME',
+        defaultValue: 'https://www.instagram.com/YOUR-USERNAME',
+        label: 'Instagram Profile URL',
         Icon: socialIconComponentMapping[SocialNetwork.INSTAGRAM],
     },
     {
         key: 'youtubeUrl',
-        placeholder: 'Youtube Profile URL',
-        label: 'Youtube',
+        placeholder: 'https://www.youtube.com/channel/UCZoi3FvC280YqwSw0doGikA',
+        defaultValue: 'https://www.youtube.com/channel/YOUR-CHANNEL-ID',
+        label: 'Youtube Channel URL',
         Icon: socialIconComponentMapping[SocialNetwork.YOUTUBE],
     },
     {
         key: 'twitterUrl',
-        placeholder: 'Twitter Profile URL',
-        label: 'Twitter',
+        placeholder: 'https://twitter.com/YOUR-USERNAME',
+        defaultValue: 'https://twitter.com/YOUR-USERNAME',
+        label: 'Twitter Profile URL',
         Icon: socialIconComponentMapping[SocialNetwork.TWITTER],
     },
 ]
@@ -156,7 +161,7 @@ const UserSectionEditContainer: React.FunctionComponent<Props> = ({
                         <Input
                             key={network.key}
                             error={urlErrors[network.key]}
-                            defaultValue={user[network.key] || ''}
+                            defaultValue={user[network.key] || network.defaultValue}
                             placeholder={network.placeholder}
                             label={network.label}
                             onChange={updateNetworkUrl(network.key)}
