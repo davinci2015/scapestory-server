@@ -49,7 +49,7 @@ const Navigation = ({
                         <a>
                             <picture>
                                 <source
-                                    media={`(min-width): ${breakpoints.medium}`}
+                                    media={`(min-width: ${breakpoints.medium})`}
                                     srcSet="/static/logo.svg"
                                 />
                                 <img src="/static/logo-simple.svg" alt="Scapestory" />
