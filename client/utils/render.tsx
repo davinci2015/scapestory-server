@@ -30,12 +30,13 @@ export const renderAquascapeCards = (
         </Grid.Item>
     ))
 
-export const showUploadImageToast = () =>
+export const showUploadImageToast = (count: number = 1) =>
     toast.info(
         <ToastMessage showLoader>
             <FormattedMessage
                 id="upload_image_loading"
-                defaultMessage="Uploading image, please wait..."
+                defaultMessage="Uploading {count, plural, one {image} other {images}}, please wait..."
+                values={{count}}
             />
         </ToastMessage>,
         {

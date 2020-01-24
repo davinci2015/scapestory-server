@@ -23,6 +23,7 @@ const ALT_PLACEHOLDER = 'Scapostory post'
 
 const ButtonAddPhoto = ({onClick}: {onClick: (files: FileList | null) => void}) => (
     <ImageUpload
+        multiple
         onChange={onClick}
         render={({openFinder}) => (
             <Button

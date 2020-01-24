@@ -7,15 +7,17 @@ export interface RenderProps {
 interface Props {
     onChange: (files: FileList | null) => void
     render: (props: RenderProps) => React.ReactNode
+    multiple?: boolean
 }
 
-const ImageUpload: React.FunctionComponent<Props> = ({onChange, render}) => {
+const ImageUpload: React.FunctionComponent<Props> = ({onChange, render, multiple}) => {
     const inputRef = useRef<HTMLInputElement | null>(null)
     const openFinder = () => inputRef?.current?.click()
 
     return (
         <>
             <input
+                multiple={multiple}
                 type="file"
                 accept="image/x-png,image/jpg,image/jpeg"
                 required

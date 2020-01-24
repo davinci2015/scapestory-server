@@ -8,6 +8,7 @@ import {ADD_AQUASCAPE_IMAGE, DELETE_AQUASCAPE_IMAGE} from './mutations'
 import {MutationDeleteAquascapeImageArgs} from 'graphql/generated/queries'
 import {updateAquascapeImageCache, AquascapeImageActions} from './cache'
 import {showUploadImageToast} from 'utils/render'
+import {ToastMessage, FormattedMessage} from 'components/atoms'
 
 interface Props {
     aquascapeId: number
@@ -34,16 +35,36 @@ const PhotoSectionEditContainer: React.FunctionComponent<Props> = ({aquascapeId,
     const onImageChange = (files: FileList | null) => {
         // TODO: Validate file extension
         // TODO: Validate file size
+        const MAX_FILES_FOR_UPLOAD = 5
+        const promises = []
         if (!files || !files.length) return
 
-        const toastRef = showUploadImageToast()
+        if (files.length > MAX_FILES_FOR_UPLOAD) {
+            return toast.error(
+                <ToastMessage>
+                    <FormattedMessage
+                        id="errors.upload_max_files"
+                        defaultMessage="You can't upload more than {count} files at once!"
+                        values={{count: MAX_FILES_FOR_UPLOAD}}
+                    />
+                </ToastMessage>
+            )
+        }
 
-        addImage({
-            variables: {aquascapeId, file: files[0]},
-            update: updateAquascapeImageCache(AquascapeImageActions.AQUASCAPE_ADD_IMAGE, {
-                aquascapeId,
-            }),
-        }).finally(() => toast.dismiss(toastRef))
+        const toastRef = showUploadImageToast(files.length)
+
+        for (let i = 0; i < files.length; i++) {
+            promises.push(
+                addImage({
+                    variables: {aquascapeId, file: files.item(i)},
+                    update: updateAquascapeImageCache(AquascapeImageActions.AQUASCAPE_ADD_IMAGE, {
+                        aquascapeId,
+                    }),
+                })
+            )
+        }
+
+        Promise.all(promises).finally(() => toast.dismiss(toastRef))
     }
 
     return (
