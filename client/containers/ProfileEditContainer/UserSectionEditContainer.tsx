@@ -70,7 +70,11 @@ const UserSectionEditContainer: React.FunctionComponent<Props> = ({
 
     const updateNetworkUrl = (key: SocialNetworkKey) => (event: ChangeEvent<HTMLInputElement>) => {
         const url = event.target.value.trim()
-        if (url === '') return updateField(key, url)
+
+        if (url === '') {
+            setUrlError({...urlErrors, [key]: false})
+            return updateField(key, url)
+        }
 
         const isValid = Boolean(isWebUri(url))
         setUrlError({...urlErrors, [key]: !isValid})

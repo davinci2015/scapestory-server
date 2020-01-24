@@ -25,7 +25,7 @@ const Input = ({endAdornment, error, errorMessage, label, ...props}: InputProps)
             <div className={classes.inputContainer}>
                 <div className="base">
                     <div className="root">
-                        <input ref={inputRef} {...props} />
+                        <input key={label} ref={inputRef} {...props} />
                         <label>{label}</label>
                         <fieldset className="outline"></fieldset>
                         <div className="highlighter"></div>
@@ -52,18 +52,21 @@ const Input = ({endAdornment, error, errorMessage, label, ...props}: InputProps)
                     width: 100%;
                 }
 
-                input:focus ~ .highlighter {
+                input:focus ~ .highlighter,
+                input:active ~ .highlighter {
                     opacity: 1;
                     height: 100%;
                     top: 0;
                 }
 
-                input:focus ~ label {
+                input:focus ~ label,
+                input:active ~ label {
                     color: ${error ? colors.ERROR : colors.PRIMARY};
                 }
 
-                input:focus ~ .outline {
-                    border-color: ${colors.MID_GRAY};
+                input:focus ~ .outline,
+                input:active ~ .outline {
+                    border-color: ${error ? colors.ERROR : colors.PRIMARY};
                 }
 
                 .highlighter {
@@ -100,6 +103,12 @@ const Input = ({endAdornment, error, errorMessage, label, ...props}: InputProps)
                     border-style: solid;
                     border-color: ${colors.SHADE_LIGHT};
                     border-radius: ${borderRadius.SECONDARY};
+                    transition: border-color 300ms ease-in-out;
+
+                    ${error &&
+                        `
+                        border-color: ${colors.ERROR};
+                    `}
                 }
 
                 .base {
@@ -141,7 +150,12 @@ const Input = ({endAdornment, error, errorMessage, label, ...props}: InputProps)
                     left: 0;
 
                     transform: translate(30px, 14px);
-                    transition: color 120ms linear;
+                    transition: color 130ms linear;
+
+                    ${error &&
+                        `
+                        color: ${colors.ERROR};
+                    `}
                 }
 
                 .${classes.inputContainer} {
