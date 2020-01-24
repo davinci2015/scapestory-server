@@ -14,40 +14,17 @@ import {AuthContext} from 'providers/AuthenticationProvider'
 import {ModalContext} from 'providers/ModalProvider'
 import CoverSection from 'components/sections/Profile/CoverSection'
 import {Button, FormattedMessage, Icon} from 'components/atoms'
-import UserFollowIcon from 'assets/icons/user-plus.svg'
-import UserUnfollowIcon from 'assets/icons/user-minus.svg'
 import LogoutIcon from 'assets/icons/log-out.svg'
 import {colors} from 'styles'
 import cookie from 'services/cookie'
 import {useRouter} from 'next/router'
 import routes from 'routes'
+import {UnfollowButton, FollowButton} from 'components/molecules'
 
 interface Props {
     user: UserBySlugQuery['user']
     onEdit: VoidFunction
 }
-
-const FollowButton = ({toggleFollow}: {toggleFollow: VoidFunction}) => (
-    <Button
-        onClick={toggleFollow}
-        dimensions="extraSmall"
-        leftIcon={<UserFollowIcon />}
-        color="tertiary"
-    >
-        <FormattedMessage id="user_profile.follow" defaultMessage="Follow" />
-    </Button>
-)
-
-const UnfollowButton = ({toggleFollow}: {toggleFollow: VoidFunction}) => (
-    <Button
-        onClick={toggleFollow}
-        dimensions="extraSmall"
-        leftIcon={<UserUnfollowIcon />}
-        color="tertiary"
-    >
-        <FormattedMessage id="user_profile.unfollow" defaultMessage="Unfollow" />
-    </Button>
-)
 
 const CoverSectionContainer: React.FunctionComponent<Props> = ({onEdit, user}) => {
     const {isAuthenticated, refreshAuthentication, user: loggedInUser} = useContext(AuthContext)

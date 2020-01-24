@@ -11,7 +11,7 @@ import {
 } from 'components/atoms'
 import {colors, spaces} from 'styles'
 import {Hero} from 'components/sections/shared'
-import {UserWidget} from 'components/molecules'
+import {UserWidget, UnfollowButton, FollowButton} from 'components/molecules'
 import {AquascapeDetailsQuery} from 'graphql/generated/queries'
 import {ProfileLink} from 'components/core'
 import {UserWidgetSize, UserWidgetVariant} from 'components/molecules/UserWidget/UserWidget'
@@ -96,26 +96,33 @@ const HeroSection: React.FunctionComponent<Props> = ({
                         </Hero.TopLeft>
                         <Hero.TopRight>
                             {!mineAquascape && (
-                                <Button
-                                    onClick={toggleLike}
-                                    leftIcon={
-                                        <Icon
-                                            d={
-                                                aquascape.isLikedByMe
-                                                    ? Icon.HEART
-                                                    : Icon.HEART_OUTLINE
-                                            }
-                                            color={colors.WHITE}
+                                <Hero.ActionButtons>
+                                    <Button
+                                        onClick={toggleLike}
+                                        leftIcon={
+                                            <Icon
+                                                d={
+                                                    aquascape.isLikedByMe
+                                                        ? Icon.HEART
+                                                        : Icon.HEART_OUTLINE
+                                                }
+                                                color={colors.WHITE}
+                                            />
+                                        }
+                                        dimensions="extraSmall"
+                                        color="tertiary"
+                                    >
+                                        <FormattedMessage
+                                            id="aquascape.hero_section.like"
+                                            defaultMessage="Like"
                                         />
-                                    }
-                                    dimensions="extraSmall"
-                                    color="tertiary"
-                                >
-                                    <FormattedMessage
-                                        id="aquascape.hero_section.like"
-                                        defaultMessage="Like"
-                                    />
-                                </Button>
+                                    </Button>
+                                    {aquascape.user.isFollowedByMe ? (
+                                        <UnfollowButton toggleFollow={toggleFollow} />
+                                    ) : (
+                                        <FollowButton toggleFollow={toggleFollow} />
+                                    )}
+                                </Hero.ActionButtons>
                             )}
 
                             {mineAquascape && (

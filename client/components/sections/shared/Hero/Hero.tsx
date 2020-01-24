@@ -7,6 +7,7 @@ import {TopSection, TopLeft, TopRight} from 'components/sections/shared/Hero/Top
 import {BottomSection, BottomLeft, BottomRight} from 'components/sections/shared/Hero/BottomSection'
 import {GRID_WIDTH_DEFAULT} from 'components/core/Grid'
 import config from 'config'
+import ActionButtons from './ActionButtons'
 
 interface Props {
     editMode?: boolean
@@ -185,5 +186,6 @@ Hero.TopRight = TopRight
 Hero.BottomSection = BottomSection
 Hero.BottomLeft = BottomLeft
 Hero.BottomRight = BottomRight
+Hero.ActionButtons = ActionButtons
 
 export default Hero
