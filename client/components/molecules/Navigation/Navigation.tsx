@@ -10,6 +10,7 @@ import NavLink from './NavLink'
 import routes, {createDynamicPath} from 'routes'
 import {User_ProfileQuery} from 'graphql/generated/queries'
 import {UserImageSize} from 'components/atoms/UserImage/UserImage'
+import {media, spaces, breakpoints} from 'styles'
 
 interface Props {
     user?: User_ProfileQuery['me']
@@ -46,7 +47,13 @@ const Navigation = ({
                 <div className="left">
                     <Link href={routes.index}>
                         <a>
-                            <img src="/static/logo.svg" />
+                            <picture>
+                                <source
+                                    media={`(min-width): ${breakpoints.medium}`}
+                                    srcSet="/static/logo.svg"
+                                />
+                                <img src="/static/logo-simple.svg" alt="Scapestory" />
+                            </picture>
                         </a>
                     </Link>
                     <NavLink href={routes.index}>
@@ -143,15 +150,27 @@ const Navigation = ({
                 .container {
                     height: 100%;
                     margin: 0 auto;
-                    padding: 0 24px 0 60px;
+                    padding: 0 ${spaces.s16};
 
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
                 }
 
+                @media ${media.up('medium')} {
+                    .container {
+                        padding: 0 24px 0 60px;
+                    }
+                }
+
                 .left :global(img) {
-                    padding-right: 60px;
+                    padding-right: ${spaces.s16};
+                }
+
+                @media ${media.up('medium')} {
+                    .left :global(img) {
+                        padding-right: ${spaces.s60};
+                    }
                 }
 
                 .right,

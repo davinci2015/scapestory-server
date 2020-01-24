@@ -55,6 +55,7 @@
     "devDependencies": {
         "@babel/core": "^7.7.5",
         "@babel/plugin-proposal-optional-chaining": "^7.7.5",
+        "@dump247/storybook-state": "^1.6.1",
         "@graphql-codegen/cli": "^1.9.1",
         "@graphql-codegen/typescript": "^1.9.1",
         "@graphql-codegen/typescript-operations": "^1.9.1",

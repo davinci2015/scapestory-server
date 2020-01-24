@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import {withRouter} from 'next/router'
 
-import {colors, spaces, typography} from 'styles'
+import {colors, spaces, typography, media} from 'styles'
 import {Router} from 'next/router'
 
 export interface Props {
@@ -26,13 +26,20 @@ const NavLink = ({as, children, href, router, ...rest}: Props) => (
                 align-items: center;
 
                 height: 100%;
-                padding: ${spaces.s12} ${spaces.s6};
-                margin: 0 ${spaces.s36};
+                padding: ${spaces.s8} ${spaces.s6};
+                margin: 0 ${spaces.s8};
 
                 text-decoration: none;
                 font-weight: ${typography.fontWeight.bold};
                 color: ${colors.SHADE_DEEP};
                 transition: color 100ms ease-in-out;
+            }
+
+            @media ${media.up('medium')} {
+                :global(nav a.nav-link) {
+                    padding: ${spaces.s12} ${spaces.s6};
+                    margin: 0 ${spaces.s36};
+                }
             }
 
             :global(nav a.nav-link:hover) {

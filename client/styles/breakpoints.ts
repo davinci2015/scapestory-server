@@ -7,7 +7,7 @@ export interface Breakpoints {
 }
 
 export default {
-    extraSmall: '0',
+    extraSmall: '320px',
     small: '600px',
     medium: '960px',
     large: '1280px',
