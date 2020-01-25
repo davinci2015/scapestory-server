@@ -208,7 +208,7 @@ const PrivacyPolicy = () => {
 
             <style jsx>{`
                 .privacy-policy {
-                    margin: 120px 0;
+                    margin: ${spaces.s60} 0;
                 }
 
                 .privacy-policy :global(.${Headline.classes.root}) {

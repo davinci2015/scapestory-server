@@ -10,6 +10,7 @@ import NavigationContainer from 'containers/NavigationContainer'
 import ArrowBackIcon from 'assets/icons/arrow-left.svg'
 import routes from 'routes'
 import withAuth from 'hocs/withAuth'
+import {GridWidth} from 'components/core/Grid'
 
 const Terms = () => {
     const router = useRouter()
@@ -19,7 +20,7 @@ const Terms = () => {
             <ModalProvider>
                 <NavigationContainer />
                 <Content>
-                    <Grid>
+                    <Grid width={GridWidth.SMALL}>
                         <div className="terms">
                             <Button
                                 dimensions="extraSmall"
@@ -35,103 +36,109 @@ const Terms = () => {
                             <Headline variant="h2">Terms and Conditions</Headline>
 
                             <Paragraph>
-                                [Developer/Company name] built the [App Name] app as [open
-                                source/free/freemium/ad-supported/commercial] app. This SERVICE is
-                                provided by [Developer/Company name] [at no cost] and is intended
-                                for use as is. This page is used to inform visitors regarding
-                                [my/our] policies with the collection, use, and disclosure of
-                                Personal Information if anyone decided to use [my/our] Service. If
-                                you choose to use [my/our] Service, then you agree to the collection
-                                and use of information in relation to this policy. The Personal
-                                Information that [I/We] collect is used for providing and improving
-                                the Service. [I/We] will not use or share your information with
-                                anyone except as described in this Privacy Policy. The terms used in
-                                this Privacy Policy have the same meanings as in our Terms and
-                                Conditions, which is accessible at [App Name] unless otherwise
-                                defined in this Privacy Policy.
+                                I provide a web application (“Site”) to a community of registered
+                                users to engage in a variety of activities, including to upload and
+                                display images (“Visual Content”), add and display aquascape
+                                informations, add comments or other content. All these informations
+                                and images will be referred as “Content”.
+                                <br /> <br />
+                                Additional Services may be offered by me from time to time. These
+                                Terms governs your use of Site and provide information about Site,
+                                outlined below. When you create a Scapestory account or use
+                                Scapestory, you agree to these terms.
                             </Paragraph>
 
-                            <Headline variant="h4">Information Collection and Use</Headline>
+                            <Headline variant="h4">The Scapestory Site</Headline>
 
                             <Paragraph>
-                                For a better experience, while using our Service, [I/We] may require
-                                you to provide us with certain personally identifiable
-                                information[add whatever else you collect here, e.g. users name,
-                                address, location, pictures] The information that [I/We] request
-                                will be [retained on your device and is not collected by [me/us] in
-                                any way]/[retained by us and used as described in this privacy
-                                policy]. The app does use third party services that may collect
-                                information used to identify you. Link to privacy policy of third
-                                party service providers used by the app Google Play Services Log
-                                Data [I/We] want to inform you that whenever you use [my/our]
-                                Service, in a case of an error in the app [I/We] collect data and
-                                information (through third party products) on your phone called Log
-                                Data. This Log Data may include information such as your device
-                                Internet Protocol (“IP”) address, device name, operating system
-                                version, the configuration of the app when utilizing [my/our]
-                                Service, the time and date of your use of the Service, and other
-                                statistics.
+                                In return for my commitment to provide the Site, I require you to
+                                make the below commitments. By using the Site, you are agreeing, on
+                                behalf of yourself and those you represent, to comply with and be
+                                legally bound by these terms as well as the privacy policy.
+                                <br />
+                                If you disagree to any provision of these terms, you must
+                                discontinue the registration process or discontinue your use of the
+                                Site.
+                                <br /> <br />
+                                Your access to and use of the Site may be interrupted from time to
+                                time as a result of regular maintenance, equipment failure or any
+                                other reason within or without my control.
+                                <br />I reserve the right to suspend or discontinue the availability
+                                of the Site and to remove any Visual Content at any time at its sole
+                                discretion and without prior notice.
                             </Paragraph>
 
-                            <Headline variant="h4">Cookies</Headline>
+                            <Headline variant="h4">Registration</Headline>
 
                             <Paragraph>
-                                Cookies are files with a small amount of data that are commonly used
-                                as anonymous unique identifiers. These are sent to your browser from
-                                the websites that you visit and are stored on your device's internal
-                                memory. This Service does not use these “cookies” explicitly.
-                                However, the app may use third party code and libraries that use
-                                “cookies” to collect information and improve their services. You
-                                have the option to either accept or refuse these cookies and know
-                                when a cookie is being sent to your device. If you choose to refuse
-                                our cookies, you may not be able to use some portions of this
-                                Service.
+                                As a condition to using the Site, you are required to register an
+                                account and provide information including a valid email address. Any
+                                personal information that you provide to me is governed by the
+                                Privacy Policy.
+                                <br />
+                                Your responsibility is to maintain the confidentiality of your
+                                password and you are responsible for all activities resulting from
+                                the use of your password and conducted through your account.
                             </Paragraph>
 
-                            <Headline variant="h4">Service Providers</Headline>
+                            <Headline variant="h4">User Conduct</Headline>
 
                             <Paragraph>
-                                To facilitate our Service; [I/We] want to inform users of this
-                                Service that these third parties have access to your Personal
-                                Information. The reason is to perform the tasks assigned to them on
-                                our behalf. However, they are obligated not to disclose or use the
-                                information for any other purpose. To provide the Service on our
-                                behalf; To perform Service-related services; or To assist us in
-                                analyzing how our Service is used. [I/We] may employ third-party
-                                companies and individuals due to the following reasons:
+                                All content posted or otherwise submitted to the Site is sole
+                                responsibility of the account owner from which such content
+                                originate. You are allowed to upload content only if you are the
+                                creator and the owner of it. You completely agree that you are
+                                entirely responsible for all content that you post, or otherwise
+                                submit to the Site. Visual Content that you post or submit to the
+                                Site should be related to the aquascape with main goal to promote
+                                aquascaping hobby and inspire other people. I do not control user
+                                submitted Content and I do not guarantee the accuracy, integrity, or
+                                quality of such Content. You understand that by using the Site, you
+                                may be exposed to Content that is offensive, indecent, or not
+                                appropriate.
+                                <br />
+                                <br />
+                                As a condition of use, you will not post or submit any content which
+                                might involve abusement, harassment, threatening, impersonation or
+                                similar towards any person. You may not use a name or add any
+                                content that is vulgar, offensive, obscene or not appropriate. You
+                                commit that your posted content will be appropriate and will serve
+                                in a good manner of promoting an aquascaping hobby to the world.
                             </Paragraph>
 
-                            <Headline variant="h4">Security</Headline>
+                            <Headline variant="h4">
+                                Content Removal and Terminating Your Account
+                            </Headline>
 
                             <Paragraph>
-                                [I/We] value your trust in providing us your Personal Information,
-                                thus we are striving to use commercially acceptable means of
-                                protecting it. But remember that no method of transmission over the
-                                internet, or method of electronic storage is 100% secure and
-                                reliable, and [I/We] cannot guarantee its absolute security. Links
-                                to Other Sites This Service may contain links to other sites. If you
-                                click on a third-party link, you will be directed to that site. Note
-                                that these external sites are not operated by [me/us]. Therefore,
-                                [I/We] strongly advise you to review the Privacy Policy of these
-                                websites. [I/We] have no control over and assume no responsibility
-                                for the content, privacy policies, or practices of any third-party
-                                sites or services. Children’s Privacy These Services do not address
-                                anyone under the age of 13. [I/We] do not knowingly collect
-                                personally identifiable information from children under 13. In the
-                                case [I/We] discover that a child under 13 has provided [me/us] with
-                                personal information, [I/We] immediately delete this from our
-                                servers. If you are a parent or guardian and you are aware that your
-                                child has provided us with personal information, please contact
-                                [me/us] so that [I/We] will be able to do necessary actions. Changes
-                                to This Privacy Policy [I/We] may update our Privacy Policy from
-                                time to time. Thus, you are advised to review this page periodically
-                                for any changes. [I/We] will notify you of any changes by posting
-                                the new Privacy Policy on this page. These changes are effective
-                                immediately after they are posted on this page. Contact Us If you
-                                have any questions or suggestions about [my/our] Privacy Policy, do
-                                not hesitate to contact [me/us] at [App Contact informations]. This
-                                privacy policy page was created at privacypolicytemplate.net and
-                                modified/generated by App Privacy Policy Generator
+                                I can remove any content or information you share on the Site if I
+                                believe that it violates these Terms immediately, without prior
+                                notice or liability, for any reason whatsoever. If, for some reason,
+                                you want to terminate your account, you must contact me and I will
+                                remove your Visual Content and account itself. It is your
+                                responsibility to retain copies of your Visual Content because I
+                                will remove all Visual Content from your account prior to
+                                termination.
+                            </Paragraph>
+
+                            <Headline variant="h4">Links To Other Web Sites</Headline>
+
+                            <Paragraph>
+                                This Service may contain links to other sites. If you click on a
+                                third-party link, you will be redirected to that site. Note that
+                                these external sites are not operated by me. Therefore, I strongly
+                                advise you to review the Privacy Policy of these websites. I have no
+                                control over and assume no responsibility for the content, privacy
+                                policies, or practices of any third-party sites or services.
+                            </Paragraph>
+
+                            <Headline variant="h4">Modification of Terms</Headline>
+
+                            <Paragraph>
+                                I may change Terms at any time, and I might need to make changes to
+                                these Terms so that they accurately reflect Site and policies. Using
+                                Site and viewing any Content constitutes your acceptance of the
+                                Terms as modified.
                             </Paragraph>
                         </div>
                     </Grid>
@@ -141,7 +148,7 @@ const Terms = () => {
 
             <style jsx>{`
                 .terms {
-                    margin: 120px 0;
+                    margin: ${spaces.s60} 0;
                 }
 
                 .terms :global(.${Headline.classes.root}) {
