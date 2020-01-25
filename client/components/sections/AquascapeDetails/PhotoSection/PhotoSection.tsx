@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {spaces} from 'styles'
 import {Headline, FormattedMessage} from 'components/atoms'
-import {PhotoGrid} from 'components/molecules'
+import {PhotoGrid, Gallery} from 'components/molecules'
 import {AquascapeImage} from 'graphql/generated/types'
 
 interface Props {
@@ -17,7 +17,12 @@ const PostsSection: React.FunctionComponent<Props> = ({
     onImageChange,
     onImageRemove,
 }) => {
+    const [isGalleryOpen, changeGalleryOpen] = useState(false)
     if (!images) return null
+
+    const openGallery = () => changeGalleryOpen(true)
+
+    const closeGallery = () => changeGalleryOpen(false)
 
     return (
         <>
@@ -29,6 +34,7 @@ const PostsSection: React.FunctionComponent<Props> = ({
                     edit={edit}
                     onImageChange={onImageChange}
                     onImageRemove={onImageRemove}
+                    openGallery={openGallery}
                     images={images
                         .sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
                         .map(image => ({
@@ -38,6 +44,9 @@ const PostsSection: React.FunctionComponent<Props> = ({
                         }))}
                 />
             </div>
+            <Gallery onClose={closeGallery} isOpen={isGalleryOpen}>
+                <h1>heleelel</h1>
+            </Gallery>
             <style jsx>{`
                 .section {
                     padding-top: ${spaces.s90};

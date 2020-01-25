@@ -14,6 +14,7 @@ interface Image {
 interface Props {
     onImageChange?: (files: FileList | null) => void
     onImageRemove?: (id: number) => void
+    openGallery: VoidFunction
     images: Image[]
     edit?: boolean
 }
@@ -54,12 +55,13 @@ const PhotoSection: React.FunctionComponent<Props> = ({
     images,
     onImageChange = noop,
     onImageRemove = noop,
+    openGallery,
 }) => (
     <>
         <div className="photo-grid">
             <div className="row">
                 {images[0] ? (
-                    <div className="image image--main">
+                    <a onClick={openGallery} className="image image--main">
                         <img src={images[0].src} alt={images[0].alt || ALT_PLACEHOLDER} />
                         {edit && (
                             <div className="btn-wrapper">
@@ -67,7 +69,7 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                                 <ButtonRemovePhoto id={images[0].id} onClick={onImageRemove} />
                             </div>
                         )}
-                    </div>
+                    </a>
                 ) : (
                     <div className="image image--main">
                         {edit && (
@@ -86,39 +88,39 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                     </div>
                 )}
                 {images[1] ? (
-                    <div className="image image--half">
+                    <a onClick={openGallery} className="image image--half">
                         <img src={images[1].src} alt={images[1].alt || ALT_PLACEHOLDER} />
                         {edit && (
                             <div className="btn-wrapper">
                                 <ButtonRemovePhoto id={images[1].id} onClick={onImageRemove} />
                             </div>
                         )}
-                    </div>
+                    </a>
                 ) : (
                     edit && <div className="image image--half"></div>
                 )}
                 <div className="column">
                     {images[2] ? (
-                        <div className="image">
+                        <a onClick={openGallery} className="image">
                             <img src={images[2].src} alt={images[2].alt || ALT_PLACEHOLDER} />
                             {edit && (
                                 <div className="btn-wrapper">
                                     <ButtonRemovePhoto id={images[2].id} onClick={onImageRemove} />
                                 </div>
                             )}
-                        </div>
+                        </a>
                     ) : (
                         edit && <div className="image"></div>
                     )}
                     {images[3] ? (
-                        <div className="image">
+                        <a onClick={openGallery} className="image">
                             <img src={images[3].src} alt={images[3].alt || ALT_PLACEHOLDER} />
                             {edit && (
                                 <div className="btn-wrapper">
                                     <ButtonRemovePhoto id={images[3].id} onClick={onImageRemove} />
                                 </div>
                             )}
-                        </div>
+                        </a>
                     ) : (
                         edit && <div className="image"></div>
                     )}
@@ -126,14 +128,14 @@ const PhotoSection: React.FunctionComponent<Props> = ({
             </div>
             <div className="row">
                 {images.slice(4).map(image => (
-                    <div className="image" key={image.src}>
+                    <a onClick={openGallery} className="image" key={image.src}>
                         <img src={image.src} alt={image.alt || ALT_PLACEHOLDER} />
                         {edit && (
                             <div className="btn-wrapper">
                                 <ButtonRemovePhoto id={image.id} onClick={onImageRemove} />
                             </div>
                         )}
-                    </div>
+                    </a>
                 ))}
             </div>
         </div>
@@ -176,6 +178,7 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                 width: calc(25% - ${GUTTER});
                 height: 221px;
                 margin: 8px;
+                cursor: pointer;
 
                 background-color: ${colors.SHADE_EXTRA_LIGHT};
                 border-radius: ${borderRadius.TERTIARY};

@@ -40,8 +40,8 @@ const Gallery: GalleryType = ({children, isOpen, onClose}) => {
                     left: 0px;
                     right: 0px;
                     bottom: 0px;
-                    background-color: rgba(0, 0, 0, 0.7);
-                    z-index: ${zIndex.HIGH};
+                    background-color: rgba(0, 0, 0, 0.9);
+                    z-index: ${zIndex.HIGHEST};
                 }
 
                 .gallery__close {
