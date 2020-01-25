@@ -30,7 +30,8 @@ class MyDocument extends Document {
                         type="text/css"
                         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
                     />
-                    <link href="/static/ReactToastify.min.css" rel="stylesheet" />
+                    <link href="/static/toastify.css" rel="stylesheet" />
+                    <link href="/static/awesome-slider.css" rel="stylesheet" />
                     {flush()}
                 </Head>
                 <body>

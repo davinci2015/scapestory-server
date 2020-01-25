@@ -1,7 +1,7 @@
 import React from 'react'
 import {spaces, media} from 'styles'
 import Row from 'components/core/Grid/Row'
-import Item, {ItemProps} from 'components/core/Grid/Item'
+import Item from 'components/core/Grid/Item'
 
 export const GRID_WIDTH_DEFAULT = '1470px'
 export const GRID_WIDTH_SMALL = '727px'
@@ -18,8 +18,8 @@ interface Props {
 }
 
 type GridInterface = React.FunctionComponent<Props> & {
-    Item: React.FunctionComponent<ItemProps>
-    Row: React.FunctionComponent
+    Item: typeof Item
+    Row: typeof Row
 }
 
 const gridWidthMapping = {

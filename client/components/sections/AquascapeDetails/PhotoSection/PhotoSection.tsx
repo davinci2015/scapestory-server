@@ -17,12 +17,14 @@ const PostsSection: React.FunctionComponent<Props> = ({
     onImageChange,
     onImageRemove,
 }) => {
-    const [isGalleryOpen, changeGalleryOpen] = useState(false)
+    const [isGalleryOpen, changeGalleryOpen] = useState(true)
     if (!images) return null
 
     const openGallery = () => changeGalleryOpen(true)
 
     const closeGallery = () => changeGalleryOpen(false)
+
+    const sortedImages = images.sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
 
     return (
         <>
@@ -35,7 +37,7 @@ const PostsSection: React.FunctionComponent<Props> = ({
                     onImageChange={onImageChange}
                     onImageRemove={onImageRemove}
                     openGallery={openGallery}
-                    images={images
+                    images={sortedImages
                         .sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
                         .map(image => ({
                             id: image.id,
@@ -45,7 +47,9 @@ const PostsSection: React.FunctionComponent<Props> = ({
                 />
             </div>
             <Gallery onClose={closeGallery} isOpen={isGalleryOpen}>
-                <h1>heleelel</h1>
+                {sortedImages.map(image => (
+                    <Gallery.Image key={image.id} src={image.url} />
+                ))}
             </Gallery>
             <style jsx>{`
                 .section {
