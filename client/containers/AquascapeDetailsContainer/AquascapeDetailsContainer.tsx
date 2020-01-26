@@ -287,7 +287,7 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                                 )}
                             </Grid.Row>
                         ) : (
-                            <Paragraph type="body" as="span">
+                            <Paragraph type="s3" as="span">
                                 <FormattedMessage
                                     id="aquascape.equipment.no_equipment"
                                     defaultMessage="No equipment added"
