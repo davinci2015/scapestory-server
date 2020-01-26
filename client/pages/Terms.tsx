@@ -103,7 +103,8 @@ const Terms = () => {
                                 similar towards any person. You may not use a name or add any
                                 content that is vulgar, offensive, obscene or not appropriate. You
                                 commit that your posted content will be appropriate and will serve
-                                in a good manner of promoting an aquascaping hobby to the world.
+                                in a good manner of promoting an aquascaping hobby to the world and
+                                inspiring other people.
                             </Paragraph>
 
                             <Headline variant="h4">
@@ -135,10 +136,9 @@ const Terms = () => {
                             <Headline variant="h4">Modification of Terms</Headline>
 
                             <Paragraph>
-                                I may change Terms at any time, and I might need to make changes to
-                                these Terms so that they accurately reflect Site and policies. Using
-                                Site and viewing any Content constitutes your acceptance of the
-                                Terms as modified.
+                                I may change Terms at any time so that they accurately reflect Site
+                                and policies. Using Site and viewing any Content constitutes your
+                                acceptance of the Terms as modified.
                             </Paragraph>
                         </div>
                     </Grid>

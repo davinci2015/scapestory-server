@@ -91,10 +91,11 @@ const PrivacyPolicy = () => {
 
                             <Paragraph>
                                 I want to inform you that whenever you use my Service, in a case of
-                                an error in the app I collect data and information. This Log Data
-                                may include information such as your device Internet Protocol (“IP”)
-                                address, browser name and version, operating system version, the
-                                time and date of your use of the Service, and other statistics.
+                                an error in the app I collect data and information (“Log Data”).
+                                This Log Data may include information such as your device Internet
+                                Protocol (“IP”) address, browser name and version, operating system
+                                version, the time and date of your use of the Service, and other
+                                statistics.
                             </Paragraph>
 
                             <Headline variant="h4">Cookies</Headline>
