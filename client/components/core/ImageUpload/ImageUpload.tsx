@@ -10,7 +10,7 @@ interface Props {
     multiple?: boolean
 }
 
-const ImageUpload: React.FunctionComponent<Props> = ({onChange, render, multiple}) => {
+const ImageUpload: React.FunctionComponent<Props> = ({multiple, onChange, render}) => {
     const inputRef = useRef<HTMLInputElement | null>(null)
     const openFinder = () => inputRef?.current?.click()
 

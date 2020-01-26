@@ -14,7 +14,7 @@ interface Image {
 interface Props {
     onImageChange?: (files: FileList | null) => void
     onImageRemove?: (id: number) => void
-    openGallery: VoidFunction
+    openGallery: (imageIndex: number) => void
     images: Image[]
     edit?: boolean
 }
@@ -61,15 +61,19 @@ const PhotoSection: React.FunctionComponent<Props> = ({
         <div className="photo-grid">
             <div className="row">
                 {images[0] ? (
-                    <a onClick={openGallery} className="image image--main">
-                        <img src={images[0].src} alt={images[0].alt || ALT_PLACEHOLDER} />
+                    <div className="image image--main">
+                        <img
+                            onClick={() => openGallery(0)}
+                            src={images[0].src}
+                            alt={images[0].alt || ALT_PLACEHOLDER}
+                        />
                         {edit && (
                             <div className="btn-wrapper">
                                 <ButtonAddPhoto onClick={onImageChange} />
                                 <ButtonRemovePhoto id={images[0].id} onClick={onImageRemove} />
                             </div>
                         )}
-                    </a>
+                    </div>
                 ) : (
                     <div className="image image--main">
                         {edit && (
@@ -88,54 +92,70 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                     </div>
                 )}
                 {images[1] ? (
-                    <a onClick={openGallery} className="image image--half">
-                        <img src={images[1].src} alt={images[1].alt || ALT_PLACEHOLDER} />
+                    <div className="image image--half">
+                        <img
+                            onClick={() => openGallery(1)}
+                            src={images[1].src}
+                            alt={images[1].alt || ALT_PLACEHOLDER}
+                        />
                         {edit && (
                             <div className="btn-wrapper">
                                 <ButtonRemovePhoto id={images[1].id} onClick={onImageRemove} />
                             </div>
                         )}
-                    </a>
+                    </div>
                 ) : (
                     edit && <div className="image image--half"></div>
                 )}
                 <div className="column">
                     {images[2] ? (
-                        <a onClick={openGallery} className="image">
-                            <img src={images[2].src} alt={images[2].alt || ALT_PLACEHOLDER} />
+                        <div className="image">
+                            <img
+                                onClick={() => openGallery(2)}
+                                src={images[2].src}
+                                alt={images[2].alt || ALT_PLACEHOLDER}
+                            />
                             {edit && (
                                 <div className="btn-wrapper">
                                     <ButtonRemovePhoto id={images[2].id} onClick={onImageRemove} />
                                 </div>
                             )}
-                        </a>
+                        </div>
                     ) : (
                         edit && <div className="image"></div>
                     )}
                     {images[3] ? (
-                        <a onClick={openGallery} className="image">
-                            <img src={images[3].src} alt={images[3].alt || ALT_PLACEHOLDER} />
+                        <div className="image">
+                            <img
+                                onClick={() => openGallery(3)}
+                                src={images[3].src}
+                                alt={images[3].alt || ALT_PLACEHOLDER}
+                            />
                             {edit && (
                                 <div className="btn-wrapper">
                                     <ButtonRemovePhoto id={images[3].id} onClick={onImageRemove} />
                                 </div>
                             )}
-                        </a>
+                        </div>
                     ) : (
                         edit && <div className="image"></div>
                     )}
                 </div>
             </div>
             <div className="row">
-                {images.slice(4).map(image => (
-                    <a onClick={openGallery} className="image" key={image.src}>
-                        <img src={image.src} alt={image.alt || ALT_PLACEHOLDER} />
+                {images.slice(4).map((image, index) => (
+                    <div className="image" key={image.src}>
+                        <img
+                            onClick={() => openGallery(index + 4)}
+                            src={image.src}
+                            alt={image.alt || ALT_PLACEHOLDER}
+                        />
                         {edit && (
                             <div className="btn-wrapper">
                                 <ButtonRemovePhoto id={image.id} onClick={onImageRemove} />
                             </div>
                         )}
-                    </a>
+                    </div>
                 ))}
             </div>
         </div>
@@ -162,6 +182,7 @@ const PhotoSection: React.FunctionComponent<Props> = ({
 
             .row {
                 display: flex;
+                flex-wrap: wrap;
                 margin-left: -8px;
             }
 

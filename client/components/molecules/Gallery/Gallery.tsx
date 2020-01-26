@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import ImageGallery, {ReactImageGalleryItem} from 'react-image-gallery'
 
 import {zIndex, colors, spaces} from 'styles'
 import {Icon} from 'components/atoms'
@@ -11,6 +12,8 @@ const classes = {
 interface Props {
     onClose: VoidFunction
     isOpen: boolean
+    images: ReactImageGalleryItem[]
+    startIndex: number
 }
 
 type GalleryType = React.FunctionComponent<Props> & {
@@ -18,18 +21,31 @@ type GalleryType = React.FunctionComponent<Props> & {
     Image: typeof GalleryImage
 }
 
-const Gallery: GalleryType = ({children, isOpen, onClose}) => {
+const Gallery: GalleryType = ({images, isOpen, onClose, startIndex = 0}) => {
     if (!isOpen) return null
+
+    useEffect(() => {
+        document.addEventListener('keydown', onEscape)
+        return () => document.removeEventListener('keydown', onEscape)
+    }, [])
+
+    const onEscape = (e: KeyboardEvent) => {
+        const escape = 27
+        if (e.keyCode === escape) onClose()
+    }
 
     return (
         <>
             <div className="gallery">
                 <div className="gallery__overlay">
-                    <a onClick={onClose} className="gallery__close">
+                    <div className="slider">
+                        <a onClick={onClose} className="gallery__outside"></a>
+                        <ImageGallery startIndex={startIndex} items={images} />
+                    </div>
+                    <div onClick={onClose} className="gallery__close-icon">
                         <Icon d={Icon.CLOSE} color={colors.SHADE_LIGHT} size={36} />
-                    </a>
+                    </div>
                 </div>
-                <div className="slider">{children}</div>
             </div>
             <style jsx>{`
                 .gallery {
@@ -45,19 +61,26 @@ const Gallery: GalleryType = ({children, isOpen, onClose}) => {
                     z-index: ${zIndex.HIGHEST};
                 }
 
-                .gallery__close {
+                .gallery__outside {
+                    position: absolute;
+                    top: ${spaces.s4};
+                    right: ${spaces.s4};
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .gallery__close-icon {
                     cursor: pointer;
                     position: absolute;
-                    top: ${spaces.s16};
+                    top: ${spaces.s18};
                     right: ${spaces.s30};
-                    padding: ${spaces.s6};
                 }
 
                 .slider {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     height: 100%;
                 }
             `}</style>
