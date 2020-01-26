@@ -1,6 +1,4 @@
 import React from 'react'
-// @ts-ignore
-import AwesomeSlider from 'react-awesome-slider'
 
 import {zIndex, colors, spaces} from 'styles'
 import {Icon} from 'components/atoms'
@@ -31,9 +29,7 @@ const Gallery: GalleryType = ({children, isOpen, onClose}) => {
                         <Icon d={Icon.CLOSE} color={colors.SHADE_LIGHT} size={36} />
                     </a>
                 </div>
-                <div className="slider">
-                    <AwesomeSlider>{children}</AwesomeSlider>
-                </div>
+                <div className="slider">{children}</div>
             </div>
             <style jsx>{`
                 .gallery {
