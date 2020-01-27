@@ -11,6 +11,8 @@ import routes, {createDynamicPath} from 'routes'
 import {User_ProfileQuery} from 'graphql/generated/queries'
 import {UserImageSize} from 'components/atoms/UserImage/UserImage'
 import {media, spaces, breakpoints} from 'styles'
+import {Hide} from 'components/core'
+import {pxToNumber} from 'utils/converter'
 
 interface Props {
     user?: User_ProfileQuery['me']
@@ -65,26 +67,28 @@ const Navigation = ({
                 <div className="right">
                     {!isAuthenticated && (
                         <>
-                            <div className="text">
-                                <Paragraph as="span" color={styles.colors.SHADE_DEEP}>
-                                    <FormattedMessage
-                                        id="navigation.already_member"
-                                        defaultMessage="Already a member?"
-                                    />
-                                </Paragraph>
-                                <div className="signup" onClick={openLoginModal}>
-                                    <Paragraph
-                                        as="span"
-                                        color={styles.colors.PRIMARY}
-                                        weight="bold"
-                                    >
+                            <Hide upTo={pxToNumber(breakpoints.medium)}>
+                                <div className="text">
+                                    <Paragraph as="span" color={styles.colors.SHADE_DEEP}>
                                         <FormattedMessage
-                                            id="navigation.login"
-                                            defaultMessage="Login"
+                                            id="navigation.already_member"
+                                            defaultMessage="Already a member?"
                                         />
                                     </Paragraph>
+                                    <div className="signup" onClick={openLoginModal}>
+                                        <Paragraph
+                                            as="span"
+                                            color={styles.colors.PRIMARY}
+                                            weight="bold"
+                                        >
+                                            <FormattedMessage
+                                                id="navigation.login"
+                                                defaultMessage="Login"
+                                            />
+                                        </Paragraph>
+                                    </div>
                                 </div>
-                            </div>
+                            </Hide>
                             <div className="sign-up-btn">
                                 <Button
                                     color="secondary"
@@ -100,22 +104,25 @@ const Navigation = ({
                             </div>
                         </>
                     )}
-                    <Button
-                        dimensions="small"
-                        onClick={onCreateAquascape}
-                        leftIcon={
-                            <Icon
-                                d={Icon.ADD_FULL}
-                                viewBox="0 0 22 22"
-                                color={styles.colors.WHITE}
+                    <Hide upTo={pxToNumber(breakpoints.medium)}>
+                        <Button
+                            dimensions="small"
+                            onClick={onCreateAquascape}
+                            leftIcon={
+                                <Icon
+                                    d={Icon.ADD_FULL}
+                                    viewBox="0 0 22 22"
+                                    color={styles.colors.WHITE}
+                                />
+                            }
+                        >
+                            <FormattedMessage
+                                id="navigation_add_your_aquascape"
+                                defaultMessage="Add your aquascape"
                             />
-                        }
-                    >
-                        <FormattedMessage
-                            id="navigation_add_your_aquascape"
-                            defaultMessage="Add your aquascape"
-                        />
-                    </Button>
+                        </Button>
+                    </Hide>
+
                     {isAuthenticated && user && (
                         <NavLink
                             as={createDynamicPath(routes.profile, {slug: user.slug})}
@@ -150,7 +157,7 @@ const Navigation = ({
                 .container {
                     height: 100%;
                     margin: 0 auto;
-                    padding: 0 ${spaces.s16};
+                    padding: 0 ${spaces.s18};
 
                     display: flex;
                     align-items: center;
@@ -159,17 +166,19 @@ const Navigation = ({
 
                 @media ${media.up('medium')} {
                     .container {
-                        padding: 0 24px 0 60px;
+                        padding: 0 ${spaces.s24} 0 ${spaces.s60};
                     }
                 }
 
                 .left :global(img) {
-                    padding-right: ${spaces.s16};
+                    padding-right: ${spaces.s8};
+                    width: 41px;
                 }
 
                 @media ${media.up('medium')} {
                     .left :global(img) {
                         padding-right: ${spaces.s60};
+                        width: auto;
                     }
                 }
 
@@ -188,8 +197,14 @@ const Navigation = ({
 
                 .right .sign-up-btn {
                     flex: 0;
-                    margin-right: ${styles.spaces.s24};
-                    margin-left: ${styles.spaces.s36};
+                    margin-left: ${styles.spaces.s12};
+                }
+
+                @media ${media.up('medium')} {
+                    .right .sign-up-btn {
+                        margin-right: ${styles.spaces.s24};
+                        margin-left: ${styles.spaces.s36};
+                    }
                 }
 
                 .right .text {
