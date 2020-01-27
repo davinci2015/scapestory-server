@@ -1,7 +1,7 @@
 import React from 'react'
 import {noop} from 'lodash'
 
-import {spaces, borderRadius, colors} from 'styles'
+import {spaces, borderRadius, colors, media} from 'styles'
 import {FormattedMessage, Button, Icon, Paragraph} from 'components/atoms'
 import {ImageUpload} from 'components/core'
 
@@ -183,35 +183,21 @@ const PhotoSection: React.FunctionComponent<Props> = ({
             .row {
                 display: flex;
                 flex-wrap: wrap;
-                margin-left: -8px;
             }
 
             .column {
-                width: calc(25% - ${GUTTER});
-            }
-
-            .column .image {
                 width: 100%;
             }
 
             .image {
                 position: relative;
-                width: calc(25% - ${GUTTER});
-                height: 221px;
-                margin: 8px;
+                width: 100%;
+                height: 200px;
+                margin-bottom: ${spaces.s16};
                 cursor: pointer;
 
                 background-color: ${colors.SHADE_EXTRA_LIGHT};
                 border-radius: ${borderRadius.TERTIARY};
-            }
-
-            .image.image--main {
-                width: calc(50% - ${GUTTER});
-                height: 450px;
-            }
-
-            .image.image--half {
-                height: 450px;
             }
 
             .image :global(img) {
@@ -220,6 +206,53 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                 width: 100%;
                 object-fit: cover;
                 border-radius: ${borderRadius.TERTIARY};
+            }
+
+            @media ${media.up('small')} {
+                .row {
+                    margin-left: -${spaces.s8};
+                }
+
+                .column {
+                    display: flex;
+                }
+
+                .image {
+                    width: calc(50% - ${GUTTER});
+                    margin: ${spaces.s8};
+                    height: 180px;
+                }
+            }
+
+            @media ${media.up('medium')} {
+                .row {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+
+                .column {
+                    display: block;
+                    width: calc(25% - ${GUTTER});
+                }
+
+                .column .image {
+                    width: 100%;
+                }
+
+                .image {
+                    width: calc(25% - ${GUTTER});
+                    height: 221px;
+                    margin: ${spaces.s8};
+                }
+
+                .image.image--main {
+                    width: calc(50% - ${GUTTER});
+                    height: 450px;
+                }
+
+                .image.image--half {
+                    height: 450px;
+                }
             }
         `}</style>
     </>
