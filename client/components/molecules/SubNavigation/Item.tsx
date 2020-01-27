@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-scroll'
 
-import {colors, spaces, typography} from 'styles'
+import {colors, spaces, typography, media} from 'styles'
 import {navigationHeight} from 'components/molecules/Navigation'
 import {pxToNumber} from 'utils/converter'
 
@@ -11,24 +11,12 @@ export interface SubNavigationItemProps {
 
 const SUBNAVIGATION_HEIGHT = '72px'
 
-const offset = -(
-    pxToNumber(SUBNAVIGATION_HEIGHT) + pxToNumber(navigationHeight.SLIM)
-)
+const offset = -(pxToNumber(SUBNAVIGATION_HEIGHT) + pxToNumber(navigationHeight.SLIM))
 
-const Item: React.FunctionComponent<SubNavigationItemProps> = ({
-    children,
-    id,
-}) => (
+const Item: React.FunctionComponent<SubNavigationItemProps> = ({children, id}) => (
     <>
         <li>
-            <Link
-                activeClass="active"
-                to={id}
-                spy
-                smooth
-                duration={500}
-                offset={offset}
-            >
+            <Link activeClass="active" to={id} spy smooth duration={500} offset={offset}>
                 {children}
             </Link>
         </li>
@@ -42,25 +30,29 @@ const Item: React.FunctionComponent<SubNavigationItemProps> = ({
                 font-weight: ${typography.fontWeight.extraBold};
                 color: ${colors.SHADE_DEEP};
                 transition: color 100ms linear;
+                fill: ${colors.SHADE_DEEP};
             }
 
             li :global(.active) {
                 color: ${colors.PRIMARY};
+                fill: ${colors.PRIMARY};
             }
 
             li:hover {
                 color: ${colors.PRIMARY};
             }
 
-            li::after {
-                content: '';
-                position: absolute;
-                width: 4px;
-                height: 4px;
-                border-radius: 50%;
-                background-color: ${colors.DARK_GRAY};
-                right: -${spaces.s24};
-                top: calc(50% - 2px);
+            @media ${media.up('small')} {
+                li::after {
+                    content: '';
+                    position: absolute;
+                    width: 4px;
+                    height: 4px;
+                    border-radius: 50%;
+                    background-color: ${colors.DARK_GRAY};
+                    right: -${spaces.s24};
+                    top: calc(50% - 2px);
+                }
             }
         `}</style>
     </>

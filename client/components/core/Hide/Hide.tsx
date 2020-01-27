@@ -6,10 +6,11 @@ export const GUTTER = 15
 export const COLUMNS = 12
 
 interface Props {
-    upTo: number
+    upTo?: number
+    after?: number
 }
 
-const Hide: React.FunctionComponent<Props> = ({children, upTo}) => {
+const Hide: React.FunctionComponent<Props> = ({after, children, upTo}) => {
     const [width, setWidth] = useState(0)
 
     useEffect(() => {
@@ -23,7 +24,11 @@ const Hide: React.FunctionComponent<Props> = ({children, upTo}) => {
         setWidth(window.innerWidth)
     }
 
-    if (upTo > width) {
+    if (upTo && upTo > width) {
+        return null
+    }
+
+    if (after && after < width) {
         return null
     }
 

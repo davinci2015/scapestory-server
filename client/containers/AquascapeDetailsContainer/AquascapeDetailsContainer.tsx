@@ -6,7 +6,7 @@ import {Element} from 'react-scroll'
 
 import {AQUASCAPE_DETAILS} from 'containers/AquascapeDetailsContainer/queries'
 import {Divider, Icon, Paragraph} from 'components/atoms'
-import {Grid, Content} from 'components/core'
+import {Grid, Content, Hide} from 'components/core'
 import {SubNavigation, EquipmentCard} from 'components/molecules'
 import {VISIT} from 'graphql/mutations'
 import CommentsContainer from 'containers/AquascapeDetailsContainer/CommentsContainer'
@@ -25,13 +25,15 @@ import cookie from 'services/cookie'
 import {AquascapeDetailsQuery, AquascapeDetailsQueryVariables} from 'graphql/generated/queries'
 import HeroSectionContainer from 'containers/AquascapeDetailsContainer/HeroSectionContainer'
 import FloraList from 'components/sections/AquascapeDetails/FloraSection/FloraList'
-import {colors} from 'styles'
+import {colors, breakpoints} from 'styles'
 import {
     AdditivesCard,
     SubstratesCard,
     LightsCard,
     FiltersCard,
 } from 'components/sections/AquascapeDetails/EquipmentSection/Cards'
+import {pxToNumber} from 'utils/converter'
+import SettingsIcon from 'assets/icons/settings.svg'
 
 const sections = {
     PHOTO_POSTS: 'PHOTO_POSTS',
@@ -93,29 +95,49 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
             <HeroSectionContainer aquascape={aquascapeResult.aquascape} />
             <SubNavigation>
                 <SubNavigation.Item id={sections.PHOTO_POSTS}>
-                    <FormattedMessage
-                        id="aquascape.subnavigation.photo"
-                        defaultMessage="Photo Diary"
-                    />
+                    <Hide upTo={pxToNumber(breakpoints.small)}>
+                        <FormattedMessage
+                            id="aquascape.subnavigation.photo"
+                            defaultMessage="Photo Diary"
+                        />
+                    </Hide>
+                    <Hide after={pxToNumber(breakpoints.small)}>
+                        <Icon d={Icon.CAMERA} />
+                    </Hide>
                 </SubNavigation.Item>
                 <SubNavigation.Item id={sections.FLORA}>
-                    <FormattedMessage
-                        id="aquascape.subnavigation.flora"
-                        defaultMessage="Flora & Fauna"
-                    />
+                    <Hide upTo={pxToNumber(breakpoints.small)}>
+                        <FormattedMessage
+                            id="aquascape.subnavigation.flora"
+                            defaultMessage="Flora & Fauna"
+                        />
+                    </Hide>
+                    <Hide after={pxToNumber(breakpoints.small)}>
+                        <Icon d={Icon.PLANT} viewBox="0 0 48 48" size={42} />
+                    </Hide>
                 </SubNavigation.Item>
                 <SubNavigation.Item id={sections.EQUIPMENT}>
-                    <FormattedMessage
-                        id="aquascape.subnavigation.equipment"
-                        defaultMessage="Equipment"
-                    />
+                    <Hide upTo={pxToNumber(breakpoints.small)}>
+                        <FormattedMessage
+                            id="aquascape.subnavigation.equipment"
+                            defaultMessage="Equipment"
+                        />
+                    </Hide>
+                    <Hide after={pxToNumber(breakpoints.small)}>
+                        <SettingsIcon />
+                    </Hide>
                 </SubNavigation.Item>
                 <SubNavigation.Item id={sections.COMMENTS}>
-                    <FormattedMessage
-                        id="aquascape.subnavigation.comments"
-                        defaultMessage="Comments ({count})"
-                        values={{count: aquascapeResult.aquascape.comments.length}}
-                    />
+                    <Hide upTo={pxToNumber(breakpoints.small)}>
+                        <FormattedMessage
+                            id="aquascape.subnavigation.comments"
+                            defaultMessage="Comments ({count})"
+                            values={{count: aquascapeResult.aquascape.comments.length}}
+                        />
+                    </Hide>
+                    <Hide after={pxToNumber(breakpoints.small)}>
+                        <Icon d={Icon.COMMENT} />
+                    </Hide>
                 </SubNavigation.Item>
             </SubNavigation>
             <Grid>

@@ -164,22 +164,9 @@ const Navigation = ({
                     justify-content: space-between;
                 }
 
-                @media ${media.up('medium')} {
-                    .container {
-                        padding: 0 ${spaces.s24} 0 ${spaces.s60};
-                    }
-                }
-
                 .left :global(img) {
                     padding-right: ${spaces.s8};
                     width: 41px;
-                }
-
-                @media ${media.up('medium')} {
-                    .left :global(img) {
-                        padding-right: ${spaces.s60};
-                        width: auto;
-                    }
                 }
 
                 .right,
@@ -191,20 +178,13 @@ const Navigation = ({
 
                 .right :global(.${UserImage.classes.root}) {
                     flex: 0 0 auto;
-                    margin: 0 ${styles.spaces.s36};
+                    margin-left: ${spaces.s18};
                     cursor: pointer;
                 }
 
                 .right .sign-up-btn {
                     flex: 0;
                     margin-left: ${styles.spaces.s12};
-                }
-
-                @media ${media.up('medium')} {
-                    .right .sign-up-btn {
-                        margin-right: ${styles.spaces.s24};
-                        margin-left: ${styles.spaces.s36};
-                    }
                 }
 
                 .right .text {
@@ -215,6 +195,28 @@ const Navigation = ({
                     display: inline;
                     margin-left: ${styles.spaces.s6};
                     cursor: pointer;
+                }
+
+                @media ${media.up('medium')} {
+                    .container {
+                        padding: 0 ${spaces.s24} 0 ${spaces.s60};
+                    }
+
+                    .left :global(img) {
+                        padding-right: ${spaces.s60};
+                        width: auto;
+                    }
+
+                    .right .sign-up-btn {
+                        margin-right: ${styles.spaces.s24};
+                        margin-left: ${styles.spaces.s36};
+                    }
+
+                    .right :global(.${UserImage.classes.root}) {
+                        flex: 0 0 auto;
+                        margin: 0 ${styles.spaces.s36};
+                        cursor: pointer;
+                    }
                 }
             `}</style>
         </nav>

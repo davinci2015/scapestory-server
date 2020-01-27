@@ -175,7 +175,7 @@ const Hero = ({
                     padding: ${spaces.s36} ${spaces.s48} ${spaces.s48} ${spaces.s48};
                 }
 
-                .content-cover {
+                .content--cover {
                     padding: ${spaces.s36} ${spaces.s24} ${spaces.s48} ${spaces.s24};
                 }
             }
