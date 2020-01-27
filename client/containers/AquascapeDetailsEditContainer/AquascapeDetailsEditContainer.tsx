@@ -75,7 +75,7 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
         <Content>
             <HeroSectionEditContainer aquascape={aquascapeResult.aquascape} />
             <SubNavigation>
-                <SubNavigation.Item id={sections.PHOTO_POSTS}>
+                <SubNavigation.Item offset={70} id={sections.PHOTO_POSTS}>
                     <Hide upTo={pxToNumber(breakpoints.small)}>
                         <FormattedMessage
                             id="aquascape.subnavigation.photo"
@@ -86,7 +86,7 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
                         <Icon d={Icon.CAMERA} />
                     </Hide>
                 </SubNavigation.Item>
-                <SubNavigation.Item id={sections.FLORA}>
+                <SubNavigation.Item offset={100} id={sections.FLORA}>
                     <Hide upTo={pxToNumber(breakpoints.small)}>
                         <FormattedMessage
                             id="aquascape.subnavigation.flora"
@@ -97,7 +97,7 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
                         <Icon d={Icon.PLANT} viewBox="0 0 48 48" size={42} />
                     </Hide>
                 </SubNavigation.Item>
-                <SubNavigation.Item id={sections.EQUIPMENT}>
+                <SubNavigation.Item offset={100} id={sections.EQUIPMENT}>
                     <Hide upTo={pxToNumber(breakpoints.small)}>
                         <FormattedMessage
                             id="aquascape.subnavigation.equipment"
@@ -108,7 +108,7 @@ const AquascapeDetailsEditContainer: React.FunctionComponent = () => {
                         <SettingsIcon />
                     </Hide>
                 </SubNavigation.Item>
-                <SubNavigation.Item id={sections.COMMENTS}>
+                <SubNavigation.Item offset={100} id={sections.COMMENTS}>
                     <Hide upTo={pxToNumber(breakpoints.small)}>
                         <FormattedMessage
                             id="aquascape.subnavigation.comments"

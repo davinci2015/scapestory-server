@@ -7,16 +7,24 @@ import {pxToNumber} from 'utils/converter'
 
 export interface SubNavigationItemProps {
     id: string
+    offset?: number
 }
 
 const SUBNAVIGATION_HEIGHT = '72px'
 
-const offset = -(pxToNumber(SUBNAVIGATION_HEIGHT) + pxToNumber(navigationHeight.SLIM))
+const DEFAULT_OFFSET = -(pxToNumber(SUBNAVIGATION_HEIGHT) + pxToNumber(navigationHeight.SLIM))
 
-const Item: React.FunctionComponent<SubNavigationItemProps> = ({children, id}) => (
+const Item: React.FunctionComponent<SubNavigationItemProps> = ({children, id, offset = 0}) => (
     <>
         <li>
-            <Link activeClass="active" to={id} spy smooth duration={500} offset={offset}>
+            <Link
+                activeClass="active"
+                to={id}
+                spy
+                smooth
+                duration={500}
+                offset={offset + DEFAULT_OFFSET}
+            >
                 {children}
             </Link>
         </li>

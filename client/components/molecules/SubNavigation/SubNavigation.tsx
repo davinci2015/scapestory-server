@@ -31,6 +31,7 @@ const SubNavigation: SubNavigationInterface = ({children}) => (
                 display: flex;
                 align-items: center;
 
+                border-top: 2px solid ${colors.SHADE_EXTRA_LIGHT};
                 background-color: ${colors.WHITE};
                 box-shadow: ${boxShadow.PRIMARY};
                 z-index: ${zIndex.HIGH};
