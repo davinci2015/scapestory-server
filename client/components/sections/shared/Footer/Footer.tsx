@@ -6,11 +6,19 @@ import {Paragraph, FormattedMessage, Icon} from 'components/atoms'
 import routes from 'routes'
 import config from 'config'
 
+const classes = {
+    root: 'footer',
+}
+
 interface Props {}
 
-const Footer: React.FunctionComponent<Props> = () => (
+type FooterType = React.FunctionComponent<Props> & {
+    classes: typeof classes
+}
+
+const Footer: FooterType = () => (
     <>
-        <div className="footer">
+        <div className={classes.root}>
             <div className="top">
                 <Link href={routes.index}>
                     <a>
@@ -186,5 +194,7 @@ const Footer: React.FunctionComponent<Props> = () => (
         `}</style>
     </>
 )
+
+Footer.classes = classes
 
 export default Footer

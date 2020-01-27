@@ -56,7 +56,7 @@ const AquascapeCard = ({
                 {(state: TransitionStatus) => (
                     <div className={classnames(classes.root, state)}>
                         <AquascapeDetailsLink href={href} as={as}>
-                            <div className="header">
+                            <div className="card__header">
                                 <img
                                     className="header-image"
                                     src={image || config.AQUASCAPE_MAIN_IMAGE_PLACEHOLDER}
@@ -79,7 +79,7 @@ const AquascapeCard = ({
                                 </div>
                             </div>
                         </AquascapeDetailsLink>
-                        <div className="body">
+                        <div className="card__body">
                             <div className="headline">
                                 <Headline as="h2" variant="h5">
                                     <Truncate trimWhitespace>
@@ -87,7 +87,7 @@ const AquascapeCard = ({
                                     </Truncate>
                                 </Headline>
                             </div>
-                            <div className="footer">
+                            <div className="card__footer">
                                 <ProfileLink slug={user?.slug || ''}>
                                     <UserWidget
                                         image={user?.profileImage}
@@ -132,7 +132,7 @@ const AquascapeCard = ({
                     box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
                 }
 
-                .header {
+                .card__header {
                     display: block;
                     position: relative;
                     height: 180px;
@@ -198,11 +198,11 @@ const AquascapeCard = ({
                     width: 16px;
                 }
 
-                .body {
+                .card__body {
                     padding: ${spaces.s12} ${spaces.s18} ${spaces.s18} ${spaces.s18};
                 }
 
-                .body > .headline :global(.${Headline.classes.root}) {
+                .card__body > .headline :global(.${Headline.classes.root}) {
                     margin-top: 0;
                     height: 48px;
                     overflow: hidden;
@@ -211,16 +211,16 @@ const AquascapeCard = ({
                     -webkit-box-orient: vertical;
                 }
 
-                .footer {
+                .card__footer {
                     display: flex;
                     justify-content: space-between;
                 }
 
-                .footer .user-link {
+                .card__footer .user-link {
                     text-decoration: none;
                 }
 
-                .footer > .tags :global(.${Tag.classes.root}) {
+                .card__footer > .tags :global(.${Tag.classes.root}) {
                     margin-left: ${spaces.s6};
                 }
             `}</style>

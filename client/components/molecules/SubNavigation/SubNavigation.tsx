@@ -4,6 +4,7 @@ import {colors, boxShadow, zIndex, media, spaces} from 'styles'
 import {SubNavigationItemProps, Item} from 'components/molecules/SubNavigation/Item'
 import {navigationHeight} from 'components/molecules/Navigation'
 import {GRID_WIDTH_DEFAULT} from 'components/core/Hide/Hide'
+import {Footer} from 'components/sections/shared'
 
 type SubNavigationInterface<P = {}> = React.FunctionComponent<P> & {
     Item: React.FunctionComponent<SubNavigationItemProps>
@@ -18,7 +19,7 @@ const SubNavigation: SubNavigationInterface = ({children}) => (
         </div>
 
         <style jsx>{`
-            :global(.footer) {
+            :global(.${Footer.classes.root}) {
                 padding-bottom: 62px;
             }
 
@@ -53,7 +54,7 @@ const SubNavigation: SubNavigationInterface = ({children}) => (
             }
 
             @media ${media.up('small')} {
-                :global(.footer) {
+                :global(.${Footer.classes.root}) {
                     padding-bottom: 0;
                 }
 
