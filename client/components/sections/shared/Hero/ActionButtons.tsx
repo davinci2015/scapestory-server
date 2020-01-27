@@ -3,7 +3,15 @@ import React from 'react'
 import {spaces} from 'styles'
 import {Button} from 'components/atoms'
 
-const ActionButtons: React.FunctionComponent = ({children}) => (
+const classes = {
+    root: 'action-buttons',
+}
+
+type ActionButtons = React.FunctionComponent & {
+    classes: typeof classes
+}
+
+const ActionButtons: ActionButtons = ({children}) => (
     <>
         <div className="action-buttons">{children}</div>
         <style jsx>{`
@@ -12,10 +20,13 @@ const ActionButtons: React.FunctionComponent = ({children}) => (
             }
 
             .action-buttons :global(.${Button.classes.root}) {
-                margin-left: ${spaces.s18};
+                margin-left: ${spaces.s8};
+                margin-right: ${spaces.s8};
             }
         `}</style>
     </>
 )
+
+ActionButtons.classes = classes
 
 export default ActionButtons

@@ -1,7 +1,7 @@
 import React, {useCallback, SyntheticEvent} from 'react'
 
 import {Badge, FormattedMessage, Paragraph, Icon, Tag, IconText} from 'components/atoms'
-import {colors, spaces} from 'styles'
+import {colors, spaces, media} from 'styles'
 import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
 import {FeaturedAquascapesQuery} from 'graphql/generated/queries'
@@ -61,7 +61,7 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
                         }
                         bottomSection={
                             <Hero.BottomSection>
-                                <Hero.BottomLeft>
+                                <div className="bottom-left">
                                     {aquascape.user && (
                                         <UserWidget
                                             onClick={redirectToProfile}
@@ -79,17 +79,19 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
                                             }
                                         />
                                     )}
-                                    <IconText
-                                        icon={Icon.EYE_SHOW_FULL}
-                                        text={aquascape.viewsCount}
-                                        color={colors.WHITE}
-                                    />
-                                    <IconText
-                                        icon={Icon.HEART}
-                                        text={aquascape.likesCount}
-                                        color={colors.WHITE}
-                                    />
-                                </Hero.BottomLeft>
+                                    <div className="stats">
+                                        <IconText
+                                            icon={Icon.EYE_SHOW_FULL}
+                                            text={aquascape.viewsCount}
+                                            color={colors.WHITE}
+                                        />
+                                        <IconText
+                                            icon={Icon.HEART}
+                                            text={aquascape.likesCount}
+                                            color={colors.WHITE}
+                                        />
+                                    </div>
+                                </div>
                                 <Hero.BottomRight>
                                     {aquascape.tags.map((tag, index) => (
                                         <Tag
@@ -108,7 +110,7 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
 
             <style jsx>{`
                 .section {
-                    padding-top: ${spaces.s60};
+                    margin: 0 -${spaces.s16};
                 }
 
                 .section a {
@@ -117,6 +119,27 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
 
                 .section :global(.${UserWidget.classes.root}) {
                     margin-right: ${spaces.s30};
+                }
+
+                .stats {
+                    margin-top: ${spaces.s18};
+                    margin-left: -${spaces.s8};
+                }
+
+                @media ${media.up('medium')} {
+                    .section {
+                        padding-top: ${spaces.s60};
+                    }
+
+                    .bottom-left {
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .bottom-left .stats {
+                        margin-top: 0;
+                        margin-left: 0;
+                    }
                 }
             `}</style>
         </>

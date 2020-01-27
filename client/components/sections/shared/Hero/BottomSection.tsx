@@ -26,20 +26,8 @@ const BottomSection: React.FunctionComponent = ({children}) => (
     </div>
 )
 
-const BottomLeft: React.FunctionComponent = ({children}) => (
-    <div className="left">
-        {children}
-        <style jsx>{`
-            .left {
-                display: flex;
-                align-items: center;
-            }
-        `}</style>
-    </div>
-)
+const BottomLeft: React.FunctionComponent = ({children}) => <div>{children}</div>
 
-const BottomRight: React.FunctionComponent = ({children}) => (
-    <div>{children}</div>
-)
+const BottomRight: React.FunctionComponent = ({children}) => <div>{children}</div>
 
 export {BottomSection, BottomLeft, BottomRight}

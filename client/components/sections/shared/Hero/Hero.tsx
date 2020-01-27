@@ -8,6 +8,7 @@ import {BottomSection, BottomLeft, BottomRight} from 'components/sections/shared
 import {GRID_WIDTH_DEFAULT} from 'components/core/Grid'
 import config from 'config'
 import ActionButtons from './ActionButtons'
+import Truncate from 'react-truncate'
 
 interface Props {
     editMode?: boolean
@@ -66,7 +67,9 @@ const Hero = ({
                 ) : (
                     title && (
                         <Headline as="h1" variant="h2" color={colors.WHITE}>
-                            {title}
+                            <Truncate lines={4} trimWhitespace>
+                                {title}
+                            </Truncate>
                         </Headline>
                     )
                 )}
@@ -84,23 +87,10 @@ const Hero = ({
             .container {
                 position: relative;
                 height: 80vh;
-                margin-left: -${spaces.s24};
-                margin-right: -${spaces.s24};
             }
 
             .container--compact {
                 height: 270px;
-            }
-
-            @media ${media.up('medium')} {
-                .container {
-                    height: 70vh;
-                    margin: 0;
-                }
-
-                .container--compact {
-                    height: 270px;
-                }
             }
 
             .headline-input {
@@ -124,12 +114,6 @@ const Hero = ({
                 position: absolute;
                 left: 0;
                 right: 0;
-            }
-
-            @media ${media.up('medium')} {
-                .radius {
-                    border-radius: ${borderRadius.SECONDARY};
-                }
             }
 
             .gradient--top {
@@ -157,15 +141,13 @@ const Hero = ({
                 flex-direction: column;
                 justify-content: space-between;
                 height: 100%;
-                padding: ${spaces.s36} ${spaces.s48} ${spaces.s48} ${spaces.s48};
-
+                padding: ${spaces.s36} ${spaces.s18} ${spaces.s36} ${spaces.s18};
                 z-index: ${zIndex.DEFAULT};
             }
 
             .content--cover {
                 max-width: ${GRID_WIDTH_DEFAULT};
                 margin: 0 auto;
-                padding: ${spaces.s36} ${spaces.s24} ${spaces.s48} ${spaces.s24};
             }
 
             .content :global(.${Headline.classes.root}) {
@@ -174,6 +156,28 @@ const Hero = ({
 
             .content .bottom {
                 z-index: ${zIndex.DEFAULT};
+            }
+
+            @media ${media.up('medium')} {
+                .container {
+                    height: 70vh;
+                }
+
+                .container--compact {
+                    height: 270px;
+                }
+
+                .radius {
+                    border-radius: ${borderRadius.SECONDARY};
+                }
+
+                .content {
+                    padding: ${spaces.s36} ${spaces.s48} ${spaces.s48} ${spaces.s48};
+                }
+
+                .content-cover {
+                    padding: ${spaces.s36} ${spaces.s24} ${spaces.s48} ${spaces.s24};
+                }
             }
         `}</style>
     </div>

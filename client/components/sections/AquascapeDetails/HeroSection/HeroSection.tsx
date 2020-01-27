@@ -9,13 +9,14 @@ import {
     Button,
     IconButton,
 } from 'components/atoms'
-import {colors, spaces} from 'styles'
+import {colors, spaces, zIndex, media} from 'styles'
 import {Hero} from 'components/sections/shared'
 import {UserWidget, UnfollowButton, FollowButton} from 'components/molecules'
 import {AquascapeDetailsQuery} from 'graphql/generated/queries'
 import {ProfileLink} from 'components/core'
 import {UserWidgetSize, UserWidgetVariant} from 'components/molecules/UserWidget/UserWidget'
 import config from 'config'
+import ActionButtons from 'components/sections/shared/Hero/ActionButtons'
 
 interface Props {
     mineAquascape: boolean
@@ -41,7 +42,7 @@ const HeroSection: React.FunctionComponent<Props> = ({
                 title={aquascape.title || config.AQUASCAPE_TITLE_PLACEHOLDER}
                 image={aquascape.mainImageUrl}
                 topSection={
-                    <Hero.TopSection>
+                    <div className="top-section">
                         <Hero.TopLeft>
                             <ProfileLink slug={aquascape.user.slug}>
                                 <UserWidget
@@ -139,7 +140,7 @@ const HeroSection: React.FunctionComponent<Props> = ({
                                 </Button>
                             )}
                         </Hero.TopRight>
-                    </Hero.TopSection>
+                    </div>
                 }
                 bottomSection={
                     <Hero.BottomSection>
@@ -177,6 +178,28 @@ const HeroSection: React.FunctionComponent<Props> = ({
 
                 .follow {
                     cursor: pointer;
+                }
+
+                .top-section {
+                    display: flex;
+                    flex-direction: column;
+                    z-index: ${zIndex.DEFAULT};
+                }
+
+                .top-section :global(.${ActionButtons.classes.root}) {
+                    margin-top: ${spaces.s18};
+                    margin-left: -${spaces.s8};
+                }
+
+                @media ${media.up('medium')} {
+                    .top-section {
+                        flex-direction: row;
+                        justify-content: space-between;
+                    }
+
+                    .top-section :global(.${ActionButtons.classes.root}) {
+                        margin: 0 -${spaces.s8} 0 0;
+                    }
                 }
             `}</style>
         </>
