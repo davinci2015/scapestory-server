@@ -18,6 +18,10 @@ const SubNavigation: SubNavigationInterface = ({children}) => (
         </div>
 
         <style jsx>{`
+            :global(.footer) {
+                padding-bottom: 62px;
+            }
+
             .subnav {
                 position: fixed;
                 bottom: 0;
@@ -49,6 +53,10 @@ const SubNavigation: SubNavigationInterface = ({children}) => (
             }
 
             @media ${media.up('small')} {
+                :global(.footer) {
+                    padding-bottom: 0;
+                }
+
                 .subnav {
                     position: sticky;
                     top: ${navigationHeight.SLIM};
