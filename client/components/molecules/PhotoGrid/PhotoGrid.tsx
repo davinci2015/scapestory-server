@@ -3,7 +3,6 @@ import {noop} from 'lodash'
 
 import {spaces, borderRadius, colors, media} from 'styles'
 import {FormattedMessage, Button, Icon, Paragraph} from 'components/atoms'
-import {ImageUpload} from 'components/core'
 
 interface Image {
     id: number
@@ -12,7 +11,6 @@ interface Image {
 }
 
 interface Props {
-    onImageChange?: (files: FileList | null) => void
     onImageRemove?: (id: number) => void
     openGallery: (imageIndex: number) => void
     images: Image[]
@@ -21,23 +19,6 @@ interface Props {
 
 const GUTTER = spaces.s16
 const ALT_PLACEHOLDER = 'Scapostory post'
-
-const ButtonAddPhoto = ({onClick}: {onClick: (files: FileList | null) => void}) => (
-    <ImageUpload
-        multiple
-        onChange={onClick}
-        render={({openFinder}) => (
-            <Button
-                onClick={openFinder}
-                dimensions="small"
-                color="primary"
-                leftIcon={<Icon d={Icon.CAMERA} color={colors.WHITE} />}
-            >
-                <FormattedMessage id="photo_grid.add_photo" defaultMessage="Add photo" />
-            </Button>
-        )}
-    />
-)
 
 const ButtonRemovePhoto = ({id, onClick}: {onClick: (id: number) => void; id: number}) => (
     <Button
@@ -53,7 +34,6 @@ const ButtonRemovePhoto = ({id, onClick}: {onClick: (id: number) => void; id: nu
 const PhotoSection: React.FunctionComponent<Props> = ({
     edit,
     images,
-    onImageChange = noop,
     onImageRemove = noop,
     openGallery,
 }) => (
@@ -69,18 +49,12 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                         />
                         {edit && (
                             <div className="btn-wrapper">
-                                <ButtonAddPhoto onClick={onImageChange} />
                                 <ButtonRemovePhoto id={images[0].id} onClick={onImageRemove} />
                             </div>
                         )}
                     </div>
                 ) : (
                     <div className="image image--main">
-                        {edit && (
-                            <div className="btn-wrapper">
-                                <ButtonAddPhoto onClick={onImageChange} />
-                            </div>
-                        )}
                         <div className="placeholder-text">
                             <Paragraph color={colors.DARK_GRAY} type="body" weight="bold">
                                 <FormattedMessage
@@ -163,10 +137,8 @@ const PhotoSection: React.FunctionComponent<Props> = ({
         <style jsx>{`
             .photo-grid .btn-wrapper {
                 position: absolute;
-                display: flex;
-
-                margin-top: ${spaces.s18};
-                margin-left: ${spaces.s18};
+                margin-top: ${spaces.s16};
+                margin-left: ${spaces.s16};
             }
 
             .photo-grid .placeholder-text {
@@ -174,10 +146,6 @@ const PhotoSection: React.FunctionComponent<Props> = ({
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%);
-            }
-
-            .photo-grid .btn-wrapper :global(.${Button.classes.root}) {
-                margin-right: ${spaces.s18};
             }
 
             .row {

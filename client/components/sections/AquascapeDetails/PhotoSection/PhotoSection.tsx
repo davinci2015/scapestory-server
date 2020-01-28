@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
-import {spaces} from 'styles'
-import {Headline, FormattedMessage} from 'components/atoms'
+import {spaces, colors} from 'styles'
+import {Headline, FormattedMessage, Icon, Button} from 'components/atoms'
 import {PhotoGrid, Gallery} from 'components/molecules'
 import {AquascapeImage} from 'graphql/generated/types'
 import Section from 'components/sections/AquascapeDetails/Section'
+import {ImageUpload} from 'components/core'
 
 interface Props {
     edit?: boolean
@@ -38,9 +39,27 @@ const PostsSection: React.FunctionComponent<Props> = ({
                     <Headline as="h2" variant="h3">
                         <FormattedMessage id="aquascape.posts.title" defaultMessage="Photo Diary" />
                     </Headline>
+                    {edit && onImageChange && (
+                        <ImageUpload
+                            multiple
+                            onChange={onImageChange}
+                            render={({openFinder}) => (
+                                <Button
+                                    onClick={openFinder}
+                                    dimensions="small"
+                                    color="primary"
+                                    leftIcon={<Icon d={Icon.CAMERA} color={colors.WHITE} />}
+                                >
+                                    <FormattedMessage
+                                        id="photo_grid.add_photo"
+                                        defaultMessage="Add photo"
+                                    />
+                                </Button>
+                            )}
+                        />
+                    )}
                     <PhotoGrid
                         edit={edit}
-                        onImageChange={onImageChange}
                         onImageRemove={onImageRemove}
                         openGallery={openGallery}
                         images={sortedImages

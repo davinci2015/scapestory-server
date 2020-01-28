@@ -9,6 +9,7 @@ import {MutationDeleteAquascapeImageArgs} from 'graphql/generated/queries'
 import {updateAquascapeImageCache, AquascapeImageActions} from './cache'
 import {showUploadImageToast} from 'utils/render'
 import {ToastMessage, FormattedMessage} from 'components/atoms'
+import logger from 'services/logger'
 
 interface Props {
     aquascapeId: number
@@ -30,6 +31,18 @@ const PhotoSectionEditContainer: React.FunctionComponent<Props> = ({aquascapeId,
                 imageId,
             }),
         })
+            .then(() => {
+                toast.success(
+                    <ToastMessage>
+                        <FormattedMessage
+                            id="success.photo_removed"
+                            defaultMessage="Photo successfully removed!"
+                        />
+                    </ToastMessage>,
+                    {autoClose: 2500}
+                )
+            })
+            .catch(logger.error)
     }
 
     const onImageChange = (files: FileList | null) => {
