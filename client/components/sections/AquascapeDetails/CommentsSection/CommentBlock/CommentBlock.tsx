@@ -6,7 +6,7 @@ import Comment from 'components/molecules/Comment/Comment'
 import {CommentFieldsFragment} from 'graphql/generated/queries'
 import CommentInput from 'components/sections/AquascapeDetails/CommentsSection/CommentInput'
 import {FormattedMessage} from 'components/atoms'
-import {spaces} from 'styles'
+import {spaces, media} from 'styles'
 
 interface Props {
     comment: CommentFieldsFragment
@@ -84,7 +84,13 @@ const CommentsBlock: React.FunctionComponent<Props> = ({
             </Grid.Item>
             <style jsx>{`
                 .child-wrapper {
-                    padding-left: ${spaces.s54};
+                    padding-left: ${spaces.s18};
+                }
+
+                @media ${media.up('large')} {
+                    .child-wrapper {
+                        padding-left: ${spaces.s54};
+                    }
                 }
             `}</style>
         </>

@@ -10,36 +10,38 @@ export interface ItemProps {
     large?: number
 }
 
-const Item: React.FunctionComponent<ItemProps> = ({
-    children,
-    extraSmall = 12,
-    large,
-    medium,
-    small,
-}) => (
+const classes = {
+    root: 'grid-item',
+}
+
+type GridType = React.FunctionComponent<ItemProps> & {
+    classes: typeof classes
+}
+
+const Item: GridType = ({children, extraSmall = 12, large, medium, small}) => (
     <>
-        <div className="item">{children}</div>
+        <div className={classes.root}>{children}</div>
         <style jsx>{`
-            .item {
+            .grid-item {
                 display: flex;
                 flex-direction: column;
                 margin: 0 ${GUTTER}px;
             }
 
             @media ${media.up('extraSmall')} {
-                .item {
+                .grid-item {
                     flex: 0 1 calc(${(extraSmall / COLUMNS) * 100}% - ${GUTTER * 2}px);
                 }
             }
 
             @media ${media.up('small')} {
-                .item {
+                .grid-item {
                     flex: 0 1 calc(${((small || extraSmall) / COLUMNS) * 100}% - ${GUTTER * 2}px);
                 }
             }
 
             @media ${media.up('medium')} {
-                .item {
+                .grid-item {
                     flex: 0 1
                         calc(
                             ${((medium || small || extraSmall) / COLUMNS) * 100}% - ${GUTTER * 2}px
@@ -48,7 +50,7 @@ const Item: React.FunctionComponent<ItemProps> = ({
             }
 
             @media ${media.up('large')} {
-                .item {
+                .grid-item {
                     flex: 0 1
                         calc(
                             ${((large || medium || small || extraSmall) / COLUMNS) * 100}% -
@@ -59,5 +61,7 @@ const Item: React.FunctionComponent<ItemProps> = ({
         `}</style>
     </>
 )
+
+Item.classes = classes
 
 export default Item

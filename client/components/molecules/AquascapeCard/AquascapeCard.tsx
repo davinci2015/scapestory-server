@@ -146,24 +146,6 @@ const AquascapeCard = ({
                     border-top-right-radius: ${borderRadius.TERTIARY};
                 }
 
-                @media ${media.up('extraSmall')} {
-                    .header {
-                        height: 200px;
-                    }
-                }
-
-                @media ${media.up('small')} {
-                    .header {
-                        height: 244px;
-                    }
-                }
-
-                @media ${media.up('medium')} {
-                    .header {
-                        height: 264px;
-                    }
-                }
-
                 .header-image {
                     width: 100%;
                     height: 100%;
@@ -222,6 +204,24 @@ const AquascapeCard = ({
 
                 .card__footer > .tags :global(.${Tag.classes.root}) {
                     margin-left: ${spaces.s6};
+                }
+
+                @media ${media.up('extraSmall')} {
+                    .card__header {
+                        height: 200px;
+                    }
+                }
+
+                @media ${media.up('small')} {
+                    .card__header {
+                        height: 244px;
+                    }
+                }
+
+                @media ${media.up('medium')} {
+                    .card__header {
+                        height: 264px;
+                    }
                 }
             `}</style>
         </>

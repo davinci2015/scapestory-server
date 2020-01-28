@@ -1,8 +1,10 @@
 import React, {FormEvent} from 'react'
 
 import {Textarea, InputAdornment, Button, UserImage} from 'components/atoms'
-import {spaces, typography} from 'styles'
+import {spaces, typography, breakpoints, media} from 'styles'
 import {UserImageSize} from 'components/atoms/UserImage/UserImage'
+import {Hide} from 'components/core'
+import {pxToNumber} from 'utils/converter'
 
 interface Props {
     userImage?: string | null
@@ -23,7 +25,9 @@ const CommentInput: React.FunctionComponent<Props> = ({
 }) => (
     <>
         <div className="textarea">
-            <UserImage size={UserImageSize.s36} image={userImage} />
+            <Hide upTo={pxToNumber(breakpoints.medium)}>
+                <UserImage size={UserImageSize.s36} image={userImage} />
+            </Hide>
             <Textarea
                 rows={1}
                 value={value}
@@ -31,25 +35,44 @@ const CommentInput: React.FunctionComponent<Props> = ({
                 placeholder={placeholder}
                 maxLength={400}
                 endAdornment={
-                    <InputAdornment>
-                        <Button dimensions="small" onClick={onSubmit}>
-                            {submitText}
-                        </Button>
-                    </InputAdornment>
+                    <Hide upTo={pxToNumber(breakpoints.large)}>
+                        <InputAdornment>
+                            <Button dimensions="small" onClick={onSubmit}>
+                                {submitText}
+                            </Button>
+                        </InputAdornment>
+                    </Hide>
                 }
             />
         </div>
+        <Hide after={pxToNumber(breakpoints.large)}>
+            <div className="submit-btn">
+                <Button dimensions="small" onClick={onSubmit}>
+                    {submitText}
+                </Button>
+            </div>
+        </Hide>
         <style jsx>{`
             .textarea {
                 display: flex;
                 align-items: center;
-                font-size: ${typography.fontSize.fs20};
+                font-size: ${typography.fontSize.fs16};
                 width: 100%;
+            }
+
+            .submit-btn {
+                margin-top: ${spaces.s16};
             }
 
             .textarea :global(.${UserImage.classes.root}) {
                 margin-right: ${spaces.s24};
                 flex-shrink: 0;
+            }
+
+            @media ${media.up('medium')} {
+                .textarea {
+                    font-size: ${typography.fontSize.fs20};
+                }
             }
         `}</style>
     </>

@@ -2,11 +2,12 @@ import React, {useCallback} from 'react'
 import classnames from 'classnames'
 
 import {UserImage, FormattedMessage, Icon} from 'components/atoms'
-import {typography, spaces, colors} from 'styles'
+import {typography, spaces, colors, media, breakpoints} from 'styles'
 import {formatDate, dateFormats} from 'utils/date'
 import {CommentFieldsFragment} from 'graphql/generated/queries'
-import {ProfileLink} from 'components/core'
+import {ProfileLink, Hide} from 'components/core'
 import {UserImageSize} from 'components/atoms/UserImage/UserImage'
+import {pxToNumber} from 'utils/converter'
 
 const classes = {
     root: 'comment',
@@ -50,35 +51,42 @@ const Comment: CardInterface = ({
                     </ProfileLink>
                     <span className="content">{comment.content}</span>
                     <div className="bottom">
-                        <div>
+                        <div className="bottom__actions">
                             <span className="date">
                                 {formatDate(parseInt(comment.createdAt), dateFormats.PRIMARY)}
                             </span>
-                            <div className="divider"></div>
-                            <span
-                                onClick={onLikeClick}
-                                className={classnames('action', {
-                                    'action--active': isLiked,
-                                })}
-                            >
-                                <FormattedMessage id="comment.action.like" defaultMessage="Like" />
-                            </span>
-                            {!comment.parentCommentId && (
-                                <span onClick={onReply} className="action">
+                            <Hide upTo={pxToNumber(breakpoints.large)}>
+                                <div className="divider"></div>
+                            </Hide>
+                            <div>
+                                <span
+                                    onClick={onLikeClick}
+                                    className={classnames('action', {
+                                        'action--active': isLiked,
+                                    })}
+                                >
                                     <FormattedMessage
-                                        id="comment.action.reply"
-                                        defaultMessage="Reply"
+                                        id="comment.action.like"
+                                        defaultMessage="Like"
                                     />
                                 </span>
-                            )}
-                            {onRemove && (
-                                <span className="action" onClick={onRemoveClick}>
-                                    <FormattedMessage
-                                        id="comment.action.remove"
-                                        defaultMessage="Remove"
-                                    />
-                                </span>
-                            )}
+                                {!comment.parentCommentId && (
+                                    <span onClick={onReply} className="action">
+                                        <FormattedMessage
+                                            id="comment.action.reply"
+                                            defaultMessage="Reply"
+                                        />
+                                    </span>
+                                )}
+                                {onRemove && (
+                                    <span className="action" onClick={onRemoveClick}>
+                                        <FormattedMessage
+                                            id="comment.action.remove"
+                                            defaultMessage="Remove"
+                                        />
+                                    </span>
+                                )}
+                            </div>
                         </div>
                         <div className="info">
                             {!comment.parentCommentId && !!repliesCount && (
@@ -126,14 +134,14 @@ const Comment: CardInterface = ({
                 .comment .username {
                     display: block;
                     color: ${colors.BLACK};
-                    font-size: ${typography.fontSize.fs20};
+                    font-size: ${typography.fontSize.fs18};
                     font-weight: ${typography.fontWeight.extraBold};
                 }
 
                 .comment .content {
                     display: block;
                     margin: ${spaces.s12} 0;
-                    font-size: ${typography.fontSize.fs20};
+                    font-size: ${typography.fontSize.fs16};
                     word-break: break-word;
                     white-space: pre-wrap;
                 }
@@ -145,11 +153,12 @@ const Comment: CardInterface = ({
 
                 .bottom {
                     display: flex;
-                    justify-content: space-between;
+                    flex-direction: column;
                 }
 
                 .bottom .date {
-                    margin-right: ${spaces.s16};
+                    margin-bottom: ${spaces.s8};
+                    font-size: ${typography.fontSize.fs14};
                 }
 
                 .bottom .divider {
@@ -163,15 +172,25 @@ const Comment: CardInterface = ({
                     border-radius: 1px;
                 }
 
-                .bottom .action {
-                    margin: 0 ${spaces.s16};
-                    cursor: pointer;
-                    font-weight: ${typography.fontWeight.extraBold};
-                    transition: color 80ms linear;
+                .bottom__actions {
+                    display: flex;
+                    flex-direction: column;
                 }
 
-                .bottom .action--active {
+                .bottom__actions .action {
+                    margin-right: ${spaces.s16};
+                    font-weight: ${typography.fontWeight.extraBold};
+
+                    transition: color 80ms linear;
+                    cursor: pointer;
+                }
+
+                .bottom__actions .action--active {
                     color: ${colors.PRIMARY};
+                }
+
+                .bottom .info {
+                    margin-top: ${spaces.s24};
                 }
 
                 .bottom .info,
@@ -187,6 +206,43 @@ const Comment: CardInterface = ({
 
                 .bottom .info span {
                     margin-right: 2px;
+                }
+
+                @media ${media.up('large')} {
+                    .bottom {
+                        justify-content: space-between;
+                        flex-direction: row;
+                    }
+
+                    .bottom__actions {
+                        flex-direction: row;
+                    }
+
+                    .bottom .date {
+                        margin-right: ${spaces.s16};
+                        margin-bottom: 0;
+                        font-size: ${typography.fontSize.fs16};
+                    }
+
+                    .bottom .info {
+                        margin-top: 0;
+                    }
+
+                    .bottom__actions .action {
+                        margin: 0 ${spaces.s16};
+                    }
+
+                    .comment .content {
+                        margin: ${spaces.s12} 0;
+                        font-size: ${typography.fontSize.fs20};
+                    }
+
+                    .comment .username {
+                        display: block;
+                        color: ${colors.BLACK};
+                        font-size: ${typography.fontSize.fs20};
+                        font-weight: ${typography.fontWeight.extraBold};
+                    }
                 }
             `}</style>
         </>

@@ -7,7 +7,7 @@ import {Comment} from 'components/molecules'
 import {CommentFieldsFragment} from 'graphql/generated/queries'
 import CommentsBlock from './CommentBlock/CommentBlock'
 import CommentInput from 'components/sections/AquascapeDetails/CommentsSection/CommentInput'
-import {spaces} from 'styles'
+import {spaces, media} from 'styles'
 
 interface Props {
     comments: CommentFieldsFragment[]
@@ -93,7 +93,7 @@ const CommentsSection: React.FunctionComponent<Props> = ({
             </div>
             <style jsx>{`
                 .section {
-                    padding: ${spaces.s120} 0;
+                    padding: ${spaces.s60} 0;
                 }
 
                 .section :global(.${Headline.classes.root}) {
@@ -105,7 +105,13 @@ const CommentsSection: React.FunctionComponent<Props> = ({
                 }
 
                 .section :global(.${Comment.classes.root}) {
-                    margin: ${spaces.s30} 0;
+                    margin: ${spaces.s16} 0;
+                }
+
+                @media ${media.up('medium')} {
+                    .section {
+                        padding: ${spaces.s120} 0;
+                    }
                 }
             `}</style>
         </>
