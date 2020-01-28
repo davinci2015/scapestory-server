@@ -35,12 +35,13 @@ import {Brand} from 'db/models/Brand'
 const getAquascapeImage = () => {
     const aquascapeImages = [
         'https://www.dmbotanicalgarden.com/wp-content/uploads/2018/09/aquascaping_creative-commons.jpg',
-        'https://img.rnudah.com/images/63/636924094540541.jpg',
         'https://i.ytimg.com/vi/RL2bPr_8ZcM/maxresdefault.jpg',
         'http://cdn.powered-by-nitrosell.com/store_images/11/2575/customcontent/1160/picholder.jpg',
         'https://23pxcp3u31lgiybw92v8rma1-wpengine.netdna-ssl.com/wp-content/uploads/2019/07/Nature_style_aquascape-1-600x293.png',
         'https://image.shutterstock.com/image-photo/aquascape-wood-rock-260nw-738632542.jpg',
         'https://i.pinimg.com/originals/95/fd/11/95fd11bf394b5c252948da10368c9aef.jpg',
+        'https://66.media.tumblr.com/76382bcffbd1b082ea5c1ff69ccf2d6e/tumblr_p5eb31w8Mp1s3c1oao1_500.jpg',
+        'https://i.pinimg.com/736x/cc/97/48/cc9748538675c1383d40427372b79088--aquascape-aquarium-aquarium-terrarium.jpg',
     ]
 
     return aquascapeImages[Math.floor(Math.random() * aquascapeImages.length)]

@@ -13,14 +13,12 @@ export const connectToDatabase = (onConnect?: (db: Database) => void) => {
         username: process.env.DB_USER || '',
         password: process.env.DB_PASS || '',
         database: process.env.DB_NAME || '',
-        port: process.env.DB_PORT ? Number(process.env.DB_PORT) : undefined
+        port: process.env.DB_PORT ? Number(process.env.DB_PORT) : undefined,
     })
 
     database
         .testConnection()
-        .then(() =>
-            console.log(`🚀 Connected to ${process.env.DB_NAME} database`)
-        )
+        .then(() => console.log(`🚀 Connected to ${process.env.DB_NAME} database`))
         .then(() => onConnect && onConnect(database))
         .catch(() => console.log('⚠️ Failed to connect to the database!'))
 }
