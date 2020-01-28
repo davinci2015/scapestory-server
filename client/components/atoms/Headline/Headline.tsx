@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 
-import {typography, colors, media} from 'styles'
+import {typography, media} from 'styles'
 
 type HeadlineVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
 
@@ -21,17 +21,14 @@ const Headline = ({
     as = 'h1',
     children,
     variant,
-    color = colors.BLACK,
+    color,
     fontWeight = typography.fontWeight.extraBold,
     ...props
 }: Props) => {
     const Component = as
 
     return (
-        <Component
-            className={classnames(classes.root, variant ? variant : as)}
-            {...props}
-        >
+        <Component className={classnames(classes.root, variant ? variant : as)} {...props}>
             {children}
             <style jsx>{`
                 .${classes.root} {

@@ -10,6 +10,7 @@ const classes = {
 export enum UserImageSize {
     s24,
     s36,
+    s90,
     s148,
 }
 
@@ -27,12 +28,14 @@ interface Props {
 const sizeMapping = {
     [UserImageSize.s24]: '24px',
     [UserImageSize.s36]: '36px',
+    [UserImageSize.s90]: '90px',
     [UserImageSize.s148]: '148px',
 }
 
 const borderSizeMapping = {
     [UserImageSize.s24]: '1px',
     [UserImageSize.s36]: '1px',
+    [UserImageSize.s90]: '3px',
     [UserImageSize.s148]: '3px',
 }
 

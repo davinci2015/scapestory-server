@@ -7,7 +7,9 @@ import UserSection from 'components/sections/Profile/UserSection'
 import UserStats from 'components/sections/Profile/UserStats'
 import UserAbout from 'components/sections/Profile/UserAbout'
 import SocialLink, {SocialNetwork} from 'components/sections/Profile/UserAbout/SocialLink'
-import {colors} from 'styles'
+import {breakpoints} from 'styles'
+import {Hide} from 'components/core'
+import {pxToNumber} from 'utils/converter'
 
 interface Props {
     user: UserBySlugQuery['user']
@@ -19,16 +21,27 @@ const UserSectionContainer: React.FunctionComponent<Props> = ({user}) => {
     return (
         <UserSection
             username={
-                <Headline as="h1" variant="h4" color={colors.WHITE}>
+                <Headline as="h1" variant="h4">
                     {user.name}
                 </Headline>
             }
             userImage={
-                <UserImage
-                    image={user.profileImage}
-                    size={UserImageSize.s148}
-                    variant={UserImageVariant.BORDER}
-                />
+                <>
+                    <Hide upTo={pxToNumber(breakpoints.medium)}>
+                        <UserImage
+                            image={user.profileImage}
+                            size={UserImageSize.s148}
+                            variant={UserImageVariant.BORDER}
+                        />
+                    </Hide>
+                    <Hide after={pxToNumber(breakpoints.medium)}>
+                        <UserImage
+                            image={user.profileImage}
+                            size={UserImageSize.s90}
+                            variant={UserImageVariant.BORDER}
+                        />
+                    </Hide>
+                </>
             }
             stats={
                 <UserStats>
