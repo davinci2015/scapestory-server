@@ -4,7 +4,7 @@ import classnames from 'classnames'
 
 import * as styles from 'styles'
 import useScrollPosition from 'hooks/useScrollPosition'
-import {Button, FormattedMessage, Icon, UserImage, Paragraph} from 'components/atoms'
+import {Button, FormattedMessage, UserImage, Paragraph} from 'components/atoms'
 
 import NavLink from './NavLink'
 import routes, {createDynamicPath} from 'routes'
@@ -13,13 +13,14 @@ import {UserImageSize} from 'components/atoms/UserImage/UserImage'
 import {media, spaces, breakpoints} from 'styles'
 import {Hide} from 'components/core'
 import {pxToNumber} from 'utils/converter'
+import AddAquascapeButton from '../AddAquascapeButton'
 
 interface Props {
     user?: User_ProfileQuery['me']
     isAuthenticated: boolean
-    openLoginModal: () => void
-    openRegisterModal: () => void
-    onCreateAquascape: () => void
+    openLoginModal: VoidFunction
+    openRegisterModal: VoidFunction
+    onCreateAquascape: VoidFunction
 }
 
 export const navigationHeight = {
@@ -104,23 +105,9 @@ const Navigation = ({
                             </div>
                         </>
                     )}
-                    <Hide upTo={pxToNumber(breakpoints.medium)}>
-                        <Button
-                            dimensions="small"
-                            onClick={onCreateAquascape}
-                            leftIcon={
-                                <Icon
-                                    d={Icon.ADD_FULL}
-                                    viewBox="0 0 22 22"
-                                    color={styles.colors.WHITE}
-                                />
-                            }
-                        >
-                            <FormattedMessage
-                                id="navigation_add_your_aquascape"
-                                defaultMessage="Add your aquascape"
-                            />
-                        </Button>
+
+                    <Hide upTo={pxToNumber(breakpoints.small)}>
+                        <AddAquascapeButton onClick={onCreateAquascape} />
                     </Hide>
 
                     {isAuthenticated && user && (
@@ -185,6 +172,7 @@ const Navigation = ({
                 .right .sign-up-btn {
                     flex: 0;
                     margin-left: ${styles.spaces.s12};
+                    margin-right: ${styles.spaces.s12};
                 }
 
                 .right .text {

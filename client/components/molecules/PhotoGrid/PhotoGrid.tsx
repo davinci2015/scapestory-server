@@ -143,9 +143,10 @@ const PhotoSection: React.FunctionComponent<Props> = ({
 
             .photo-grid .placeholder-text {
                 position: absolute;
+                text-align: center;
+                width: 100%;
                 top: 50%;
-                left: 50%;
-                transform: translate(-50%);
+                transform: translateY(-50%);
             }
 
             .row {

@@ -76,10 +76,12 @@ const Footer: FooterType = () => (
                     </ul>
                 </div>
                 <div className="social-icons">
-                    <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer">
-                        <Icon d={Icon.FACEBOOK_OUTLINE} viewBox="0 0 48 48" size={24} />
-                    </a>
-                    <a className="social-icon" href="#" target="_blank" rel="noopener noreferrer">
+                    <a
+                        className="social-icon"
+                        href="https://www.instagram.com/scapestory"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         <Icon d={Icon.INSTAGRAM} viewBox="0 0 48 48" size={24} />
                     </a>
                 </div>

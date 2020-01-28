@@ -11,7 +11,6 @@ const HomeContainer = () => (
     <Content>
         <Grid>
             <FeaturedContainer />
-
             <TrendingContainer />
             <RecentContainer />
             <ExploreContainer />
