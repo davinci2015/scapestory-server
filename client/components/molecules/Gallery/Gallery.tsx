@@ -83,6 +83,10 @@ const Gallery: GalleryType = ({images, isOpen, onClose, startIndex = 0}) => {
                     justify-content: center;
                     height: 100%;
                 }
+
+                .slider :global(.image-gallery) {
+                    max-width: 100%;
+                }
             `}</style>
         </>
     )
