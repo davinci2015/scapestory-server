@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {spaces} from 'styles'
+import {spaces, media} from 'styles'
 import {Button} from 'components/atoms'
 
 const classes = {
@@ -18,10 +18,18 @@ const ActionButtons: ActionButtons = ({children}) => (
             .action-buttons {
                 display: flex;
                 flex-wrap: wrap;
+                margin-top: ${spaces.s12};
+                margin-left: -${spaces.s8};
             }
 
             .action-buttons :global(.${Button.classes.root}) {
                 margin: ${spaces.s8};
+            }
+
+            @media ${media.up('medium')} {
+                .action-buttons {
+                    margin: -${spaces.s8} -${spaces.s8} 0 0;
+                }
             }
         `}</style>
     </>
