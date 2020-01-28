@@ -199,7 +199,7 @@ const PrivacyPolicy = () => {
 
                             <Paragraph>
                                 If you have any questions or suggestions about my Privacy Policy, do
-                                not hesitate to contact me at danijel.vincijanovic@gmail.com.
+                                not hesitate to contact me at contact@scapestory.com.
                             </Paragraph>
                         </div>
                     </Grid>
