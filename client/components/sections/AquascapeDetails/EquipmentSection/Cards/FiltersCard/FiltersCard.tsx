@@ -8,7 +8,7 @@ interface Props {}
 const FiltersCard: React.FunctionComponent<Props> = ({children}) => (
     <EquipmentCard
         title={<FormattedMessage id="aquascape.equipment.filtration" defaultMessage="Filtration" />}
-        image={<img src="/static/equipment/filter.png" alt="Filter" />}
+        image={<img src="/static/equipment/filter.jpg" alt="Filter" />}
     >
         {children}
     </EquipmentCard>

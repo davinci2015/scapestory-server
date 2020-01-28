@@ -272,8 +272,8 @@ const AquascapeDetailsContainer: React.FunctionComponent = () => {
                                             }
                                             image={
                                                 <img
-                                                    src="/static/equipment/filter.png"
-                                                    alt="Filter"
+                                                    src="/static/equipment/co2.jpg"
+                                                    alt="Aquarium co2"
                                                 />
                                             }
                                         >
