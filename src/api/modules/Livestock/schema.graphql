@@ -1,0 +1,15 @@
+type Livestock {
+    id: Int!
+    name: String!
+    description: String
+    image: String
+}
+
+type Query {
+    livestock: [Livestock!]!
+}
+
+type Mutation {
+    addLivestock(livestockId: Int, name: String, aquascapeId: Int!): Livestock!
+    removeLivestock(livestockId: Int!, aquascapeId: Int!): Livestock
+}

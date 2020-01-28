@@ -1,0 +1,38 @@
+#import "../User/schema.graphql"
+#import "../Like/schema.graphql"
+#import "../Aquascape/schema.graphql"
+
+type Comment {
+    id: Int!
+    createdAt: String!
+    content: String!
+    parentCommentId: Int
+    likes: [Like!]!
+    user: User!
+    aquascapeImageId: Int
+    aquascapeId: Int
+    commentId: Int
+}
+
+type Aquascape {
+    comments: [Comment!]!
+}
+
+enum CommentEntityType {
+    AQUASCAPE
+    IMAGE
+}
+
+type Query {
+    comments(entity: CommentEntityType!, entityId: Int!, pagination: Pagination!): [Comment!]!
+}
+
+type Mutation {
+    addComment(
+        entity: CommentEntityType!
+        entityId: Int!
+        content: String!
+        parentCommentId: Int
+    ): Comment
+    removeComment(id: Int!): Comment
+}

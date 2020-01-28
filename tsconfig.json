@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "experimentalDecorators": true,
+        "module": "commonjs",
+        "target": "es2017",
+        "lib": ["es2017"],
+        "noUnusedLocals": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "emitDecoratorMetadata": true,
+        "sourceMap": true,
+        "outDir": "./dist",
+        "types": ["node"],
+        "typeRoots": ["./node_modules/@types"]
+    },
+    "include": ["./src", "./webpack.config.production.ts", "./webpack.config.ts"],
+    "files": ["src/main.ts", "src/@types/graphql.d.ts"],
+    "exclude": ["node_modules"]
+}

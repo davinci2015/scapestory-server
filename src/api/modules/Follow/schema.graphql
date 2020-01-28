@@ -1,0 +1,25 @@
+type Follow {
+    id: Int!
+    followedUserId: Int!
+    followerUserId: Int!
+    followed: User!
+    follower: User!
+    updatedAt: String!
+    createdAt: String!
+}
+
+type Follows {
+    following: [Follow]
+    followers: [Follow]
+}
+
+type User {
+    followersCount: Int!
+    followingCount: Int!
+    isFollowedByMe: Boolean!
+}
+
+type Mutation {
+    followUser(userId: Int!): User
+    unfollowUser(userId: Int!): User
+}

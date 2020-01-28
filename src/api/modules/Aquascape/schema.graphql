@@ -1,0 +1,97 @@
+#import "../User/schema.graphql"
+#import "../Filter/schema.graphql"
+#import "../Light/schema.graphql"
+#import "../Plant/schema.graphql"
+#import "../Hardscape/schema.graphql"
+#import "../Livestock/schema.graphql"
+#import "../Substrate/schema.graphql"
+#import "../Additive/schema.graphql"
+#import "../Filter/schema.graphql"
+#import "../Like/schema.graphql"
+#import "../AquascapeImage/schema.graphql"
+#import "../Brand/schema.graphql"
+
+type CO2 {
+    id: Int!
+    type: String
+    bps: Int
+}
+
+type Tag {
+    id: Int!
+    predefined: Boolean!
+    name: String!
+}
+
+type Tank {
+    id: Int!
+    volume: Float
+    width: Float
+    height: Float
+    depth: Float
+    glassThickness: Float
+}
+
+type User {
+    aquascapes(pagination: Pagination!, random: Boolean): AquascapesResult!
+}
+
+type Aquascape {
+    id: Int!
+    createdAt: String!
+    updatedAt: String!
+    title: String
+    featured: Boolean!
+    trending: Boolean!
+    description: String
+    userId: Int!
+    user: User
+    co2: CO2
+    tank: Tank
+    mainImageUrl: String
+    mainImagePublicId: String
+    images: [AquascapeImage!]!
+    tags: [Tag!]!
+    plants: [Plant!]!
+    hardscape: [Hardscape!]!
+    livestock: [Livestock!]!
+    filters: [Filter!]!
+    lights: [Light!]!
+    substrates: [Substrate!]!
+    additives: [Additive!]!
+}
+
+input Pagination {
+    limit: Int
+    cursor: String
+    offset: Int
+}
+
+input AquascapesFilter {
+    trending: Boolean
+}
+
+type AquascapesResult {
+    rows: [Aquascape!]!
+    count: Int!
+}
+
+type Query {
+    aquascapes(pagination: Pagination!, userId: Int, random: Boolean): AquascapesResult!
+    trendingAquascapes(pagination: Pagination!): [Aquascape!]!
+    featuredAquascape: Aquascape
+    aquascape(id: Int!): Aquascape
+}
+
+scalar Upload
+
+type MainImageUploadResult {
+    mainImagePublicId: String!
+    mainImageUrl: String!
+}
+
+type Mutation {
+    createAquascape: Aquascape!
+    updateAquascapeTitle(aquascapeId: Int!, title: String!): String
+    updateAquascapeMainImage(aquascapeId: Int!, file: Upload!): MainImageUploadResult!
+}

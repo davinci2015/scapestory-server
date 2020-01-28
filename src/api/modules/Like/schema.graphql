@@ -1,0 +1,23 @@
+type Like {
+    id: Int!
+    userId: Int!
+    aquascapeImageId: Int
+    aquascapeId: Int
+    commentId: Int
+}
+
+type Aquascape {
+    likesCount: Int!
+    isLikedByMe: Boolean!
+}
+
+enum LikeEntityType {
+    AQUASCAPE
+    IMAGE
+    COMMENT
+}
+
+type Mutation {
+    like(entity: LikeEntityType!, entityId: Int!): Like
+    dislike(entity: LikeEntityType!, entityId: Int!): Like
+}

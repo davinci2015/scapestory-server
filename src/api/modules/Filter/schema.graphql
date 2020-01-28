@@ -1,0 +1,13 @@
+#import "../Equipment/schema.graphql"
+
+type Filter implements Equipment {
+    id: Int!
+    predefined: Boolean!
+    model: String!
+    description: String
+    image: String
+}
+
+type Query {
+    filters: [Filter!]!
+}

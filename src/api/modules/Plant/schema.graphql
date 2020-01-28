@@ -1,0 +1,22 @@
+type Plant {
+    id: Int!
+    name: String!
+    description: String
+    image: String
+    origin: String
+    minHeight: Int
+    maxHeight: Int
+    position: String
+    luminosity: String
+    growthSpeed: String
+    difficulty: String
+}
+
+type Query {
+    plants: [Plant!]!
+}
+
+type Mutation {
+    addPlant(plantId: Int, name: String, aquascapeId: Int!): Plant!
+    removePlant(plantId: Int!, aquascapeId: Int!): Plant
+}

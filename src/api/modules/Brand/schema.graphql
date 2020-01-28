@@ -1,0 +1,31 @@
+type Brand {
+    id: Int!
+    predefined: Boolean!
+    name: String!
+    logo: String
+    address: String
+}
+
+type Filter {
+    brand: Brand
+}
+
+type Substrate {
+    brand: Brand
+}
+
+type Additive {
+    brand: Brand
+}
+
+type Light {
+    brand: Brand
+}
+
+interface Equipment {
+    brand: Brand
+}
+
+type Query {
+    brands: [Brand!]!
+}

@@ -1,0 +1,56 @@
+type User {
+    id: Int!
+    slug: String!
+    name: String!
+    about: String
+    profileImage: String
+    profileImagePublicId: String
+    coverImage: String
+    coverImagePublicId: String
+    country: String
+    facebookUrl: String
+    youtubeUrl: String
+    instagramUrl: String
+    twitterUrl: String
+    createdAt: String!
+    updatedAt: String!
+}
+
+type AuthPayload {
+    token: String!
+    user: User!
+}
+
+type ImageUploadResult {
+    imageUrl: String!
+    imagePublicId: String!
+}
+
+enum ImageVariant {
+    PROFILE
+    COVER
+}
+
+input UserDetails {
+    name: String
+    about: String
+    facebookUrl: String
+    youtubeUrl: String
+    instagramUrl: String
+    twitterUrl: String
+}
+
+scalar Upload
+
+type Query {
+    me: User
+    user(id: Int!): User
+    userBySlug(slug: String!): User
+    users: [User]!
+}
+
+type Mutation {
+    uploadUserImage(file: Upload!, imageVariant: ImageVariant!): ImageUploadResult!
+    updateUserDetails(details: UserDetails!): [User]
+    confirmEmail(token: String!): AuthPayload
+}

@@ -1,0 +1,13 @@
+{
+    "overwrite": true,
+    "schema": "http://localhost:8080",
+    "documents": null,
+    "generates": {
+        "./src/interfaces/graphql/types.ts": {
+            "plugins": [{"add": "/* eslint-disable */"}, "typescript", "typescript-resolvers"],
+            "config": {
+                "defaultMapper": "Partial<{T}>"
+            }
+        }
+    }
+}

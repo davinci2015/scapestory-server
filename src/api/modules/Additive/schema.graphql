@@ -1,0 +1,13 @@
+#import "../Equipment/schema.graphql"
+
+type Additive implements Equipment {
+    id: Int!
+    predefined: Boolean!
+    model: String!
+    description: String
+    image: String
+}
+
+type Query {
+    additives: [Additive!]!
+}
