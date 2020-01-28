@@ -5,15 +5,16 @@ import {Grid} from 'components/core'
 import {AquascapeCardList} from 'components/sections/shared'
 import {renderAquascapeCards} from 'utils/render'
 import {AquascapeFieldsFragment} from 'graphql/generated/queries'
+import Section from 'components/sections/AquascapeDetails/Section'
 
 interface Props {
     username: string
     aquascapes: AquascapeFieldsFragment[]
 }
 
-const UserAquascapesSection: React.FunctionComponent<Props> = ({username, aquascapes}) => (
+const UserAquascapesSection: React.FunctionComponent<Props> = ({aquascapes, username}) => (
     <>
-        <div className="section">
+        <Section>
             <AquascapeCardList
                 title={
                     <Headline as="h2" variant="h3">
@@ -27,12 +28,8 @@ const UserAquascapesSection: React.FunctionComponent<Props> = ({username, aquasc
             >
                 <Grid.Row>{renderAquascapeCards(aquascapes)}</Grid.Row>
             </AquascapeCardList>
-        </div>
-        <style jsx>{`
-            .section {
-                padding-bottom: 45px;
-            }
-        `}</style>
+        </Section>
+        <style jsx>{``}</style>
     </>
 )
 

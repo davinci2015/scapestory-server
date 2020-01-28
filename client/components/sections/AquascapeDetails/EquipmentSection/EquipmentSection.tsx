@@ -3,13 +3,14 @@ import React from 'react'
 import {FormattedMessage, Headline} from 'components/atoms'
 import {EquipmentCard} from 'components/molecules'
 import {spaces} from 'styles'
+import Section from 'components/sections/AquascapeDetails/Section'
 
 interface Props {}
 
 const EquipmentSection: React.FunctionComponent<Props> = ({children}) => {
     return (
         <>
-            <div className="section">
+            <Section>
                 <div className="title">
                     <Headline as="h2" variant="h3">
                         <FormattedMessage
@@ -20,13 +21,9 @@ const EquipmentSection: React.FunctionComponent<Props> = ({children}) => {
                 </div>
 
                 <div className="list">{children}</div>
-            </div>
+            </Section>
             <style jsx>{`
-                .section {
-                    padding: ${spaces.s120} 0;
-                }
-
-                .section .title :global(.${Headline.classes.root}) {
+                .title :global(.${Headline.classes.root}) {
                     margin-bottom: ${spaces.s60};
                 }
 

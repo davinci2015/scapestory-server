@@ -1,26 +1,18 @@
 import React from 'react'
-import classnames from 'classnames'
 
 import {FormattedMessage, Headline, Icon} from 'components/atoms'
 import {colors, spaces, media} from 'styles'
 import {AquascapeCard} from 'components/molecules'
 
-type CardListVariant = 'default' | 'condensed'
-
 interface Props {
     children: React.ReactNode
     title: React.ReactNode
     loadMore?: VoidFunction
-    variant?: CardListVariant
 }
 
-const AquascapeCardList = ({children, loadMore, title, variant = 'default'}: Props) => (
+const AquascapeCardList = ({children, loadMore, title}: Props) => (
     <>
-        <div
-            className={classnames('section', {
-                'section--condensed': variant === 'condensed',
-            })}
-        >
+        <div className="card-section">
             <div className="title">{title}</div>
             {children}
             {loadMore && (
@@ -38,36 +30,12 @@ const AquascapeCardList = ({children, loadMore, title, variant = 'default'}: Pro
             )}
         </div>
         <style jsx>{`
-            .section {
-                display: block;
-                margin: 36px 0;
+            .card-section :global(.${AquascapeCard.classes.root}) {
+                margin: ${spaces.s16} 0;
             }
 
-            .section--condensed {
-                margin: 24px 0;
-            }
-
-            @media ${media.up('medium')} {
-                .section {
-                    margin: ${spaces.s90} 0;
-                }
-
-                .section--condensed {
-                    margin: 30px 0;
-                }
-            }
-
-            .section :global(.${AquascapeCard.classes.root}) {
-                margin-top: ${spaces.s16};
-                margin-bottom: ${spaces.s16};
-            }
-
-            .section .title {
+            .card-section .title {
                 margin-bottom: 40px;
-            }
-
-            .section--condensed .title {
-                margin-bottom: 14px;
             }
 
             .load-more {
@@ -75,13 +43,6 @@ const AquascapeCardList = ({children, loadMore, title, variant = 'default'}: Pro
                 margin-bottom: 62px;
                 display: flex;
                 justify-content: center;
-            }
-
-            @media ${media.up('medium')} {
-                .load-more {
-                    margin-top: 105px;
-                    margin-bottom: 120px;
-                }
             }
 
             .load-more-button {
@@ -92,6 +53,13 @@ const AquascapeCardList = ({children, loadMore, title, variant = 'default'}: Pro
 
             .load-more-button :global(svg) {
                 margin-left: ${spaces.s12};
+            }
+
+            @media ${media.up('medium')} {
+                .load-more {
+                    margin-top: 105px;
+                    margin-bottom: 120px;
+                }
             }
         `}</style>
     </>

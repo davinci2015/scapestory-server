@@ -93,7 +93,8 @@ const CommentsSection: React.FunctionComponent<Props> = ({
             </div>
             <style jsx>{`
                 .section {
-                    padding: ${spaces.s60} 0;
+                    padding-top: ${spaces.s60};
+                    padding-bottom: ${spaces.s60};
                 }
 
                 .section :global(.${Headline.classes.root}) {
@@ -110,7 +111,8 @@ const CommentsSection: React.FunctionComponent<Props> = ({
 
                 @media ${media.up('medium')} {
                     .section {
-                        padding: ${spaces.s120} 0;
+                        padding-top: ${spaces.s90};
+                        padding-bottom: ${spaces.s120};
                     }
                 }
             `}</style>

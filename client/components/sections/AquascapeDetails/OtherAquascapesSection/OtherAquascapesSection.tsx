@@ -3,9 +3,9 @@ import React from 'react'
 import {FormattedMessage, Headline} from 'components/atoms'
 import {Grid} from 'components/core'
 import {AquascapeCardList} from 'components/sections/shared'
-import {spaces} from 'styles'
 import {renderAquascapeCards} from 'utils/render'
 import {AquascapeFieldsFragment} from 'graphql/generated/queries'
+import Section from 'components/sections/AquascapeDetails/Section'
 
 interface Props {
     aquascapes: AquascapeFieldsFragment[]
@@ -13,7 +13,7 @@ interface Props {
 
 const OtherAquascapesSection: React.FunctionComponent<Props> = ({aquascapes}) => (
     <>
-        <div className="section">
+        <Section>
             <AquascapeCardList
                 title={
                     <Headline as="h3" variant="h4">
@@ -26,12 +26,8 @@ const OtherAquascapesSection: React.FunctionComponent<Props> = ({aquascapes}) =>
             >
                 <Grid.Row>{renderAquascapeCards(aquascapes)}</Grid.Row>
             </AquascapeCardList>
-        </div>
-        <style jsx>{`
-            .section {
-                padding-bottom: ${spaces.s120};
-            }
-        `}</style>
+        </Section>
+        <style jsx>{``}</style>
     </>
 )
 

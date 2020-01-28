@@ -3,10 +3,11 @@ import React from 'react'
 import {FormattedMessage, Headline} from 'components/atoms'
 import {List} from 'components/molecules'
 import {spaces, media} from 'styles'
+import Section from 'components/sections/AquascapeDetails/Section'
 
 const FloraSection: React.FunctionComponent = ({children}) => (
     <>
-        <div className="section">
+        <Section>
             <Headline as="h2" variant="h3">
                 <FormattedMessage
                     id="aquascape.flora_and_fauna.title"
@@ -14,20 +15,16 @@ const FloraSection: React.FunctionComponent = ({children}) => (
                 />
             </Headline>
             <div className="list">{children}</div>
-        </div>
+        </Section>
         <style jsx>{`
-            .section {
-                padding: ${spaces.s120} 0;
-            }
-
             .list {
                 display: flex;
                 flex-direction: column;
-                margin-top: ${spaces.s60};
+                margin-top: ${spaces.s30};
             }
 
             .list :global(.${List.classes.root}) {
-                margin-top: ${spaces.s36};
+                margin-top: ${spaces.s30};
                 flex: 1 1 0px;
             }
 

@@ -61,7 +61,7 @@ const SubNavigation: SubNavigationInterface = ({children}) => (
 
                 .subnav {
                     position: sticky;
-                    top: ${navigationHeight.SLIM};
+                    top: calc(${navigationHeight.SLIM} - 1px);
                     height: 72px;
                 }
 
