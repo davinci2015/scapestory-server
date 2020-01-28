@@ -4,15 +4,14 @@ import {useQuery} from 'react-apollo'
 
 import {UserBySlugQuery, UserBySlugQueryVariables} from 'graphql/generated/queries'
 import {Content, Grid} from 'components/core'
-import {AquascapeCardList} from 'components/sections/shared'
-import {Headline, FormattedMessage} from 'components/atoms'
-import {renderAquascapeCards} from 'utils/render'
 import {GridWidth} from 'components/core/Grid'
 import routes, {createDynamicPath} from 'routes'
 import {USER_BY_SLUG} from 'graphql/queries'
 
 import CoverSectionContainer from './CoverSectionContainer'
 import UserSectionContainer from './UserSectionContainer'
+import AquascapesSection from 'components/sections/Profile/AquascapesSection.tsx'
+import {renderAquascapeCards} from 'utils/render'
 
 const ProfileContainer = () => {
     const router = useRouter()
@@ -42,19 +41,8 @@ const ProfileContainer = () => {
             <CoverSectionContainer user={userResult.user} onEdit={onEdit} />
             <Grid width={GridWidth.SMALL}>
                 <UserSectionContainer user={userResult.user} />
-                {!!userResult.user.aquascapes.rows.length && (
-                    <AquascapeCardList
-                        variant="condensed"
-                        title={
-                            <Headline as="h2" variant="h5">
-                                <FormattedMessage
-                                    id="home_list_title_explore"
-                                    defaultMessage="{name}'s aquascapes"
-                                    values={{name: userResult.user.name}}
-                                />
-                            </Headline>
-                        }
-                    >
+                {Boolean(userResult.user.aquascapes.rows.length) && (
+                    <AquascapesSection name={userResult.user.name}>
                         <Grid.Row>
                             {renderAquascapeCards(userResult.user.aquascapes.rows, {
                                 large: 6,
@@ -63,7 +51,7 @@ const ProfileContainer = () => {
                                 extraSmall: 12,
                             })}
                         </Grid.Row>
-                    </AquascapeCardList>
+                    </AquascapesSection>
                 )}
             </Grid>
         </Content>

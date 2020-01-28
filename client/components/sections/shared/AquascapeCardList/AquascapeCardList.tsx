@@ -10,10 +10,19 @@ interface Props {
     loadMore?: VoidFunction
 }
 
-const AquascapeCardList = ({children, loadMore, title}: Props) => (
+const classes = {
+    root: 'card-section',
+    title: 'card-section__title',
+}
+
+type AquascapeCardListType = React.FunctionComponent<Props> & {
+    classes: typeof classes
+}
+
+const AquascapeCardList: AquascapeCardListType = ({children, loadMore, title}) => (
     <>
-        <div className="card-section">
-            <div className="title">{title}</div>
+        <div className={classes.root}>
+            <div className={classes.title}>{title}</div>
             {children}
             {loadMore && (
                 <div className="load-more" onClick={loadMore}>
@@ -34,7 +43,7 @@ const AquascapeCardList = ({children, loadMore, title}: Props) => (
                 margin: ${spaces.s16} 0;
             }
 
-            .card-section .title {
+            .card-section__title {
                 margin-bottom: ${spaces.s48};
             }
 
@@ -62,5 +71,7 @@ const AquascapeCardList = ({children, loadMore, title}: Props) => (
         `}</style>
     </>
 )
+
+AquascapeCardList.classes = classes
 
 export default AquascapeCardList
