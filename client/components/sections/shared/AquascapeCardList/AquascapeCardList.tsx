@@ -35,12 +35,11 @@ const AquascapeCardList = ({children, loadMore, title}: Props) => (
             }
 
             .card-section .title {
-                margin-bottom: 40px;
+                margin-bottom: ${spaces.s48};
             }
 
             .load-more {
-                margin-top: 36px;
-                margin-bottom: 62px;
+                margin-top: ${spaces.s60};
                 display: flex;
                 justify-content: center;
             }
@@ -57,8 +56,7 @@ const AquascapeCardList = ({children, loadMore, title}: Props) => (
 
             @media ${media.up('medium')} {
                 .load-more {
-                    margin-top: 105px;
-                    margin-bottom: 120px;
+                    margin-top: ${spaces.s90};
                 }
             }
         `}</style>

@@ -6,21 +6,21 @@ import {Headline, FormattedMessage} from 'components/atoms'
 import {AquascapeCardList} from 'components/sections/shared'
 
 import {renderAquascapeCards} from 'utils/render'
-import {AQUASCAPES} from 'graphql/queries'
-import {AquascapesQuery} from 'graphql/generated/queries'
+import {TRENDING_AQUASCAPES} from 'graphql/queries'
+import {TrendingAquascapesQuery} from 'graphql/generated/queries'
 import Section from 'components/sections/Home/Section'
 
-const RECENT_AQUASCAPES_LIMIT = 4
+const TRENDING_AQUASCAPES_LIMIT = 8
 
-const RecentContainer = () => {
-    const recent = useQuery<AquascapesQuery>(AQUASCAPES, {
+const TrendingContainer = () => {
+    const trending = useQuery<TrendingAquascapesQuery>(TRENDING_AQUASCAPES, {
         fetchPolicy: 'cache-and-network',
         variables: {
-            pagination: {limit: RECENT_AQUASCAPES_LIMIT},
+            pagination: {limit: TRENDING_AQUASCAPES_LIMIT},
         },
     })
 
-    if (!recent.data) {
+    if (!trending.data?.trending) {
         return null
     }
 
@@ -30,16 +30,16 @@ const RecentContainer = () => {
                 title={
                     <Headline as="h2" variant="h4">
                         <FormattedMessage
-                            id="home_list_title_newest"
-                            defaultMessage="Recently added"
+                            id="home.section_title.trending"
+                            defaultMessage="Trending now"
                         />
                     </Headline>
                 }
             >
-                <Grid.Row>{renderAquascapeCards(recent.data.aquascapes.rows)}</Grid.Row>
+                <Grid.Row>{renderAquascapeCards(trending.data.trending)}</Grid.Row>
             </AquascapeCardList>
         </Section>
     )
 }
 
-export default RecentContainer
+export default TrendingContainer

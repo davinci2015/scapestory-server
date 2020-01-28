@@ -8,6 +8,7 @@ import {AquascapeCardList} from 'components/sections/shared'
 import {renderAquascapeCards} from 'utils/render'
 import {AQUASCAPES} from 'graphql/queries'
 import {AquascapesQuery} from 'graphql/generated/queries'
+import Section from 'components/sections/Home/Section'
 
 const RECENT_AQUASCAPES_PER_LOAD = 12
 const RECENT_AQUASCAPES_LIMIT = 12
@@ -52,19 +53,21 @@ const ExploreContainer = () => {
     )
 
     return (
-        <AquascapeCardList
-            loadMore={canLoadMore ? loadMore : undefined}
-            title={
-                <Headline as="h2" variant="h4">
-                    <FormattedMessage
-                        id="home_list_title_explore"
-                        defaultMessage="Explore all aquascapes"
-                    />
-                </Headline>
-            }
-        >
-            <Grid.Row>{renderAquascapeCards(recent.data.aquascapes.rows)}</Grid.Row>
-        </AquascapeCardList>
+        <Section>
+            <AquascapeCardList
+                loadMore={canLoadMore ? loadMore : undefined}
+                title={
+                    <Headline as="h2" variant="h4">
+                        <FormattedMessage
+                            id="home_list_title_explore"
+                            defaultMessage="Explore all aquascapes"
+                        />
+                    </Headline>
+                }
+            >
+                <Grid.Row>{renderAquascapeCards(recent.data.aquascapes.rows)}</Grid.Row>
+            </AquascapeCardList>
+        </Section>
     )
 }
 

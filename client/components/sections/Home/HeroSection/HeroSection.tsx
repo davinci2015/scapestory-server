@@ -37,7 +37,7 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
 
     return (
         <>
-            <div className="section">
+            <div className="hero-section">
                 <AquascapeDetailsLink href={detailsLink} as={detailsLink}>
                     <Hero
                         title={aquascape.title}
@@ -109,15 +109,15 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
             </div>
 
             <style jsx>{`
-                .section {
+                .hero-section {
                     margin: 0 -${spaces.s16};
                 }
 
-                .section a {
+                .hero-section a {
                     text-decoration: none;
                 }
 
-                .section :global(.${UserWidget.classes.root}) {
+                .hero-section :global(.${UserWidget.classes.root}) {
                     margin-right: ${spaces.s30};
                 }
 
@@ -127,8 +127,9 @@ const HeroSection: React.FunctionComponent<Props> = ({aquascape}) => {
                 }
 
                 @media ${media.up('medium')} {
-                    .section {
+                    .hero-section {
                         padding-top: ${spaces.s60};
+                        margin: 0;
                     }
 
                     .bottom-left {
