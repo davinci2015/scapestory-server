@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {spaces, colors} from 'styles'
+import {spaces, colors, media} from 'styles'
 import {Headline, FormattedMessage, Icon, Button} from 'components/atoms'
 import {PhotoGrid, Gallery} from 'components/molecules'
 import {AquascapeImage} from 'graphql/generated/types'
@@ -40,23 +40,25 @@ const PostsSection: React.FunctionComponent<Props> = ({
                         <FormattedMessage id="aquascape.posts.title" defaultMessage="Photo Diary" />
                     </Headline>
                     {edit && onImageChange && (
-                        <ImageUpload
-                            multiple
-                            onChange={onImageChange}
-                            render={({openFinder}) => (
-                                <Button
-                                    onClick={openFinder}
-                                    dimensions="small"
-                                    color="primary"
-                                    leftIcon={<Icon d={Icon.CAMERA} color={colors.WHITE} />}
-                                >
-                                    <FormattedMessage
-                                        id="photo_grid.add_photo"
-                                        defaultMessage="Add photo"
-                                    />
-                                </Button>
-                            )}
-                        />
+                        <div className="add-photo">
+                            <ImageUpload
+                                multiple
+                                onChange={onImageChange}
+                                render={({openFinder}) => (
+                                    <Button
+                                        onClick={openFinder}
+                                        dimensions="small"
+                                        color="primary"
+                                        leftIcon={<Icon d={Icon.CAMERA} color={colors.WHITE} />}
+                                    >
+                                        <FormattedMessage
+                                            id="photo_grid.add_photo"
+                                            defaultMessage="Add photo"
+                                        />
+                                    </Button>
+                                )}
+                            />
+                        </div>
                     )}
                     <PhotoGrid
                         edit={edit}
@@ -84,6 +86,16 @@ const PostsSection: React.FunctionComponent<Props> = ({
             <style jsx>{`
                 .photo-section :global(.${Headline.classes.root}) {
                     margin-bottom: ${spaces.s60};
+                }
+
+                .photo-section .add-photo {
+                    margin-bottom: ${spaces.s16};
+                }
+
+                @media ${media.up('small')} {
+                    .photo-section .add-photo {
+                        margin-bottom: ${spaces.s8};
+                    }
                 }
             `}</style>
         </>

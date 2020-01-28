@@ -94,12 +94,12 @@ const Hero = ({
             }
 
             .headline-input {
-                width: 50%;
-                margin-bottom: ${spaces.s60};
+                width: 100%;
+                margin-bottom: ${spaces.s36};
 
                 font-weight: ${typography.fontWeight.extraBold};
-                font-size: ${typography.fontSize.fs51};
-                line-height: ${typography.lineHeight.lh66};
+                font-size: ${typography.fontSize.fs38};
+                line-height: ${typography.lineHeight.lh48};
 
                 color: ${colors.WHITE};
                 background: transparent;
@@ -177,6 +177,14 @@ const Hero = ({
 
                 .content--cover {
                     padding: ${spaces.s36} ${spaces.s24} ${spaces.s48} ${spaces.s24};
+                }
+
+                .headline-input {
+                    width: 50%;
+                    margin-bottom: ${spaces.s60};
+
+                    font-size: ${typography.fontSize.fs51};
+                    line-height: ${typography.lineHeight.lh66};
                 }
             }
         `}</style>

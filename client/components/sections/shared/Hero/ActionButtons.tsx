@@ -17,11 +17,11 @@ const ActionButtons: ActionButtons = ({children}) => (
         <style jsx>{`
             .action-buttons {
                 display: flex;
+                flex-wrap: wrap;
             }
 
             .action-buttons :global(.${Button.classes.root}) {
-                margin-left: ${spaces.s8};
-                margin-right: ${spaces.s8};
+                margin: ${spaces.s8};
             }
         `}</style>
     </>

@@ -28,7 +28,7 @@ const Hide: React.FunctionComponent<Props> = ({after, children, upTo}) => {
         return null
     }
 
-    if (after && after < width) {
+    if (after && after <= width) {
         return null
     }
 

@@ -1,12 +1,13 @@
 import React from 'react'
 
 import {FormattedMessage, Paragraph, Icon, Tag, IconText, Button} from 'components/atoms'
-import {colors, spaces} from 'styles'
+import {colors, spaces, zIndex, media} from 'styles'
 import {Hero} from 'components/sections/shared'
 import {UserWidget} from 'components/molecules'
 import {AquascapeDetailsQuery} from 'graphql/generated/queries'
 import {ProfileLink, ImageUpload} from 'components/core'
 import {UserWidgetSize, UserWidgetVariant} from 'components/molecules/UserWidget/UserWidget'
+import ActionButtons from 'components/sections/shared/Hero/ActionButtons'
 
 interface Props {
     aquascape: AquascapeDetailsQuery['aquascape']
@@ -32,7 +33,7 @@ const HeroSection: React.FunctionComponent<Props> = ({
                 title={aquascape.title}
                 image={aquascape.mainImageUrl}
                 topSection={
-                    <Hero.TopSection>
+                    <div className="top-section">
                         <Hero.TopLeft>
                             <ProfileLink slug={aquascape.user.slug}>
                                 <UserWidget
@@ -58,7 +59,7 @@ const HeroSection: React.FunctionComponent<Props> = ({
                             </ProfileLink>
                         </Hero.TopLeft>
                         <Hero.TopRight>
-                            <div className="top-right">
+                            <Hero.ActionButtons>
                                 <ImageUpload
                                     onChange={onImageChange}
                                     render={({openFinder}) => (
@@ -99,9 +100,9 @@ const HeroSection: React.FunctionComponent<Props> = ({
                                         defaultMessage="Preview"
                                     />
                                 </Button>
-                            </div>
+                            </Hero.ActionButtons>
                         </Hero.TopRight>
-                    </Hero.TopSection>
+                    </div>
                 }
                 bottomSection={
                     <Hero.BottomSection>
@@ -137,12 +138,26 @@ const HeroSection: React.FunctionComponent<Props> = ({
                     cursor: pointer;
                 }
 
-                .top-right {
+                .top-section {
                     display: flex;
+                    flex-direction: column;
+                    z-index: ${zIndex.DEFAULT};
                 }
 
-                .top-right :global(.${Button.classes.root}) {
-                    margin-left: ${spaces.s18};
+                .top-section :global(.${ActionButtons.classes.root}) {
+                    margin-top: ${spaces.s12};
+                    margin-left: -${spaces.s8};
+                }
+
+                @media ${media.up('medium')} {
+                    .top-section {
+                        flex-direction: row;
+                        justify-content: space-between;
+                    }
+
+                    .top-section :global(.${ActionButtons.classes.root}) {
+                        margin: -${spaces.s8} -${spaces.s8} 0 0;
+                    }
                 }
             `}</style>
         </>
