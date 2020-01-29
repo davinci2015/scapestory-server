@@ -34,3 +34,5 @@ const substrates = [
         ],
     },
 ]
+
+export default substrates

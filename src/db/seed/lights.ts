@@ -1,4 +1,4 @@
-const light = [
+const lights = [
     {
         brand: 'Twinstar',
         models: [
@@ -279,3 +279,5 @@ const light = [
         ],
     },
 ]
+
+export default lights

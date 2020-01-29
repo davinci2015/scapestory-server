@@ -11,6 +11,7 @@
         "start": "node dist/bundle.js",
         "build": "webpack --config webpack.config.production.ts",
         "seed": "ts-node -r tsconfig-paths/register src/db/seed/index.ts",
+        "production-seed": "ts-node -r tsconfig-paths/register src/db/seed/production.ts",
         "lint": "tslint ./src/**/*.ts",
         "codegen": "graphql-codegen --config codegen.json",
         "pretty": "prettier --write \"./**/*.{ts,json}\""
