@@ -36,7 +36,6 @@ const getAquascapeImage = () => {
     const aquascapeImages = [
         'https://www.dmbotanicalgarden.com/wp-content/uploads/2018/09/aquascaping_creative-commons.jpg',
         'https://i.ytimg.com/vi/RL2bPr_8ZcM/maxresdefault.jpg',
-        'http://cdn.powered-by-nitrosell.com/store_images/11/2575/customcontent/1160/picholder.jpg',
         'https://23pxcp3u31lgiybw92v8rma1-wpengine.netdna-ssl.com/wp-content/uploads/2019/07/Nature_style_aquascape-1-600x293.png',
         'https://image.shutterstock.com/image-photo/aquascape-wood-rock-260nw-738632542.jpg',
         'https://i.pinimg.com/originals/95/fd/11/95fd11bf394b5c252948da10368c9aef.jpg',
