@@ -12,6 +12,9 @@ export default [
         name: 'Blau',
     },
     {
+        name: 'ONF',
+    },
+    {
         name: 'Oase',
     },
     {
@@ -21,7 +24,16 @@ export default [
         name: 'Eheim',
     },
     {
+        name: 'Seachem',
+    },
+    {
         name: 'Fluval',
+    },
+    {
+        name: 'Kessil',
+    },
+    {
+        name: 'Finnex',
     },
     {
         name: 'Hydor',

@@ -6,7 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-dist/bundle.js
 dist/
 
 .idea/*
@@ -91,3 +90,4 @@ server/.env
 .dynamodb/
 .vscode
 .DS_Store
+dist/bundle.js

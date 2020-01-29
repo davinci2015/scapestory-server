@@ -284,7 +284,7 @@ const aquascapeHardscape = filterDuplicateKeys(
     getEmptyArray(entriesCount.aquascapeHardscape).map((_, index) => ({
         _id: index + 1,
         aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
-        hardscapeId: hardscape[getRandomIndex(entriesCount.hardscape)]._id,
+        hardscapeId: hardscape[getRandomIndex(realHardscape.length)]._id,
     })),
     ['aquascapeId', 'hardscapeId']
 )
@@ -293,7 +293,7 @@ const aquascapeLivestock = filterDuplicateKeys(
     getEmptyArray(entriesCount.aquascapeLivestock).map((_, index) => ({
         _id: index + 1,
         aquascapeId: aquascapes[getRandomIndex(entriesCount.aquascapes)]._id,
-        livestockId: livestock[getRandomIndex(entriesCount.livestock)]._id,
+        livestockId: livestock[getRandomIndex(realFish.length)]._id,
     })),
     ['aquascapeId', 'livestockId']
 )

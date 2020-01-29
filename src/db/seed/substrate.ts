@@ -25,7 +25,7 @@ const substrates = [
         models: ['Flourite', 'Flourite Black', 'Flourite Dark', 'Flourite Red'],
     },
     {
-        brand: 'Blaue',
+        brand: 'Blau',
         models: [
             'Terra Activa Black Normal',
             'Terra Activa Brown Normal',

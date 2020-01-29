@@ -151,7 +151,7 @@ export default [
         ],
     },
     {
-        brand: 'Marinelandd',
+        brand: 'Marineland',
         models: [
             'Emperor',
             'Magniflow 160',

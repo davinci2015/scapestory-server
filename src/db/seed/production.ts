@@ -27,6 +27,14 @@ const brands = realBrands.map((brand, index) => ({
     name: brand.name,
 }))
 
+const brandsMap = brands.reduce(
+    (acc, brand) => ({
+        ...acc,
+        [brand.name]: brand,
+    }),
+    {}
+)
+
 const hardscape = realHardscape.sort().map((hardscape, index) => ({
     predefined: true,
     name: hardscape,
@@ -34,7 +42,7 @@ const hardscape = realHardscape.sort().map((hardscape, index) => ({
 
 realSubstrate.forEach(item => {
     item.models.forEach(model => {
-        const brand = brands.find(brand => brand.name === item.brand)
+        const brand = brandsMap[item.brand]
         if (!brand) throw `Brand ${item.brand} not found!`
 
         substrate.push({
@@ -47,7 +55,7 @@ realSubstrate.forEach(item => {
 
 realLights.forEach(item => {
     item.models.forEach(model => {
-        const brand = brands.find(brand => brand.name === item.brand)
+        const brand = brandsMap[item.brand]
         if (!brand) throw `Brand ${item.brand} not found!`
 
         lights.push({
@@ -60,7 +68,7 @@ realLights.forEach(item => {
 
 realFilters.forEach(item => {
     item.models.forEach(model => {
-        const brand = brands.find(brand => brand.name === item.brand)
+        const brand = brandsMap[item.brand]
         if (!brand) throw `Brand ${item.brand} not found!`
 
         filters.push({
