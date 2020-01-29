@@ -10,7 +10,6 @@ interface EnvironmentVariables {
     DB_NAME: string
     ENVIRONMENT: string
     SECURITY_TOKEN_SECRET: string
-    SECURITY_TOKEN_STATIC: string
     FACEBOOK_CLIENT_ID: string
     FACEBOOK_SECRET: string
     GOOGLE_SECRET: string
@@ -30,7 +29,6 @@ const environment = {
     DB_NAME: process.env.DB_NAME,
     ENVIRONMENT: process.env.ENVIRONMENT,
     SECURITY_TOKEN_SECRET: process.env.SECURITY_TOKEN_SECRET,
-    SECURITY_TOKEN_STATIC: process.env.SECURITY_TOKEN_STATIC,
     FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,
     FACEBOOK_SECRET: process.env.FACEBOOK_SECRET,
     GOOGLE_SECRET: process.env.GOOGLE_SECRET,
