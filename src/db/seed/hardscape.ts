@@ -1,0 +1,27 @@
+const hardscape = [
+    'Dragon Stone',
+    'Black Lava',
+    'Unzan Stone',
+    'Koke Stone',
+    'Manten Stone',
+    'Sansui Stone',
+    'Seiryu Stone',
+    'Black Pagoda',
+    'Grey Rocks Elephant Skin Rocks',
+    'Frodo Stone',
+    'Moorwood',
+    'Talawa Wood',
+    'Red Moorwood',
+    'Dark Iron Driftwood',
+    'Mangrove Wood',
+    'Mekong Wood',
+    'Manzanita Wood',
+    'Bogwood',
+    'Bonsai Tree',
+    'Mopani Wood',
+    'River Wood',
+    'Root Wood',
+    'Tantora Wood',
+]
+
+export default hardscape

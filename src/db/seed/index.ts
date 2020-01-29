@@ -3,6 +3,8 @@ import * as faker from 'faker'
 import realPlants from './plants'
 import realFilters from './filters'
 import realBrands from './brand'
+import realFish from './fish'
+import realHardscape from './hardscape'
 import {connectToDatabase} from 'server'
 import {Light} from 'db/models/Light'
 import {Plant} from 'db/models/Plant'
@@ -72,9 +74,7 @@ const filterDuplicateKeys = (arr: any[], keys: string[]) =>
 
 const entriesCount = {
     aquascapes: 40,
-    hardscape: 10,
     comments: 100,
-    livestock: 10,
     users: 20,
     lights: 10,
     tags: 20,
@@ -191,10 +191,10 @@ const aquascapeTags = filterDuplicateKeys(
     ['tagId', 'aquascapeId']
 )
 
-const hardscape = getEmptyArray(entriesCount.hardscape).map((_, index) => ({
+const hardscape = realHardscape.sort().map((hardscape, index) => ({
     _id: index + 1,
     predefined: true,
-    name: faker.commerce.productMaterial(),
+    name: hardscape,
     description: faker.lorem.words(),
     image: faker.image.imageUrl(),
 }))
@@ -215,9 +215,9 @@ const additives = getEmptyArray(entriesCount.additives).map((_, index) => ({
     image: faker.image.imageUrl(),
 }))
 
-const livestock = getEmptyArray(entriesCount.livestock).map((_, index) => ({
+const livestock = realFish.sort().map((fish, index) => ({
     _id: index + 1,
-    name: faker.commerce.productName(),
+    name: fish,
     description: faker.lorem.words(),
     image: faker.image.animals(),
 }))

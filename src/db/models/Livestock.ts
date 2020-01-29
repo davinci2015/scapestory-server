@@ -10,6 +10,9 @@ export class Livestock extends Model<Livestock> {
     name: string
 
     @Column
+    taxonomy: string
+
+    @Column
     description: string
 
     @Column

@@ -50,4 +50,10 @@ export default [
     {
         name: 'Tropica',
     },
+    {
+        name: 'Twinstar',
+    },
+    {
+        name: 'Ultum Nature Systems',
+    },
 ]
