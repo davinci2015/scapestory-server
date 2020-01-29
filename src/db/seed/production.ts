@@ -6,6 +6,7 @@ import realFish from './fish'
 import realHardscape from './hardscape'
 import realLights from './lights'
 import realSubstrate from './substrate'
+import realAdditives from './additives'
 
 import {connectToDatabase} from 'server'
 import {Light} from 'db/models/Light'
@@ -16,10 +17,12 @@ import {Livestock} from 'db/models/Livestock'
 import {Filter} from 'db/models/Filter'
 import {Substrate} from 'db/models/Substrate'
 import {Brand} from 'db/models/Brand'
+import {Additive} from 'db/models'
 
 const substrate: any = []
 const lights: any = []
 const filters: any = []
+const additives: any = []
 
 const brands = realBrands.map((brand, index) => ({
     _id: index + 1,
@@ -79,6 +82,19 @@ realFilters.forEach(item => {
     })
 })
 
+realAdditives.forEach(item => {
+    item.models.forEach(model => {
+        const brand = brandsMap[item.brand]
+        if (!brand) throw `Brand ${item.brand} not found!`
+
+        additives.push({
+            brandId: brand._id,
+            predefined: true,
+            model,
+        })
+    })
+})
+
 const livestock = realFish.sort().map((fish, index) => ({
     name: fish,
     predefined: true,
@@ -100,6 +116,7 @@ connectToDatabase((database: Database) => {
             await Promise.all(livestock.map(animal => Livestock.create(animal)))
             await Promise.all(substrate.map(sub => Substrate.create(sub)))
             await Promise.all(filters.map(filter => Filter.create(filter)))
+            await Promise.all(additives.map(additive => Additive.create(additive)))
         })
         .then(() => console.log('Database synced'))
         .catch(e => console.log('Failed to sync database', e))
