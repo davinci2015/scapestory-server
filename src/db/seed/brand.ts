@@ -15,6 +15,9 @@ export default [
         name: 'ONF',
     },
     {
+        name: 'DOOA',
+    },
+    {
         name: 'Oase',
     },
     {
