@@ -182,7 +182,6 @@ export class AuthProvider implements AuthProviderInterface {
         const social = await this.socialLoginRepository.findSocialLogin(data.socialProfileId)
 
         if (social) {
-            console.log('Found social', social.userId)
             user = await this.userRepository.findUserById(social.userId)
 
             if (!user) {
