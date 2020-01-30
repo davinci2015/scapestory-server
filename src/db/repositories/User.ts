@@ -25,6 +25,7 @@ export class UserRepository extends BaseRepository<User> implements UserReposito
     }
 
     async findUserById(id: number): Promise<User | null> {
+        console.log('findUserById', id)
         return this.dataLoader.load(id)
     }
 
@@ -61,6 +62,7 @@ export class UserRepository extends BaseRepository<User> implements UserReposito
     }
 
     private batchGetUserById = async (ids: number[]) => {
+        console.log('batchGetUserById', ids)
         const users = await this.findAll({where: {id: ids}})
         return GraphQLHelper.ensureOrder({
             docs: users,
