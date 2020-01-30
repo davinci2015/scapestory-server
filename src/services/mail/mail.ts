@@ -8,7 +8,7 @@ mailer.setApiKey(environment.SENDGRID_API_KEY)
 export const sendMail = (mail: MailData) => mailer.send(mail)
 
 export const sendConfirmationMail = (receiver: string, token: string) => {
-    const confirmationLink = `${environment.HOST}/register/validate/${token}`
+    const confirmationLink = `${environment.HOST}/register/confirm/${token}`
 
     return sendMail({
         from: environment.EMAIL_SENDER,
