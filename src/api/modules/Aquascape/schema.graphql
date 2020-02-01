@@ -94,4 +94,5 @@ type Mutation {
     createAquascape: Aquascape!
     updateAquascapeTitle(aquascapeId: Int!, title: String!): String
     updateAquascapeMainImage(aquascapeId: Int!, file: Upload!): MainImageUploadResult!
+    removeAquascape(aquascapeId: Int!): Int!
 }

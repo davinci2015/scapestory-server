@@ -40,6 +40,8 @@ export interface AquascapeProviderInterface {
 
     updateAquascapeTitle: (aquascapeId: number, title: string) => Bluebird<[number, Aquascape[]]>
 
+    removeAquascape: (aquascapeId: number) => Promise<number>
+
     updateAquascapeMainImage: (
         aquascapeId: number,
         file: Promise<FileUpload>
@@ -84,6 +86,12 @@ export class AquascapeProvider implements AquascapeProviderInterface {
 
     updateAquascapeTitle(aquascapeId: number, title: string) {
         return this.aquascapeRepository.updateAquascapeTitle(aquascapeId, title)
+    }
+
+    removeAquascape(aquascapeId: number) {
+        return this.aquascapeRepository.destroy({
+            where: {id: aquascapeId},
+        })
     }
 
     async updateAquascapeMainImage(aquascapeId: number, file: Promise<FileUpload>) {
