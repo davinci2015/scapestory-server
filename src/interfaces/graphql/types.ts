@@ -434,7 +434,7 @@ export type MutationGoogleRegisterArgs = {
 
 
 export type MutationResendConfirmationMailArgs = {
-  email: Scalars['Int']
+  email: Scalars['String']
 };
 
 
