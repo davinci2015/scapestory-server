@@ -10,6 +10,7 @@ export interface EmailConfirmationRepositoryInterface
     createConfirmationKey(email: string): Promise<EmailConfirmation>
     confirmEmail(email: string, code: string): Promise<boolean>
     confirmationExpired(email: string): Promise<boolean>
+    findByEmail(email: string): Promise<EmailConfirmation | null>
 }
 
 @Injectable()
@@ -17,6 +18,10 @@ export class EmailConfirmationRepository extends BaseRepository<EmailConfirmatio
     implements EmailConfirmationRepositoryInterface {
     constructor() {
         super(EmailConfirmation)
+    }
+
+    findByEmail(email: string) {
+        return this.findOne({where: {email}})
     }
 
     createConfirmationKey(email: string) {
@@ -41,7 +46,11 @@ export class EmailConfirmationRepository extends BaseRepository<EmailConfirmatio
 
     async confirmationExpired(email: string) {
         const confirmation = await this.findOne({where: {email}})
-        return Boolean(confirmation && moment(confirmation.expiresAt).isBefore(moment()))
+        if (!confirmation) {
+            return true
+        }
+
+        return Boolean(moment(confirmation.expiresAt).isBefore(moment()))
     }
 
     private async isValidCode(email: string, code: string) {

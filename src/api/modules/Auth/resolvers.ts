@@ -49,6 +49,10 @@ export const resolvers = {
             const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
             return await provider.googleRegister(args.token, req, res)
         },
+        async resendConfirmationMail(root, args, context: ModuleContext) {
+            const provider: AuthProviderInterface = context.injector.get(tokens.AUTH_PROVIDER)
+            await provider.resendConfirmationMail(args.email)
+        },
     },
 }
 
