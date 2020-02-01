@@ -4,6 +4,7 @@ import {Injectable, Inject} from '@graphql-modules/di'
 import {AuthenticationError, UserInputError} from 'apollo-server'
 import {Request, Response} from 'express'
 import slugify from 'slugify'
+import {ClientResponse} from '@sendgrid/client/src/response'
 
 import {User} from 'db/models/User'
 import {UserRepositoryInterface} from 'db/repositories/User'
@@ -31,6 +32,7 @@ export interface AuthProviderInterface {
     ) => Promise<AuthPayload | undefined>
     googleRegister: (token: string, req: Request, res: Response) => Promise<AuthPayload | undefined>
     userProfileSlugExists: (slug: string) => Promise<boolean>
+    resendConfirmationMail: (email: string) => Promise<[ClientResponse, {}]>
 }
 
 interface SocialLoginData {
@@ -138,6 +140,18 @@ export class AuthProvider implements AuthProviderInterface {
                 socialProfileId: data.profile.id,
             })
         }
+    }
+
+    async resendConfirmationMail(email: string) {
+        const confirmation = await this.emailConfirmationRepository.findByEmail(email)
+        const expired = await this.emailConfirmationRepository.confirmationExpired(email)
+
+        if (!confirmation || expired) {
+            throw new UserInputError('Email confirmation does not exist or expired!')
+        }
+
+        const token = AuthHelper.createEmailConfirmationToken(email, confirmation.code)
+        return sendConfirmationMail(email, token)
     }
 
     private async generateUniqueSlug(base: string = 'user'): Promise<string> {

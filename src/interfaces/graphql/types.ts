@@ -252,6 +252,7 @@ export type Mutation = {
   createAquascape: Aquascape,
   updateAquascapeTitle?: Maybe<Scalars['String']>,
   updateAquascapeMainImage: MainImageUploadResult,
+  removeAquascape: Scalars['Int'],
   addComment?: Maybe<Comment>,
   removeComment?: Maybe<Comment>,
   followUser?: Maybe<User>,
@@ -260,6 +261,7 @@ export type Mutation = {
   register?: Maybe<User>,
   fbRegister?: Maybe<AuthPayload>,
   googleRegister?: Maybe<AuthPayload>,
+  resendConfirmationMail?: Maybe<Scalars['Int']>,
   visitAquascape: VisitAquascapeResult,
 };
 
@@ -380,6 +382,11 @@ export type MutationUpdateAquascapeMainImageArgs = {
 };
 
 
+export type MutationRemoveAquascapeArgs = {
+  aquascapeId: Scalars['Int']
+};
+
+
 export type MutationAddCommentArgs = {
   entity: CommentEntityType,
   entityId: Scalars['Int'],
@@ -423,6 +430,11 @@ export type MutationFbRegisterArgs = {
 
 export type MutationGoogleRegisterArgs = {
   token: Scalars['String']
+};
+
+
+export type MutationResendConfirmationMailArgs = {
+  email: Scalars['String']
 };
 
 
@@ -929,6 +941,7 @@ export type MutationResolvers<ContextType = any, ParentType = ResolversParentTyp
   createAquascape?: Resolver<ResolversTypes['Aquascape'], ParentType, ContextType>,
   updateAquascapeTitle?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, MutationUpdateAquascapeTitleArgs>,
   updateAquascapeMainImage?: Resolver<ResolversTypes['MainImageUploadResult'], ParentType, ContextType, MutationUpdateAquascapeMainImageArgs>,
+  removeAquascape?: Resolver<ResolversTypes['Int'], ParentType, ContextType, MutationRemoveAquascapeArgs>,
   addComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationAddCommentArgs>,
   removeComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationRemoveCommentArgs>,
   followUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationFollowUserArgs>,
@@ -937,6 +950,7 @@ export type MutationResolvers<ContextType = any, ParentType = ResolversParentTyp
   register?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationRegisterArgs>,
   fbRegister?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationFbRegisterArgs>,
   googleRegister?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationGoogleRegisterArgs>,
+  resendConfirmationMail?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, MutationResendConfirmationMailArgs>,
   visitAquascape?: Resolver<ResolversTypes['VisitAquascapeResult'], ParentType, ContextType, MutationVisitAquascapeArgs>,
 };
 
