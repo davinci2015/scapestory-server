@@ -17,6 +17,7 @@ import {FilterModule} from 'api/modules/Filter'
 import {BrandModule} from 'api/modules/Brand'
 import {EquipmentModule} from 'api/modules/Equipment'
 import {AquascapeImageModule} from 'api/modules/AquascapeImage'
+import {NotificationModule} from 'api/modules/Notification'
 
 export const AppModule = new GraphQLModule({
     imports: [
@@ -37,5 +38,6 @@ export const AppModule = new GraphQLModule({
         BrandModule,
         EquipmentModule,
         AquascapeImageModule,
+        NotificationModule,
     ],
 })

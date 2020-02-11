@@ -1,7 +1,9 @@
-import {Injectable} from '@graphql-modules/di'
+import {Injectable, Inject} from '@graphql-modules/di'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Notification} from 'db/models/Notification'
+import {tokens} from 'di/tokens'
+import {NotificationNotifierRepositoryInterface} from './NotificationNotifier'
 
 export enum NotificationType {
     LIKE,
@@ -23,11 +25,15 @@ export interface CreateNotificationArgs {
 
 export interface NotificationRepositoryInterface extends BaseRepositoryInterface<Notification> {
     createNotification: (options: CreateNotificationArgs) => void
+}
 
 @Injectable()
 export class NotificationRepository extends BaseRepository<Notification>
     implements NotificationRepositoryInterface {
-    constructor() {
+    constructor(
+        @Inject(tokens.NOTIFICATION_NOTIFIER_REPOSITORY)
+        private notifierRepository: NotificationNotifierRepositoryInterface
+    ) {
         super(Notification)
     }
 
@@ -38,10 +44,12 @@ export class NotificationRepository extends BaseRepository<Notification>
             entityId: options.entityId,
         })
 
-        this.bulkCreate(options.notifiers.map(notifier => ({
-            notificationId: notification.id,
-            notifierId: notifier,
-            status: NotificationStatus.UNREAD,
-        })))
+        this.notifierRepository.bulkCreate(
+            options.notifiers.map(notifier => ({
+                notificationId: notification.id,
+                notifierId: notifier,
+                status: NotificationStatus.UNREAD,
+            }))
+        )
     }
 }
