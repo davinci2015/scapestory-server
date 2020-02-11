@@ -25,9 +25,7 @@ const getAquascapeIdForEntity = (args: MutationLikeArgs, context: ModuleContext)
                 .getCommentById(args.entityId)
                 .then(comment => (comment ? resolve(comment.aquascapeId) : reject(null)))
                 .catch(() => reject(null))
-        }
-
-        if (args.entity === LikeEntityType.Image) {
+        } else if (args.entity === LikeEntityType.Image) {
             const aquascapeImageProvider: AquascapeImageProviderInterface = context.injector.get(
                 tokens.AQUASCAPE_IMAGE_PROVIDER
             )
@@ -36,9 +34,9 @@ const getAquascapeIdForEntity = (args: MutationLikeArgs, context: ModuleContext)
                 .getImageById(args.entityId)
                 .then(image => (image ? resolve(image.aquascapeId) : reject(null)))
                 .catch(() => reject(null))
+        } else {
+            resolve(args.entityId)
         }
-
-        resolve(args.entityId)
     })
 
 export const resolvers = {
