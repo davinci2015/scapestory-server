@@ -5,12 +5,7 @@ import * as DataLoader from 'dataloader'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Like} from 'db/models/Like'
-
-export enum LikeEntityType {
-    AQUASCAPE = 'AQUASCAPE',
-    IMAGE = 'IMAGE',
-    COMMENT = 'COMMENT',
-}
+import {LikeEntityType} from 'interfaces/graphql/types'
 
 export interface LikeRepositoryInterface extends BaseRepositoryInterface<Like> {
     like(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
@@ -20,9 +15,9 @@ export interface LikeRepositoryInterface extends BaseRepositoryInterface<Like> {
 }
 
 const entityToFieldMapper = {
-    [LikeEntityType.AQUASCAPE]: 'aquascapeId',
-    [LikeEntityType.IMAGE]: 'aquascapeImageId',
-    [LikeEntityType.COMMENT]: 'commentId',
+    [LikeEntityType.Aquascape]: 'aquascapeId',
+    [LikeEntityType.Image]: 'aquascapeImageId',
+    [LikeEntityType.Comment]: 'commentId',
 }
 
 @Injectable({scope: ProviderScope.Session})
@@ -74,7 +69,7 @@ export class LikeRepository extends BaseRepository<Like> {
         const field = entityToFieldMapper[entity]
 
         switch (field) {
-            case entityToFieldMapper[LikeEntityType.AQUASCAPE]:
+            case entityToFieldMapper[LikeEntityType.Aquascape]:
                 return this.aquascapeLikesLoader.load(entityId)
             default:
                 return 0
@@ -83,7 +78,7 @@ export class LikeRepository extends BaseRepository<Like> {
 
     private batchCountAquascapeLikes = async (ids: number[]) => {
         const likes = await this.findAll({
-            where: {[entityToFieldMapper[LikeEntityType.AQUASCAPE]]: ids},
+            where: {[entityToFieldMapper[LikeEntityType.Aquascape]]: ids},
         })
 
         return ids.map(id => likes.filter(like => like.aquascapeId === id).length)

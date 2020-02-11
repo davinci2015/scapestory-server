@@ -2,8 +2,9 @@ import {Injectable, Inject, ProviderScope} from '@graphql-modules/di'
 import Bluebird from 'bluebird'
 
 import {tokens} from 'di/tokens'
-import {LikeRepositoryInterface, LikeEntityType} from 'db/repositories/Like'
+import {LikeRepositoryInterface} from 'db/repositories/Like'
 import {Like} from 'db/models/Like'
+import {LikeEntityType} from 'interfaces/graphql/types'
 
 export interface LikeProviderInterface {
     like(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
