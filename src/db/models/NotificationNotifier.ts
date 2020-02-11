@@ -9,7 +9,6 @@ export class NotificationNotifier extends Model<NotificationNotifier> {
     notificationId: number
 
     @BelongsTo(() => Notification)
-    @Column
     notification: Notification
 
     @ForeignKey(() => User)

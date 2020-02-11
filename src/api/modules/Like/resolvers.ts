@@ -75,7 +75,7 @@ export const resolvers = {
             getAquascapeIdForEntity(args, context)
                 .then((aquascapeId: number | null) => {
                     if (aquascapeId) {
-                        aquascapeProvider.getAquascapeById(aquascapeId).then(aquascape => {
+                        return aquascapeProvider.getAquascapeById(aquascapeId).then(aquascape => {
                             if (aquascape?.userId) {
                                 notificationProvider.createNotification({
                                     creatorId: context.currentUserId,

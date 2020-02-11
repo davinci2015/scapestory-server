@@ -22,7 +22,7 @@ export class NotificationProvider implements NotificationProviderInterface {
     ) {}
 
     createNotification(options: CreateNotificationArgs) {
-        this.notificationRepository.createNotification(options)
+        return this.notificationRepository.createNotification(options)
     }
 
     getNotifications(userId: number) {

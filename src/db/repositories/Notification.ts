@@ -4,6 +4,7 @@ import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Notification} from 'db/models/Notification'
 import {tokens} from 'di/tokens'
 import {NotificationNotifierRepositoryInterface} from './NotificationNotifier'
+import logger from 'logger'
 
 export enum NotificationType {
     LIKE,
@@ -38,18 +39,22 @@ export class NotificationRepository extends BaseRepository<Notification>
     }
 
     async createNotification(options: CreateNotificationArgs) {
-        const notification = await this.create({
-            creatorId: options.creatorId,
-            type: options.notificationType,
-            entityId: options.entityId,
-        })
+        try {
+            const notification = await this.create({
+                creatorId: options.creatorId,
+                type: options.notificationType,
+                entityId: options.entityId,
+            })
 
-        this.notifierRepository.bulkCreate(
-            options.notifiers.map(notifier => ({
-                notificationId: notification.id,
-                notifierId: notifier,
-                status: NotificationStatus.UNREAD,
-            }))
-        )
+            this.notifierRepository.bulkCreate(
+                options.notifiers.map(notifier => ({
+                    notificationId: notification.id,
+                    notifierId: notifier,
+                    status: NotificationStatus.UNREAD,
+                }))
+            )
+        } catch (error) {
+            logger.error(error)
+        }
     }
 }
