@@ -11,9 +11,7 @@ export interface FollowProviderInterface {
     followUser: (followedId: number, followerId: number) => Promise<User>
     unfollowUser: (followedId: number, followerId: number) => Promise<User>
     isFollowedBy: (followerId: number, followedId: number) => Promise<boolean>
-    getFollows: (
-        userId: number
-    ) => Promise<{followers: Follow[], following: Follow[]}>
+    getFollows: (userId: number) => Promise<{followers: Follow[]; following: Follow[]}>
 }
 
 @Injectable()
@@ -26,10 +24,7 @@ export class FollowProvider implements FollowProviderInterface {
     ) {}
 
     async followUser(followedId: number, followerId: number) {
-        const [follower, followed] = await this.findUsers(
-            followerId,
-            followedId
-        )
+        const [follower, followed] = await this.findUsers(followerId, followedId)
 
         if (!follower || !followed) {
             throw new UserInputError('User does not exist')
@@ -41,10 +36,7 @@ export class FollowProvider implements FollowProviderInterface {
     }
 
     async unfollowUser(followedId: number, followerId: number) {
-        const [follower, followed] = await this.findUsers(
-            followerId,
-            followedId
-        )
+        const [follower, followed] = await this.findUsers(followerId, followedId)
 
         if (!follower || !followed) {
             throw new UserInputError('User does not exist')

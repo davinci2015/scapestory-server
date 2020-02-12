@@ -20,7 +20,7 @@ export enum NotificationStatus {
 export interface CreateNotificationArgs {
     creatorId: number
     notifiers: number[]
-    entityId: number
+    entityId?: number
     notificationType: NotificationType
 }
 
