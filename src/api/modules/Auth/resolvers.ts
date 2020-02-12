@@ -6,13 +6,13 @@ import {validate} from 'api/guards'
 import {AuthProviderInterface} from 'api/modules/Auth/providers/AuthProvider'
 import {loginValidationSchema, registerValidationSchema} from 'api/modules/Auth/validation'
 import {
-    MutationRegisterArgs,
+    MutationResendConfirmationMailArgs,
+    QueryUserProfileSlugExistsArgs,
     MutationLoginArgs,
+    MutationRegisterArgs,
     MutationFbRegisterArgs,
     MutationGoogleRegisterArgs,
-    QueryUserProfileSlugExistsArgs,
-} from 'api/generated/types'
-import {MutationResendConfirmationMailArgs} from 'interfaces/graphql/types'
+} from 'interfaces/graphql/types'
 
 export const resolvers = {
     Query: {

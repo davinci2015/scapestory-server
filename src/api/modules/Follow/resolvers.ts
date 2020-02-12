@@ -5,7 +5,7 @@ import {authenticate} from 'api/guards'
 import {tokens} from 'di/tokens'
 import {User} from 'db/models/User'
 import {AuthenticationContext} from 'api/context'
-import {MutationFollowUserArgs, MutationUnfollowUserArgs} from 'api/generated/types'
+import {MutationFollowUserArgs, MutationUnfollowUserArgs} from 'interfaces/graphql/types'
 
 export const resolvers = {
     User: {

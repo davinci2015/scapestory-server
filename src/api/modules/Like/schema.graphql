@@ -22,6 +22,6 @@ enum LikeEntityType {
 }
 
 type Mutation {
-    like(entity: LikeEntityType!, entityId: Int!): Like
+    like(aquascapeId: Int!, entity: LikeEntityType!, entityId: Int!): Like
     dislike(entity: LikeEntityType!, entityId: Int!): Like
 }

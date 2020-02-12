@@ -18,15 +18,15 @@ import {AquascapeImage} from 'db/models/AquascapeImage'
 
 import {AquascapeProviderInterface} from './AquascapeProvider'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
+import {FileUpload} from 'graphql-upload'
+import {ModuleContext} from '@graphql-modules/core'
+import {Comment, User, Aquascape, Like} from 'db/models'
 import {
     QueryAquascapesArgs,
     QueryTrendingAquascapesArgs,
     QueryAquascapeArgs,
     MutationUpdateAquascapeTitleArgs,
-} from 'api/generated/types'
-import {FileUpload} from 'graphql-upload'
-import {ModuleContext} from '@graphql-modules/core'
-import {Comment, User, Aquascape, Like} from 'db/models'
+} from 'interfaces/graphql/types'
 
 const modelMapping = {
     tags: Tag,

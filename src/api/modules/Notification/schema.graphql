@@ -1,9 +1,7 @@
-#import "../Like/schema.graphql"
-#import "../Comment/schema.graphql"
-
 type Notification {
     id: Int!
     type: Int!
+    createdAt: Int!
 }
 
 type Notifier {
