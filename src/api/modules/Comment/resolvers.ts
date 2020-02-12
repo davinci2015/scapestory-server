@@ -6,27 +6,20 @@ import {GraphQLHelper} from 'utils/GraphQLHelper'
 import {tokens} from 'di/tokens'
 import {User} from 'db/models/User'
 import {authenticate} from 'api/guards'
-import {CommentEntityType} from 'db/repositories/Comment'
 import {AuthenticationContext} from 'api/context'
 import {Like} from 'db/models/Like'
 import {Aquascape} from 'db/models/Aquascape'
 import {Notification} from 'db/models'
-
-export type CommentsArgs = {
-    entityId: number
-    entity: CommentEntityType
-}
-
-export type MutationAddCommentArgs = {
-    entityId: number
-    entity: CommentEntityType
-    content: string
-    parentCommentId?: number
-}
-
-export type MutationRemoveCommentArgs = {
-    id: number
-}
+import {NotificationProvider} from '../Notification/NotificationProvider'
+import {NotificationType} from 'db/repositories/Notification'
+import logger from 'logger'
+import {AquascapeProviderInterface} from '../Aquascape/AquascapeProvider'
+import {
+    MutationAddCommentArgs,
+    MutationRemoveCommentArgs,
+    QueryCommentsArgs,
+    CommentEntityType,
+} from 'interfaces/graphql/types'
 
 const modelMapping = {
     user: User,
@@ -35,22 +28,28 @@ const modelMapping = {
 
 export const resolvers = {
     Query: {
-        async comments(root, args: CommentsArgs, context: ModuleContext, info: GraphQLResolveInfo) {
+        async comments(
+            root,
+            args: QueryCommentsArgs,
+            context: ModuleContext,
+            info: GraphQLResolveInfo
+        ) {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
             const fields = GraphQLHelper.getIncludeableFields(info, modelMapping)
+
             return await provider.getComments(args.entity, args.entityId, fields)
         },
     },
     Aquascape: {
         async comments(
             aquascape: Aquascape,
-            args: CommentsArgs,
+            args: QueryCommentsArgs,
             context: ModuleContext,
             info: GraphQLResolveInfo
         ) {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
             const fields = GraphQLHelper.getIncludeableFields(info, modelMapping)
-            return await provider.getComments(CommentEntityType.AQUASCAPE, aquascape.id, fields)
+            return await provider.getComments(CommentEntityType.Aquascape, aquascape.id, fields)
         },
     },
     Like: {
@@ -68,15 +67,55 @@ export const resolvers = {
         },
     },
     Mutation: {
-        async addComment(root, args: MutationAddCommentArgs, context: ModuleContext) {
+        async addComment(
+            root,
+            args: MutationAddCommentArgs,
+            context: ModuleContext & AuthenticationContext
+        ) {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
-            return await provider.addComment({
+            const aquascapeProvider: AquascapeProviderInterface = context.injector.get(
+                tokens.AQUASCAPE_PROVIDER
+            )
+            const notificationProvider: NotificationProvider = context.injector.get(
+                tokens.NOTIFICATION_PROVIDER
+            )
+
+            const comment = await provider.addComment({
                 entityType: args.entity,
                 entityId: args.entityId,
                 userId: context.currentUserId,
                 content: args.content,
                 parentCommentId: args.parentCommentId,
             })
+
+            aquascapeProvider
+                .getAquascapeById(args.aquascapeId)
+                .then(aquascape => {
+                    if (aquascape?.userId && aquascape.userId !== context.currentUserId) {
+                        notificationProvider.createNotification({
+                            creatorId: context.currentUserId,
+                            entityId: comment.id,
+                            notificationType: NotificationType.COMMENT,
+                            notifiers: [aquascape.userId],
+                        })
+                    }
+                })
+                .catch(logger.error)
+
+            if (comment.parentCommentId) {
+                provider.getCommentById(comment.parentCommentId).then(parentComment => {
+                    if (parentComment && context.currentUserId !== parentComment.userId) {
+                        notificationProvider.createNotification({
+                            creatorId: context.currentUserId,
+                            entityId: comment.id,
+                            notificationType: NotificationType.REPLY,
+                            notifiers: [parentComment.userId],
+                        })
+                    }
+                })
+            }
+
+            return comment
         },
         async removeComment(
             root,

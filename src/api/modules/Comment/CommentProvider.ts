@@ -4,11 +4,8 @@ import Bluebird from 'bluebird'
 
 import {Comment} from 'db/models/Comment'
 import {tokens} from 'di/tokens'
-import {
-    CommentRepositoryInterface,
-    AddCommentArgs,
-    CommentEntityType,
-} from 'db/repositories/Comment'
+import {CommentRepositoryInterface, AddCommentArgs} from 'db/repositories/Comment'
+import {CommentEntityType} from 'interfaces/graphql/types'
 
 export interface CommentProviderInterface {
     getCommentById(id: number): Bluebird<Comment | null>

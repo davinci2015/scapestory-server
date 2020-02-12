@@ -53,7 +53,7 @@ export const resolvers = {
                 aquascapeProvider
                     .getAquascapeById(args.aquascapeId)
                     .then(aquascape => {
-                        if (aquascape?.userId) {
+                        if (aquascape?.userId && aquascape.userId !== context.currentUserId) {
                             notificationProvider.createNotification({
                                 creatorId: context.currentUserId,
                                 entityId: like.id,

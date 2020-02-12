@@ -38,6 +38,7 @@ type Query {
 
 type Mutation {
     addComment(
+        aquascapeId: Int!
         entity: CommentEntityType!
         entityId: Int!
         content: String!

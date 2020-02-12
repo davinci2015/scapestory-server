@@ -10,6 +10,7 @@ export enum NotificationType {
     LIKE,
     FOLLOW,
     COMMENT,
+    REPLY,
 }
 
 export enum NotificationStatus {
