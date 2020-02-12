@@ -28,6 +28,11 @@ export interface NotificationRepositoryInterface extends BaseRepositoryInterface
     createNotification: (options: CreateNotificationArgs) => void
 }
 
+const notificationTypeMapping = {
+    [NotificationType.LIKE]: 'likeId',
+    [NotificationType.COMMENT]: 'commentId',
+}
+
 @Injectable()
 export class NotificationRepository extends BaseRepository<Notification>
     implements NotificationRepositoryInterface {
@@ -39,12 +44,19 @@ export class NotificationRepository extends BaseRepository<Notification>
     }
 
     async createNotification(options: CreateNotificationArgs) {
+        const notificationOptions = {
+            creatorId: options.creatorId,
+            type: options.notificationType,
+        }
+
+        const entityId = notificationTypeMapping[options.notificationType]
+
+        if (entityId) {
+            notificationOptions[entityId] = options.entityId
+        }
+
         try {
-            const notification = await this.create({
-                creatorId: options.creatorId,
-                type: options.notificationType,
-                entityId: options.entityId,
-            })
+            const notification = await this.create(notificationOptions)
 
             this.notifierRepository.bulkCreate(
                 options.notifiers.map(notifier => ({

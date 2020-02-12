@@ -13,6 +13,7 @@ import {AquascapeProviderInterface} from 'api/modules/Aquascape/AquascapeProvide
 import {CommentProviderInterface} from 'api/modules/Comment/CommentProvider'
 import {AquascapeImageProviderInterface} from 'api/modules/AquascapeImage/AquascapeImageProvider'
 import logger from 'logger'
+import {Notification} from 'db/models'
 
 const getAquascapeIdForEntity = (args: MutationLikeArgs, context: ModuleContext) =>
     new Promise((resolve, reject) => {
@@ -60,6 +61,13 @@ export const resolvers = {
                 LikeEntityType.Aquascape,
                 aquascape.id
             )
+        },
+    },
+    Notification: {
+        async like(notification: Notification, args, context: ModuleContext) {
+            const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
+
+            return await provider.getLikeById(notification.likeId)
         },
     },
     Mutation: {

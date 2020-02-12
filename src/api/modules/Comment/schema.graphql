@@ -1,5 +1,6 @@
 #import "../User/schema.graphql"
 #import "../Like/schema.graphql"
+#import "../Notification/schema.graphql"
 #import "../Aquascape/schema.graphql"
 
 type Comment {
@@ -19,6 +20,10 @@ type Aquascape {
 }
 
 type Like {
+    comment: Comment
+}
+
+type Notification {
     comment: Comment
 }
 

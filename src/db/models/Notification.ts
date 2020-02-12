@@ -11,7 +11,10 @@ export class Notification extends Model<Notification> {
     creator: User
 
     @Column
-    entityId: number
+    likeId: number
+
+    @Column
+    commentId: number
 
     @Column
     type: number

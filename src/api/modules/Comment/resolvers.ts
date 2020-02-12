@@ -10,6 +10,7 @@ import {CommentEntityType} from 'db/repositories/Comment'
 import {AuthenticationContext} from 'api/context'
 import {Like} from 'db/models/Like'
 import {Aquascape} from 'db/models/Aquascape'
+import {Notification} from 'db/models'
 
 export type CommentsArgs = {
     entityId: number
@@ -57,6 +58,13 @@ export const resolvers = {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
 
             return await provider.getCommentById(like.commentId)
+        },
+    },
+    Notification: {
+        async comment(notification: Notification, args, context: ModuleContext) {
+            const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
+
+            return await provider.getCommentById(notification.likeId)
         },
     },
     Mutation: {

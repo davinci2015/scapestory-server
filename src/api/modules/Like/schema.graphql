@@ -11,6 +11,10 @@ type Aquascape {
     isLikedByMe: Boolean!
 }
 
+type Notification {
+    like: Like
+}
+
 enum LikeEntityType {
     AQUASCAPE
     IMAGE

@@ -10,8 +10,19 @@ module.exports = {
                     primaryKey: true,
                     autoIncrement: true
                 },
-                entityId: {
-                    type: Sequelize.INTEGER
+                likeId: {
+                    type: Sequelize.INTEGER,
+                    references: {
+                        model: 'Likes',
+                        key: 'id'
+                    },
+                },
+                commentId: {
+                    type: Sequelize.INTEGER,
+                    references: {
+                        model: 'Comments',
+                        key: 'id'
+                    },
                 },
                 type: {
                     type: Sequelize.INTEGER
