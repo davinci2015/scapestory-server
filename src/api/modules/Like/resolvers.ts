@@ -34,6 +34,10 @@ export const resolvers = {
         async like(notification: Notification, _, context: ModuleContext) {
             const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
 
+            if (!notification.likeId) {
+                return null
+            }
+
             return await provider.getLikeById(notification.likeId)
         },
     },

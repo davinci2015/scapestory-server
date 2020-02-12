@@ -56,6 +56,10 @@ export const resolvers = {
         async comment(like: Like, args, context: ModuleContext) {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
 
+            if (!like.commentId) {
+                return null
+            }
+
             return await provider.getCommentById(like.commentId)
         },
     },
@@ -63,7 +67,11 @@ export const resolvers = {
         async comment(notification: Notification, args, context: ModuleContext) {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
 
-            return await provider.getCommentById(notification.likeId)
+            if (!notification.commentId) {
+                return null
+            }
+
+            return await provider.getCommentById(notification.commentId)
         },
     },
     Mutation: {
