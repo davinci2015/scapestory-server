@@ -34,19 +34,10 @@ const modelMapping = {
 
 export const resolvers = {
     Query: {
-        async comments(
-            root,
-            args: CommentsArgs,
-            context: ModuleContext,
-            info: GraphQLResolveInfo
-        ) {
+        async comments(root, args: CommentsArgs, context: ModuleContext, info: GraphQLResolveInfo) {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
-            const fields = GraphQLHelper.getIncludeableFields(info,modelMapping)
-            return await provider.getComments(
-                args.entity,
-                args.entityId,
-                fields
-            )
+            const fields = GraphQLHelper.getIncludeableFields(info, modelMapping)
+            return await provider.getComments(args.entity, args.entityId, fields)
         },
     },
     Aquascape: {
@@ -57,19 +48,20 @@ export const resolvers = {
             info: GraphQLResolveInfo
         ) {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
-            const fields = GraphQLHelper.getIncludeableFields(info,modelMapping)
-            return await provider.getComments(
-                CommentEntityType.AQUASCAPE,
-                aquascape.id,
-                fields
-            )
+            const fields = GraphQLHelper.getIncludeableFields(info, modelMapping)
+            return await provider.getComments(CommentEntityType.AQUASCAPE, aquascape.id, fields)
+        },
+    },
+    Like: {
+        async comment(like: Like, args, context: ModuleContext) {
+            const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
+
+            return await provider.getCommentById(like.commentId)
         },
     },
     Mutation: {
         async addComment(root, args: MutationAddCommentArgs, context: ModuleContext) {
-            const provider: CommentProviderInterface = context.injector.get(
-                tokens.COMMENT_PROVIDER
-            )
+            const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
             return await provider.addComment({
                 entityType: args.entity,
                 entityId: args.entityId,
@@ -78,7 +70,11 @@ export const resolvers = {
                 parentCommentId: args.parentCommentId,
             })
         },
-        async removeComment(root, args: MutationRemoveCommentArgs, context: ModuleContext & AuthenticationContext) {
+        async removeComment(
+            root,
+            args: MutationRemoveCommentArgs,
+            context: ModuleContext & AuthenticationContext
+        ) {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
             return await provider.removeComment(args.id, context.currentUserId)
         },

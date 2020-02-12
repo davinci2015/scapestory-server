@@ -13,6 +13,7 @@ import {
     MutationConfirmEmailArgs,
 } from 'interfaces/graphql/types'
 import {AuthHelper} from 'utils/AuthHelper'
+import {Notification} from 'db/models'
 
 export const resolvers = {
     Query: {
@@ -31,6 +32,12 @@ export const resolvers = {
         async users(root, args, {injector}: ModuleContext) {
             const provider: UsersProviderInterface = injector.get(tokens.USER_PROVIDER)
             return await provider.getAllUsers()
+        },
+    },
+    Notification: {
+        async creator(notification: Notification, args, {injector}: ModuleContext) {
+            const provider: UsersProviderInterface = injector.get(tokens.USER_PROVIDER)
+            return await provider.findUserById(notification.creatorId)
         },
     },
     Mutation: {

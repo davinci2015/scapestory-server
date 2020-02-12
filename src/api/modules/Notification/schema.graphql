@@ -1,9 +1,20 @@
+#import "../Like/schema.graphql"
+#import "../Comment/schema.graphql"
+
 type Notification {
     id: Int!
+    type: Int!
+}
+
+type Notifier {
+    id: Int!
+    notification: Notification
+    status: Int
+    createdAt: Int!
 }
 
 type Query {
-    notifications: [Notification!]!
+    notifications: [Notifier!]!
 }
 
 type Mutation {

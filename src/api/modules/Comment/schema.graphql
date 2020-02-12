@@ -18,6 +18,10 @@ type Aquascape {
     comments: [Comment!]!
 }
 
+type Like {
+    comment: Comment
+}
+
 enum CommentEntityType {
     AQUASCAPE
     IMAGE

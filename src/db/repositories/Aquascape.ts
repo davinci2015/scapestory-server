@@ -26,6 +26,8 @@ export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aq
 
     getAquascapeById: (id: number, include?: Includeable[]) => Bluebird<Aquascape | null>
 
+    getAquascapesById: (ids: number[], include?: Includeable[]) => Bluebird<Aquascape[]>
+
     getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
 
     updateAquascapeTitle: (id: number, title: string) => Bluebird<[number, Aquascape[]]>
@@ -104,6 +106,10 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
 
     getAquascapeById(id: number, include?: Includeable[]) {
         return this.findOne({where: {id}, include})
+    }
+
+    getAquascapesById(ids: number[], include?: Includeable[]) {
+        return this.findAll({where: {id: ids}, include})
     }
 
     getAquascapeImages(aquascapeId: number) {

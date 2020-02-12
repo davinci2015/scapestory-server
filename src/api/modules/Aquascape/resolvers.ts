@@ -26,6 +26,7 @@ import {
 } from 'api/generated/types'
 import {FileUpload} from 'graphql-upload'
 import {ModuleContext} from '@graphql-modules/core'
+import {Comment, User, Aquascape, Like} from 'db/models'
 
 const modelMapping = {
     tags: Tag,
@@ -84,14 +85,14 @@ export const resolvers = {
         },
     },
     Aquascape: {
-        async user(aquascape, args, context) {
+        async user(aquascape: Aquascape, args, context) {
             const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
 
             return await provider.findUserById(aquascape.userId)
         },
     },
     User: {
-        async aquascapes(user, args, context, info) {
+        async aquascapes(user: User, args, context, info) {
             const provider: AquascapeProviderInterface = context.injector.get(
                 tokens.AQUASCAPE_PROVIDER
             )
@@ -102,6 +103,24 @@ export const resolvers = {
                 args.random,
                 getAquascapeJoinFields(info)
             )
+        },
+    },
+    Comment: {
+        async aquascape(comment: Comment, args, context: ModuleContext) {
+            const provider: AquascapeProviderInterface = context.injector.get(
+                tokens.AQUASCAPE_PROVIDER
+            )
+
+            return await provider.getAquascapeById(comment.aquascapeId)
+        },
+    },
+    Like: {
+        async aquascape(like: Like, args, context: ModuleContext) {
+            const provider: AquascapeProviderInterface = context.injector.get(
+                tokens.AQUASCAPE_PROVIDER
+            )
+
+            return await provider.getAquascapeById(like.aquascapeId)
         },
     },
     Mutation: {

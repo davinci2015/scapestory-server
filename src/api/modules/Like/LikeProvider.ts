@@ -7,6 +7,7 @@ import {Like} from 'db/models/Like'
 import {LikeEntityType} from 'interfaces/graphql/types'
 
 export interface LikeProviderInterface {
+    getLikeById(id: number): Bluebird<Like | null>
     like(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
     dislike(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
     countLikes(entity: LikeEntityType, entityId: number): Promise<number>
@@ -19,6 +20,10 @@ export class LikeProvider implements LikeProviderInterface {
         @Inject(tokens.LIKE_REPOSITORY)
         private likeRepository: LikeRepositoryInterface
     ) {}
+
+    getLikeById(id: number) {
+        return this.likeRepository.findOne({where: {id}})
+    }
 
     like(entity: LikeEntityType, entityId: number, userId: number) {
         return this.likeRepository.like(entity, entityId, userId)

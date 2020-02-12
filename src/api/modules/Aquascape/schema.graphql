@@ -36,6 +36,14 @@ type User {
     aquascapes(pagination: Pagination!, random: Boolean): AquascapesResult!
 }
 
+type Comment {
+    aquascape: Aquascape
+}
+
+type Like {
+    aquascape: Aquascape
+}
+
 type Aquascape {
     id: Int!
     createdAt: String!
