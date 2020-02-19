@@ -4,6 +4,7 @@ import {tokens} from 'di/tokens'
 import {authenticate} from 'api/guards'
 import {NotificationProviderInterface} from './NotificationProvider'
 import {AuthenticationContext} from 'api/context'
+import {MutationReadNotificationsArgs} from 'interfaces/graphql/types'
 
 export const resolvers = {
     Query: {
@@ -16,12 +17,14 @@ export const resolvers = {
         },
     },
     Mutation: {
-        async readNotifications(root, args, context) {
+        async readNotifications(root, args: MutationReadNotificationsArgs, context) {
             const provider: NotificationProviderInterface = context.injector.get(
                 tokens.NOTIFICATION_PROVIDER
             )
 
-            return await provider.readNotifications(args.notifications)
+            const [affected] = await provider.readNotifications(args.notifierId)
+
+            return affected
         },
     },
 }

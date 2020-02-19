@@ -258,7 +258,7 @@ export type Mutation = {
   removeAquascape: Scalars['Int'],
   addComment?: Maybe<Comment>,
   removeComment?: Maybe<Comment>,
-  readNotifications?: Maybe<Scalars['Boolean']>,
+  readNotifications?: Maybe<Scalars['Int']>,
   followUser?: Maybe<User>,
   unfollowUser?: Maybe<User>,
   login?: Maybe<AuthPayload>,
@@ -407,7 +407,7 @@ export type MutationRemoveCommentArgs = {
 
 
 export type MutationReadNotificationsArgs = {
-  notifications: Array<Scalars['Int']>
+  notifierId: Scalars['Int']
 };
 
 
@@ -997,7 +997,7 @@ export type MutationResolvers<ContextType = any, ParentType = ResolversParentTyp
   removeAquascape?: Resolver<ResolversTypes['Int'], ParentType, ContextType, MutationRemoveAquascapeArgs>,
   addComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationAddCommentArgs>,
   removeComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationRemoveCommentArgs>,
-  readNotifications?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, MutationReadNotificationsArgs>,
+  readNotifications?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, MutationReadNotificationsArgs>,
   followUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationFollowUserArgs>,
   unfollowUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationUnfollowUserArgs>,
   login?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationLoginArgs>,

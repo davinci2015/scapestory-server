@@ -10,7 +10,7 @@ export interface NotificationNotifierRepositoryInterface
     extends BaseRepositoryInterface<NotificationNotifier> {
     getNotifications: (userId: number) => Bluebird<NotificationNotifier[]>
     countUnreadNotifications: (userId: number) => Bluebird<number>
-    readNotifications: (notifications: number[]) => Bluebird<[number, NotificationNotifier[]]>
+    readNotifications: (notifierId: number) => Bluebird<[number, NotificationNotifier[]]>
 }
 
 @Injectable()
@@ -28,7 +28,10 @@ export class NotificationNotifierRepository extends BaseRepository<NotificationN
         return this.count({where: {notifierId: userId, status: NotificationStatus.Unread}})
     }
 
-    readNotifications(notifications: number[]) {
-        return this.update({status: NotificationStatus.Read}, {where: {id: notifications}})
+    readNotifications(notifierId: number) {
+        return this.update(
+            {status: NotificationStatus.Read},
+            {where: {notifierId, status: NotificationStatus.Unread}}
+        )
     }
 }

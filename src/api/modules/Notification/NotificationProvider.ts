@@ -9,7 +9,7 @@ import {NotificationNotifier} from 'db/models/NotificationNotifier'
 export interface NotificationProviderInterface {
     createNotification(options: CreateNotificationArgs): void
     getNotifications(userId: number): Bluebird<NotificationNotifier[]>
-    readNotifications(notifications: number[]): Bluebird<[number, NotificationNotifier[]]>
+    readNotifications(notifierId: number): Bluebird<[number, NotificationNotifier[]]>
 }
 
 @Injectable()
@@ -29,7 +29,7 @@ export class NotificationProvider implements NotificationProviderInterface {
         return this.notifierRepository.getNotifications(userId)
     }
 
-    readNotifications(notifications: number[]) {
-        return this.notifierRepository.readNotifications(notifications)
+    readNotifications(notifierId: number) {
+        return this.notifierRepository.readNotifications(notifierId)
     }
 }
