@@ -1,14 +1,26 @@
+enum NotificationType {
+    LIKE
+    FOLLOW
+    COMMENT
+    REPLY
+}
+
+enum NotificationStatus {
+    READ
+    UNREAD
+}
+
 type Notification {
     id: Int!
-    type: Int!
+    type: NotificationType!
     createdAt: Int!
 }
 
 type Notifier {
     id: Int!
-    notification: Notification
-    status: Int
-    createdAt: Int!
+    notification: Notification!
+    status: NotificationStatus!
+    createdAt: String!
 }
 
 type Query {

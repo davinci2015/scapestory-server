@@ -4,8 +4,7 @@ import {tokens} from 'di/tokens'
 import {authenticate} from 'api/guards'
 import {LikeProviderInterface} from 'api/modules/Like/LikeProvider'
 import {AuthenticationContext} from 'api/context'
-import {LikeEntityType, MutationLikeArgs} from 'interfaces/graphql/types'
-import {NotificationType} from 'db/repositories/Notification'
+import {LikeEntityType, MutationLikeArgs, NotificationType} from 'interfaces/graphql/types'
 import {NotificationProvider} from 'api/modules/Notification/NotificationProvider'
 import {AquascapeProviderInterface} from 'api/modules/Aquascape/AquascapeProvider'
 import {Notification, Aquascape} from 'db/models'
@@ -61,7 +60,7 @@ export const resolvers = {
                             notificationProvider.createNotification({
                                 creatorId: context.currentUserId,
                                 entityId: like.id,
-                                notificationType: NotificationType.LIKE,
+                                notificationType: NotificationType.Like,
                                 notifiers: [aquascape.userId],
                             })
                         }

@@ -1,3 +1,4 @@
+import {UserInputError} from 'apollo-server'
 import {Injectable, Inject} from '@graphql-modules/di'
 
 import {Follow} from 'db/models/Follow'
@@ -5,7 +6,6 @@ import {FollowRepositoryInterface} from 'db/repositories/Follow'
 import {UserRepositoryInterface} from 'db/repositories/User'
 import {User} from 'db/models/User'
 import {tokens} from 'di/tokens'
-import {UserInputError} from 'apollo-server'
 
 export interface FollowProviderInterface {
     followUser: (followedId: number, followerId: number) => Promise<User>

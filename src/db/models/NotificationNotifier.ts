@@ -19,5 +19,5 @@ export class NotificationNotifier extends Model<NotificationNotifier> {
     notifier: User
 
     @Column
-    status: number
+    status: string
 }

@@ -17,5 +17,5 @@ export class Notification extends Model<Notification> {
     commentId: number
 
     @Column
-    type: number
+    type: string
 }

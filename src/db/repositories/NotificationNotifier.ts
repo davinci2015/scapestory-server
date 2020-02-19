@@ -4,7 +4,7 @@ import {Injectable} from '@graphql-modules/di'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {NotificationNotifier} from 'db/models/NotificationNotifier'
 import {Notification} from 'db/models/Notification'
-import {NotificationStatus} from './Notification'
+import {NotificationStatus} from 'interfaces/graphql/types'
 
 export interface NotificationNotifierRepositoryInterface
     extends BaseRepositoryInterface<NotificationNotifier> {
@@ -25,10 +25,10 @@ export class NotificationNotifierRepository extends BaseRepository<NotificationN
     }
 
     countUnreadNotifications(userId: number) {
-        return this.count({where: {notifierId: userId, status: NotificationStatus.UNREAD}})
+        return this.count({where: {notifierId: userId, status: NotificationStatus.Unread}})
     }
 
     readNotifications(notifications: number[]) {
-        return this.update({status: NotificationStatus.READ}, {where: {id: notifications}})
+        return this.update({status: NotificationStatus.Read}, {where: {id: notifications}})
     }
 }

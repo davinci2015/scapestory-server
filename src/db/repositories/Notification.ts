@@ -5,18 +5,7 @@ import {Notification} from 'db/models/Notification'
 import {tokens} from 'di/tokens'
 import {NotificationNotifierRepositoryInterface} from './NotificationNotifier'
 import logger from 'logger'
-
-export enum NotificationType {
-    LIKE,
-    FOLLOW,
-    COMMENT,
-    REPLY,
-}
-
-export enum NotificationStatus {
-    READ,
-    UNREAD,
-}
+import {NotificationType, NotificationStatus} from 'interfaces/graphql/types'
 
 export interface CreateNotificationArgs {
     creatorId: number
@@ -30,8 +19,8 @@ export interface NotificationRepositoryInterface extends BaseRepositoryInterface
 }
 
 const notificationTypeMapping = {
-    [NotificationType.LIKE]: 'likeId',
-    [NotificationType.COMMENT]: 'commentId',
+    [NotificationType.Like]: 'likeId',
+    [NotificationType.Comment]: 'commentId',
 }
 
 @Injectable()
@@ -63,7 +52,7 @@ export class NotificationRepository extends BaseRepository<Notification>
                 options.notifiers.map(notifier => ({
                     notificationId: notification.id,
                     notifierId: notifier,
-                    status: NotificationStatus.UNREAD,
+                    status: NotificationStatus.Unread,
                 }))
             )
         } catch (error) {

@@ -16,6 +16,8 @@ module.exports = {
                         model: 'Likes',
                         key: 'id'
                     },
+                    onUpdate: 'cascade',
+                    onDelete: 'cascade'
                 },
                 commentId: {
                     type: Sequelize.INTEGER,
@@ -23,9 +25,11 @@ module.exports = {
                         model: 'Comments',
                         key: 'id'
                     },
+                    onUpdate: 'cascade',
+                    onDelete: 'cascade'
                 },
                 type: {
-                    type: Sequelize.INTEGER
+                    type: Sequelize.STRING
                 },
                 creatorId: {
                     type: Sequelize.INTEGER,
@@ -60,7 +64,7 @@ module.exports = {
                     onDelete: 'cascade'
                 },
                 status: {
-                    type: Sequelize.INTEGER
+                    type: Sequelize.STRING
                 },
                 notificationId: {
                     type: Sequelize.INTEGER,

@@ -6,6 +6,7 @@ import {Comment} from 'db/models/Comment'
 import {tokens} from 'di/tokens'
 import {CommentRepositoryInterface, AddCommentArgs} from 'db/repositories/Comment'
 import {CommentEntityType} from 'interfaces/graphql/types'
+import {NotificationRepositoryInterface} from 'db/repositories/Notification'
 
 export interface CommentProviderInterface {
     getCommentById(id: number): Bluebird<Comment | null>
@@ -24,7 +25,9 @@ export interface CommentProviderInterface {
 export class CommentProvider implements CommentProviderInterface {
     constructor(
         @Inject(tokens.COMMENT_REPOSITORY)
-        private commentRepository: CommentRepositoryInterface
+        private commentRepository: CommentRepositoryInterface,
+        @Inject(tokens.NOTIFICATION_REPOSITORY)
+        private notificationRepository: NotificationRepositoryInterface
     ) {}
 
     getCommentById(id: number) {
@@ -40,6 +43,7 @@ export class CommentProvider implements CommentProviderInterface {
     }
 
     removeComment(id: number, userId: number) {
+        this.notificationRepository.destroy({where: {commentId: id}})
         return this.commentRepository.removeComment(id, userId)
     }
 }

@@ -11,7 +11,6 @@ import {Like} from 'db/models/Like'
 import {Aquascape} from 'db/models/Aquascape'
 import {Notification} from 'db/models'
 import {NotificationProvider} from '../Notification/NotificationProvider'
-import {NotificationType} from 'db/repositories/Notification'
 import logger from 'logger'
 import {AquascapeProviderInterface} from '../Aquascape/AquascapeProvider'
 import {
@@ -19,6 +18,7 @@ import {
     MutationRemoveCommentArgs,
     QueryCommentsArgs,
     CommentEntityType,
+    NotificationType,
 } from 'interfaces/graphql/types'
 
 const modelMapping = {
@@ -103,7 +103,7 @@ export const resolvers = {
                         notificationProvider.createNotification({
                             creatorId: context.currentUserId,
                             entityId: comment.id,
-                            notificationType: NotificationType.COMMENT,
+                            notificationType: NotificationType.Comment,
                             notifiers: [aquascape.userId],
                         })
                     }
@@ -116,7 +116,7 @@ export const resolvers = {
                         notificationProvider.createNotification({
                             creatorId: context.currentUserId,
                             entityId: comment.id,
-                            notificationType: NotificationType.REPLY,
+                            notificationType: NotificationType.Reply,
                             notifiers: [parentComment.userId],
                         })
                     }
