@@ -1,3 +1,4 @@
+#import "../App/schema.graphql"
 #import "../User/schema.graphql"
 #import "../Filter/schema.graphql"
 #import "../Light/schema.graphql"
@@ -67,12 +68,6 @@ type Aquascape {
     lights: [Light!]!
     substrates: [Substrate!]!
     additives: [Additive!]!
-}
-
-input Pagination {
-    limit: Int
-    cursor: String
-    offset: Int
 }
 
 input AquascapesFilter {

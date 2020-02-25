@@ -1,4 +1,4 @@
-#import "../Aquascape/schema.graphql"
+#import "../App/schema.graphql"
 
 enum NotificationType {
     LIKE
