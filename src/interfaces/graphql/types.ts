@@ -524,6 +524,7 @@ export type Query = {
   brands: Array<Brand>,
   comments: Array<Comment>,
   notifications: Array<Notifier>,
+  countUnreadNotifications: Scalars['Int'],
   userProfileSlugExists?: Maybe<Scalars['Boolean']>,
 };
 
@@ -1057,6 +1058,7 @@ export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes[
   brands?: Resolver<Array<ResolversTypes['Brand']>, ParentType, ContextType>,
   comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType, QueryCommentsArgs>,
   notifications?: Resolver<Array<ResolversTypes['Notifier']>, ParentType, ContextType>,
+  countUnreadNotifications?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   userProfileSlugExists?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, QueryUserProfileSlugExistsArgs>,
 };
 
