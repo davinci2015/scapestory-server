@@ -9,6 +9,7 @@ import {NotificationNotifier} from 'db/models/NotificationNotifier'
 export interface NotificationProviderInterface {
     createNotification(options: CreateNotificationArgs): void
     getNotifications(userId: number): Bluebird<NotificationNotifier[]>
+    countUnreadNotifications(notifierId: number): Promise<number>
     readNotifications(notifierId: number): Bluebird<[number, NotificationNotifier[]]>
 }
 
@@ -27,6 +28,10 @@ export class NotificationProvider implements NotificationProviderInterface {
 
     getNotifications(userId: number) {
         return this.notifierRepository.getNotifications(userId)
+    }
+
+    countUnreadNotifications(notifierId: number) {
+        return this.notificationRepository.countUnreadNotifications(notifierId)
     }
 
     readNotifications(notifierId: number) {

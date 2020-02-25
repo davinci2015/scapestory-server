@@ -8,12 +8,19 @@ import {MutationReadNotificationsArgs} from 'interfaces/graphql/types'
 
 export const resolvers = {
     Query: {
-        async notifications(root, args, context: ModuleContext & AuthenticationContext) {
+        notifications(root, args, context: ModuleContext & AuthenticationContext) {
             const provider: NotificationProviderInterface = context.injector.get(
                 tokens.NOTIFICATION_PROVIDER
             )
 
-            return await provider.getNotifications(context.currentUserId)
+            return provider.getNotifications(context.currentUserId)
+        },
+        countUnreadNotifications(root, args, context: ModuleContext & AuthenticationContext) {
+            const provider: NotificationProviderInterface = context.injector.get(
+                tokens.NOTIFICATION_PROVIDER
+            )
+
+            return provider.countUnreadNotifications(context.currentUserId)
         },
     },
     Mutation: {
@@ -31,5 +38,6 @@ export const resolvers = {
 
 export const resolversComposition = {
     'Query.notifications': [authenticate],
+    'Query.countUnreadNotifications': [authenticate],
     'Mutation.readNotifications': [authenticate],
 }

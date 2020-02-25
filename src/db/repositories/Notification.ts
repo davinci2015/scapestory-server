@@ -16,6 +16,7 @@ export interface CreateNotificationArgs {
 
 export interface NotificationRepositoryInterface extends BaseRepositoryInterface<Notification> {
     createNotification: (options: CreateNotificationArgs) => void
+    countUnreadNotifications(notifierId: number): Promise<number>
 }
 
 const notificationTypeMapping = {
@@ -31,6 +32,12 @@ export class NotificationRepository extends BaseRepository<Notification>
         private notifierRepository: NotificationNotifierRepositoryInterface
     ) {
         super(Notification)
+    }
+
+    countUnreadNotifications(notifierId: number) {
+        return this.notifierRepository.count({
+            where: {notifierId, status: NotificationStatus.Unread},
+        })
     }
 
     async createNotification(options: CreateNotificationArgs) {
