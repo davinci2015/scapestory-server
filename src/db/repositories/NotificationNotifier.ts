@@ -1,14 +1,15 @@
 import Bluebird from 'bluebird'
 import {Injectable} from '@graphql-modules/di'
+import {Op, WhereOptions, Order} from 'sequelize'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {NotificationNotifier} from 'db/models/NotificationNotifier'
 import {Notification} from 'db/models/Notification'
-import {NotificationStatus} from 'interfaces/graphql/types'
+import {NotificationStatus, Pagination} from 'interfaces/graphql/types'
 
 export interface NotificationNotifierRepositoryInterface
     extends BaseRepositoryInterface<NotificationNotifier> {
-    getNotifications: (userId: number) => Bluebird<NotificationNotifier[]>
+    getNotifications: (userId: number, pagination: Pagination) => Bluebird<NotificationNotifier[]>
     countUnreadNotifications: (userId: number) => Bluebird<number>
     readNotifications: (notifierId: number) => Bluebird<[number, NotificationNotifier[]]>
 }
@@ -20,8 +21,23 @@ export class NotificationNotifierRepository extends BaseRepository<NotificationN
         super(NotificationNotifier)
     }
 
-    getNotifications(userId: number) {
-        return this.findAll({where: {notifierId: userId}, include: [Notification]})
+    getNotifications(userId: number, pagination: Pagination) {
+        const where: WhereOptions = {notifierId: userId}
+        const include = [Notification]
+        const limit = pagination.limit || 20
+        const offset = pagination.offset || 0
+        const order: Order = [
+            ['createdAt', 'DESC'],
+            ['id', 'DESC'],
+        ]
+
+        if (pagination.cursor) {
+            where.createdAt = {
+                [Op.lt]: new Date(Number(pagination.cursor)),
+            }
+        }
+
+        return this.findAll({where, include, order, limit, offset})
     }
 
     countUnreadNotifications(userId: number) {

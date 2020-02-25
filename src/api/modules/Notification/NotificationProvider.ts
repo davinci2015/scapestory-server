@@ -9,10 +9,11 @@ import {
 } from 'db/repositories/Notification'
 import {NotificationNotifierRepositoryInterface} from 'db/repositories/NotificationNotifier'
 import {NotificationNotifier} from 'db/models/NotificationNotifier'
+import {Pagination} from 'interfaces/graphql/types'
 
 export interface NotificationProviderInterface {
     createNotification(options: CreateNotificationArgs): void
-    getNotifications(userId: number): Bluebird<NotificationNotifier[]>
+    getNotifications(userId: number, pagination: Pagination): Bluebird<NotificationNotifier[]>
     countUnreadNotifications(notifierId: number): Promise<number>
     readNotifications(notifierId: number): Bluebird<[number, NotificationNotifier[]]>
     removeNotifications(notifications: NotificationToRemove[]): Promise<number>
@@ -31,8 +32,8 @@ export class NotificationProvider implements NotificationProviderInterface {
         return this.notificationRepository.createNotification(options)
     }
 
-    getNotifications(userId: number) {
-        return this.notifierRepository.getNotifications(userId)
+    getNotifications(userId: number, pagination: Pagination) {
+        return this.notifierRepository.getNotifications(userId, pagination)
     }
 
     countUnreadNotifications(notifierId: number) {

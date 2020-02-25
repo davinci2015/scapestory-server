@@ -4,16 +4,20 @@ import {tokens} from 'di/tokens'
 import {authenticate} from 'api/guards'
 import {NotificationProviderInterface} from './NotificationProvider'
 import {AuthenticationContext} from 'api/context'
-import {MutationReadNotificationsArgs} from 'interfaces/graphql/types'
+import {MutationReadNotificationsArgs, QueryNotificationsArgs} from 'interfaces/graphql/types'
 
 export const resolvers = {
     Query: {
-        notifications(root, args, context: ModuleContext & AuthenticationContext) {
+        notifications(
+            root,
+            args: QueryNotificationsArgs,
+            context: ModuleContext & AuthenticationContext
+        ) {
             const provider: NotificationProviderInterface = context.injector.get(
                 tokens.NOTIFICATION_PROVIDER
             )
 
-            return provider.getNotifications(context.currentUserId)
+            return provider.getNotifications(context.currentUserId, args.pagination)
         },
         unreadNotificationsCount(root, args, context: ModuleContext & AuthenticationContext) {
             const provider: NotificationProviderInterface = context.injector.get(

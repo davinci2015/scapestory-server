@@ -524,7 +524,7 @@ export type Query = {
   brands: Array<Brand>,
   comments: Array<Comment>,
   notifications: Array<Notifier>,
-  countUnreadNotifications: Scalars['Int'],
+  unreadNotificationsCount: Scalars['Int'],
   userProfileSlugExists?: Maybe<Scalars['Boolean']>,
 };
 
@@ -559,6 +559,11 @@ export type QueryAquascapeArgs = {
 export type QueryCommentsArgs = {
   entity: CommentEntityType,
   entityId: Scalars['Int'],
+  pagination: Pagination
+};
+
+
+export type QueryNotificationsArgs = {
   pagination: Pagination
 };
 
@@ -1057,8 +1062,8 @@ export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes[
   aquascape?: Resolver<Maybe<ResolversTypes['Aquascape']>, ParentType, ContextType, QueryAquascapeArgs>,
   brands?: Resolver<Array<ResolversTypes['Brand']>, ParentType, ContextType>,
   comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType, QueryCommentsArgs>,
-  notifications?: Resolver<Array<ResolversTypes['Notifier']>, ParentType, ContextType>,
-  countUnreadNotifications?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  notifications?: Resolver<Array<ResolversTypes['Notifier']>, ParentType, ContextType, QueryNotificationsArgs>,
+  unreadNotificationsCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   userProfileSlugExists?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, QueryUserProfileSlugExistsArgs>,
 };
 
