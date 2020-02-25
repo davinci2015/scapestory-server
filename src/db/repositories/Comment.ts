@@ -22,6 +22,8 @@ export interface CommentRepositoryInterface extends BaseRepositoryInterface<Comm
         include?: Includeable[]
     ): Bluebird<Comment[]>
 
+    getChildComments(parentCommentId: number): Bluebird<Comment[]>
+
     addComment(data: AddCommentArgs): Bluebird<Comment>
 
     removeComment(id: number, userId: number): Bluebird<Comment>
@@ -50,6 +52,10 @@ export class CommentRepository extends BaseRepository<Comment> {
             include,
             order: [['createdAt', 'DESC']],
         })
+    }
+
+    getChildComments(parentCommentId: number) {
+        return this.findAll({where: {parentCommentId}})
     }
 
     addComment(data: AddCommentArgs) {

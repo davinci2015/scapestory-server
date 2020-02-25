@@ -14,14 +14,21 @@ export interface CreateNotificationArgs {
     notificationType: NotificationType
 }
 
+export interface NotificationToRemove {
+    entityId: number
+    notificationType: NotificationType
+}
+
 export interface NotificationRepositoryInterface extends BaseRepositoryInterface<Notification> {
     createNotification: (options: CreateNotificationArgs) => void
     countUnreadNotifications(notifierId: number): Promise<number>
+    removeNotifications(notifications: NotificationToRemove[]): Promise<number>
 }
 
 const notificationTypeMapping = {
     [NotificationType.Like]: 'likeId',
     [NotificationType.Comment]: 'commentId',
+    [NotificationType.Reply]: 'commentId',
 }
 
 @Injectable()
@@ -65,5 +72,19 @@ export class NotificationRepository extends BaseRepository<Notification>
         } catch (error) {
             logger.error(error)
         }
+    }
+
+    removeNotifications(notifications: NotificationToRemove[]) {
+        let field: string
+
+        const where = notifications.reduce((acc, notification) => {
+            field = acc[notificationTypeMapping[notification.notificationType]]
+            acc[field] = acc[field] || []
+            acc[field].push(notification.entityId)
+
+            return acc
+        }, {})
+
+        return this.destroy({where})
     }
 }

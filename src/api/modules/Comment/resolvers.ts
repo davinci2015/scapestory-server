@@ -131,7 +131,37 @@ export const resolvers = {
             context: ModuleContext & AuthenticationContext
         ) {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
-            return await provider.removeComment(args.id, context.currentUserId)
+            const notificationProvider: NotificationProvider = context.injector.get(
+                tokens.NOTIFICATION_PROVIDER
+            )
+
+            const removedComment = await provider.removeComment(args.id, context.currentUserId)
+
+            provider
+                .getChildComments(removedComment.id)
+                .then(comments => {
+                    let notificationsToRemove = [
+                        {
+                            entityId: removedComment.id,
+                            notificationType: NotificationType.Comment,
+                        },
+                    ]
+
+                    if (comments && comments.length) {
+                        notificationsToRemove = [
+                            ...notificationsToRemove,
+                            ...comments.map(comment => ({
+                                entityId: comment.id,
+                                notificationType: NotificationType.Reply,
+                            })),
+                        ]
+                    }
+
+                    return notificationProvider.removeNotifications(notificationsToRemove)
+                })
+                .catch(logger.error)
+
+            return removedComment
         },
     },
 }

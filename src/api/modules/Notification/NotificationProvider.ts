@@ -2,7 +2,11 @@ import {Injectable, Inject} from '@graphql-modules/di'
 import Bluebird from 'bluebird'
 
 import {tokens} from 'di/tokens'
-import {NotificationRepositoryInterface, CreateNotificationArgs} from 'db/repositories/Notification'
+import {
+    NotificationRepositoryInterface,
+    CreateNotificationArgs,
+    NotificationToRemove,
+} from 'db/repositories/Notification'
 import {NotificationNotifierRepositoryInterface} from 'db/repositories/NotificationNotifier'
 import {NotificationNotifier} from 'db/models/NotificationNotifier'
 
@@ -11,6 +15,7 @@ export interface NotificationProviderInterface {
     getNotifications(userId: number): Bluebird<NotificationNotifier[]>
     countUnreadNotifications(notifierId: number): Promise<number>
     readNotifications(notifierId: number): Bluebird<[number, NotificationNotifier[]]>
+    removeNotifications(notifications: NotificationToRemove[]): Promise<number>
 }
 
 @Injectable()
@@ -36,5 +41,9 @@ export class NotificationProvider implements NotificationProviderInterface {
 
     readNotifications(notifierId: number) {
         return this.notifierRepository.readNotifications(notifierId)
+    }
+
+    removeNotifications(notifications: NotificationToRemove[]) {
+        return this.notificationRepository.removeNotifications(notifications)
     }
 }
