@@ -15,10 +15,14 @@ export const resolvers = {
 
             return provider.getNotifications(context.currentUserId)
         },
-        countUnreadNotifications(root, args, context: ModuleContext & AuthenticationContext) {
+        unreadNotificationsCount(root, args, context: ModuleContext & AuthenticationContext) {
             const provider: NotificationProviderInterface = context.injector.get(
                 tokens.NOTIFICATION_PROVIDER
             )
+
+            if (!context.currentUserId) {
+                return 0
+            }
 
             return provider.countUnreadNotifications(context.currentUserId)
         },
@@ -38,6 +42,5 @@ export const resolvers = {
 
 export const resolversComposition = {
     'Query.notifications': [authenticate],
-    'Query.countUnreadNotifications': [authenticate],
     'Mutation.readNotifications': [authenticate],
 }

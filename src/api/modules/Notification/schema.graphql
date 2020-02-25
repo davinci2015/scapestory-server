@@ -25,7 +25,7 @@ type Notifier {
 
 type Query {
     notifications: [Notifier!]!
-    countUnreadNotifications: Int!
+    unreadNotificationsCount: Int!
 }
 
 type Mutation {
