@@ -25,8 +25,13 @@ type Notifier {
     createdAt: String!
 }
 
+type NotificationsResult {
+    rows: [Notifier!]!
+    count: Int!
+}
+
 type Query {
-    notifications(pagination: Pagination!): [Notifier!]!
+    notifications(pagination: Pagination!): NotificationsResult!
     unreadNotificationsCount: Int!
 }
 

@@ -13,7 +13,10 @@ import {Pagination} from 'interfaces/graphql/types'
 
 export interface NotificationProviderInterface {
     createNotification(options: CreateNotificationArgs): void
-    getNotifications(userId: number, pagination: Pagination): Bluebird<NotificationNotifier[]>
+    getNotifications(
+        userId: number,
+        pagination: Pagination
+    ): Promise<{rows: NotificationNotifier[]; count: number}>
     countUnreadNotifications(notifierId: number): Promise<number>
     readNotifications(notifierId: number): Bluebird<[number, NotificationNotifier[]]>
     removeNotifications(notifications: NotificationToRemove[]): Promise<number>

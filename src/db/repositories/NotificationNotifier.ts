@@ -9,7 +9,10 @@ import {NotificationStatus, Pagination} from 'interfaces/graphql/types'
 
 export interface NotificationNotifierRepositoryInterface
     extends BaseRepositoryInterface<NotificationNotifier> {
-    getNotifications: (userId: number, pagination: Pagination) => Bluebird<NotificationNotifier[]>
+    getNotifications: (
+        userId: number,
+        pagination: Pagination
+    ) => Promise<{rows: NotificationNotifier[]; count: number}>
     countUnreadNotifications: (userId: number) => Bluebird<number>
     readNotifications: (notifierId: number) => Bluebird<[number, NotificationNotifier[]]>
 }
@@ -21,7 +24,7 @@ export class NotificationNotifierRepository extends BaseRepository<NotificationN
         super(NotificationNotifier)
     }
 
-    getNotifications(userId: number, pagination: Pagination) {
+    async getNotifications(userId: number, pagination: Pagination) {
         const where: WhereOptions = {notifierId: userId}
         const include = [Notification]
         const limit = pagination.limit || 20
@@ -37,7 +40,12 @@ export class NotificationNotifierRepository extends BaseRepository<NotificationN
             }
         }
 
-        return this.findAll({where, include, order, limit, offset})
+        const [rows, count] = await Promise.all([
+            this.findAll({where, include, order, limit, offset}),
+            this.count({where}),
+        ])
+
+        return {rows, count}
     }
 
     countUnreadNotifications(userId: number) {
