@@ -78,12 +78,14 @@ export class NotificationRepository extends BaseRepository<Notification>
         let field: string
 
         const where = notifications.reduce((acc, notification) => {
-            field = acc[notificationTypeMapping[notification.notificationType]]
+            field = notificationTypeMapping[notification.notificationType]
             acc[field] = acc[field] || []
             acc[field].push(notification.entityId)
 
             return acc
         }, {})
+
+        console.log(where)
 
         return this.destroy({where})
     }

@@ -135,31 +135,27 @@ export const resolvers = {
                 tokens.NOTIFICATION_PROVIDER
             )
 
+            const childComments = await provider.getChildComments(args.id)
             const removedComment = await provider.removeComment(args.id, context.currentUserId)
 
-            provider
-                .getChildComments(removedComment.id)
-                .then(comments => {
-                    let notificationsToRemove = [
-                        {
-                            entityId: removedComment.id,
-                            notificationType: NotificationType.Comment,
-                        },
-                    ]
+            let notificationsToRemove = [
+                {
+                    entityId: removedComment.id,
+                    notificationType: NotificationType.Comment,
+                },
+            ]
 
-                    if (comments && comments.length) {
-                        notificationsToRemove = [
-                            ...notificationsToRemove,
-                            ...comments.map(comment => ({
-                                entityId: comment.id,
-                                notificationType: NotificationType.Reply,
-                            })),
-                        ]
-                    }
+            if (childComments && childComments.length) {
+                notificationsToRemove = [
+                    ...notificationsToRemove,
+                    ...childComments.map(comment => ({
+                        entityId: comment.id,
+                        notificationType: NotificationType.Reply,
+                    })),
+                ]
+            }
 
-                    return notificationProvider.removeNotifications(notificationsToRemove)
-                })
-                .catch(logger.error)
+            notificationProvider.removeNotifications(notificationsToRemove).catch(logger.error)
 
             return removedComment
         },
