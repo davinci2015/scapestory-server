@@ -7,8 +7,10 @@ import {AuthenticationContext} from 'api/context'
 import {LikeEntityType, MutationLikeArgs, NotificationType} from 'interfaces/graphql/types'
 import {NotificationProvider} from 'api/modules/Notification/NotificationProvider'
 import {AquascapeProviderInterface} from 'api/modules/Aquascape/AquascapeProvider'
-import {Notification, Aquascape} from 'db/models'
+import {Notification, Aquascape, Like} from 'db/models'
 import logger from 'logger'
+import {CommentProviderInterface} from '../Comment/CommentProvider'
+import {CreateNotificationArgs} from 'db/repositories/Notification'
 
 export const resolvers = {
     Aquascape: {
@@ -46,6 +48,9 @@ export const resolvers = {
             const aquascapeProvider: AquascapeProviderInterface = context.injector.get(
                 tokens.AQUASCAPE_PROVIDER
             )
+            const commentProvider: CommentProviderInterface = context.injector.get(
+                tokens.COMMENT_PROVIDER
+            )
             const notificationProvider: NotificationProvider = context.injector.get(
                 tokens.NOTIFICATION_PROVIDER
             )
@@ -53,19 +58,34 @@ export const resolvers = {
             const like = await provider.like(args.entity, args.entityId, context.currentUserId)
 
             if (like) {
-                aquascapeProvider
-                    .getAquascapeById(args.aquascapeId)
-                    .then(aquascape => {
-                        if (aquascape?.userId && aquascape.userId !== context.currentUserId) {
-                            notificationProvider.createNotification({
-                                creatorId: context.currentUserId,
-                                entityId: like.id,
-                                notificationType: NotificationType.Like,
-                                notifiers: [aquascape.userId],
-                            })
-                        }
-                    })
-                    .catch(logger.error)
+                const notification: CreateNotificationArgs = {
+                    creatorId: context.currentUserId,
+                    entityId: like.id,
+                    notificationType: NotificationType.Like,
+                    notifiers: [],
+                }
+
+                if (args.entity === LikeEntityType.Aquascape) {
+                    aquascapeProvider
+                        .getAquascapeById(args.entityId)
+                        .then(aquascape => {
+                            if (aquascape?.userId && aquascape.userId !== context.currentUserId) {
+                                notification.notifiers.push(aquascape.userId)
+                                return notificationProvider.createNotification(notification)
+                            }
+                        })
+                        .catch(logger.error)
+                } else if (args.entity === LikeEntityType.Comment) {
+                    commentProvider
+                        .getCommentById(args.entityId)
+                        .then(comment => {
+                            if (comment?.userId && comment.userId !== context.currentUserId) {
+                                notification.notifiers.push(comment.userId)
+                                return notificationProvider.createNotification(notification)
+                            }
+                        })
+                        .catch(logger.error)
+                }
             }
 
             return like
