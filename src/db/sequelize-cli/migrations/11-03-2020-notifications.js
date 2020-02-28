@@ -28,6 +28,15 @@ module.exports = {
                     onUpdate: 'cascade',
                     onDelete: 'cascade'
                 },
+                followId: {
+                    type: Sequelize.INTEGER,
+                    references: {
+                        model: 'Follows',
+                        key: 'id'
+                    },
+                    onUpdate: 'cascade',
+                    onDelete: 'cascade'
+                },
                 type: {
                     type: Sequelize.STRING
                 },

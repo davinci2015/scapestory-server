@@ -29,6 +29,7 @@ const notificationTypeMapping = {
     [NotificationType.Like]: 'likeId',
     [NotificationType.Comment]: 'commentId',
     [NotificationType.Reply]: 'commentId',
+    [NotificationType.Follow]: 'followId',
 }
 
 @Injectable()
@@ -84,8 +85,6 @@ export class NotificationRepository extends BaseRepository<Notification>
 
             return acc
         }, {})
-
-        console.log(where)
 
         return this.destroy({where})
     }

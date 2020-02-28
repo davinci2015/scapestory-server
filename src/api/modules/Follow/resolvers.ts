@@ -44,13 +44,18 @@ export const resolvers = {
                 tokens.NOTIFICATION_PROVIDER
             )
 
-            notificationProvider.createNotification({
-                creatorId: context.currentUserId,
-                notifiers: [args.userId],
-                notificationType: NotificationType.Follow,
-            })
+            const {followed, follow} = await provider.followUser(args.userId, context.currentUserId)
 
-            return await provider.followUser(args.userId, context.currentUserId)
+            if (follow) {
+                notificationProvider.createNotification({
+                    creatorId: context.currentUserId,
+                    notifiers: [args.userId],
+                    notificationType: NotificationType.Follow,
+                    entityId: follow.id,
+                })
+            }
+
+            return followed
         },
         async unfollowUser(
             root,

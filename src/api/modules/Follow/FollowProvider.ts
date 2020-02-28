@@ -8,7 +8,10 @@ import {User} from 'db/models/User'
 import {tokens} from 'di/tokens'
 
 export interface FollowProviderInterface {
-    followUser: (followedId: number, followerId: number) => Promise<User>
+    followUser: (
+        followedId: number,
+        followerId: number
+    ) => Promise<{followed: User; follow: Follow | null}>
     unfollowUser: (followedId: number, followerId: number) => Promise<User>
     isFollowedBy: (followerId: number, followedId: number) => Promise<boolean>
     getFollows: (userId: number) => Promise<{followers: Follow[]; following: Follow[]}>
@@ -30,9 +33,9 @@ export class FollowProvider implements FollowProviderInterface {
             throw new UserInputError('User does not exist')
         }
 
-        await this.followRepository.followUser(followedId, followerId)
+        const follow = await this.followRepository.followUser(followedId, followerId)
 
-        return followed
+        return {followed, follow}
     }
 
     async unfollowUser(followedId: number, followerId: number) {

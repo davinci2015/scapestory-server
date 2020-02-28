@@ -8,14 +8,20 @@ export class NotificationNotifier extends Model<NotificationNotifier> {
     @Column
     notificationId: number
 
-    @BelongsTo(() => Notification)
+    @BelongsTo(() => Notification, {
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
+    })
     notification: Notification
 
     @ForeignKey(() => User)
     @Column
     notifierId: number
 
-    @BelongsTo(() => User)
+    @BelongsTo(() => User, {
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
+    })
     notifier: User
 
     @Column
