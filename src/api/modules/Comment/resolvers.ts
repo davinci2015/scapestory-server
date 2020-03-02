@@ -19,7 +19,9 @@ import {
     QueryCommentsArgs,
     CommentEntityType,
     NotificationType,
+    LikeEntityType,
 } from 'interfaces/graphql/types'
+import {LikeProviderInterface} from '../Like/LikeProvider'
 
 const modelMapping = {
     user: User,
@@ -131,6 +133,7 @@ export const resolvers = {
             context: ModuleContext & AuthenticationContext
         ) {
             const provider: CommentProviderInterface = context.injector.get(tokens.COMMENT_PROVIDER)
+            const likeProvider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
             const notificationProvider: NotificationProvider = context.injector.get(
                 tokens.NOTIFICATION_PROVIDER
             )
@@ -156,6 +159,12 @@ export const resolvers = {
             }
 
             notificationProvider.removeNotifications(notificationsToRemove).catch(logger.error)
+            likeProvider.removeLikes(
+                notificationsToRemove.map(notification => ({
+                    entityId: notification.entityId,
+                    entity: LikeEntityType.Comment,
+                }))
+            )
 
             return removedComment
         },

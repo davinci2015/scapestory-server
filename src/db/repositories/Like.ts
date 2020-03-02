@@ -9,6 +9,7 @@ import {LikeEntityType} from 'interfaces/graphql/types'
 
 export interface LikeRepositoryInterface extends BaseRepositoryInterface<Like> {
     like(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
+    removeLikes(data: {entity: LikeEntityType; entityId: number}[]): Promise<number>
     dislike(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
     countLikes(entity: LikeEntityType, entityId: number): Promise<number>
     isLikedBy(userId: number, entity: LikeEntityType, entityId: number): Promise<boolean>
@@ -74,6 +75,18 @@ export class LikeRepository extends BaseRepository<Like> {
             default:
                 return 0
         }
+    }
+
+    removeLikes(data: {entity: LikeEntityType; entityId: number}[]) {
+        let field
+        return this.destroy({
+            where: data.reduce((acc, elem) => {
+                field = entityToFieldMapper[elem.entity]
+                acc[field] = acc[field] || []
+                acc[field].push(elem.entityId)
+                return acc
+            }, {}),
+        })
     }
 
     private batchCountAquascapeLikes = async (ids: number[]) => {

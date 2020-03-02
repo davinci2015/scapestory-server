@@ -11,6 +11,7 @@ export interface LikeProviderInterface {
     getLikeById(id: number): Bluebird<Like | null>
     like(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
     dislike(entity: LikeEntityType, entityId: number, userId: number): Promise<Like>
+    removeLikes(data: {entity: LikeEntityType; entityId: number}[]): Promise<number>
     countLikes(entity: LikeEntityType, entityId: number): Promise<number>
     isLikedBy(userId: number, entity: LikeEntityType, entityId: number): Promise<boolean>
 }
@@ -37,6 +38,10 @@ export class LikeProvider implements LikeProviderInterface {
         this.notificationRepository.destroy({where: {id: like.id}})
 
         return like
+    }
+
+    removeLikes(data: {entity: LikeEntityType; entityId: number}[]) {
+        return this.likeRepository.removeLikes(data)
     }
 
     countLikes(entity: LikeEntityType, entityId) {
