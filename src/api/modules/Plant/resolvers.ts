@@ -1,11 +1,11 @@
 import {ModuleContext} from '@graphql-modules/core'
+import {UserInputError} from 'apollo-server'
 
 import {tokens} from 'di/tokens'
 import {PlantProviderInterface} from './PlantProvider'
 import {authenticate, authorizeAquascapeUpdate} from 'api/guards'
-import {MutationAddPlantArgs, MutationRemovePlantArgs} from 'api/generated/types'
-import {UserInputError} from 'apollo-server'
 import {Plant} from 'db/models/Plant'
+import {MutationAddPlantArgs, MutationRemovePlantArgs} from 'interfaces/graphql/types'
 
 export const resolvers = {
     Query: {
@@ -26,7 +26,9 @@ export const resolvers = {
             }
 
             if (!plant) {
-                throw new UserInputError('You need to provide a plant ID or a plant name that will be created')
+                throw new UserInputError(
+                    'You need to provide a plant ID or a plant name that will be created'
+                )
             }
 
             await provider.addPlantForAquascape(plant.id, args.aquascapeId)
@@ -48,12 +50,11 @@ export const resolvers = {
             }
 
             return plant
-        }
-    }
+        },
+    },
 }
 
 export const resolversComposition = {
     'Mutation.addPlant': [authenticate, authorizeAquascapeUpdate],
     'Mutation.removePlant': [authenticate, authorizeAquascapeUpdate],
 }
-

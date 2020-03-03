@@ -1,16 +1,15 @@
 import {Injectable, Inject} from '@graphql-modules/di'
 import {Includeable} from 'sequelize/types'
-import * as Bluebird from 'bluebird'
+import Bluebird from 'bluebird'
 
 import {Comment} from 'db/models/Comment'
 import {tokens} from 'di/tokens'
-import {
-    CommentRepositoryInterface,
-    AddCommentArgs,
-    CommentEntityType,
-} from 'db/repositories/Comment'
+import {CommentRepositoryInterface, AddCommentArgs} from 'db/repositories/Comment'
+import {CommentEntityType} from 'interfaces/graphql/types'
 
 export interface CommentProviderInterface {
+    getCommentById(id: number): Bluebird<Comment | null>
+    getChildComments(parentCommentId: number): Promise<Comment[]>
     getComments(
         entityType: CommentEntityType,
         entityId: number,
@@ -29,12 +28,16 @@ export class CommentProvider implements CommentProviderInterface {
         private commentRepository: CommentRepositoryInterface
     ) {}
 
-    getComments(
-        entityType: CommentEntityType,
-        entityId: number,
-        include?: Includeable[]
-    ) {
+    getCommentById(id: number) {
+        return this.commentRepository.findOne({where: {id}})
+    }
+
+    getComments(entityType: CommentEntityType, entityId: number, include?: Includeable[]) {
         return this.commentRepository.getComments(entityType, entityId, include)
+    }
+
+    getChildComments(parentCommentId: number) {
+        return this.commentRepository.getChildComments(parentCommentId)
     }
 
     addComment(data: AddCommentArgs) {

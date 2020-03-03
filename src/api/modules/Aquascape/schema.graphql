@@ -1,3 +1,4 @@
+#import "../App/schema.graphql"
 #import "../User/schema.graphql"
 #import "../Filter/schema.graphql"
 #import "../Light/schema.graphql"
@@ -36,6 +37,14 @@ type User {
     aquascapes(pagination: Pagination!, random: Boolean): AquascapesResult!
 }
 
+type Comment {
+    aquascape: Aquascape
+}
+
+type Like {
+    aquascape: Aquascape
+}
+
 type Aquascape {
     id: Int!
     createdAt: String!
@@ -59,12 +68,6 @@ type Aquascape {
     lights: [Light!]!
     substrates: [Substrate!]!
     additives: [Additive!]!
-}
-
-input Pagination {
-    limit: Int
-    cursor: String
-    offset: Int
 }
 
 input AquascapesFilter {

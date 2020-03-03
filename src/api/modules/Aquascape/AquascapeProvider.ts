@@ -8,7 +8,6 @@ import {Aquascape} from 'db/models/Aquascape'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {tokens} from 'di/tokens'
 
-import {Pagination} from 'api/generated/types'
 import {
     uploadStreamFile,
     CloudinaryUploadResult,
@@ -16,6 +15,7 @@ import {
     imageUploadOptions,
 } from 'services/cloudinary'
 import logger from 'logger'
+import {Pagination} from 'interfaces/graphql/types'
 
 export interface AquascapeProviderInterface {
     getAquascapes: (

@@ -5,7 +5,12 @@ import {authenticate} from 'api/guards'
 import {tokens} from 'di/tokens'
 import {User} from 'db/models/User'
 import {AuthenticationContext} from 'api/context'
-import {MutationFollowUserArgs, MutationUnfollowUserArgs} from 'api/generated/types'
+import {
+    MutationFollowUserArgs,
+    MutationUnfollowUserArgs,
+    NotificationType,
+} from 'interfaces/graphql/types'
+import {NotificationProvider} from '../Notification/NotificationProvider'
 
 export const resolvers = {
     User: {
@@ -35,7 +40,22 @@ export const resolvers = {
             context: ModuleContext & AuthenticationContext
         ) {
             const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
-            return await provider.followUser(args.userId, context.currentUserId)
+            const notificationProvider: NotificationProvider = context.injector.get(
+                tokens.NOTIFICATION_PROVIDER
+            )
+
+            const {followed, follow} = await provider.followUser(args.userId, context.currentUserId)
+
+            if (follow) {
+                notificationProvider.createNotification({
+                    creatorId: context.currentUserId,
+                    notifiers: [args.userId],
+                    notificationType: NotificationType.Follow,
+                    entityId: follow.id,
+                })
+            }
+
+            return followed
         },
         async unfollowUser(
             root,

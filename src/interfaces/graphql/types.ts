@@ -97,6 +97,7 @@ export type Co2 = {
 
 export type Comment = {
   __typename?: 'Comment',
+  aquascape?: Maybe<Aquascape>,
   id: Scalars['Int'],
   createdAt: Scalars['String'],
   content: Scalars['String'],
@@ -208,6 +209,8 @@ export type Like = {
   aquascapeImageId?: Maybe<Scalars['Int']>,
   aquascapeId?: Maybe<Scalars['Int']>,
   commentId?: Maybe<Scalars['Int']>,
+  aquascape?: Maybe<Aquascape>,
+  comment?: Maybe<Comment>,
 };
 
 export enum LikeEntityType {
@@ -255,6 +258,7 @@ export type Mutation = {
   removeAquascape: Scalars['Int'],
   addComment?: Maybe<Comment>,
   removeComment?: Maybe<Comment>,
+  readNotifications?: Maybe<Scalars['Int']>,
   followUser?: Maybe<User>,
   unfollowUser?: Maybe<User>,
   login?: Maybe<AuthPayload>,
@@ -347,6 +351,7 @@ export type MutationRemoveLivestockArgs = {
 
 
 export type MutationLikeArgs = {
+  aquascapeId: Scalars['Int'],
   entity: LikeEntityType,
   entityId: Scalars['Int']
 };
@@ -388,6 +393,7 @@ export type MutationRemoveAquascapeArgs = {
 
 
 export type MutationAddCommentArgs = {
+  aquascapeId: Scalars['Int'],
   entity: CommentEntityType,
   entityId: Scalars['Int'],
   content: Scalars['String'],
@@ -397,6 +403,11 @@ export type MutationAddCommentArgs = {
 
 export type MutationRemoveCommentArgs = {
   id: Scalars['Int']
+};
+
+
+export type MutationReadNotificationsArgs = {
+  notifierId: Scalars['Int']
 };
 
 
@@ -442,6 +453,42 @@ export type MutationVisitAquascapeArgs = {
   aquascapeId: Scalars['Int']
 };
 
+export type Notification = {
+  __typename?: 'Notification',
+  creator?: Maybe<User>,
+  like?: Maybe<Like>,
+  comment?: Maybe<Comment>,
+  id: Scalars['Int'],
+  type: NotificationType,
+  createdAt: Scalars['Int'],
+};
+
+export type NotificationsResult = {
+  __typename?: 'NotificationsResult',
+  rows: Array<Notifier>,
+  count: Scalars['Int'],
+};
+
+export enum NotificationStatus {
+  Read = 'READ',
+  Unread = 'UNREAD'
+}
+
+export enum NotificationType {
+  Like = 'LIKE',
+  Follow = 'FOLLOW',
+  Comment = 'COMMENT',
+  Reply = 'REPLY'
+}
+
+export type Notifier = {
+  __typename?: 'Notifier',
+  id: Scalars['Int'],
+  notification: Notification,
+  status: NotificationStatus,
+  createdAt: Scalars['String'],
+};
+
 export type Pagination = {
   limit?: Maybe<Scalars['Int']>,
   cursor?: Maybe<Scalars['String']>,
@@ -482,6 +529,8 @@ export type Query = {
   aquascape?: Maybe<Aquascape>,
   brands: Array<Brand>,
   comments: Array<Comment>,
+  notifications: NotificationsResult,
+  unreadNotificationsCount: Scalars['Int'],
   userProfileSlugExists?: Maybe<Scalars['Boolean']>,
 };
 
@@ -516,6 +565,11 @@ export type QueryAquascapeArgs = {
 export type QueryCommentsArgs = {
   entity: CommentEntityType,
   entityId: Scalars['Int'],
+  pagination: Pagination
+};
+
+
+export type QueryNotificationsArgs = {
   pagination: Pagination
 };
 
@@ -690,6 +744,11 @@ export type ResolversTypes = {
   Comment: ResolverTypeWrapper<Partial<Comment>>,
   Like: ResolverTypeWrapper<Partial<Like>>,
   CommentEntityType: ResolverTypeWrapper<Partial<CommentEntityType>>,
+  NotificationsResult: ResolverTypeWrapper<Partial<NotificationsResult>>,
+  Notifier: ResolverTypeWrapper<Partial<Notifier>>,
+  Notification: ResolverTypeWrapper<Partial<Notification>>,
+  NotificationType: ResolverTypeWrapper<Partial<NotificationType>>,
+  NotificationStatus: ResolverTypeWrapper<Partial<NotificationStatus>>,
   Mutation: ResolverTypeWrapper<{}>,
   Upload: ResolverTypeWrapper<Partial<Scalars['Upload']>>,
   ImageVariant: ResolverTypeWrapper<Partial<ImageVariant>>,
@@ -734,6 +793,11 @@ export type ResolversParentTypes = {
   Comment: Partial<Comment>,
   Like: Partial<Like>,
   CommentEntityType: Partial<CommentEntityType>,
+  NotificationsResult: Partial<NotificationsResult>,
+  Notifier: Partial<Notifier>,
+  Notification: Partial<Notification>,
+  NotificationType: Partial<NotificationType>,
+  NotificationStatus: Partial<NotificationStatus>,
   Mutation: {},
   Upload: Partial<Scalars['Upload']>,
   ImageVariant: Partial<ImageVariant>,
@@ -824,6 +888,7 @@ export type Co2Resolvers<ContextType = any, ParentType = ResolversParentTypes['C
 };
 
 export type CommentResolvers<ContextType = any, ParentType = ResolversParentTypes['Comment']> = {
+  aquascape?: Resolver<Maybe<ResolversTypes['Aquascape']>, ParentType, ContextType>,
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -906,6 +971,8 @@ export type LikeResolvers<ContextType = any, ParentType = ResolversParentTypes['
   aquascapeImageId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   aquascapeId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   commentId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  aquascape?: Resolver<Maybe<ResolversTypes['Aquascape']>, ParentType, ContextType>,
+  comment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType>,
 };
 
 export type LivestockResolvers<ContextType = any, ParentType = ResolversParentTypes['Livestock']> = {
@@ -944,6 +1011,7 @@ export type MutationResolvers<ContextType = any, ParentType = ResolversParentTyp
   removeAquascape?: Resolver<ResolversTypes['Int'], ParentType, ContextType, MutationRemoveAquascapeArgs>,
   addComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationAddCommentArgs>,
   removeComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationRemoveCommentArgs>,
+  readNotifications?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, MutationReadNotificationsArgs>,
   followUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationFollowUserArgs>,
   unfollowUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationUnfollowUserArgs>,
   login?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationLoginArgs>,
@@ -952,6 +1020,27 @@ export type MutationResolvers<ContextType = any, ParentType = ResolversParentTyp
   googleRegister?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationGoogleRegisterArgs>,
   resendConfirmationMail?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, MutationResendConfirmationMailArgs>,
   visitAquascape?: Resolver<ResolversTypes['VisitAquascapeResult'], ParentType, ContextType, MutationVisitAquascapeArgs>,
+};
+
+export type NotificationResolvers<ContextType = any, ParentType = ResolversParentTypes['Notification']> = {
+  creator?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
+  like?: Resolver<Maybe<ResolversTypes['Like']>, ParentType, ContextType>,
+  comment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType>,
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  type?: Resolver<ResolversTypes['NotificationType'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+};
+
+export type NotificationsResultResolvers<ContextType = any, ParentType = ResolversParentTypes['NotificationsResult']> = {
+  rows?: Resolver<Array<ResolversTypes['Notifier']>, ParentType, ContextType>,
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+};
+
+export type NotifierResolvers<ContextType = any, ParentType = ResolversParentTypes['Notifier']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  notification?: Resolver<ResolversTypes['Notification'], ParentType, ContextType>,
+  status?: Resolver<ResolversTypes['NotificationStatus'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
 };
 
 export type PlantResolvers<ContextType = any, ParentType = ResolversParentTypes['Plant']> = {
@@ -986,6 +1075,8 @@ export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes[
   aquascape?: Resolver<Maybe<ResolversTypes['Aquascape']>, ParentType, ContextType, QueryAquascapeArgs>,
   brands?: Resolver<Array<ResolversTypes['Brand']>, ParentType, ContextType>,
   comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType, QueryCommentsArgs>,
+  notifications?: Resolver<ResolversTypes['NotificationsResult'], ParentType, ContextType, QueryNotificationsArgs>,
+  unreadNotificationsCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   userProfileSlugExists?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, QueryUserProfileSlugExistsArgs>,
 };
 
@@ -1070,6 +1161,9 @@ export type Resolvers<ContextType = any> = {
   Livestock?: LivestockResolvers<ContextType>,
   MainImageUploadResult?: MainImageUploadResultResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
+  Notification?: NotificationResolvers<ContextType>,
+  NotificationsResult?: NotificationsResultResolvers<ContextType>,
+  Notifier?: NotifierResolvers<ContextType>,
   Plant?: PlantResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   Substrate?: SubstrateResolvers<ContextType>,

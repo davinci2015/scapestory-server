@@ -10,19 +10,28 @@ import {composeContext, attachSession, attachCurrentUserId} from 'api/context'
 import {UserModule} from 'api/modules/User'
 import {AquascapeModule} from 'api/modules/Aquascape'
 import {LikeModule} from 'api/modules/Like'
+import {AquascapeProvider} from 'api/modules/Aquascape/AquascapeProvider'
+import {NotificationProvider} from 'api/modules/Notification/NotificationProvider'
+import {NotificationRepository} from 'db/repositories/Notification'
+import {NotificationNotifierRepository} from 'db/repositories/NotificationNotifier'
+import {AquascapeRepository} from 'db/repositories/Aquascape'
 
 export const CommentModule = new GraphQLModule({
     providers: [
         {provide: tokens.COMMENT_PROVIDER, useClass: CommentProvider},
         {provide: tokens.COMMENT_REPOSITORY, useClass: CommentRepository},
+        {provide: tokens.AQUASCAPE_PROVIDER, useClass: AquascapeProvider},
+        {provide: tokens.AQUASCAPE_REPOSITORY, useClass: AquascapeRepository},
+        {provide: tokens.NOTIFICATION_PROVIDER, useClass: NotificationProvider},
+        {provide: tokens.NOTIFICATION_REPOSITORY, useClass: NotificationRepository},
+        {
+            provide: tokens.NOTIFICATION_NOTIFIER_REPOSITORY,
+            useClass: NotificationNotifierRepository,
+        },
     ],
     typeDefs,
     resolvers,
     resolversComposition,
     context: composeContext([attachCurrentUserId, attachSession]),
-    imports: [
-        UserModule,
-        AquascapeModule,
-        LikeModule
-    ]
+    imports: [UserModule, AquascapeModule, LikeModule],
 })

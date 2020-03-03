@@ -7,7 +7,7 @@ import Bluebird from 'bluebird'
 import {Aquascape} from 'db/models/Aquascape'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {AquascapeImage} from 'db/models/AquascapeImage'
-import {Pagination} from 'api/generated/types'
+import {Pagination} from 'interfaces/graphql/types'
 
 export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aquascape> {
     getAquascapes: (
@@ -25,6 +25,8 @@ export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aq
     ) => Bluebird<Aquascape[]>
 
     getAquascapeById: (id: number, include?: Includeable[]) => Bluebird<Aquascape | null>
+
+    getAquascapesById: (ids: number[], include?: Includeable[]) => Bluebird<Aquascape[]>
 
     getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
 
@@ -53,6 +55,7 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
         const where: WhereOptions = {}
         const randomOrder: Order = literal('random()')
         const offset = pagination.offset || 0
+        const limit = pagination.limit || 50
         const defaultOrder: Order = [
             ['createdAt', 'DESC'],
             ['id', 'DESC'],
@@ -74,7 +77,7 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
             where,
             include,
             order: random ? randomOrder : defaultOrder,
-            limit: pagination.limit,
+            limit,
             offset,
         })
 
@@ -83,6 +86,7 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
 
     getTrendingAquascapes(pagination: Pagination, include?: Includeable[]) {
         const where: WhereOptions = {trending: true}
+        const limit = pagination.limit || 20
 
         if (pagination.cursor) {
             where.createdAt = {
@@ -94,7 +98,7 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
             where,
             include,
             order: [['createdAt', 'DESC']],
-            limit: pagination.limit,
+            limit,
         })
     }
 
@@ -104,6 +108,10 @@ export class AquascapeRepository extends BaseRepository<Aquascape>
 
     getAquascapeById(id: number, include?: Includeable[]) {
         return this.findOne({where: {id}, include})
+    }
+
+    getAquascapesById(ids: number[], include?: Includeable[]) {
+        return this.findAll({where: {id: ids}, include})
     }
 
     getAquascapeImages(aquascapeId: number) {

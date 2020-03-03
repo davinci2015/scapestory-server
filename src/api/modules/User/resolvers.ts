@@ -1,18 +1,20 @@
 import {ModuleContext} from '@graphql-modules/core'
+import {UserInputError} from 'apollo-server'
 
 import {UsersProviderInterface} from 'api/modules/User/UsersProvider'
 import {AuthenticationContext} from 'api/context'
 import {authenticate} from 'api/guards'
 import {tokens} from 'di/tokens'
-import {QueryUserArgs, QueryUserBySlugArgs} from 'api/generated/types'
-import {UserInputError} from 'apollo-server'
 import {
     MutationUploadUserImageArgs,
     ImageVariant,
     MutationUpdateUserDetailsArgs,
     MutationConfirmEmailArgs,
+    QueryUserArgs,
+    QueryUserBySlugArgs,
 } from 'interfaces/graphql/types'
 import {AuthHelper} from 'utils/AuthHelper'
+import {Notification} from 'db/models'
 
 export const resolvers = {
     Query: {
@@ -31,6 +33,12 @@ export const resolvers = {
         async users(root, args, {injector}: ModuleContext) {
             const provider: UsersProviderInterface = injector.get(tokens.USER_PROVIDER)
             return await provider.getAllUsers()
+        },
+    },
+    Notification: {
+        async creator(notification: Notification, args, {injector}: ModuleContext) {
+            const provider: UsersProviderInterface = injector.get(tokens.USER_PROVIDER)
+            return await provider.findUserById(notification.creatorId)
         },
     },
     Mutation: {

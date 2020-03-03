@@ -1,5 +1,6 @@
 #import "../User/schema.graphql"
 #import "../Like/schema.graphql"
+#import "../Notification/schema.graphql"
 #import "../Aquascape/schema.graphql"
 
 type Comment {
@@ -18,6 +19,14 @@ type Aquascape {
     comments: [Comment!]!
 }
 
+type Like {
+    comment: Comment
+}
+
+type Notification {
+    comment: Comment
+}
+
 enum CommentEntityType {
     AQUASCAPE
     IMAGE
@@ -29,6 +38,7 @@ type Query {
 
 type Mutation {
     addComment(
+        aquascapeId: Int!
         entity: CommentEntityType!
         entityId: Int!
         content: String!

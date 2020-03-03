@@ -1,3 +1,4 @@
+import {UserInputError} from 'apollo-server'
 import {Injectable, Inject} from '@graphql-modules/di'
 
 import {Follow} from 'db/models/Follow'
@@ -5,15 +6,15 @@ import {FollowRepositoryInterface} from 'db/repositories/Follow'
 import {UserRepositoryInterface} from 'db/repositories/User'
 import {User} from 'db/models/User'
 import {tokens} from 'di/tokens'
-import {UserInputError} from 'apollo-server'
 
 export interface FollowProviderInterface {
-    followUser: (followedId: number, followerId: number) => Promise<User>
+    followUser: (
+        followedId: number,
+        followerId: number
+    ) => Promise<{followed: User; follow: Follow | null}>
     unfollowUser: (followedId: number, followerId: number) => Promise<User>
     isFollowedBy: (followerId: number, followedId: number) => Promise<boolean>
-    getFollows: (
-        userId: number
-    ) => Promise<{followers: Follow[], following: Follow[]}>
+    getFollows: (userId: number) => Promise<{followers: Follow[]; following: Follow[]}>
 }
 
 @Injectable()
@@ -26,25 +27,19 @@ export class FollowProvider implements FollowProviderInterface {
     ) {}
 
     async followUser(followedId: number, followerId: number) {
-        const [follower, followed] = await this.findUsers(
-            followerId,
-            followedId
-        )
+        const [follower, followed] = await this.findUsers(followerId, followedId)
 
         if (!follower || !followed) {
             throw new UserInputError('User does not exist')
         }
 
-        await this.followRepository.followUser(followedId, followerId)
+        const follow = await this.followRepository.followUser(followedId, followerId)
 
-        return followed
+        return {followed, follow}
     }
 
     async unfollowUser(followedId: number, followerId: number) {
-        const [follower, followed] = await this.findUsers(
-            followerId,
-            followedId
-        )
+        const [follower, followed] = await this.findUsers(followerId, followedId)
 
         if (!follower || !followed) {
             throw new UserInputError('User does not exist')
