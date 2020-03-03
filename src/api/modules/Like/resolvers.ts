@@ -3,29 +3,22 @@ import {ModuleContext} from '@graphql-modules/core'
 import {tokens} from 'di/tokens'
 import {authenticate} from 'api/guards'
 import {LikeProviderInterface} from 'api/modules/Like/LikeProvider'
-import {LikeEntityType} from 'db/repositories/Like'
 import {AuthenticationContext} from 'api/context'
-import {Aquascape} from 'db/models/Aquascape'
-
-export type LikeArgs = {
-    entityId: number
-    entity: LikeEntityType
-}
+import {LikeEntityType, MutationLikeArgs, NotificationType} from 'interfaces/graphql/types'
+import {NotificationProvider} from 'api/modules/Notification/NotificationProvider'
+import {AquascapeProviderInterface} from 'api/modules/Aquascape/AquascapeProvider'
+import {Notification, Aquascape} from 'db/models'
+import logger from 'logger'
+import {CommentProviderInterface} from '../Comment/CommentProvider'
+import {CreateNotificationArgs} from 'db/repositories/Notification'
 
 export const resolvers = {
     Aquascape: {
-        async likesCount(aquascape: Aquascape, args, context: ModuleContext) {
+        async likesCount(aquascape: Aquascape, _, context: ModuleContext) {
             const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
-            return await provider.countLikes(
-                LikeEntityType.AQUASCAPE,
-                aquascape.id
-            )
+            return await provider.countLikes(LikeEntityType.Aquascape, aquascape.id)
         },
-        async isLikedByMe(
-            aquascape: Aquascape,
-            args,
-            context: ModuleContext & AuthenticationContext
-        ) {
+        async isLikedByMe(aquascape: Aquascape, _, context: ModuleContext & AuthenticationContext) {
             if (!context.currentUserId) {
                 return false
             }
@@ -33,31 +26,78 @@ export const resolvers = {
             const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
             return await provider.isLikedBy(
                 context.currentUserId,
-                LikeEntityType.AQUASCAPE,
+                LikeEntityType.Aquascape,
                 aquascape.id
             )
         },
     },
-    Mutation: {
-        async like(root, args: LikeArgs, context: ModuleContext & AuthenticationContext) {
+    Notification: {
+        async like(notification: Notification, _, context: ModuleContext) {
             const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
-            return await provider.like(
-                args.entity,
-                args.entityId,
-                context.currentUserId
-            )
+
+            if (!notification.likeId) {
+                return null
+            }
+
+            return await provider.getLikeById(notification.likeId)
         },
-        async dislike(root, args: LikeArgs, context: ModuleContext & AuthenticationContext) {
+    },
+    Mutation: {
+        async like(_, args: MutationLikeArgs, context: ModuleContext & AuthenticationContext) {
             const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
-            return await provider.dislike(
-                args.entity,
-                args.entityId,
-                context.currentUserId
+            const aquascapeProvider: AquascapeProviderInterface = context.injector.get(
+                tokens.AQUASCAPE_PROVIDER
             )
+            const commentProvider: CommentProviderInterface = context.injector.get(
+                tokens.COMMENT_PROVIDER
+            )
+            const notificationProvider: NotificationProvider = context.injector.get(
+                tokens.NOTIFICATION_PROVIDER
+            )
+
+            const like = await provider.like(args.entity, args.entityId, context.currentUserId)
+
+            if (like) {
+                const notification: CreateNotificationArgs = {
+                    creatorId: context.currentUserId,
+                    entityId: like.id,
+                    notificationType: NotificationType.Like,
+                    notifiers: [],
+                }
+
+                if (args.entity === LikeEntityType.Aquascape) {
+                    aquascapeProvider
+                        .getAquascapeById(args.entityId)
+                        .then(aquascape => {
+                            if (aquascape?.userId && aquascape.userId !== context.currentUserId) {
+                                notification.notifiers.push(aquascape.userId)
+                                return notificationProvider.createNotification(notification)
+                            }
+                        })
+                        .catch(logger.error)
+                } else if (args.entity === LikeEntityType.Comment) {
+                    commentProvider
+                        .getCommentById(args.entityId)
+                        .then(comment => {
+                            if (comment?.userId && comment.userId !== context.currentUserId) {
+                                notification.notifiers.push(comment.userId)
+                                return notificationProvider.createNotification(notification)
+                            }
+                        })
+                        .catch(logger.error)
+                }
+            }
+
+            return like
+        },
+        async dislike(_, args: MutationLikeArgs, context: ModuleContext & AuthenticationContext) {
+            const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
+            return await provider.dislike(args.entity, args.entityId, context.currentUserId)
         },
     },
 }
 
 export const resolversComposition = {
     'Mutation.like': [authenticate],
+    'Mutation.dislike': [authenticate],
 }

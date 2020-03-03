@@ -1,5 +1,6 @@
 import {Injectable, Inject} from '@graphql-modules/di'
 import {FileUpload} from 'graphql-upload'
+import Bluebird from 'bluebird'
 
 import {AquascapeImage} from 'db/models/AquascapeImage'
 import {tokens} from 'di/tokens'
@@ -8,6 +9,7 @@ import {AquascapeImageRepository} from 'db/repositories/AquascapeImage'
 import logger from 'logger'
 
 export interface AquascapeImageProviderInterface {
+    getImageById: (id: number) => Bluebird<AquascapeImage | null>
     addAquascapeImage: (aquascapeId: number, file: Promise<FileUpload>) => Promise<AquascapeImage>
     deleteAquascapeImage: (aquascapeId: number, imageId: number) => Promise<number>
 }
@@ -18,6 +20,10 @@ export class AquascapeImageProvider implements AquascapeImageProviderInterface {
         @Inject(tokens.AQUASCAPE_IMAGE_REPOSITORY)
         private aquascapeImageRepository: AquascapeImageRepository
     ) {}
+
+    getImageById(id: number) {
+        return this.aquascapeImageRepository.findOne({where: {id}})
+    }
 
     async addAquascapeImage(aquascapeId: number, file: Promise<FileUpload>) {
         const {createReadStream} = await file

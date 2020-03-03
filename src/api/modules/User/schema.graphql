@@ -16,6 +16,10 @@ type User {
     updatedAt: String!
 }
 
+type Notification {
+    creator: User
+}
+
 type AuthPayload {
     token: String!
     user: User!

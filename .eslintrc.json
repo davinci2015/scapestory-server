@@ -24,32 +24,7 @@
                 "accessibility": "no-public"
             }
         ],
-        "@typescript-eslint/indent": [
-            "error",
-            4,
-            {
-                "FunctionDeclaration": {
-                    "parameters": "first"
-                },
-                "FunctionExpression": {
-                    "parameters": "first"
-                }
-            }
-        ],
         "@typescript-eslint/interface-name-prefix": "error",
-        "@typescript-eslint/member-delimiter-style": [
-            "error",
-            {
-                "multiline": {
-                    "delimiter": "none",
-                    "requireLast": true
-                },
-                "singleline": {
-                    "delimiter": "comma",
-                    "requireLast": false
-                }
-            }
-        ],
         "@typescript-eslint/member-ordering": "error",
         "@typescript-eslint/no-empty-function": "error",
         "@typescript-eslint/no-explicit-any": "error",

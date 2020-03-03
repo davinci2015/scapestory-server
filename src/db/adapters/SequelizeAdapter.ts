@@ -30,6 +30,8 @@ import {
     AquascapePlant,
     AquascapeSubstrate,
     EmailConfirmation,
+    Notification,
+    NotificationNotifier,
 } from 'db/models'
 import {Brand} from 'db/models/Brand'
 
@@ -82,6 +84,8 @@ export class SequelizeAdapter implements DatabaseAdapter {
                 AquascapePlant,
                 AquascapeSubstrate,
                 EmailConfirmation,
+                Notification,
+                NotificationNotifier,
             ],
         })
     }

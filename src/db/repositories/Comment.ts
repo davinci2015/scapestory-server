@@ -1,31 +1,28 @@
 import {Injectable} from '@graphql-modules/di'
-import * as Bluebird from 'bluebird'
+import {UserInputError} from 'apollo-server'
+import Bluebird from 'bluebird'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Comment} from 'db/models/Comment'
 import {Includeable} from 'sequelize/types'
-import {UserInputError} from 'apollo-server'
-
-export enum CommentEntityType {
-    AQUASCAPE = 'AQUASCAPE',
-    IMAGE = 'IMAGE',
-}
+import {CommentEntityType} from 'interfaces/graphql/types'
 
 export interface AddCommentArgs {
     content: string
     userId: number
     entityType: CommentEntityType
     entityId: number
-    parentCommentId?: number
+    parentCommentId?: number | null
 }
 
-export interface CommentRepositoryInterface
-    extends BaseRepositoryInterface<Comment> {
+export interface CommentRepositoryInterface extends BaseRepositoryInterface<Comment> {
     getComments(
         entityType: CommentEntityType,
         entityId: number,
         include?: Includeable[]
     ): Bluebird<Comment[]>
+
+    getChildComments(parentCommentId: number): Bluebird<Comment[]>
 
     addComment(data: AddCommentArgs): Bluebird<Comment>
 
@@ -33,8 +30,8 @@ export interface CommentRepositoryInterface
 }
 
 const entityToFieldMapper = {
-    [CommentEntityType.AQUASCAPE]: 'aquascapeId',
-    [CommentEntityType.IMAGE]: 'aquascapeImageId',
+    [CommentEntityType.Aquascape]: 'aquascapeId',
+    [CommentEntityType.Image]: 'aquascapeImageId',
 }
 
 @Injectable()
@@ -55,6 +52,10 @@ export class CommentRepository extends BaseRepository<Comment> {
             include,
             order: [['createdAt', 'DESC']],
         })
+    }
+
+    getChildComments(parentCommentId: number) {
+        return this.findAll({where: {parentCommentId}})
     }
 
     addComment(data: AddCommentArgs) {
