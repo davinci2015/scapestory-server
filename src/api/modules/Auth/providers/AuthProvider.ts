@@ -69,7 +69,11 @@ export class AuthProvider implements AuthProviderInterface {
         })
 
         if (!user) {
-            throw new AuthenticationError(errors.INVALID_CREDENTIALS)
+            throw new AuthenticationError(errors.NON_EXISTING_USER)
+        }
+
+        if (!user.emailConfirmed) {
+            throw new AuthenticationError(errors.EMAIL_NOT_CONFIRMED)
         }
 
         if (!AuthHelper.checkPassword(password, user.password)) {
