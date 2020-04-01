@@ -25,6 +25,7 @@ export type Additive = Equipment & {
 export type Aquascape = {
   __typename?: 'Aquascape',
   likesCount: Scalars['Int'],
+  likes: Likes,
   isLikedByMe: Scalars['Boolean'],
   id: Scalars['Int'],
   createdAt: Scalars['String'],
@@ -50,6 +51,11 @@ export type Aquascape = {
   additives: Array<Additive>,
   comments: Array<Comment>,
   viewsCount: Scalars['Int'],
+};
+
+
+export type AquascapeLikesArgs = {
+  limit?: Maybe<Scalars['Int']>
 };
 
 export type AquascapeImage = {
@@ -204,6 +210,7 @@ export type Light = Equipment & {
 
 export type Like = {
   __typename?: 'Like',
+  user: User,
   id: Scalars['Int'],
   userId: Scalars['Int'],
   aquascapeImageId?: Maybe<Scalars['Int']>,
@@ -218,6 +225,12 @@ export enum LikeEntityType {
   Image = 'IMAGE',
   Comment = 'COMMENT'
 }
+
+export type Likes = {
+  __typename?: 'Likes',
+  rows: Array<Like>,
+  count: Scalars['Int'],
+};
 
 export type Livestock = {
   __typename?: 'Livestock',
@@ -727,6 +740,9 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Partial<Scalars['Boolean']>>,
   AquascapesResult: ResolverTypeWrapper<Partial<AquascapesResult>>,
   Aquascape: ResolverTypeWrapper<Partial<Aquascape>>,
+  Likes: ResolverTypeWrapper<Partial<Likes>>,
+  Like: ResolverTypeWrapper<Partial<Like>>,
+  Comment: ResolverTypeWrapper<Partial<Comment>>,
   CO2: ResolverTypeWrapper<Partial<Co2>>,
   Tank: ResolverTypeWrapper<Partial<Tank>>,
   Float: ResolverTypeWrapper<Partial<Scalars['Float']>>,
@@ -741,8 +757,6 @@ export type ResolversTypes = {
   Light: ResolverTypeWrapper<Partial<Light>>,
   Substrate: ResolverTypeWrapper<Partial<Substrate>>,
   Additive: ResolverTypeWrapper<Partial<Additive>>,
-  Comment: ResolverTypeWrapper<Partial<Comment>>,
-  Like: ResolverTypeWrapper<Partial<Like>>,
   CommentEntityType: ResolverTypeWrapper<Partial<CommentEntityType>>,
   NotificationsResult: ResolverTypeWrapper<Partial<NotificationsResult>>,
   Notifier: ResolverTypeWrapper<Partial<Notifier>>,
@@ -776,6 +790,9 @@ export type ResolversParentTypes = {
   Boolean: Partial<Scalars['Boolean']>,
   AquascapesResult: Partial<AquascapesResult>,
   Aquascape: Partial<Aquascape>,
+  Likes: Partial<Likes>,
+  Like: Partial<Like>,
+  Comment: Partial<Comment>,
   CO2: Partial<Co2>,
   Tank: Partial<Tank>,
   Float: Partial<Scalars['Float']>,
@@ -790,8 +807,6 @@ export type ResolversParentTypes = {
   Light: Partial<Light>,
   Substrate: Partial<Substrate>,
   Additive: Partial<Additive>,
-  Comment: Partial<Comment>,
-  Like: Partial<Like>,
   CommentEntityType: Partial<CommentEntityType>,
   NotificationsResult: Partial<NotificationsResult>,
   Notifier: Partial<Notifier>,
@@ -826,6 +841,7 @@ export type AdditiveResolvers<ContextType = any, ParentType = ResolversParentTyp
 
 export type AquascapeResolvers<ContextType = any, ParentType = ResolversParentTypes['Aquascape']> = {
   likesCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  likes?: Resolver<ResolversTypes['Likes'], ParentType, ContextType, AquascapeLikesArgs>,
   isLikedByMe?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -966,6 +982,7 @@ export type LightResolvers<ContextType = any, ParentType = ResolversParentTypes[
 };
 
 export type LikeResolvers<ContextType = any, ParentType = ResolversParentTypes['Like']> = {
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   aquascapeImageId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
@@ -973,6 +990,11 @@ export type LikeResolvers<ContextType = any, ParentType = ResolversParentTypes['
   commentId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   aquascape?: Resolver<Maybe<ResolversTypes['Aquascape']>, ParentType, ContextType>,
   comment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType>,
+};
+
+export type LikesResolvers<ContextType = any, ParentType = ResolversParentTypes['Likes']> = {
+  rows?: Resolver<Array<ResolversTypes['Like']>, ParentType, ContextType>,
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
 };
 
 export type LivestockResolvers<ContextType = any, ParentType = ResolversParentTypes['Livestock']> = {
@@ -1158,6 +1180,7 @@ export type Resolvers<ContextType = any> = {
   ImageUploadResult?: ImageUploadResultResolvers<ContextType>,
   Light?: LightResolvers<ContextType>,
   Like?: LikeResolvers<ContextType>,
+  Likes?: LikesResolvers<ContextType>,
   Livestock?: LivestockResolvers<ContextType>,
   MainImageUploadResult?: MainImageUploadResultResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,

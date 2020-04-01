@@ -13,7 +13,7 @@ type Likes {
 
 type Aquascape {
     likesCount: Int!
-    likes(limit: Int): Likes
+    likes(limit: Int): Likes!
     isLikedByMe: Boolean!
 }
 

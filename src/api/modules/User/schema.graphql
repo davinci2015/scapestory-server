@@ -30,6 +30,10 @@ type ImageUploadResult {
     imagePublicId: String!
 }
 
+type Like {
+    user: User!
+}
+
 enum ImageVariant {
     PROFILE
     COVER

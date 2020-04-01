@@ -12,6 +12,7 @@ import {
     MutationConfirmEmailArgs,
     QueryUserArgs,
     QueryUserBySlugArgs,
+    Like,
 } from 'interfaces/graphql/types'
 import {AuthHelper} from 'utils/AuthHelper'
 import {Notification} from 'db/models'
@@ -39,6 +40,12 @@ export const resolvers = {
         async creator(notification: Notification, args, {injector}: ModuleContext) {
             const provider: UsersProviderInterface = injector.get(tokens.USER_PROVIDER)
             return await provider.findUserById(notification.creatorId)
+        },
+    },
+    Like: {
+        async user(like: Like, args, {injector}: ModuleContext) {
+            const provider: UsersProviderInterface = injector.get(tokens.USER_PROVIDER)
+            return await provider.findUserById(like.userId)
         },
     },
     Mutation: {
