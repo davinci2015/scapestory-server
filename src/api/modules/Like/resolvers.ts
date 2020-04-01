@@ -18,6 +18,14 @@ export const resolvers = {
             const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
             return await provider.countLikes(LikeEntityType.Aquascape, aquascape.id)
         },
+        async likes(aquascape: Aquascape, args, context) {
+            const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
+            return await provider.getLikes(
+                LikeEntityType.Aquascape,
+                aquascape.id,
+                args.limit || undefined
+            )
+        },
         async isLikedByMe(aquascape: Aquascape, _, context: ModuleContext & AuthenticationContext) {
             if (!context.currentUserId) {
                 return false

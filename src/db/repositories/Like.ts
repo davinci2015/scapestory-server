@@ -13,6 +13,11 @@ export interface LikeRepositoryInterface extends BaseRepositoryInterface<Like> {
     dislike(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
     countLikes(entity: LikeEntityType, entityId: number): Promise<number>
     isLikedBy(userId: number, entity: LikeEntityType, entityId: number): Promise<boolean>
+    getLikes(
+        entity: LikeEntityType,
+        entityId: number,
+        limit?: number
+    ): Promise<{rows: Like[]; count: number}>
 }
 
 const entityToFieldMapper = {
@@ -87,6 +92,11 @@ export class LikeRepository extends BaseRepository<Like> {
                 return acc
             }, {}),
         })
+    }
+
+    getLikes(entity: LikeEntityType, entityId: number, limit?: number) {
+        const field = entityToFieldMapper[entity]
+        return this.findAndCountAll({where: {[field]: entityId}, limit})
     }
 
     private batchCountAquascapeLikes = async (ids: number[]) => {

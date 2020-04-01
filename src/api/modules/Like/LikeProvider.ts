@@ -9,6 +9,11 @@ import {NotificationRepositoryInterface} from 'db/repositories/Notification'
 
 export interface LikeProviderInterface {
     getLikeById(id: number): Bluebird<Like | null>
+    getLikes(
+        entity: LikeEntityType,
+        entityId: number,
+        limit?: number
+    ): Promise<{rows: Like[]; count: number}>
     like(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
     dislike(entity: LikeEntityType, entityId: number, userId: number): Promise<Like>
     removeLikes(data: {entity: LikeEntityType; entityId: number}[]): Promise<number>
@@ -50,5 +55,9 @@ export class LikeProvider implements LikeProviderInterface {
 
     isLikedBy(userId: number, entity: LikeEntityType, entityId: number) {
         return this.likeRepository.isLikedBy(userId, entity, entityId)
+    }
+
+    getLikes(entity: LikeEntityType, entityId: number, limit?: number) {
+        return this.likeRepository.getLikes(entity, entityId, limit)
     }
 }
