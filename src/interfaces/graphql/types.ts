@@ -163,10 +163,22 @@ export type Follow = {
   createdAt: Scalars['String'],
 };
 
-export type Follows = {
-  __typename?: 'Follows',
-  following?: Maybe<Array<Maybe<Follow>>>,
-  followers?: Maybe<Array<Maybe<Follow>>>,
+export type Followers = {
+  __typename?: 'Followers',
+  rows: Array<Follow>,
+  count: Scalars['Int'],
+};
+
+export type Following = {
+  __typename?: 'Following',
+  rows: Array<Follow>,
+  count: Scalars['Int'],
+};
+
+export type FollowResult = {
+  __typename?: 'FollowResult',
+  followers: Followers,
+  following: Following,
 };
 
 export type Hardscape = {
@@ -637,9 +649,7 @@ export type User = {
   createdAt: Scalars['String'],
   updatedAt: Scalars['String'],
   aquascapes: AquascapesResult,
-  followersCount: Scalars['Int'],
-  followingCount: Scalars['Int'],
-  isFollowedByMe: Scalars['Boolean'],
+  follows?: Maybe<FollowResult>,
 };
 
 
@@ -757,6 +767,10 @@ export type ResolversTypes = {
   Light: ResolverTypeWrapper<Partial<Light>>,
   Substrate: ResolverTypeWrapper<Partial<Substrate>>,
   Additive: ResolverTypeWrapper<Partial<Additive>>,
+  FollowResult: ResolverTypeWrapper<Partial<FollowResult>>,
+  Followers: ResolverTypeWrapper<Partial<Followers>>,
+  Follow: ResolverTypeWrapper<Partial<Follow>>,
+  Following: ResolverTypeWrapper<Partial<Following>>,
   CommentEntityType: ResolverTypeWrapper<Partial<CommentEntityType>>,
   NotificationsResult: ResolverTypeWrapper<Partial<NotificationsResult>>,
   Notifier: ResolverTypeWrapper<Partial<Notifier>>,
@@ -776,8 +790,6 @@ export type ResolversTypes = {
   VisitAquascapeResult: ResolverTypeWrapper<Partial<VisitAquascapeResult>>,
   Visitor: ResolverTypeWrapper<Partial<Visitor>>,
   AquascapesFilter: ResolverTypeWrapper<Partial<AquascapesFilter>>,
-  Follow: ResolverTypeWrapper<Partial<Follow>>,
-  Follows: ResolverTypeWrapper<Partial<Follows>>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -807,6 +819,10 @@ export type ResolversParentTypes = {
   Light: Partial<Light>,
   Substrate: Partial<Substrate>,
   Additive: Partial<Additive>,
+  FollowResult: Partial<FollowResult>,
+  Followers: Partial<Followers>,
+  Follow: Partial<Follow>,
+  Following: Partial<Following>,
   CommentEntityType: Partial<CommentEntityType>,
   NotificationsResult: Partial<NotificationsResult>,
   Notifier: Partial<Notifier>,
@@ -826,8 +842,6 @@ export type ResolversParentTypes = {
   VisitAquascapeResult: Partial<VisitAquascapeResult>,
   Visitor: Partial<Visitor>,
   AquascapesFilter: Partial<AquascapesFilter>,
-  Follow: Partial<Follow>,
-  Follows: Partial<Follows>,
 };
 
 export type AdditiveResolvers<ContextType = any, ParentType = ResolversParentTypes['Additive']> = {
@@ -945,9 +959,19 @@ export type FollowResolvers<ContextType = any, ParentType = ResolversParentTypes
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
 };
 
-export type FollowsResolvers<ContextType = any, ParentType = ResolversParentTypes['Follows']> = {
-  following?: Resolver<Maybe<Array<Maybe<ResolversTypes['Follow']>>>, ParentType, ContextType>,
-  followers?: Resolver<Maybe<Array<Maybe<ResolversTypes['Follow']>>>, ParentType, ContextType>,
+export type FollowersResolvers<ContextType = any, ParentType = ResolversParentTypes['Followers']> = {
+  rows?: Resolver<Array<ResolversTypes['Follow']>, ParentType, ContextType>,
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+};
+
+export type FollowingResolvers<ContextType = any, ParentType = ResolversParentTypes['Following']> = {
+  rows?: Resolver<Array<ResolversTypes['Follow']>, ParentType, ContextType>,
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+};
+
+export type FollowResultResolvers<ContextType = any, ParentType = ResolversParentTypes['FollowResult']> = {
+  followers?: Resolver<ResolversTypes['Followers'], ParentType, ContextType>,
+  following?: Resolver<ResolversTypes['Following'], ParentType, ContextType>,
 };
 
 export type HardscapeResolvers<ContextType = any, ParentType = ResolversParentTypes['Hardscape']> = {
@@ -1147,9 +1171,7 @@ export type UserResolvers<ContextType = any, ParentType = ResolversParentTypes['
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   aquascapes?: Resolver<ResolversTypes['AquascapesResult'], ParentType, ContextType, UserAquascapesArgs>,
-  followersCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
-  followingCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
-  isFollowedByMe?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  follows?: Resolver<Maybe<ResolversTypes['FollowResult']>, ParentType, ContextType>,
 };
 
 export type VisitAquascapeResultResolvers<ContextType = any, ParentType = ResolversParentTypes['VisitAquascapeResult']> = {
@@ -1175,7 +1197,9 @@ export type Resolvers<ContextType = any> = {
   Equipment?: EquipmentResolvers,
   Filter?: FilterResolvers<ContextType>,
   Follow?: FollowResolvers<ContextType>,
-  Follows?: FollowsResolvers<ContextType>,
+  Followers?: FollowersResolvers<ContextType>,
+  Following?: FollowingResolvers<ContextType>,
+  FollowResult?: FollowResultResolvers<ContextType>,
   Hardscape?: HardscapeResolvers<ContextType>,
   ImageUploadResult?: ImageUploadResultResolvers<ContextType>,
   Light?: LightResolvers<ContextType>,

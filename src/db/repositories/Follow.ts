@@ -3,19 +3,21 @@ import * as Bluebird from 'bluebird'
 import {Follow} from 'db/models/Follow'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 
-export interface FollowRepositoryInterface
-    extends BaseRepositoryInterface<Follow> {
-    followUser: (
-        followedId: number,
-        followerId: number
-    ) => Bluebird<Follow | null>
-    unfollowUser: (
-        followedId: number,
-        followerId: number
-    ) => Bluebird<Follow | null>
+export interface FollowRepositoryInterface extends BaseRepositoryInterface<Follow> {
+    followUser: (followedId: number, followerId: number) => Bluebird<Follow | null>
+    unfollowUser: (followedId: number, followerId: number) => Bluebird<Follow | null>
     getFollows: (
         userId: number
-    ) => Promise<{followers: Follow[], following: Follow[]}>
+    ) => Promise<{
+        followers: {
+            rows: Follow[]
+            count: number
+        }
+        following: {
+            rows: Follow[]
+            count: number
+        }
+    }>
     isFollowedBy: (followerId: number, followedId: number) => Promise<boolean>
 }
 
@@ -46,8 +48,8 @@ export class FollowRepository extends BaseRepository<Follow> {
 
     async getFollows(userId: number) {
         const [followers, following] = await Promise.all([
-            this.findAll({where: {followedUserId: userId}}),
-            this.findAll({where: {followerUserId: userId}}),
+            this.findAndCountAll({where: {followedUserId: userId}}),
+            this.findAndCountAll({where: {followerUserId: userId}}),
         ])
 
         return {
