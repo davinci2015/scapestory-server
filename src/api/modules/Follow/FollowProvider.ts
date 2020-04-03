@@ -7,8 +7,8 @@ import {UserRepositoryInterface} from 'db/repositories/User'
 import {tokens} from 'di/tokens'
 
 export interface FollowProviderInterface {
-    followUser: (followedId: number, followerId: number) => Promise<Follow | null>
-    unfollowUser: (followedId: number, followerId: number) => Promise<Follow | null>
+    followUser: (followedId: number, followerId: number) => Promise<Follow>
+    unfollowUser: (followedId: number, followerId: number) => Promise<Follow>
     isFollowedBy: (followerId: number, followedId: number) => Promise<boolean>
     getFollows: (
         userId: number
@@ -34,23 +34,43 @@ export class FollowProvider implements FollowProviderInterface {
     ) {}
 
     async followUser(followedId: number, followerId: number) {
+        if (followedId === followerId) {
+            throw new UserInputError('You can\t follow yourself.')
+        }
+
         const [follower, followed] = await this.findUsers(followerId, followedId)
 
         if (!follower || !followed) {
             throw new UserInputError('User does not exist')
         }
 
-        return this.followRepository.followUser(followedId, followerId)
+        const follow = await this.followRepository.followUser(followedId, followerId)
+
+        if (!follow) {
+            throw new UserInputError(`User ${follower.name} is already following ${followed.name}`)
+        }
+
+        return follow
     }
 
     async unfollowUser(followedId: number, followerId: number) {
+        if (followedId === followerId) {
+            throw new UserInputError('You can\t unfollow yourself.')
+        }
+
         const [follower, followed] = await this.findUsers(followerId, followedId)
 
         if (!follower || !followed) {
             throw new UserInputError('User does not exist')
         }
 
-        return this.followRepository.unfollowUser(followedId, followerId)
+        const unfollow = await this.followRepository.unfollowUser(followedId, followerId)
+
+        if (!unfollow) {
+            throw new UserInputError('Non-existent follow relationship')
+        }
+
+        return unfollow
     }
 
     getFollows(userId: number) {

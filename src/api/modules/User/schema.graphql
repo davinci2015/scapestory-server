@@ -34,6 +34,11 @@ type Like {
     user: User!
 }
 
+type Follow {
+    followed: User!
+    follower: User!
+}
+
 enum ImageVariant {
     PROFILE
     COVER

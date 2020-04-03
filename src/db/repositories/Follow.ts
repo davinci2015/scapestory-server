@@ -1,3 +1,4 @@
+import {UserInputError} from 'apollo-server'
 import {Injectable} from '@graphql-modules/di'
 import * as Bluebird from 'bluebird'
 import {Follow} from 'db/models/Follow'
@@ -27,7 +28,18 @@ export class FollowRepository extends BaseRepository<Follow> {
         super(Follow)
     }
 
-    followUser(followedId: number, followerId: number) {
+    async followUser(followedId: number, followerId: number) {
+        const existingFollow = await this.findOne({
+            where: {
+                followerUserId: followerId,
+                followedUserId: followedId,
+            },
+        })
+
+        if (existingFollow) {
+            return null
+        }
+
         return this.create({followerUserId: followerId, followedUserId: followedId})
     }
 
@@ -41,6 +53,7 @@ export class FollowRepository extends BaseRepository<Follow> {
         }
 
         follow.destroy()
+
         return follow
     }
 

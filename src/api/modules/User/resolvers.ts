@@ -15,7 +15,7 @@ import {
     Like,
 } from 'interfaces/graphql/types'
 import {AuthHelper} from 'utils/AuthHelper'
-import {Notification} from 'db/models'
+import {Notification, Follow} from 'db/models'
 
 export const resolvers = {
     Query: {
@@ -46,6 +46,16 @@ export const resolvers = {
         async user(like: Like, args, {injector}: ModuleContext) {
             const provider: UsersProviderInterface = injector.get(tokens.USER_PROVIDER)
             return await provider.findUserById(like.userId)
+        },
+    },
+    Follow: {
+        async follower(follow: Follow, args, {injector}: ModuleContext) {
+            const provider: UsersProviderInterface = injector.get(tokens.USER_PROVIDER)
+            return await provider.findUserById(follow.followerUserId)
+        },
+        async followed(follow: Follow, args, {injector}: ModuleContext) {
+            const provider: UsersProviderInterface = injector.get(tokens.USER_PROVIDER)
+            return await provider.findUserById(follow.followedUserId)
         },
     },
     Mutation: {
