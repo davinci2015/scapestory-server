@@ -26,7 +26,6 @@ export type Aquascape = {
   __typename?: 'Aquascape',
   likesCount: Scalars['Int'],
   likes: Likes,
-  isLikedByMe: Scalars['Boolean'],
   id: Scalars['Int'],
   createdAt: Scalars['String'],
   updatedAt: Scalars['String'],
@@ -284,8 +283,8 @@ export type Mutation = {
   addComment?: Maybe<Comment>,
   removeComment?: Maybe<Comment>,
   readNotifications?: Maybe<Scalars['Int']>,
-  followUser?: Maybe<User>,
-  unfollowUser?: Maybe<User>,
+  followUser?: Maybe<Follow>,
+  unfollowUser?: Maybe<Follow>,
   login?: Maybe<AuthPayload>,
   register?: Maybe<User>,
   fbRegister?: Maybe<AuthPayload>,
@@ -537,7 +536,7 @@ export type Plant = {
 
 export type Query = {
   __typename?: 'Query',
-  me?: Maybe<User>,
+  me: User,
   user?: Maybe<User>,
   userBySlug?: Maybe<User>,
   users: Array<Maybe<User>>,
@@ -649,7 +648,7 @@ export type User = {
   createdAt: Scalars['String'],
   updatedAt: Scalars['String'],
   aquascapes: AquascapesResult,
-  follows?: Maybe<FollowResult>,
+  follows: FollowResult,
 };
 
 
@@ -856,7 +855,6 @@ export type AdditiveResolvers<ContextType = any, ParentType = ResolversParentTyp
 export type AquascapeResolvers<ContextType = any, ParentType = ResolversParentTypes['Aquascape']> = {
   likesCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   likes?: Resolver<ResolversTypes['Likes'], ParentType, ContextType, AquascapeLikesArgs>,
-  isLikedByMe?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -1058,8 +1056,8 @@ export type MutationResolvers<ContextType = any, ParentType = ResolversParentTyp
   addComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationAddCommentArgs>,
   removeComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, MutationRemoveCommentArgs>,
   readNotifications?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, MutationReadNotificationsArgs>,
-  followUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationFollowUserArgs>,
-  unfollowUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationUnfollowUserArgs>,
+  followUser?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType, MutationFollowUserArgs>,
+  unfollowUser?: Resolver<Maybe<ResolversTypes['Follow']>, ParentType, ContextType, MutationUnfollowUserArgs>,
   login?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationLoginArgs>,
   register?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, MutationRegisterArgs>,
   fbRegister?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, MutationFbRegisterArgs>,
@@ -1104,7 +1102,7 @@ export type PlantResolvers<ContextType = any, ParentType = ResolversParentTypes[
 };
 
 export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes['Query']> = {
-  me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>,
+  me?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, QueryUserArgs>,
   userBySlug?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, QueryUserBySlugArgs>,
   users?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>,
@@ -1171,7 +1169,7 @@ export type UserResolvers<ContextType = any, ParentType = ResolversParentTypes['
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   aquascapes?: Resolver<ResolversTypes['AquascapesResult'], ParentType, ContextType, UserAquascapesArgs>,
-  follows?: Resolver<Maybe<ResolversTypes['FollowResult']>, ParentType, ContextType>,
+  follows?: Resolver<ResolversTypes['FollowResult'], ParentType, ContextType>,
 };
 
 export type VisitAquascapeResultResolvers<ContextType = any, ParentType = ResolversParentTypes['VisitAquascapeResult']> = {

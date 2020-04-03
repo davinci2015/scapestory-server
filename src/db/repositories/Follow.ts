@@ -31,8 +31,17 @@ export class FollowRepository extends BaseRepository<Follow> {
         return this.create({followerUserId: followerId, followedUserId: followedId})
     }
 
-    unfollowUser(followedId: number, followerId: number) {
-        return this.destroy({where: {followerUserId: followerId, followedUserId: followedId}})
+    async unfollowUser(followedId: number, followerId: number) {
+        const follow = await this.findOne({
+            where: {followerUserId: followerId, followedUserId: followedId},
+        })
+
+        if (!follow) {
+            return null
+        }
+
+        follow.destroy()
+        return follow
     }
 
     async isFollowedBy(followerId: number, followedId: number) {

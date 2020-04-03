@@ -29,5 +29,5 @@ type User {
 
 type Mutation {
     followUser(userId: Int!): Follow
-    unfollowUser(userId: Int!): User
+    unfollowUser(userId: Int!): Follow
 }

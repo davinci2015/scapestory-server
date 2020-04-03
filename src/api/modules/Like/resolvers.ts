@@ -26,18 +26,6 @@ export const resolvers = {
                 args.limit || undefined
             )
         },
-        async isLikedByMe(aquascape: Aquascape, _, context: ModuleContext & AuthenticationContext) {
-            if (!context.currentUserId) {
-                return false
-            }
-
-            const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
-            return await provider.isLikedBy(
-                context.currentUserId,
-                LikeEntityType.Aquascape,
-                aquascape.id
-            )
-        },
     },
     Notification: {
         async like(notification: Notification, _, context: ModuleContext) {

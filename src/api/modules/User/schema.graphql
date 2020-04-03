@@ -51,7 +51,7 @@ input UserDetails {
 scalar Upload
 
 type Query {
-    me: User
+    me: User!
     user(id: Int!): User
     userBySlug(slug: String!): User
     users: [User]!
