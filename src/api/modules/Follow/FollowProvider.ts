@@ -2,19 +2,27 @@ import {UserInputError} from 'apollo-server'
 import {Injectable, Inject} from '@graphql-modules/di'
 
 import {Follow} from 'db/models/Follow'
+import {User} from 'db/models/User'
 import {FollowRepositoryInterface} from 'db/repositories/Follow'
 import {UserRepositoryInterface} from 'db/repositories/User'
-import {User} from 'db/models/User'
 import {tokens} from 'di/tokens'
 
 export interface FollowProviderInterface {
-    followUser: (
-        followedId: number,
-        followerId: number
-    ) => Promise<{followed: User; follow: Follow | null}>
-    unfollowUser: (followedId: number, followerId: number) => Promise<User>
+    followUser: (followedId: number, followerId: number) => Promise<Follow | null>
+    unfollowUser: (followedId: number, followerId: number) => Promise<Follow | null>
     isFollowedBy: (followerId: number, followedId: number) => Promise<boolean>
-    getFollows: (userId: number) => Promise<{followers: Follow[]; following: Follow[]}>
+    getFollows: (
+        userId: number
+    ) => Promise<{
+        followers: {
+            rows: Follow[]
+            count: number
+        }
+        following: {
+            rows: Follow[]
+            count: number
+        }
+    }>
 }
 
 @Injectable()
@@ -33,9 +41,7 @@ export class FollowProvider implements FollowProviderInterface {
             throw new UserInputError('User does not exist')
         }
 
-        const follow = await this.followRepository.followUser(followedId, followerId)
-
-        return {followed, follow}
+        return this.followRepository.followUser(followedId, followerId)
     }
 
     async unfollowUser(followedId: number, followerId: number) {
@@ -45,9 +51,7 @@ export class FollowProvider implements FollowProviderInterface {
             throw new UserInputError('User does not exist')
         }
 
-        await this.followRepository.unfollowUser(followedId, followerId)
-
-        return followed
+        return this.followRepository.unfollowUser(followedId, followerId)
     }
 
     getFollows(userId: number) {

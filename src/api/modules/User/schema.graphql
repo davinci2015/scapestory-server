@@ -30,6 +30,10 @@ type ImageUploadResult {
     imagePublicId: String!
 }
 
+type Like {
+    user: User!
+}
+
 enum ImageVariant {
     PROFILE
     COVER
@@ -47,7 +51,7 @@ input UserDetails {
 scalar Upload
 
 type Query {
-    me: User
+    me: User!
     user(id: Int!): User
     userBySlug(slug: String!): User
     users: [User]!

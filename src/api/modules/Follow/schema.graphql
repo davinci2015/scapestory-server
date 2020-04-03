@@ -8,18 +8,26 @@ type Follow {
     createdAt: String!
 }
 
-type Follows {
-    following: [Follow]
-    followers: [Follow]
+type Followers {
+    rows: [Follow!]!
+    count: Int!
+}
+
+type Following {
+    rows: [Follow!]!
+    count: Int!
+}
+
+type FollowResult {
+    followers: Followers!
+    following: Following!
 }
 
 type User {
-    followersCount: Int!
-    followingCount: Int!
-    isFollowedByMe: Boolean!
+    follows: FollowResult!
 }
 
 type Mutation {
-    followUser(userId: Int!): User
-    unfollowUser(userId: Int!): User
+    followUser(userId: Int!): Follow
+    unfollowUser(userId: Int!): Follow
 }

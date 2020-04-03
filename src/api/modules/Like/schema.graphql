@@ -6,9 +6,14 @@ type Like {
     commentId: Int
 }
 
+type Likes {
+    rows: [Like!]!
+    count: Int!
+}
+
 type Aquascape {
     likesCount: Int!
-    isLikedByMe: Boolean!
+    likes(limit: Int): Likes!
 }
 
 type Notification {
