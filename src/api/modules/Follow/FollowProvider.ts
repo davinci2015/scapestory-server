@@ -2,7 +2,6 @@ import {UserInputError} from 'apollo-server'
 import {Injectable, Inject} from '@graphql-modules/di'
 
 import {Follow} from 'db/models/Follow'
-import {User} from 'db/models/User'
 import {FollowRepositoryInterface} from 'db/repositories/Follow'
 import {UserRepositoryInterface} from 'db/repositories/User'
 import {tokens} from 'di/tokens'
