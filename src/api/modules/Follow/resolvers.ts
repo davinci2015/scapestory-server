@@ -32,14 +32,12 @@ export const resolvers = {
 
             const follow = await provider.followUser(args.userId, context.currentUserId)
 
-            if (follow) {
-                notificationProvider.createNotification({
-                    creatorId: context.currentUserId,
-                    notifiers: [args.userId],
-                    notificationType: NotificationType.Follow,
-                    entityId: follow.id,
-                })
-            }
+            notificationProvider.createNotification({
+                creatorId: context.currentUserId,
+                notifiers: [args.userId],
+                notificationType: NotificationType.Follow,
+                entityId: follow.id,
+            })
 
             return follow
         },
@@ -49,6 +47,7 @@ export const resolvers = {
             context: ModuleContext & AuthenticationContext
         ) {
             const provider: FollowProviderInterface = context.injector.get(tokens.FOLLOW_PROVIDER)
+
             return provider.unfollowUser(args.userId, context.currentUserId)
         },
     },

@@ -2,8 +2,6 @@ type Follow {
     id: Int!
     followedUserId: Int!
     followerUserId: Int!
-    followed: User!
-    follower: User!
     updatedAt: String!
     createdAt: String!
 }
