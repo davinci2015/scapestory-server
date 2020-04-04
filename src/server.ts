@@ -33,7 +33,6 @@ export const startup = (AppModule: ModuleContext) => {
         schema: AppModule.schema,
         context: AppModule.context,
         introspection: true,
-        playground: true,
     })
 
     server.listen(port).then(({url}) => {

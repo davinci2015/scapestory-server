@@ -1,4 +1,3 @@
-import {UserInputError} from 'apollo-server'
 import {Injectable} from '@graphql-modules/di'
 import * as Bluebird from 'bluebird'
 import {Follow} from 'db/models/Follow'
