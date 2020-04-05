@@ -9,9 +9,13 @@ import {MutationAddPlantArgs, MutationRemovePlantArgs} from 'interfaces/graphql/
 
 export const resolvers = {
     Query: {
-        async plants(root, args, context: ModuleContext) {
+        plants(root, args, context: ModuleContext) {
             const provider: PlantProviderInterface = context.injector.get(tokens.PLANT_PROVIDER)
-            return await provider.getPlants()
+            return provider.getPlants()
+        },
+        plantById(root, args, context: ModuleContext) {
+            const provider: PlantProviderInterface = context.injector.get(tokens.PLANT_PROVIDER)
+            return provider.findPlantById(args.id)
         },
     },
     Mutation: {

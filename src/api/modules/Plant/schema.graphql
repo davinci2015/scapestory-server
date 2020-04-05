@@ -1,3 +1,27 @@
+enum PlantGrowthSpeed {
+    SLOW
+    MEDIUM
+    HIGH
+}
+
+enum PlantDifficulty {
+    EASY
+    MEDIUM
+    ADVANCED
+}
+
+enum PlantLuminosity {
+    LOW
+    MEDIUM
+    HIGH
+}
+
+enum PlantPosition {
+    FRONT
+    MIDDLE
+    BACK
+}
+
 type Plant {
     id: Int!
     name: String!
@@ -6,14 +30,16 @@ type Plant {
     origin: String
     minHeight: Int
     maxHeight: Int
-    position: String
-    luminosity: String
-    growthSpeed: String
-    difficulty: String
+    position: PlantPosition
+    luminosity: PlantLuminosity
+    growthSpeed: PlantGrowthSpeed
+    difficulty: PlantDifficulty
+    infoFulfilled: Boolean
 }
 
 type Query {
     plants: [Plant!]!
+    plantById(id: Int!): Plant
 }
 
 type Mutation {

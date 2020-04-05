@@ -153,11 +153,11 @@ export type Filter = Equipment & {
 
 export type Follow = {
   __typename?: 'Follow',
+  followed: User,
+  follower: User,
   id: Scalars['Int'],
   followedUserId: Scalars['Int'],
   followerUserId: Scalars['Int'],
-  followed: User,
-  follower: User,
   updatedAt: Scalars['String'],
   createdAt: Scalars['String'],
 };
@@ -528,11 +528,35 @@ export type Plant = {
   origin?: Maybe<Scalars['String']>,
   minHeight?: Maybe<Scalars['Int']>,
   maxHeight?: Maybe<Scalars['Int']>,
-  position?: Maybe<Scalars['String']>,
-  luminosity?: Maybe<Scalars['String']>,
-  growthSpeed?: Maybe<Scalars['String']>,
-  difficulty?: Maybe<Scalars['String']>,
+  position?: Maybe<PlantPosition>,
+  luminosity?: Maybe<PlantLuminosity>,
+  growthSpeed?: Maybe<PlantGrowthSpeed>,
+  difficulty?: Maybe<PlantDifficulty>,
 };
+
+export enum PlantDifficulty {
+  Easy = 'EASY',
+  Medium = 'MEDIUM',
+  Advanced = 'ADVANCED'
+}
+
+export enum PlantGrowthSpeed {
+  Slow = 'SLOW',
+  Medium = 'MEDIUM',
+  High = 'HIGH'
+}
+
+export enum PlantLuminosity {
+  Low = 'LOW',
+  Medium = 'MEDIUM',
+  High = 'HIGH'
+}
+
+export enum PlantPosition {
+  Front = 'FRONT',
+  Middle = 'MIDDLE',
+  Back = 'BACK'
+}
 
 export type Query = {
   __typename?: 'Query',
@@ -758,6 +782,10 @@ export type ResolversTypes = {
   AquascapeImage: ResolverTypeWrapper<Partial<AquascapeImage>>,
   Tag: ResolverTypeWrapper<Partial<Tag>>,
   Plant: ResolverTypeWrapper<Partial<Plant>>,
+  PlantPosition: ResolverTypeWrapper<Partial<PlantPosition>>,
+  PlantLuminosity: ResolverTypeWrapper<Partial<PlantLuminosity>>,
+  PlantGrowthSpeed: ResolverTypeWrapper<Partial<PlantGrowthSpeed>>,
+  PlantDifficulty: ResolverTypeWrapper<Partial<PlantDifficulty>>,
   Hardscape: ResolverTypeWrapper<Partial<Hardscape>>,
   Livestock: ResolverTypeWrapper<Partial<Livestock>>,
   Filter: ResolverTypeWrapper<Partial<Filter>>,
@@ -810,6 +838,10 @@ export type ResolversParentTypes = {
   AquascapeImage: Partial<AquascapeImage>,
   Tag: Partial<Tag>,
   Plant: Partial<Plant>,
+  PlantPosition: Partial<PlantPosition>,
+  PlantLuminosity: Partial<PlantLuminosity>,
+  PlantGrowthSpeed: Partial<PlantGrowthSpeed>,
+  PlantDifficulty: Partial<PlantDifficulty>,
   Hardscape: Partial<Hardscape>,
   Livestock: Partial<Livestock>,
   Filter: Partial<Filter>,
@@ -948,11 +980,11 @@ export type FilterResolvers<ContextType = any, ParentType = ResolversParentTypes
 };
 
 export type FollowResolvers<ContextType = any, ParentType = ResolversParentTypes['Follow']> = {
+  followed?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
+  follower?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   followedUserId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   followerUserId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
-  followed?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
-  follower?: Resolver<ResolversTypes['User'], ParentType, ContextType>,
   updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
 };
@@ -1095,10 +1127,10 @@ export type PlantResolvers<ContextType = any, ParentType = ResolversParentTypes[
   origin?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   minHeight?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
   maxHeight?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
-  position?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  luminosity?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  growthSpeed?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  difficulty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  position?: Resolver<Maybe<ResolversTypes['PlantPosition']>, ParentType, ContextType>,
+  luminosity?: Resolver<Maybe<ResolversTypes['PlantLuminosity']>, ParentType, ContextType>,
+  growthSpeed?: Resolver<Maybe<ResolversTypes['PlantGrowthSpeed']>, ParentType, ContextType>,
+  difficulty?: Resolver<Maybe<ResolversTypes['PlantDifficulty']>, ParentType, ContextType>,
 };
 
 export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes['Query']> = {

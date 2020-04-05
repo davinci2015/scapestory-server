@@ -35,4 +35,7 @@ export class Plant extends Model<Plant> {
 
     @Column
     difficulty: string
+
+    @Column
+    infoFulfilled: boolean
 }

@@ -1,3 +1,9 @@
+import {
+    PlantPosition,
+    PlantLuminosity,
+    PlantGrowthSpeed,
+    PlantDifficulty,
+} from 'interfaces/graphql/types'
 /* eslint-disable */
 import * as faker from 'faker'
 import realPlants from './plants'
@@ -249,10 +255,10 @@ const plants = realPlants.map((name, index) => ({
     origin: faker.address.country(),
     minHeight: faker.random.number(),
     maxHeight: faker.random.number(),
-    position: 'front',
-    luminosity: 'high',
-    growthSpeed: 'fast',
-    difficulty: 'easy',
+    position: PlantPosition.Back,
+    luminosity: PlantLuminosity.High,
+    growthSpeed: PlantGrowthSpeed.High,
+    difficulty: PlantDifficulty.Advanced,
 }))
 
 let filterIdIncrement = 1
