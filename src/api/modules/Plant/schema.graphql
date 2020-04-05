@@ -20,6 +20,8 @@ enum PlantPosition {
     FRONT
     MIDDLE
     BACK
+    FRONT_MIDDLE
+    MIDDLE_BACK
 }
 
 type Plant {
@@ -34,7 +36,7 @@ type Plant {
     luminosity: PlantLuminosity
     growthSpeed: PlantGrowthSpeed
     difficulty: PlantDifficulty
-    infoFulfilled: Boolean
+    infoFulfilled: Boolean!
 }
 
 type Query {
