@@ -532,6 +532,7 @@ export type Plant = {
   luminosity?: Maybe<PlantLuminosity>,
   growthSpeed?: Maybe<PlantGrowthSpeed>,
   difficulty?: Maybe<PlantDifficulty>,
+  infoFulfilled: Scalars['Boolean'],
 };
 
 export enum PlantDifficulty {
@@ -555,7 +556,9 @@ export enum PlantLuminosity {
 export enum PlantPosition {
   Front = 'FRONT',
   Middle = 'MIDDLE',
-  Back = 'BACK'
+  Back = 'BACK',
+  FrontMiddle = 'FRONT_MIDDLE',
+  MiddleBack = 'MIDDLE_BACK'
 }
 
 export type Query = {
@@ -567,6 +570,7 @@ export type Query = {
   filters: Array<Filter>,
   lights: Array<Light>,
   plants: Array<Plant>,
+  plantById?: Maybe<Plant>,
   hardscape: Array<Hardscape>,
   livestock: Array<Livestock>,
   substrates: Array<Substrate>,
@@ -590,6 +594,11 @@ export type QueryUserArgs = {
 
 export type QueryUserBySlugArgs = {
   slug: Scalars['String']
+};
+
+
+export type QueryPlantByIdArgs = {
+  id: Scalars['Int']
 };
 
 
@@ -1131,6 +1140,7 @@ export type PlantResolvers<ContextType = any, ParentType = ResolversParentTypes[
   luminosity?: Resolver<Maybe<ResolversTypes['PlantLuminosity']>, ParentType, ContextType>,
   growthSpeed?: Resolver<Maybe<ResolversTypes['PlantGrowthSpeed']>, ParentType, ContextType>,
   difficulty?: Resolver<Maybe<ResolversTypes['PlantDifficulty']>, ParentType, ContextType>,
+  infoFulfilled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
 };
 
 export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes['Query']> = {
@@ -1141,6 +1151,7 @@ export type QueryResolvers<ContextType = any, ParentType = ResolversParentTypes[
   filters?: Resolver<Array<ResolversTypes['Filter']>, ParentType, ContextType>,
   lights?: Resolver<Array<ResolversTypes['Light']>, ParentType, ContextType>,
   plants?: Resolver<Array<ResolversTypes['Plant']>, ParentType, ContextType>,
+  plantById?: Resolver<Maybe<ResolversTypes['Plant']>, ParentType, ContextType, QueryPlantByIdArgs>,
   hardscape?: Resolver<Array<ResolversTypes['Hardscape']>, ParentType, ContextType>,
   livestock?: Resolver<Array<ResolversTypes['Livestock']>, ParentType, ContextType>,
   substrates?: Resolver<Array<ResolversTypes['Substrate']>, ParentType, ContextType>,
