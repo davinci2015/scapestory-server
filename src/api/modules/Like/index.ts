@@ -7,13 +7,13 @@ import * as typeDefs from './schema.graphql'
 import {LikeProvider} from 'api/modules/Like/LikeProvider'
 import {LikeRepository} from 'db/repositories/Like'
 import {AquascapeRepository} from 'db/repositories/Aquascape'
-import {attachCurrentUserId, composeContext} from 'api/context'
 import {NotificationRepository} from 'db/repositories/Notification'
 import {NotificationNotifierRepository} from 'db/repositories/NotificationNotifier'
 import {CommentRepository} from 'db/repositories/Comment'
 import {AquascapeProvider} from 'api/modules/Aquascape/AquascapeProvider'
 import {NotificationProvider} from 'api/modules/Notification/NotificationProvider'
 import {CommentProvider} from 'api/modules/Comment/CommentProvider'
+import {AuthModule} from 'api/modules/Auth'
 
 export const LikeModule = new GraphQLModule({
     providers: [
@@ -33,5 +33,5 @@ export const LikeModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([attachCurrentUserId]),
+    imports: [AuthModule],
 })

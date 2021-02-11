@@ -3,8 +3,8 @@ import {GraphQLModule} from '@graphql-modules/core'
 import {FollowRepository} from 'db/repositories/Follow'
 import {UserRepository} from 'db/repositories/User'
 import {FollowProvider} from 'api/modules/Follow/FollowProvider'
+import {AuthModule} from 'api/modules/Auth'
 import {resolvers, resolversComposition} from 'api/modules/Follow/resolvers'
-import {attachCurrentUserId, composeContext} from 'api/context'
 import {NotificationProvider} from 'api/modules/Notification/NotificationProvider'
 import {NotificationRepository} from 'db/repositories/Notification'
 import {NotificationNotifierRepository} from 'db/repositories/NotificationNotifier'
@@ -26,5 +26,5 @@ export const FollowModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([attachCurrentUserId]),
+    imports: [AuthModule],
 })

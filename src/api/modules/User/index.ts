@@ -18,5 +18,6 @@ export const UserModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
+    // We can't import AuthModule here because of circular dependency
     context: composeContext([attachCurrentUserId]),
 })

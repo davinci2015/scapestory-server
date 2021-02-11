@@ -8,6 +8,7 @@ export const authenticate = (next: (root, args, context, info) => void) => (
     context: ModuleContext,
     info
 ) => {
+    console.log('---authenticate', context.currentUserId)
     if (!context.currentUserId) {
         throw new AuthenticationError(errors.AUTHENTICATION_ERROR)
     }

@@ -7,8 +7,8 @@ import {resolvers, resolversComposition} from './resolvers'
 import {PlantProvider} from 'api/modules/Plant/PlantProvider'
 import {PlantRepository} from 'db/repositories/Plant'
 import {AquascapePlantRepository} from 'db/repositories/AquascapePlant'
-import {attachCurrentUserId, composeContext} from 'api/context'
 import {AquascapeRepository} from 'db/repositories/Aquascape'
+import {AuthModule} from 'api/modules/Auth'
 
 export const PlantModule = new GraphQLModule({
     providers: [
@@ -20,5 +20,5 @@ export const PlantModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([attachCurrentUserId]),
+    imports: [AuthModule],
 })

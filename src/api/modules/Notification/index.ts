@@ -4,10 +4,10 @@ import {tokens} from 'di/tokens'
 
 import * as typeDefs from './schema.graphql'
 import {resolvers, resolversComposition} from './resolvers'
-import {attachCurrentUserId, composeContext} from 'api/context'
 import {NotificationProvider} from './NotificationProvider'
 import {NotificationRepository} from 'db/repositories/Notification'
 import {NotificationNotifierRepository} from 'db/repositories/NotificationNotifier'
+import {AuthModule} from 'api/modules/Auth'
 
 export const NotificationModule = new GraphQLModule({
     providers: [
@@ -21,5 +21,5 @@ export const NotificationModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    context: composeContext([attachCurrentUserId]),
+    imports: [AuthModule],
 })
