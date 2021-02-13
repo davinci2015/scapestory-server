@@ -21,12 +21,8 @@ module.exports = {
         ],
     },
     node: {
-        console: true,
         __filename: false,
         __dirname: false,
-        fs: 'empty',
-        net: 'empty',
-        tls: 'empty',
     },
     target: 'node',
     externals: [nodeExternals()],
