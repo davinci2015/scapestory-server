@@ -1,25 +1,23 @@
-import {ModuleContext} from '@graphql-modules/core'
-
-import {tokens} from 'di/tokens'
-import {authenticate} from 'api/guards'
-import {LikeProviderInterface} from 'api/modules/Like/LikeProvider'
-import {AuthenticationContext} from 'api/context'
+import {LikeProviderInterface, LikeProvider} from 'api/modules/Like/LikeProvider'
 import {LikeEntityType, MutationLikeArgs, NotificationType} from 'interfaces/graphql/types'
 import {NotificationProvider} from 'api/modules/Notification/NotificationProvider'
-import {AquascapeProviderInterface} from 'api/modules/Aquascape/AquascapeProvider'
+import {
+    AquascapeProviderInterface,
+    AquascapeProvider,
+} from 'api/modules/Aquascape/AquascapeProvider'
 import {Notification, Aquascape} from 'db/models'
 import logger from 'logger'
-import {CommentProviderInterface} from '../Comment/CommentProvider'
 import {CreateNotificationArgs} from 'db/repositories/Notification'
+import {CommentProvider, CommentProviderInterface} from 'api/modules/Comment/CommentProvider'
 
 export const resolvers = {
     Aquascape: {
-        async likesCount(aquascape: Aquascape, _, context: ModuleContext) {
-            const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
+        async likesCount(aquascape: Aquascape, _, context) {
+            const provider: LikeProviderInterface = context.injector.get(LikeProvider)
             return await provider.countLikes(LikeEntityType.Aquascape, aquascape.id)
         },
         async likes(aquascape: Aquascape, args, context) {
-            const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
+            const provider: LikeProviderInterface = context.injector.get(LikeProvider)
             return await provider.getLikes(
                 LikeEntityType.Aquascape,
                 aquascape.id,
@@ -28,8 +26,8 @@ export const resolvers = {
         },
     },
     Notification: {
-        async like(notification: Notification, _, context: ModuleContext) {
-            const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
+        async like(notification: Notification, _, context) {
+            const provider: LikeProviderInterface = context.injector.get(LikeProvider)
 
             if (!notification.likeId) {
                 return null
@@ -39,16 +37,14 @@ export const resolvers = {
         },
     },
     Mutation: {
-        async like(_, args: MutationLikeArgs, context: ModuleContext & AuthenticationContext) {
-            const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
+        async like(_, args: MutationLikeArgs, context) {
+            const provider: LikeProviderInterface = context.injector.get(LikeProvider)
             const aquascapeProvider: AquascapeProviderInterface = context.injector.get(
-                tokens.AQUASCAPE_PROVIDER
+                AquascapeProvider
             )
-            const commentProvider: CommentProviderInterface = context.injector.get(
-                tokens.COMMENT_PROVIDER
-            )
+            const commentProvider: CommentProviderInterface = context.injector.get(CommentProvider)
             const notificationProvider: NotificationProvider = context.injector.get(
-                tokens.NOTIFICATION_PROVIDER
+                NotificationProvider
             )
 
             const like = await provider.like(args.entity, args.entityId, context.currentUserId)
@@ -86,14 +82,9 @@ export const resolvers = {
 
             return like
         },
-        async dislike(_, args: MutationLikeArgs, context: ModuleContext & AuthenticationContext) {
-            const provider: LikeProviderInterface = context.injector.get(tokens.LIKE_PROVIDER)
+        async dislike(_, args: MutationLikeArgs, context) {
+            const provider: LikeProviderInterface = context.injector.get(LikeProvider)
             return await provider.dislike(args.entity, args.entityId, context.currentUserId)
         },
     },
-}
-
-export const resolversComposition = {
-    'Mutation.like': [authenticate],
-    'Mutation.dislike': [authenticate],
 }

@@ -1,11 +1,11 @@
-import {Injectable, Inject} from '@graphql-modules/di'
+import {Injectable, Inject} from 'graphql-modules'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Notification} from 'db/models/Notification'
-import {tokens} from 'di/tokens'
 import {NotificationNotifierRepositoryInterface} from './NotificationNotifier'
 import logger from 'logger'
 import {NotificationType, NotificationStatus} from 'interfaces/graphql/types'
+import {NotificationNotifierRepository} from 'db/repositories/NotificationNotifier'
 
 export interface CreateNotificationArgs {
     creatorId: number
@@ -33,10 +33,11 @@ const notificationTypeMapping = {
 }
 
 @Injectable()
-export class NotificationRepository extends BaseRepository<Notification>
+export class NotificationRepository
+    extends BaseRepository<Notification>
     implements NotificationRepositoryInterface {
     constructor(
-        @Inject(tokens.NOTIFICATION_NOTIFIER_REPOSITORY)
+        @Inject(NotificationNotifierRepository)
         private notifierRepository: NotificationNotifierRepositoryInterface
     ) {
         super(Notification)

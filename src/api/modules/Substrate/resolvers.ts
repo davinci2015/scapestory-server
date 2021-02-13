@@ -1,12 +1,10 @@
-import {ModuleContext} from '@graphql-modules/core'
-
-import {tokens} from 'di/tokens'
 import {SubstrateProviderInterface} from './SubstrateProvider'
+import {SubstrateProvider} from 'api/modules/Substrate/SubstrateProvider'
 
 export const resolvers = {
     Query: {
-        async substrates(root, args, context: ModuleContext) {
-            const provider: SubstrateProviderInterface = context.injector.get(tokens.SUBSTRATE_PROVIDER)
+        async substrates(root, args, context) {
+            const provider: SubstrateProviderInterface = context.injector.get(SubstrateProvider)
             return await provider.getSubstrates()
         },
     },

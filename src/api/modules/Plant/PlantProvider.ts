@@ -1,27 +1,28 @@
-import {Injectable, Inject} from '@graphql-modules/di'
-import * as Bluebird from 'bluebird'
+import {Injectable, Inject} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-import {PlantRepositoryInterface} from 'db/repositories/Plant'
+import {PlantRepositoryInterface, PlantRepository} from 'db/repositories/Plant'
 import {Plant} from 'db/models/Plant'
 import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant'
-import {AquascapePlantRepositoryInterface} from 'db/repositories/AquascapePlant'
+import {
+    AquascapePlantRepositoryInterface,
+    AquascapePlantRepository,
+} from 'db/repositories/AquascapePlant'
 
 export interface PlantProviderInterface {
-    getPlants(): Bluebird<Plant[]>
-    addPlant(name: string): Bluebird<Plant>
-    addPlantForAquascape(plantId: number, aquascapeId: number): Bluebird<AquascapePlant>
-    removePlant(id: number): Bluebird<number>
-    removePlantForAquascape(plantId: number, aquascapeId: number): Bluebird<number>
-    findPlantById(id: number): Bluebird<Plant | null>
+    getPlants(): Promise<Plant[]>
+    addPlant(name: string): Promise<Plant>
+    addPlantForAquascape(plantId: number, aquascapeId: number): Promise<AquascapePlant>
+    removePlant(id: number): Promise<number>
+    removePlantForAquascape(plantId: number, aquascapeId: number): Promise<number>
+    findPlantById(id: number): Promise<Plant | null>
 }
 
 @Injectable()
 export class PlantProvider implements PlantProviderInterface {
     constructor(
-        @Inject(tokens.PLANT_REPOSITORY)
+        @Inject(PlantRepository)
         private plantRepository: PlantRepositoryInterface,
-        @Inject(tokens.AQUASCAPE_PLANT_REPOSITORY)
+        @Inject(AquascapePlantRepository)
         private aquacapePlantRepository: AquascapePlantRepositoryInterface
     ) {}
 

@@ -1,7 +1,6 @@
-import {Injectable, Inject} from '@graphql-modules/di'
+import {Injectable, Inject} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-import {LightRepositoryInterface} from 'db/repositories/Light'
+import {LightRepositoryInterface, LightRepository} from 'db/repositories/Light'
 import {Light} from 'db/models/Light'
 
 export interface LightProviderInterface {
@@ -11,7 +10,7 @@ export interface LightProviderInterface {
 @Injectable()
 export class LightProvider implements LightProviderInterface {
     constructor(
-        @Inject(tokens.LIGHT_REPOSITORY)
+        @Inject(LightRepository)
         private lightRepository: LightRepositoryInterface
     ) {}
 

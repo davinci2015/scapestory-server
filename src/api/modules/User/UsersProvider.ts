@@ -1,18 +1,19 @@
-import Bluebird from 'bluebird'
 import {FileUpload} from 'graphql-upload'
-import {Injectable, Inject, ProviderScope} from '@graphql-modules/di'
+import {Injectable, Inject} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
 import {User} from 'db/models/User'
-import {UserRepositoryInterface} from 'db/repositories/User'
+import {UserRepositoryInterface, UserRepository} from 'db/repositories/User'
 import {uploadStreamFile, deleteFile, imageUploadOptions} from 'services/cloudinary'
 import {UserDetails, ImageUploadResult} from 'interfaces/graphql/types'
 import logger from 'logger'
-import {EmailConfirmationRepositoryInterface} from 'db/repositories/EmailConfirmation'
+import {
+    EmailConfirmationRepositoryInterface,
+    EmailConfirmationRepository,
+} from 'db/repositories/EmailConfirmation'
 import {AuthHelper, EmailConfirmationPayload} from 'utils/AuthHelper'
 
 export interface UsersProviderInterface {
-    getAllUsers: () => Bluebird<User[]>
+    getAllUsers: () => Promise<User[]>
     uploadProfileImage: (userId: number, file: Promise<FileUpload>) => Promise<ImageUploadResult>
     uploadCoverImage: (userId: number, file: Promise<FileUpload>) => Promise<ImageUploadResult>
     findUserById: (id: number) => Promise<User | null>
@@ -22,12 +23,12 @@ export interface UsersProviderInterface {
     findUserByEmail(email: string): Promise<User | null>
 }
 
-@Injectable({scope: ProviderScope.Session})
+@Injectable()
 export class UsersProvider implements UsersProviderInterface {
     constructor(
-        @Inject(tokens.USER_REPOSITORY)
+        @Inject(UserRepository)
         private userRepository: UserRepositoryInterface,
-        @Inject(tokens.EMAIL_CONFIRMATION_REPOSITORY)
+        @Inject(EmailConfirmationRepository)
         private emailConfirmationRepository: EmailConfirmationRepositoryInterface
     ) {}
 

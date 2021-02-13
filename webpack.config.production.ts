@@ -17,7 +17,7 @@ module.exports = {
     module: {
         rules: [
             {test: /\.tsx?$/, loader: 'ts-loader'},
-            {test: /\.(graphql|gql)$/, exclude: /node_modules/, loader: 'webpack-graphql-loader'},
+            {test: /\.(graphql|gql)$/, exclude: /node_modules/, loader: 'graphql-tag/loader'},
         ],
     },
     node: {

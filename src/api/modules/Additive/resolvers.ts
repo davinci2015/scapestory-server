@@ -1,12 +1,10 @@
-import {ModuleContext} from '@graphql-modules/core'
-
-import {tokens} from 'di/tokens'
 import {AdditiveProviderInterface} from './AdditiveProvider'
+import {AdditiveProvider} from 'api/modules/Additive/AdditiveProvider'
 
 export const resolvers = {
     Query: {
-        async additives(root, args, context: ModuleContext) {
-            const provider: AdditiveProviderInterface = context.injector.get(tokens.ADDITIVE_PROVIDER)
+        async additives(root, args, context) {
+            const provider: AdditiveProviderInterface = context.injector.get(AdditiveProvider)
             return await provider.getAdditives()
         },
     },

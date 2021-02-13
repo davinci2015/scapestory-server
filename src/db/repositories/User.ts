@@ -1,5 +1,5 @@
 import * as DataLoader from 'dataloader'
-import {Injectable, ProviderScope} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 
 import {User} from 'db/models/User'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
@@ -15,7 +15,7 @@ export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
     updateUserDetails(userId: number, userDetails: UserDetails): Promise<[number, User[]]>
 }
 
-@Injectable({scope: ProviderScope.Session})
+@Injectable()
 export class UserRepository extends BaseRepository<User> implements UserRepositoryInterface {
     dataLoader: DataLoader<number, User>
 

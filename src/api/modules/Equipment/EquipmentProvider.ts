@@ -1,16 +1,15 @@
-import {Injectable} from '@graphql-modules/di'
-import Bluebird from 'bluebird'
+import {Injectable} from 'graphql-modules'
 import {
     EquipmentRepositoryInterface,
     EquipmentAquascapeRepositoryInterface,
 } from 'db/repositories/Base'
 
 export interface EquipmentProviderInterface<T> {
-    addEquipment(model: string): Bluebird<T>
-    addEquipmentForAquascape(equipmentId: number, aquascapeId: number): Bluebird<T>
-    removeEquipment(id: number): Bluebird<number>
-    removeEquipmentFromAquascape(equipmentId: number, aquascapeId: number): Bluebird<number>
-    findEquipmentById(id: number): Bluebird<T | null>
+    addEquipment(model: string): Promise<T>
+    addEquipmentForAquascape(equipmentId: number, aquascapeId: number): Promise<T>
+    removeEquipment(id: number): Promise<number>
+    removeEquipmentFromAquascape(equipmentId: number, aquascapeId: number): Promise<number>
+    findEquipmentById(id: number): Promise<T | null>
     setEquipmentRepository(repository: EquipmentRepositoryInterface<T>): void
     setEquipmentAquascapeRepository(repository: EquipmentAquascapeRepositoryInterface<T>): void
 }

@@ -1,17 +1,13 @@
-import {GraphQLModule} from '@graphql-modules/core'
+import {createModule} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-
-import * as typeDefs from './schema.graphql'
+import typeDefs from './schema'
 import {resolvers} from './resolvers'
 import {SubstrateProvider} from 'api/modules/Substrate/SubstrateProvider'
 import {SubstrateRepository} from 'db/repositories/Substrate'
 
-export const SubstrateModule = new GraphQLModule({
-    providers: [
-        {provide: tokens.SUBSTRATE_PROVIDER, useClass: SubstrateProvider},
-        {provide: tokens.SUBSTRATE_REPOSITORY, useClass: SubstrateRepository},
-    ],
+export const SubstrateModule = createModule({
+    id: 'SubstrateModule',
+    providers: [SubstrateProvider, SubstrateRepository],
     typeDefs,
-    resolvers
+    resolvers,
 })

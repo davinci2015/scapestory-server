@@ -1,12 +1,9 @@
-import {ModuleContext} from '@graphql-modules/core'
-
-import {tokens} from 'di/tokens'
-import {FilterProviderInterface} from './FilterProvider'
+import {FilterProvider, FilterProviderInterface} from 'api/modules/Filter/FilterProvider'
 
 export const resolvers = {
     Query: {
-        async filters(root, args, context: ModuleContext) {
-            const provider: FilterProviderInterface = context.injector.get(tokens.FILTER_PROVIDER)
+        async filters(root, args, context) {
+            const provider: FilterProviderInterface = context.injector.get(FilterProvider)
             return await provider.getFilters()
         },
     },

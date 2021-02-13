@@ -1,34 +1,29 @@
-import {Injectable, ProviderScope} from '@graphql-modules/di'
-import * as uuid from 'uuid/v4'
-import * as Bluebird from 'bluebird'
+import {Injectable} from 'graphql-modules'
+import uuid from 'uuid'
 import * as DataLoader from 'dataloader'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Visitor} from 'db/models/Visitor'
 
-export interface VisitorRepositoryInterface
-    extends BaseRepositoryInterface<Visitor> {
-    addVisitor(
-        aquascapeId: number,
-        visitorId?: string
-    ): Bluebird<[Visitor, boolean]>
+export interface VisitorRepositoryInterface extends BaseRepositoryInterface<Visitor> {
+    addVisitor(aquascapeId: number, visitorId?: string): Promise<[Visitor, boolean]>
     countViews(aquascapeId: number): Promise<number>
 }
 
-@Injectable({ scope: ProviderScope.Session })
-export class VisitorRepository extends BaseRepository<Visitor> implements VisitorRepositoryInterface {
+@Injectable()
+export class VisitorRepository
+    extends BaseRepository<Visitor>
+    implements VisitorRepositoryInterface {
     aquascapeVisitLoader: DataLoader<number, number>
 
     constructor() {
         super(Visitor)
-        this.aquascapeVisitLoader = new DataLoader(
-            this.batchCountAquascapeVisits
-        )
+        this.aquascapeVisitLoader = new DataLoader(this.batchCountAquascapeVisits)
     }
 
     addVisitor(aquascapeId: number, visitorId?: string) {
         return this.findOrCreate({
-            where: {visitorId: visitorId || uuid(), aquascapeId},
+            where: {visitorId: visitorId || uuid.v4(), aquascapeId},
         })
     }
 
@@ -37,7 +32,7 @@ export class VisitorRepository extends BaseRepository<Visitor> implements Visito
     }
 
     private batchCountAquascapeVisits = async (ids: number[]) => {
-        const views = await this.findAll({ where: {aquascapeId: ids}})
+        const views = await this.findAll({where: {aquascapeId: ids}})
 
         return ids.map(id => views.filter(view => view.aquascapeId === id).length)
     }

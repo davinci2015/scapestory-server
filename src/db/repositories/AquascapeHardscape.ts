@@ -1,11 +1,11 @@
-import {Injectable} from '@graphql-modules/di'
-import Bluebird from 'bluebird'
+import {Injectable} from 'graphql-modules'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {AquascapeHardscape} from 'db/models/manyToMany/AquascapeHardscape'
 
-export interface AquascapeHardscapeRepositoryInterface extends BaseRepositoryInterface<AquascapeHardscape> {
-    addHardscapeForAquascape(hardscapeId: number, aquascapeId: number): Bluebird<AquascapeHardscape>
+export interface AquascapeHardscapeRepositoryInterface
+    extends BaseRepositoryInterface<AquascapeHardscape> {
+    addHardscapeForAquascape(hardscapeId: number, aquascapeId: number): Promise<AquascapeHardscape>
 }
 
 @Injectable()

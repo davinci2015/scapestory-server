@@ -1,15 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {Model} from 'sequelize-typescript'
 import {NonAbstract} from 'sequelize-typescript/dist/model'
-import Bluebird from 'bluebird'
 import {
     BulkCreateOptions,
     CountOptions,
-    CreateOptions,
     DestroyOptions,
     FindAndCountOptions,
     FindOptions,
     FindOrCreateOptions,
-    Promise,
     UpdateOptions,
 } from 'sequelize'
 
@@ -18,17 +16,17 @@ type Constructor<T> = new () => T
 type ModelType<T> = Constructor<T> & StaticMembers
 
 export interface BaseRepositoryInterface<T> {
-    create(values: object, options?: CreateOptions & {returning: boolean}): Bluebird<T>
+    create(values: any, options?: any): Promise<T>
 
-    findOne(options: FindOptions): Bluebird<T | null>
+    findOne(options: FindOptions): Promise<T | null>
 
     findAll(options?: FindOptions): Promise<T[]>
 
-    update(values: object, options: UpdateOptions): Promise<[number, T[]]>
+    update(values: any, options: UpdateOptions): Promise<[number, T[]]>
 
     destroy(options?: DestroyOptions): Promise<number>
 
-    bulkCreate(records: object[], options?: BulkCreateOptions): Promise<T[]>
+    bulkCreate(records: any[], options?: BulkCreateOptions): Promise<T[]>
 
     findAndCountAll(options?: FindAndCountOptions): Promise<{rows: T[]; count: number}>
 
@@ -40,11 +38,11 @@ export interface BaseRepositoryInterface<T> {
 export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterface<T> {
     constructor(private relation: ModelType<T>) {}
 
-    create(values: object, options?: CreateOptions & {returning: boolean}): Bluebird<T> {
+    create(values: any, options?: any): Promise<T> {
         return this.relation.create<T>(values, options)
     }
 
-    findOne(options: FindOptions): Bluebird<T | null> {
+    findOne(options: FindOptions): Promise<T | null> {
         return this.relation.findOne(options)
     }
 
@@ -56,7 +54,7 @@ export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterfa
         return this.relation.findAndCountAll(options)
     }
 
-    update(values: object, options: UpdateOptions): Promise<[number, T[]]> {
+    update(values: any, options: UpdateOptions): Promise<[number, T[]]> {
         return this.relation.update(values, options)
     }
 
@@ -64,7 +62,7 @@ export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterfa
         return this.relation.destroy(options)
     }
 
-    bulkCreate(records: object[], options?: BulkCreateOptions): Promise<T[]> {
+    bulkCreate(records: any[], options?: BulkCreateOptions): Promise<T[]> {
         return this.relation.bulkCreate(records, options)
     }
 
@@ -80,7 +78,7 @@ export class BaseRepository<T extends Model<T>> implements BaseRepositoryInterfa
 export interface EquipmentRepositoryInterface<T> extends BaseRepositoryInterface<T> {
     addEquipment(model: string): Promise<T>
     removeEquipment(equipmentId: number): Promise<number>
-    findById(id: number): Bluebird<T | null>
+    findById(id: number): Promise<T | null>
 }
 
 export interface EquipmentAquascapeRepositoryInterface<T> extends BaseRepositoryInterface<T> {

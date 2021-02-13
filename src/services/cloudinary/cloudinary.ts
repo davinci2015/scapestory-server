@@ -93,7 +93,7 @@ export const uploadStreamFile = (fileStream: any, options?: UploadApiOptions) =>
         const readStream = fileStream()
         // @ts-ignore
         const uploadStream = cloudinary.v2.uploader.upload_stream(options, (error, result) =>
-            error ? reject(error) : resolve(result)
+            error || !result ? reject(error) : resolve(result)
         )
 
         readStream.on('open', () => readStream.pipe(uploadStream))

@@ -1,27 +1,25 @@
-import {ModuleContext} from '@graphql-modules/core'
 import {UserInputError} from 'apollo-server'
 
-import {tokens} from 'di/tokens'
 import {PlantProviderInterface} from './PlantProvider'
-import {authenticate, authorizeAquascapeUpdate} from 'api/guards'
 import {Plant} from 'db/models/Plant'
 import {MutationAddPlantArgs, MutationRemovePlantArgs} from 'interfaces/graphql/types'
+import {PlantProvider} from 'api/modules/Plant/PlantProvider'
 
 export const resolvers = {
     Query: {
-        plants(root, args, context: ModuleContext) {
-            const provider: PlantProviderInterface = context.injector.get(tokens.PLANT_PROVIDER)
+        plants(root, args, context) {
+            const provider: PlantProviderInterface = context.injector.get(PlantProvider)
             return provider.getPlants()
         },
-        plantById(root, args, context: ModuleContext) {
-            const provider: PlantProviderInterface = context.injector.get(tokens.PLANT_PROVIDER)
+        plantById(root, args, context) {
+            const provider: PlantProviderInterface = context.injector.get(PlantProvider)
             return provider.findPlantById(args.id)
         },
     },
     Mutation: {
         async addPlant(root, args: MutationAddPlantArgs, context) {
             let plant: Plant | null = null
-            const provider: PlantProviderInterface = context.injector.get(tokens.PLANT_PROVIDER)
+            const provider: PlantProviderInterface = context.injector.get(PlantProvider)
 
             if (args.plantId) {
                 plant = await provider.findPlantById(args.plantId)
@@ -40,7 +38,7 @@ export const resolvers = {
             return plant
         },
         async removePlant(root, args: MutationRemovePlantArgs, context) {
-            const provider: PlantProviderInterface = context.injector.get(tokens.PLANT_PROVIDER)
+            const provider: PlantProviderInterface = context.injector.get(PlantProvider)
             const plant = await provider.findPlantById(args.plantId)
 
             if (!plant) {
@@ -56,9 +54,4 @@ export const resolvers = {
             return plant
         },
     },
-}
-
-export const resolversComposition = {
-    'Mutation.addPlant': [authenticate, authorizeAquascapeUpdate],
-    'Mutation.removePlant': [authenticate, authorizeAquascapeUpdate],
 }

@@ -1,22 +1,19 @@
-import {ModuleContext} from '@graphql-modules/core'
 import {UserInputError} from 'apollo-server'
 
-import {tokens} from 'di/tokens'
-import {HardscapeProviderInterface} from './HardscapeProvider'
-import {authenticate, authorizeAquascapeUpdate} from 'api/guards'
+import {HardscapeProviderInterface, HardscapeProvider} from './HardscapeProvider'
 import {Hardscape} from 'db/models'
 
 export const resolvers = {
     Query: {
-        async hardscape(root, args, context: ModuleContext) {
-            const provider: HardscapeProviderInterface = context.injector.get(tokens.HARDSCAPE_PROVIDER)
+        async hardscape(root, args, context) {
+            const provider: HardscapeProviderInterface = context.injector.get(HardscapeProvider)
             return await provider.getHardscape()
         },
     },
     Mutation: {
         async addHardscape(root, args, context) {
             let hardscape: Hardscape | null = null
-            const provider: HardscapeProviderInterface = context.injector.get(tokens.HARDSCAPE_PROVIDER)
+            const provider: HardscapeProviderInterface = context.injector.get(HardscapeProvider)
 
             if (args.hardscapeId) {
                 hardscape = await provider.findHardscapeById(args.hardscapeId)
@@ -25,7 +22,9 @@ export const resolvers = {
             }
 
             if (!hardscape) {
-                throw new UserInputError('You need to provide a hardscape ID or a hardscape name that will be created')
+                throw new UserInputError(
+                    'You need to provide a hardscape ID or a hardscape name that will be created'
+                )
             }
 
             await provider.addHardscapeForAquascape(hardscape.id, args.aquascapeId)
@@ -33,7 +32,7 @@ export const resolvers = {
             return hardscape
         },
         async removeHardscape(root, args, context) {
-            const provider: HardscapeProviderInterface = context.injector.get(tokens.HARDSCAPE_PROVIDER)
+            const provider: HardscapeProviderInterface = context.injector.get(HardscapeProvider)
             const hardscape = await provider.findHardscapeById(args.hardscapeId)
 
             if (!hardscape) {
@@ -47,11 +46,6 @@ export const resolvers = {
             }
 
             return hardscape
-        }
-    }
-}
-
-export const resolversComposition = {
-    'Mutation.addHardscape': [authenticate, authorizeAquascapeUpdate],
-    'Mutation.removeHardscape': [authenticate, authorizeAquascapeUpdate],
+        },
+    },
 }

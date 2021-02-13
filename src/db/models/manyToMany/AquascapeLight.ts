@@ -3,7 +3,7 @@ import {Table, Column, Model, ForeignKey} from 'sequelize-typescript'
 import {Aquascape} from 'db/models/Aquascape'
 
 @Table
-export class AquascapeLight extends Model<AquascapeLight> {
+export class AquascapeLight extends Model {
     @ForeignKey(() => Aquascape)
     @Column
     aquascapeId: number

@@ -33,7 +33,7 @@ import {Livestock} from 'db/models/Livestock'
 import {Tank} from 'db/models/Tank'
 
 @Table({paranoid: true})
-export class Aquascape extends Model<Aquascape> {
+export class Aquascape extends Model {
     @Column
     title: string
 
@@ -87,51 +87,27 @@ export class Aquascape extends Model<Aquascape> {
     @HasMany(() => Like)
     likes: Like[]
 
-    @BelongsToMany(
-        () => Filter,
-        () => AquascapeFilter
-    )
+    @BelongsToMany(() => Filter, () => AquascapeFilter)
     filters: Filter[]
 
-    @BelongsToMany(
-        () => Light,
-        () => AquascapeLight
-    )
+    @BelongsToMany(() => Light, () => AquascapeLight)
     lights: Light[]
 
-    @BelongsToMany(
-        () => Substrate,
-        () => AquascapeSubstrate
-    )
+    @BelongsToMany(() => Substrate, () => AquascapeSubstrate)
     substrates: Substrate[]
 
-    @BelongsToMany(
-        () => Additive,
-        () => AquascapeAdditive
-    )
+    @BelongsToMany(() => Additive, () => AquascapeAdditive)
     additives: Additive[]
 
-    @BelongsToMany(
-        () => Hardscape,
-        () => AquascapeHardscape
-    )
+    @BelongsToMany(() => Hardscape, () => AquascapeHardscape)
     hardscape: Hardscape[]
 
-    @BelongsToMany(
-        () => Tag,
-        () => AquascapeTag
-    )
+    @BelongsToMany(() => Tag, () => AquascapeTag)
     tags: Tag[]
 
-    @BelongsToMany(
-        () => Plant,
-        () => AquascapePlant
-    )
+    @BelongsToMany(() => Plant, () => AquascapePlant)
     plants: Plant[]
 
-    @BelongsToMany(
-        () => Livestock,
-        () => AquascapeLivestock
-    )
+    @BelongsToMany(() => Livestock, () => AquascapeLivestock)
     livestock: Livestock[]
 }

@@ -1,15 +1,15 @@
-import Bluebird from 'bluebird'
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {AquascapePlant} from 'db/models/manyToMany/AquascapePlant'
 
 export interface AquascapePlantRepositoryInterface extends BaseRepositoryInterface<AquascapePlant> {
-    addPlantForAquascape(plantId: number, aquascapeId: number): Bluebird<AquascapePlant>
+    addPlantForAquascape(plantId: number, aquascapeId: number): Promise<AquascapePlant>
 }
 
 @Injectable()
-export class AquascapePlantRepository extends BaseRepository<AquascapePlant>
+export class AquascapePlantRepository
+    extends BaseRepository<AquascapePlant>
     implements AquascapePlantRepositoryInterface {
     constructor() {
         super(AquascapePlant)

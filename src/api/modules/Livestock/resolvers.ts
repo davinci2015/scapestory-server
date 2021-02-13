@@ -1,22 +1,20 @@
-import {ModuleContext} from '@graphql-modules/core'
 import {UserInputError} from 'apollo-server'
 
-import {tokens} from 'di/tokens'
 import {LivestockProviderInterface} from './LivestockProvider'
-import {authenticate, authorizeAquascapeUpdate} from 'api/guards'
 import {Livestock} from 'db/models'
+import {LivestockProvider} from 'api/modules/Livestock/LivestockProvider'
 
 export const resolvers = {
     Query: {
-        async livestock(root, args, context: ModuleContext) {
-            const provider: LivestockProviderInterface = context.injector.get(tokens.LIVESTOCK_PROVIDER)
+        async livestock(root, args, context) {
+            const provider: LivestockProviderInterface = context.injector.get(LivestockProvider)
             return await provider.getLivestock()
         },
     },
     Mutation: {
         async addLivestock(root, args, context) {
             let livestock: Livestock | null = null
-            const provider: LivestockProviderInterface = context.injector.get(tokens.LIVESTOCK_PROVIDER)
+            const provider: LivestockProviderInterface = context.injector.get(LivestockProvider)
 
             if (args.livestockId) {
                 livestock = await provider.findLivestockById(args.livestockId)
@@ -25,7 +23,9 @@ export const resolvers = {
             }
 
             if (!livestock) {
-                throw new UserInputError('You need to provide a livestock ID or a livestock name that will be created')
+                throw new UserInputError(
+                    'You need to provide a livestock ID or a livestock name that will be created'
+                )
             }
 
             await provider.addLivestockForAquascape(livestock.id, args.aquascapeId)
@@ -33,7 +33,7 @@ export const resolvers = {
             return livestock
         },
         async removeLivestock(root, args, context) {
-            const provider: LivestockProviderInterface = context.injector.get(tokens.LIVESTOCK_PROVIDER)
+            const provider: LivestockProviderInterface = context.injector.get(LivestockProvider)
             const livestock = await provider.findLivestockById(args.livestockId)
 
             if (!livestock) {
@@ -47,11 +47,6 @@ export const resolvers = {
             }
 
             return livestock
-        }
-    }
-}
-
-export const resolversComposition = {
-    'Mutation.addLivestock': [authenticate, authorizeAquascapeUpdate],
-    'Mutation.removeLivestock': [authenticate, authorizeAquascapeUpdate],
+        },
+    },
 }
