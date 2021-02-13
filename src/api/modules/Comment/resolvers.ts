@@ -6,7 +6,6 @@ import {User} from 'db/models/User'
 import {Like} from 'db/models/Like'
 import {Aquascape} from 'db/models/Aquascape'
 import {Notification} from 'db/models'
-import {NotificationProvider} from '../Notification/NotificationProvider'
 import logger from 'logger'
 import {AquascapeProviderInterface} from '../Aquascape/AquascapeProvider'
 import {
