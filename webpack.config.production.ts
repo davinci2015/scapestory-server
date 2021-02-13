@@ -15,10 +15,7 @@ module.exports = {
         plugins: [new TsconfigPathsPlugin()],
     },
     module: {
-        rules: [
-            {test: /\.tsx?$/, loader: 'ts-loader'},
-            {test: /\.(graphql|gql)$/, exclude: /node_modules/, loader: 'graphql-tag/loader'},
-        ],
+        rules: [{test: /\.tsx?$/, loader: 'ts-loader'}],
     },
     node: {
         __filename: false,
