@@ -2,11 +2,7 @@ import {DatabaseAdapter} from 'db/adapters/SequelizeAdapter'
 import {SyncOptions} from 'sequelize/types'
 
 export interface DatabaseConnectionParams {
-    database: string
-    username: string
-    password: string
-    host: string
-    port?: number
+    uri: string
 }
 
 export interface DatabaseInterface {

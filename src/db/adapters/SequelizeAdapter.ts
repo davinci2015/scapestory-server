@@ -46,11 +46,7 @@ export class SequelizeAdapter implements DatabaseAdapter {
     instance: Sequelize
 
     connect(params: DatabaseConnectionParams) {
-        this.instance = new Sequelize(params.database, params.username, params.password, {
-            host: params.host,
-            port: params.port,
-            dialect: 'postgres',
-            // Logging: false,
+        this.instance = new Sequelize(params.uri, {
             models: [
                 Additive,
                 Aquascape,
