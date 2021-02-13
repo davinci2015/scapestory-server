@@ -7,8 +7,8 @@ import {resolvers, resolversComposition} from './resolvers'
 import {LivestockProvider} from 'api/modules/Livestock/LivestockProvider'
 import {LivestockRepository} from 'db/repositories/Livestock'
 import {AquascapeLivestockRepository} from 'db/repositories/AquascapeLivestock'
+import {composeContext, attachCurrentUserId} from 'api/context'
 import {AquascapeRepository} from 'db/repositories/Aquascape'
-import {AuthModule} from 'api/modules/Auth'
 
 export const LivestockModule = new GraphQLModule({
     providers: [
@@ -20,5 +20,5 @@ export const LivestockModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    imports: [AuthModule],
+    context: composeContext([attachCurrentUserId]),
 })

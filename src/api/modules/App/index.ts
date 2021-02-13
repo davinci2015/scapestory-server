@@ -21,7 +21,6 @@ import {NotificationModule} from 'api/modules/Notification'
 
 export const AppModule = new GraphQLModule({
     imports: [
-        AuthModule,
         CommentModule,
         FollowModule,
         LightModule,
@@ -30,6 +29,7 @@ export const AppModule = new GraphQLModule({
         PlantModule,
         HardscapeModule,
         UserModule,
+        AuthModule,
         VisitorModule,
         LivestockModule,
         SubstrateModule,
