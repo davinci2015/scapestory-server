@@ -6,10 +6,10 @@ import {tokens} from 'di/tokens'
 import {CommentProvider} from './CommentProvider'
 import {resolvers, resolversComposition} from './resolvers'
 import * as typeDefs from './schema.graphql'
+import {composeContext, attachSession, attachCurrentUserId} from 'api/context'
 import {UserModule} from 'api/modules/User'
 import {AquascapeModule} from 'api/modules/Aquascape'
 import {LikeModule} from 'api/modules/Like'
-import {AuthModule} from 'api/modules/Auth'
 import {AquascapeProvider} from 'api/modules/Aquascape/AquascapeProvider'
 import {NotificationProvider} from 'api/modules/Notification/NotificationProvider'
 import {NotificationRepository} from 'db/repositories/Notification'
@@ -32,5 +32,6 @@ export const CommentModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    imports: [AuthModule, UserModule, AquascapeModule, LikeModule],
+    context: composeContext([attachCurrentUserId, attachSession]),
+    imports: [UserModule, AquascapeModule, LikeModule],
 })

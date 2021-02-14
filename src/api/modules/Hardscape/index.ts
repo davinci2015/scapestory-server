@@ -6,8 +6,8 @@ import * as typeDefs from './schema.graphql'
 import {resolvers, resolversComposition} from './resolvers'
 import {HardscapeProvider} from 'api/modules/Hardscape/HardscapeProvider'
 import {HardscapeRepository} from 'db/repositories/Hardscape'
-import {AuthModule} from 'api/modules/Auth'
 import {AquascapeHardscapeRepository} from 'db/repositories/AquascapeHardscape'
+import {attachCurrentUserId, composeContext} from 'api/context'
 import {AquascapeRepository} from 'db/repositories/Aquascape'
 
 export const HardscapeModule = new GraphQLModule({
@@ -20,5 +20,5 @@ export const HardscapeModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
-    imports: [AuthModule],
+    context: composeContext([attachCurrentUserId]),
 })

@@ -12,6 +12,7 @@ import {tokens} from 'di/tokens'
 import {AquascapeProvider} from './AquascapeProvider'
 import {resolvers, resolversComposition} from './resolvers'
 import * as typeDefs from './schema.graphql'
+import {attachCurrentUserId, composeContext} from 'api/context'
 import {UserModule} from 'api/modules/User'
 import {FilterModule} from 'api/modules/Filter'
 import {LightModule} from 'api/modules/Light'
@@ -22,7 +23,6 @@ import {SubstrateModule} from 'api/modules/Substrate'
 import {AdditiveModule} from 'api/modules/Additive'
 import {LikeModule} from 'api/modules/Like'
 import {AquascapeImageModule} from 'api/modules/AquascapeImage'
-import {AuthModule} from '../Auth/index'
 
 export const AquascapeModule = new GraphQLModule({
     providers: [
@@ -40,8 +40,8 @@ export const AquascapeModule = new GraphQLModule({
     typeDefs,
     resolvers,
     resolversComposition,
+    context: composeContext([attachCurrentUserId]),
     imports: [
-        AuthModule,
         UserModule,
         FilterModule,
         LightModule,
@@ -52,6 +52,6 @@ export const AquascapeModule = new GraphQLModule({
         AdditiveModule,
         FilterModule,
         LikeModule,
-        AquascapeImageModule,
-    ],
+        AquascapeImageModule
+    ]
 })
