@@ -1,23 +1,25 @@
-import {GraphQLModule} from '@graphql-modules/core'
+import {createModule} from 'graphql-modules'
 
 import {UsersProvider} from 'api/modules/User/UsersProvider'
-import {resolvers, resolversComposition} from 'api/modules/User/resolvers'
+import {resolvers} from 'api/modules/User/resolvers'
 import {UserRepository} from 'db/repositories/User'
 
-import * as typeDefs from './schema.graphql'
-import {tokens} from 'di/tokens'
-import {composeContext, attachCurrentUserId} from 'api/context'
+import typeDefs from './schema'
 import {EmailConfirmationRepository} from 'db/repositories/EmailConfirmation'
+import {authenticate} from 'api/guards'
 
-export const UserModule = new GraphQLModule({
-    providers: [
-        {provide: tokens.USER_PROVIDER, useClass: UsersProvider},
-        {provide: tokens.USER_REPOSITORY, useClass: UserRepository},
-        {provide: tokens.EMAIL_CONFIRMATION_REPOSITORY, useClass: EmailConfirmationRepository},
-    ],
+export const UserModule = createModule({
+    id: 'UserModule',
+    providers: [UsersProvider, UserRepository, EmailConfirmationRepository],
     typeDefs,
     resolvers,
-    resolversComposition,
-    // We can't import AuthModule here because of circular dependency
-    context: composeContext([attachCurrentUserId]),
+    middlewares: {
+        Query: {
+            me: [authenticate],
+        },
+        Mutation: {
+            uploadUserImage: [authenticate],
+            updateUserDetails: [authenticate],
+        },
+    },
 })

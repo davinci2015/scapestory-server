@@ -1,6 +1,6 @@
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 import * as moment from 'moment'
-import * as uuid from 'uuid/v4'
+import uuid from 'uuid'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {EmailConfirmation} from 'db/models/EmailConfirmation'
@@ -14,7 +14,8 @@ export interface EmailConfirmationRepositoryInterface
 }
 
 @Injectable()
-export class EmailConfirmationRepository extends BaseRepository<EmailConfirmation>
+export class EmailConfirmationRepository
+    extends BaseRepository<EmailConfirmation>
     implements EmailConfirmationRepositoryInterface {
     constructor() {
         super(EmailConfirmation)
@@ -27,7 +28,7 @@ export class EmailConfirmationRepository extends BaseRepository<EmailConfirmatio
     createConfirmationKey(email: string) {
         return this.create({
             email,
-            code: uuid(),
+            code: uuid.v4(),
             expiresAt: moment().add(3, 'hours'),
         })
     }

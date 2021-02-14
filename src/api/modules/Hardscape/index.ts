@@ -1,24 +1,27 @@
-import {GraphQLModule} from '@graphql-modules/core'
+import {createModule} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-
-import * as typeDefs from './schema.graphql'
-import {resolvers, resolversComposition} from './resolvers'
+import typeDefs from './schema'
+import {resolvers} from './resolvers'
 import {HardscapeProvider} from 'api/modules/Hardscape/HardscapeProvider'
 import {HardscapeRepository} from 'db/repositories/Hardscape'
-import {AuthModule} from 'api/modules/Auth'
 import {AquascapeHardscapeRepository} from 'db/repositories/AquascapeHardscape'
 import {AquascapeRepository} from 'db/repositories/Aquascape'
+import {authenticate, authorizeAquascapeUpdate} from 'api/guards'
 
-export const HardscapeModule = new GraphQLModule({
+export const HardscapeModule = createModule({
+    id: 'HardscapeModule',
     providers: [
-        {provide: tokens.AQUASCAPE_REPOSITORY, useClass: AquascapeRepository},
-        {provide: tokens.HARDSCAPE_PROVIDER, useClass: HardscapeProvider},
-        {provide: tokens.HARDSCAPE_REPOSITORY, useClass: HardscapeRepository},
-        {provide: tokens.AQUASCAPE_HARDSCAPE_REPOSITORY, useClass: AquascapeHardscapeRepository},
+        AquascapeRepository,
+        HardscapeProvider,
+        HardscapeRepository,
+        AquascapeHardscapeRepository,
     ],
     typeDefs,
     resolvers,
-    resolversComposition,
-    imports: [AuthModule],
+    middlewares: {
+        Mutation: {
+            addHardscape: [authenticate, authorizeAquascapeUpdate],
+            removeHardscape: [authenticate, authorizeAquascapeUpdate],
+        },
+    },
 })

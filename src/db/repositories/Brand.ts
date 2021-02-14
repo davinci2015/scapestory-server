@@ -1,5 +1,4 @@
-import Bluebird from 'bluebird'
-import {Injectable, ProviderScope} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 import * as DataLoader from 'dataloader'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
@@ -7,11 +6,11 @@ import {Brand} from 'db/models/Brand'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
 
 export interface BrandRepositoryInterface extends BaseRepositoryInterface<Brand> {
-    getBrands: () => Bluebird<Brand[]>
+    getBrands: () => Promise<Brand[]>
     findBrandById: (id: number) => Promise<Brand | null>
 }
 
-@Injectable({scope: ProviderScope.Session})
+@Injectable()
 export class BrandRepository extends BaseRepository<Brand> implements BrandRepositoryInterface {
     brandLoader: DataLoader<number, Brand>
 

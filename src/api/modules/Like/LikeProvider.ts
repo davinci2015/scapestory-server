@@ -1,32 +1,30 @@
-import {Injectable, Inject, ProviderScope} from '@graphql-modules/di'
-import Bluebird from 'bluebird'
+import {Injectable, Inject} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-import {LikeRepositoryInterface} from 'db/repositories/Like'
+import {LikeRepositoryInterface, LikeRepository} from 'db/repositories/Like'
 import {Like} from 'db/models/Like'
 import {LikeEntityType} from 'interfaces/graphql/types'
-import {NotificationRepositoryInterface} from 'db/repositories/Notification'
+import {NotificationRepositoryInterface, NotificationRepository} from 'db/repositories/Notification'
 
 export interface LikeProviderInterface {
-    getLikeById(id: number): Bluebird<Like | null>
+    getLikeById(id: number): Promise<Like | null>
     getLikes(
         entity: LikeEntityType,
         entityId: number,
         limit?: number
     ): Promise<{rows: Like[]; count: number}>
-    like(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
+    like(entity: LikeEntityType, entityId: number, userId: number): Promise<Like>
     dislike(entity: LikeEntityType, entityId: number, userId: number): Promise<Like>
     removeLikes(data: {entity: LikeEntityType; entityId: number}[]): Promise<number>
     countLikes(entity: LikeEntityType, entityId: number): Promise<number>
     isLikedBy(userId: number, entity: LikeEntityType, entityId: number): Promise<boolean>
 }
 
-@Injectable({scope: ProviderScope.Session})
+@Injectable()
 export class LikeProvider implements LikeProviderInterface {
     constructor(
-        @Inject(tokens.LIKE_REPOSITORY)
+        @Inject(LikeRepository)
         private likeRepository: LikeRepositoryInterface,
-        @Inject(tokens.NOTIFICATION_REPOSITORY)
+        @Inject(NotificationRepository)
         private notificationRepository: NotificationRepositoryInterface
     ) {}
 

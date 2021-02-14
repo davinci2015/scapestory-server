@@ -1,15 +1,13 @@
-import {Injectable, Inject} from '@graphql-modules/di'
+import {Injectable, Inject} from 'graphql-modules'
 import {FileUpload} from 'graphql-upload'
-import Bluebird from 'bluebird'
 
 import {AquascapeImage} from 'db/models/AquascapeImage'
-import {tokens} from 'di/tokens'
 import {uploadStreamFile, deleteFile, imageUploadOptions} from 'services/cloudinary'
 import {AquascapeImageRepository} from 'db/repositories/AquascapeImage'
 import logger from 'logger'
 
 export interface AquascapeImageProviderInterface {
-    getImageById: (id: number) => Bluebird<AquascapeImage | null>
+    getImageById: (id: number) => Promise<AquascapeImage | null>
     addAquascapeImage: (aquascapeId: number, file: Promise<FileUpload>) => Promise<AquascapeImage>
     deleteAquascapeImage: (aquascapeId: number, imageId: number) => Promise<number>
 }
@@ -17,7 +15,7 @@ export interface AquascapeImageProviderInterface {
 @Injectable()
 export class AquascapeImageProvider implements AquascapeImageProviderInterface {
     constructor(
-        @Inject(tokens.AQUASCAPE_IMAGE_REPOSITORY)
+        @Inject(AquascapeImageRepository)
         private aquascapeImageRepository: AquascapeImageRepository
     ) {}
 

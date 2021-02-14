@@ -1,7 +1,7 @@
 import {Table, Column, Model, Default} from 'sequelize-typescript'
 
 @Table
-export class Brand extends Model<Brand> {
+export class Brand extends Model {
     @Default(false)
     @Column
     predefined: boolean

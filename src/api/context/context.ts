@@ -1,6 +1,3 @@
-import {ModuleContext, BuildContextFn, ModuleSessionInfo} from '@graphql-modules/core'
-import {Config} from 'apollo-server'
-
 import headers from 'constants/headers'
 import {AuthHelper, AuthTokenPayload} from 'utils/AuthHelper'
 import {SessionInterface} from 'interfaces'
@@ -12,27 +9,10 @@ export type AuthenticationContext = {
 
 export type SessionContext = SessionInterface
 
-export const composeContext = (
-    contexts: Function[]
-): BuildContextFn<Config, ModuleSessionInfo, ModuleContext> => (
-    session: ModuleSessionInfo,
-    currentContext: ModuleContext,
-    moduleSessionInfo: ModuleSessionInfo
-) =>
-    contexts.reduce(
-        (acc, ctx) => ({
-            ...acc,
-            ...ctx(session, currentContext, moduleSessionInfo),
-        }),
-        {}
-    )
-
-export const attachCurrentUserId = (
-    session: SessionInterface
-): {currentUserId: number} | object => {
+export const attachCurrentUserId = (session: SessionInterface): {currentUserId: number} | null => {
     const authToken = session.req.headers[headers.AUTH_TOKEN]
     if (!authToken || typeof authToken !== 'string') {
-        return {}
+        return null
     }
 
     try {
@@ -47,7 +27,7 @@ export const attachCurrentUserId = (
         logger.warn('Invalid JWT token')
     }
 
-    return {}
+    return null
 }
 
 export const attachSession = (session: SessionInterface): SessionContext => ({

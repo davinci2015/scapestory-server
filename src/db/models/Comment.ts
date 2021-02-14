@@ -5,7 +5,7 @@ import {User} from 'db/models/User'
 import {Like} from 'db/models/Like'
 
 @Table({paranoid: true})
-export class Comment extends Model<Comment> {
+export class Comment extends Model {
     @Column(DataType.TEXT)
     content: string
 

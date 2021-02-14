@@ -1,5 +1,4 @@
-import Bluebird from 'bluebird'
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 import {Op, WhereOptions, Order} from 'sequelize'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
@@ -13,12 +12,13 @@ export interface NotificationNotifierRepositoryInterface
         userId: number,
         pagination: Pagination
     ) => Promise<{rows: NotificationNotifier[]; count: number}>
-    countUnreadNotifications: (userId: number) => Bluebird<number>
-    readNotifications: (notifierId: number) => Bluebird<[number, NotificationNotifier[]]>
+    countUnreadNotifications: (userId: number) => Promise<number>
+    readNotifications: (notifierId: number) => Promise<[number, NotificationNotifier[]]>
 }
 
 @Injectable()
-export class NotificationNotifierRepository extends BaseRepository<NotificationNotifier>
+export class NotificationNotifierRepository
+    extends BaseRepository<NotificationNotifier>
     implements NotificationNotifierRepositoryInterface {
     constructor() {
         super(NotificationNotifier)

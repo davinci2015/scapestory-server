@@ -1,4 +1,4 @@
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Tag} from 'db/models/Tag'
 

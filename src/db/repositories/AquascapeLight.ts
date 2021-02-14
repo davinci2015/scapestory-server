@@ -1,4 +1,4 @@
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 
 import {BaseRepository, EquipmentAquascapeRepositoryInterface} from 'db/repositories/Base'
 import {AquascapeLight} from 'db/models/manyToMany/AquascapeLight'
@@ -7,7 +7,8 @@ export interface AquascapeLightRepositoryInterface
     extends EquipmentAquascapeRepositoryInterface<AquascapeLight> {}
 
 @Injectable()
-export class AquascapeLightRepository extends BaseRepository<AquascapeLight>
+export class AquascapeLightRepository
+    extends BaseRepository<AquascapeLight>
     implements AquascapeLightRepositoryInterface {
     constructor() {
         super(AquascapeLight)

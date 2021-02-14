@@ -1,24 +1,27 @@
-import {GraphQLModule} from '@graphql-modules/core'
+import {createModule} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-
-import * as typeDefs from './schema.graphql'
-import {resolvers, resolversComposition} from './resolvers'
+import typeDefs from './schema'
+import {resolvers} from './resolvers'
 import {LivestockProvider} from 'api/modules/Livestock/LivestockProvider'
 import {LivestockRepository} from 'db/repositories/Livestock'
 import {AquascapeLivestockRepository} from 'db/repositories/AquascapeLivestock'
 import {AquascapeRepository} from 'db/repositories/Aquascape'
-import {AuthModule} from 'api/modules/Auth'
+import {authenticate, authorizeAquascapeUpdate} from 'api/guards'
 
-export const LivestockModule = new GraphQLModule({
+export const LivestockModule = createModule({
+    id: 'LivestockModule',
     providers: [
-        {provide: tokens.AQUASCAPE_REPOSITORY, useClass: AquascapeRepository},
-        {provide: tokens.LIVESTOCK_PROVIDER, useClass: LivestockProvider},
-        {provide: tokens.LIVESTOCK_REPOSITORY, useClass: LivestockRepository},
-        {provide: tokens.AQUASCAPE_LIVESTOCK_REPOSITORY, useClass: AquascapeLivestockRepository},
+        AquascapeRepository,
+        LivestockProvider,
+        LivestockRepository,
+        AquascapeLivestockRepository,
     ],
     typeDefs,
     resolvers,
-    resolversComposition,
-    imports: [AuthModule],
+    middlewares: {
+        Mutation: {
+            addLivestock: [authenticate, authorizeAquascapeUpdate],
+            removeLivestock: [authenticate, authorizeAquascapeUpdate],
+        },
+    },
 })

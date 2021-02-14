@@ -1,19 +1,21 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
-import {Injectable, Inject} from '@graphql-modules/di'
+import {Injectable, Inject} from 'graphql-modules'
 import {AuthenticationError, UserInputError} from 'apollo-server'
 import {Request, Response} from 'express'
 import slugify from 'slugify'
 import {ClientResponse} from '@sendgrid/client/src/response'
 
 import {User} from 'db/models/User'
-import {UserRepositoryInterface} from 'db/repositories/User'
+import {UserRepositoryInterface, UserRepository} from 'db/repositories/User'
 import {authenticateFacebook, authenticateGoogle} from 'api/modules/Auth/passport'
 import {AuthHelper} from 'utils/AuthHelper'
-import {tokens} from 'di/tokens'
-import {SocialLoginRepositoryInterface} from 'db/repositories/SocialLogin'
+import {SocialLoginRepositoryInterface, SocialLoginRepository} from 'db/repositories/SocialLogin'
 import socialProviders from 'constants/socialProviders'
-import {EmailConfirmationRepositoryInterface} from 'db/repositories/EmailConfirmation'
+import {
+    EmailConfirmationRepositoryInterface,
+    EmailConfirmationRepository,
+} from 'db/repositories/EmailConfirmation'
 import {sendConfirmationMail} from 'services/mail/mail'
 import errors from 'constants/errors'
 
@@ -46,11 +48,11 @@ interface SocialLoginData {
 @Injectable()
 export class AuthProvider implements AuthProviderInterface {
     constructor(
-        @Inject(tokens.USER_REPOSITORY)
+        @Inject(UserRepository)
         private userRepository: UserRepositoryInterface,
-        @Inject(tokens.SOCIAL_LOGIN_REPOSITORY)
+        @Inject(SocialLoginRepository)
         private socialLoginRepository: SocialLoginRepositoryInterface,
-        @Inject(tokens.EMAIL_CONFIRMATION_REPOSITORY)
+        @Inject(EmailConfirmationRepository)
         private emailConfirmationRepository: EmailConfirmationRepositoryInterface
     ) {}
 

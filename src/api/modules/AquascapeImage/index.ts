@@ -1,22 +1,22 @@
-import {GraphQLModule} from '@graphql-modules/core'
+import {createModule} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
 import {AquascapeImageRepository} from 'db/repositories/AquascapeImage'
 import {AquascapeRepository} from 'db/repositories/Aquascape'
 
 import {AquascapeImageProvider} from './AquascapeImageProvider'
-import {resolvers, resolversComposition} from './resolvers'
-import * as typeDefs from './schema.graphql'
-import {AuthModule} from 'api/modules/Auth'
+import {resolvers} from './resolvers'
+import typeDefs from './schema'
+import {authenticate, authorizeAquascapeUpdate} from 'api/guards'
 
-export const AquascapeImageModule = new GraphQLModule({
-    providers: [
-        {provide: tokens.AQUASCAPE_REPOSITORY, useClass: AquascapeRepository},
-        {provide: tokens.AQUASCAPE_IMAGE_PROVIDER, useClass: AquascapeImageProvider},
-        {provide: tokens.AQUASCAPE_IMAGE_REPOSITORY, useClass: AquascapeImageRepository},
-    ],
+export const AquascapeImageModule = createModule({
+    id: 'AquascapeImageModule',
+    providers: [AquascapeRepository, AquascapeImageProvider, AquascapeImageRepository],
     typeDefs,
     resolvers,
-    resolversComposition,
-    imports: [AuthModule],
+    middlewares: {
+        Mutation: {
+            addAquascapeImage: [authenticate, authorizeAquascapeUpdate],
+            deleteAquascapeImage: [authenticate, authorizeAquascapeUpdate],
+        },
+    },
 })

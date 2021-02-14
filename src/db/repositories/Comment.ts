@@ -1,6 +1,5 @@
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 import {UserInputError} from 'apollo-server'
-import Bluebird from 'bluebird'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Comment} from 'db/models/Comment'
@@ -20,13 +19,13 @@ export interface CommentRepositoryInterface extends BaseRepositoryInterface<Comm
         entityType: CommentEntityType,
         entityId: number,
         include?: Includeable[]
-    ): Bluebird<Comment[]>
+    ): Promise<Comment[]>
 
-    getChildComments(parentCommentId: number): Bluebird<Comment[]>
+    getChildComments(parentCommentId: number): Promise<Comment[]>
 
-    addComment(data: AddCommentArgs): Bluebird<Comment>
+    addComment(data: AddCommentArgs): Promise<Comment>
 
-    removeComment(id: number, userId: number): Bluebird<Comment>
+    removeComment(id: number, userId: number): Promise<Comment>
 }
 
 const entityToFieldMapper = {
@@ -44,7 +43,7 @@ export class CommentRepository extends BaseRepository<Comment> {
         entityType: CommentEntityType,
         entityId: number,
         include?: Includeable[]
-    ): Bluebird<Comment[]> {
+    ): Promise<Comment[]> {
         const entity = entityToFieldMapper[entityType]
 
         return this.findAll({

@@ -1,7 +1,7 @@
 import {Table, Column, Model, Default} from 'sequelize-typescript'
 
 @Table
-export class Plant extends Model<Plant> {
+export class Plant extends Model {
     @Default(false)
     @Column
     predefined: boolean
@@ -36,7 +36,6 @@ export class Plant extends Model<Plant> {
     @Column
     difficulty: string
 
-    @Default(false)
     @Column
     infoFulfilled: boolean
 }

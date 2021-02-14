@@ -1,7 +1,7 @@
 import {Table, Column, Model} from 'sequelize-typescript'
 
 @Table
-export class Tank extends Model<Tank> {
+export class Tank extends Model {
     @Column
     volume: number // Litres
 

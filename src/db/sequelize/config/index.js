@@ -1,21 +1,27 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 
-require('dotenv').config({ path: path.resolve(__dirname, '../../../../.env') })
+require('dotenv').config({path: path.resolve(__dirname, '../../../../.env')})
 
 module.exports = {
     development: {
-        username: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_NAME,
-        host: process.env.DB_HOST,
-        dialect: 'postgres'
+        url: process.env.DATABASE_URL,
+        dialect: 'postgres',
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false,
+            },
+        },
     },
     production: {
-        username: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_NAME,
-        host: process.env.DB_HOST,
-        dialect: 'postgres'
-    }
+        url: process.env.DATABASE_URL,
+        dialect: 'postgres',
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false,
+            },
+        },
+    },
 }

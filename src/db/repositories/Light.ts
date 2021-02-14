@@ -1,4 +1,4 @@
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 import {BaseRepository, EquipmentRepositoryInterface} from 'db/repositories/Base'
 import {Light} from 'db/models/Light'
 

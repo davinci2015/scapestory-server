@@ -1,25 +1,23 @@
-import {GraphQLModule} from '@graphql-modules/core'
+import {createModule} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-
-import * as typeDefs from './schema.graphql'
-import {resolvers, resolversComposition} from './resolvers'
+import typeDefs from './schema'
+import {resolvers} from './resolvers'
 import {NotificationProvider} from './NotificationProvider'
 import {NotificationRepository} from 'db/repositories/Notification'
 import {NotificationNotifierRepository} from 'db/repositories/NotificationNotifier'
-import {AuthModule} from 'api/modules/Auth'
+import {authenticate} from 'api/guards'
 
-export const NotificationModule = new GraphQLModule({
-    providers: [
-        {provide: tokens.NOTIFICATION_PROVIDER, useClass: NotificationProvider},
-        {provide: tokens.NOTIFICATION_REPOSITORY, useClass: NotificationRepository},
-        {
-            provide: tokens.NOTIFICATION_NOTIFIER_REPOSITORY,
-            useClass: NotificationNotifierRepository,
-        },
-    ],
+export const NotificationModule = createModule({
+    id: 'NotificationModule',
+    providers: [NotificationProvider, NotificationRepository, NotificationNotifierRepository],
     typeDefs,
     resolvers,
-    resolversComposition,
-    imports: [AuthModule],
+    middlewares: {
+        Query: {
+            notifications: [authenticate],
+        },
+        Mutation: {
+            readNotifications: [authenticate],
+        },
+    },
 })

@@ -1,18 +1,16 @@
-import {Injectable, Inject} from '@graphql-modules/di'
-import Bluebird from 'bluebird'
+import {Injectable, Inject} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-import {FilterRepositoryInterface} from 'db/repositories/Filter'
+import {FilterRepositoryInterface, FilterRepository} from 'db/repositories/Filter'
 import {Filter} from 'db/models/Filter'
 
 export interface FilterProviderInterface {
-    getFilters: () => Bluebird<Filter[]>
+    getFilters: () => Promise<Filter[]>
 }
 
 @Injectable()
 export class FilterProvider implements FilterProviderInterface {
     constructor(
-        @Inject(tokens.FILTER_REPOSITORY)
+        @Inject(FilterRepository)
         private filterRepository: FilterRepositoryInterface
     ) {}
 

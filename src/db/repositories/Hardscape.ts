@@ -1,16 +1,17 @@
-import Bluebird from 'bluebird'
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Hardscape} from 'db/models/Hardscape'
 
 export interface HardscapeRepositoryInterface extends BaseRepositoryInterface<Hardscape> {
-    getHardscape: () => Bluebird<Hardscape[]>
-    findHardscapeById(id: number): Bluebird<Hardscape | null>
+    getHardscape: () => Promise<Hardscape[]>
+    findHardscapeById(id: number): Promise<Hardscape | null>
 }
 
 @Injectable()
-export class HardscapeRepository extends BaseRepository<Hardscape> implements HardscapeRepositoryInterface {
+export class HardscapeRepository
+    extends BaseRepository<Hardscape>
+    implements HardscapeRepositoryInterface {
     constructor() {
         super(Hardscape)
     }

@@ -1,4 +1,4 @@
-import {GraphQLModule} from '@graphql-modules/core'
+import {createApplication} from 'graphql-modules'
 
 import {AquascapeModule} from 'api/modules/Aquascape'
 import {FollowModule} from 'api/modules/Follow'
@@ -19,9 +19,8 @@ import {EquipmentModule} from 'api/modules/Equipment'
 import {AquascapeImageModule} from 'api/modules/AquascapeImage'
 import {NotificationModule} from 'api/modules/Notification'
 
-export const AppModule = new GraphQLModule({
-    imports: [
-        AuthModule,
+export const AppModule = createApplication({
+    modules: [
         CommentModule,
         FollowModule,
         LightModule,
@@ -30,6 +29,7 @@ export const AppModule = new GraphQLModule({
         PlantModule,
         HardscapeModule,
         UserModule,
+        AuthModule,
         VisitorModule,
         LivestockModule,
         SubstrateModule,

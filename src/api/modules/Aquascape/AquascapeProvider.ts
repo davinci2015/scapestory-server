@@ -1,12 +1,10 @@
-import {Injectable, Inject} from '@graphql-modules/di'
+import {Injectable, Inject} from 'graphql-modules'
 import {Includeable} from 'sequelize/types'
-import Bluebird from 'bluebird'
 import {FileUpload} from 'graphql-upload'
 
-import {AquascapeRepositoryInterface} from 'db/repositories/Aquascape'
+import {AquascapeRepositoryInterface, AquascapeRepository} from 'db/repositories/Aquascape'
 import {Aquascape} from 'db/models/Aquascape'
 import {AquascapeImage} from 'db/models/AquascapeImage'
-import {tokens} from 'di/tokens'
 
 import {
     uploadStreamFile,
@@ -25,20 +23,17 @@ export interface AquascapeProviderInterface {
         include?: Includeable[]
     ) => Promise<{rows: Aquascape[]; count: number}>
 
-    getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape | null>
+    getFeaturedAquascape: (include?: Includeable[]) => Promise<Aquascape | null>
 
-    getTrendingAquascapes: (
-        pagination: Pagination,
-        include?: Includeable[]
-    ) => Bluebird<Aquascape[]>
+    getTrendingAquascapes: (pagination: Pagination, include?: Includeable[]) => Promise<Aquascape[]>
 
-    getAquascapeById: (id: number, include?: Includeable[]) => Bluebird<Aquascape | null>
+    getAquascapeById: (id: number, include?: Includeable[]) => Promise<Aquascape | null>
 
     createAquascape: (userId: number) => Promise<Aquascape>
 
-    getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
+    getAquascapeImages: (aquascapeId: number) => Promise<AquascapeImage[]>
 
-    updateAquascapeTitle: (aquascapeId: number, title: string) => Bluebird<[number, Aquascape[]]>
+    updateAquascapeTitle: (aquascapeId: number, title: string) => Promise<[number, Aquascape[]]>
 
     removeAquascape: (aquascapeId: number) => Promise<number>
 
@@ -51,7 +46,7 @@ export interface AquascapeProviderInterface {
 @Injectable()
 export class AquascapeProvider implements AquascapeProviderInterface {
     constructor(
-        @Inject(tokens.AQUASCAPE_REPOSITORY)
+        @Inject(AquascapeRepository)
         private aquascapeRepository: AquascapeRepositoryInterface
     ) {}
 

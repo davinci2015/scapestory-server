@@ -5,7 +5,7 @@ import {Follow} from 'db/models/Follow'
 import {Like} from 'db/models/Like'
 
 @Table({paranoid: true})
-export class User extends Model<User> {
+export class User extends Model {
     @Column
     email: string
 

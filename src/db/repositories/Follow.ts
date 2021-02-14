@@ -1,4 +1,4 @@
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 import * as Bluebird from 'bluebird'
 import {Follow} from 'db/models/Follow'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'

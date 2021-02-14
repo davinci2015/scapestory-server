@@ -1,30 +1,32 @@
-import {Injectable, Inject} from '@graphql-modules/di'
+import {Injectable, Inject} from 'graphql-modules'
 import {Includeable} from 'sequelize/types'
-import Bluebird from 'bluebird'
 
 import {Comment} from 'db/models/Comment'
-import {tokens} from 'di/tokens'
-import {CommentRepositoryInterface, AddCommentArgs} from 'db/repositories/Comment'
+import {
+    CommentRepositoryInterface,
+    AddCommentArgs,
+    CommentRepository,
+} from 'db/repositories/Comment'
 import {CommentEntityType} from 'interfaces/graphql/types'
 
 export interface CommentProviderInterface {
-    getCommentById(id: number): Bluebird<Comment | null>
+    getCommentById(id: number): Promise<Comment | null>
     getChildComments(parentCommentId: number): Promise<Comment[]>
     getComments(
         entityType: CommentEntityType,
         entityId: number,
         include?: Includeable[]
-    ): Bluebird<Comment[]>
+    ): Promise<Comment[]>
 
-    addComment(data: AddCommentArgs): Bluebird<Comment>
+    addComment(data: AddCommentArgs): Promise<Comment>
 
-    removeComment(id: number, userId: number): Bluebird<Comment>
+    removeComment(id: number, userId: number): Promise<Comment>
 }
 
 @Injectable()
 export class CommentProvider implements CommentProviderInterface {
     constructor(
-        @Inject(tokens.COMMENT_REPOSITORY)
+        @Inject(CommentRepository)
         private commentRepository: CommentRepositoryInterface
     ) {}
 

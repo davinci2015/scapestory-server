@@ -1,15 +1,17 @@
-import {Injectable, Inject} from '@graphql-modules/di'
-import Bluebird from 'bluebird'
+import {Injectable, Inject} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
 import {
     NotificationRepositoryInterface,
     CreateNotificationArgs,
     NotificationToRemove,
 } from 'db/repositories/Notification'
-import {NotificationNotifierRepositoryInterface} from 'db/repositories/NotificationNotifier'
+import {
+    NotificationNotifierRepositoryInterface,
+    NotificationNotifierRepository,
+} from 'db/repositories/NotificationNotifier'
 import {NotificationNotifier} from 'db/models/NotificationNotifier'
 import {Pagination} from 'interfaces/graphql/types'
+import {NotificationRepository} from 'db/repositories/Notification'
 
 export interface NotificationProviderInterface {
     createNotification(options: CreateNotificationArgs): void
@@ -18,16 +20,16 @@ export interface NotificationProviderInterface {
         pagination: Pagination
     ): Promise<{rows: NotificationNotifier[]; count: number}>
     countUnreadNotifications(notifierId: number): Promise<number>
-    readNotifications(notifierId: number): Bluebird<[number, NotificationNotifier[]]>
+    readNotifications(notifierId: number): Promise<[number, NotificationNotifier[]]>
     removeNotifications(notifications: NotificationToRemove[]): Promise<number>
 }
 
 @Injectable()
 export class NotificationProvider implements NotificationProviderInterface {
     constructor(
-        @Inject(tokens.NOTIFICATION_REPOSITORY)
+        @Inject(NotificationRepository)
         private notificationRepository: NotificationRepositoryInterface,
-        @Inject(tokens.NOTIFICATION_NOTIFIER_REPOSITORY)
+        @Inject(NotificationNotifierRepository)
         private notifierRepository: NotificationNotifierRepositoryInterface
     ) {}
 
