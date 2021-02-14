@@ -47,6 +47,9 @@ export class SequelizeAdapter implements DatabaseAdapter {
 
     connect(params: DatabaseConnectionParams) {
         this.instance = new Sequelize(params.uri, {
+            dialectOptions: {
+                ssl: true,
+            },
             models: [
                 Additive,
                 Aquascape,
