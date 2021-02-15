@@ -1,6 +1,6 @@
 import {createModule} from 'graphql-modules'
 
-import {AuthProvider} from 'api/modules/Auth/providers/AuthProvider'
+import {AuthProvider} from 'api/modules/Auth/AuthProvider'
 import {resolvers} from 'api/modules/Auth/resolvers'
 import {UserRepository} from 'db/repositories/User'
 import {SocialLoginRepository} from 'db/repositories/SocialLogin'

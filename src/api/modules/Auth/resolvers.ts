@@ -1,4 +1,4 @@
-import {AuthProviderInterface, AuthProvider} from 'api/modules/Auth/providers/AuthProvider'
+import {AuthProviderInterface, AuthProvider} from 'api/modules/Auth/AuthProvider'
 import {
     MutationResendConfirmationMailArgs,
     QueryUserProfileSlugExistsArgs,
