@@ -1,8 +1,9 @@
 import {ApolloServer} from 'apollo-server'
+import {Application} from 'graphql-modules'
+
 import {SequelizeAdapter} from 'db/adapters/SequelizeAdapter'
 import {Database} from 'db/Database'
 import {initPassport} from 'api/modules/Auth/passport'
-import {Application} from 'graphql-modules'
 import environment from './config/environment'
 
 export const connectToDatabase = (onConnect?: (db: Database) => void) => {
@@ -13,9 +14,9 @@ export const connectToDatabase = (onConnect?: (db: Database) => void) => {
 
     database
         .testConnection()
-        .then(() => console.log(`🚀 Connected to ${process.env.DB_NAME} database`))
+        .then(() => console.log('🚀 Connected to database'))
         .then(() => onConnect && onConnect(database))
-        .catch(() => console.log('⚠️ Failed to connect to the database!'))
+        .catch(e => console.log('⚠️ Failed to connect to the database!', e))
 }
 
 export const startup = (AppModule: Application) => {
@@ -27,6 +28,10 @@ export const startup = (AppModule: Application) => {
     const server = new ApolloServer({
         schema: AppModule.createSchemaForApollo(),
         introspection: true,
+        context: context => ({
+            req: context.req,
+            res: context.res,
+        }),
     })
 
     server.listen(port).then(({url}) => {

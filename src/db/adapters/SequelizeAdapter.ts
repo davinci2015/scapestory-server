@@ -33,6 +33,7 @@ import {
     NotificationNotifier,
 } from 'db/models'
 import {Brand} from 'db/models/Brand'
+import {AppHelper} from 'utils/AppHelper'
 
 export interface DatabaseAdapter {
     connect: (params: DatabaseConnectionParams) => void
@@ -47,12 +48,7 @@ export class SequelizeAdapter implements DatabaseAdapter {
 
     connect(params: DatabaseConnectionParams) {
         this.instance = new Sequelize(params.uri, {
-            dialectOptions: {
-                ssl: {
-                    require: true,
-                    rejectUnauthorized: false,
-                },
-            },
+            dialectOptions: this.getDialectOptions(),
             models: [
                 Additive,
                 Aquascape,
@@ -95,4 +91,14 @@ export class SequelizeAdapter implements DatabaseAdapter {
     sync(options: SyncOptions) {
         return this.instance.sync(options)
     }
+
+    private getDialectOptions = () =>
+        !AppHelper.isDevelopment()
+            ? {
+                  ssl: {
+                      require: true,
+                      rejectUnauthorized: false,
+                  },
+              }
+            : {}
 }

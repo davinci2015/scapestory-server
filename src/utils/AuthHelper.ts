@@ -1,4 +1,4 @@
-import * as moment from 'moment'
+import moment from 'moment'
 import {compareSync, hashSync} from 'bcrypt'
 import {encode, decode} from 'jwt-simple'
 import environment from 'config/environment'
