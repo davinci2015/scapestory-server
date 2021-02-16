@@ -7,7 +7,6 @@ export default gql`
         content: String!
         parentCommentId: Int
         likes: [Like!]!
-        user: User!
         aquascapeImageId: Int
         aquascapeId: Int
         commentId: Int

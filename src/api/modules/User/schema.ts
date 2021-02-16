@@ -43,7 +43,11 @@ export default gql`
     }
 
     extend type Aquascape {
-        user: User
+        user: User!
+    }
+
+    extend type Comment {
+        user: User!
     }
 
     enum ImageVariant {

@@ -11,7 +11,7 @@ import {
     Like,
 } from 'interfaces/graphql/types'
 import {AuthHelper} from 'utils/AuthHelper'
-import {Notification, Follow, Aquascape} from 'db/models'
+import {Notification, Follow, Aquascape, Comment} from 'db/models'
 import {UserDataLoader, UserDataLoaderInterface} from 'db/loaders/User'
 
 export const resolvers = {
@@ -34,32 +34,37 @@ export const resolvers = {
         },
     },
     Notification: {
-        async creator(notification: Notification, args, {injector}) {
-            const provider: UsersProviderInterface = injector.get(UsersProvider)
-            return await provider.findUserById(notification.creatorId)
+        async creator(notification: Notification, args, context) {
+            const loader: UserDataLoaderInterface = context.injector.get(UserDataLoader)
+            return await loader.findUserById(notification.creatorId)
         },
     },
     Like: {
-        async user(like: Like, args, {injector}) {
-            const provider: UsersProviderInterface = injector.get(UsersProvider)
-            return await provider.findUserById(like.userId)
+        async user(like: Like, args, context) {
+            const loader: UserDataLoaderInterface = context.injector.get(UserDataLoader)
+            return await loader.findUserById(like.userId)
         },
     },
     Follow: {
-        async follower(follow: Follow, args, {injector}) {
-            const provider: UsersProviderInterface = injector.get(UsersProvider)
-            return await provider.findUserById(follow.followerUserId)
+        async follower(follow: Follow, args, context) {
+            const loader: UserDataLoaderInterface = context.injector.get(UserDataLoader)
+            return await loader.findUserById(follow.followerUserId)
         },
-        async followed(follow: Follow, args, {injector}) {
-            const provider: UsersProviderInterface = injector.get(UsersProvider)
-            return await provider.findUserById(follow.followedUserId)
+        async followed(follow: Follow, args, context) {
+            const loader: UserDataLoaderInterface = context.injector.get(UserDataLoader)
+            return await loader.findUserById(follow.followedUserId)
         },
     },
     Aquascape: {
         async user(aquascape: Aquascape, args, context) {
             const loader: UserDataLoaderInterface = context.injector.get(UserDataLoader)
-
             return await loader.findUserById(aquascape.userId)
+        },
+    },
+    Comment: {
+        async user(comment: Comment, args, context) {
+            const loader: UserDataLoaderInterface = context.injector.get(UserDataLoader)
+            return await loader.findUserById(comment.userId)
         },
     },
     Mutation: {
