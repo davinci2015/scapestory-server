@@ -24,6 +24,7 @@ export class BrandDataLoader extends BaseDataLoader implements BrandDataLoaderIn
 
     private batchLoadBrands = async (ids: number[]) => {
         const brands = await this.brandRepository.findAll({where: {id: ids}})
+
         return this.ensureOrder({
             docs: brands,
             keys: ids,
