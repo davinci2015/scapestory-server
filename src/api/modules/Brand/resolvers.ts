@@ -1,12 +1,13 @@
 import {BrandProvider, BrandProviderInterface} from 'api/modules/Brand/BrandProvider'
+import {BrandDataLoader, BrandDataLoaderInterface} from 'db/loaders/Brand'
 
 const resolveBrand = (root, args, context) => {
     if (!root.brandId) {
         return null
     }
 
-    const provider: BrandProviderInterface = context.injector.get(BrandProvider)
-    return provider.findBrandById(root.brandId)
+    const loader: BrandDataLoaderInterface = context.injector.get(BrandDataLoader)
+    return loader.findBrandById(root.brandId)
 }
 
 export const resolvers = {

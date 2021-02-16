@@ -5,7 +5,6 @@ import {Brand} from 'db/models/Brand'
 
 export interface BrandProviderInterface {
     getBrands: () => Promise<Brand[]>
-    findBrandById: (id: number) => Promise<Brand | null>
 }
 
 @Injectable()
@@ -17,9 +16,5 @@ export class BrandProvider implements BrandProviderInterface {
 
     getBrands() {
         return this.brandRepository.getBrands()
-    }
-
-    findBrandById(id: number) {
-        return this.brandRepository.findBrandById(id)
     }
 }

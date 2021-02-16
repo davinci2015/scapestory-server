@@ -1,11 +1,10 @@
 import {Injectable} from 'graphql-modules'
-import * as Bluebird from 'bluebird'
 import {Follow} from 'db/models/Follow'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 
 export interface FollowRepositoryInterface extends BaseRepositoryInterface<Follow> {
-    followUser: (followedId: number, followerId: number) => Bluebird<Follow | null>
-    unfollowUser: (followedId: number, followerId: number) => Bluebird<Follow | null>
+    followUser: (followedId: number, followerId: number) => Promise<Follow | null>
+    unfollowUser: (followedId: number, followerId: number) => Promise<Follow | null>
     getFollows: (
         userId: number
     ) => Promise<{
@@ -22,7 +21,7 @@ export interface FollowRepositoryInterface extends BaseRepositoryInterface<Follo
 }
 
 @Injectable()
-export class FollowRepository extends BaseRepository<Follow> {
+export class FollowRepository extends BaseRepository<Follow> implements FollowRepositoryInterface {
     constructor() {
         super(Follow)
     }
