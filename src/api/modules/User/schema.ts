@@ -42,6 +42,10 @@ export default gql`
         follower: User!
     }
 
+    extend type Aquascape {
+        user: User
+    }
+
     enum ImageVariant {
         PROFILE
         COVER

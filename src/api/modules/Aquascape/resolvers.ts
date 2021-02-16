@@ -73,13 +73,6 @@ export const resolvers = {
             return await provider.getAquascapeById(args.id, getAquascapeJoinFields(info))
         },
     },
-    Aquascape: {
-        async user(aquascape: Aquascape, args, context) {
-            const provider: UsersProviderInterface = context.injector.get(UsersProvider)
-
-            return await provider.findUserById(aquascape.userId)
-        },
-    },
     User: {
         async aquascapes(user: User, args, context, info) {
             const provider: AquascapeProviderInterface = context.injector.get(AquascapeProvider)

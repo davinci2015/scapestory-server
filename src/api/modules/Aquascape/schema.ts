@@ -43,7 +43,6 @@ export default gql`
         trending: Boolean!
         description: String
         userId: Int!
-        user: User
         co2: CO2
         tank: Tank
         mainImageUrl: String

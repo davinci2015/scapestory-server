@@ -5,6 +5,7 @@ import typeDefs from './schema'
 import {LikeProvider} from 'api/modules/Like/LikeProvider'
 import {LikeRepository} from 'db/repositories/Like'
 import {AquascapeRepository} from 'db/repositories/Aquascape'
+import {LikeDataLoader} from 'db/loaders/Like'
 import {NotificationRepository} from 'db/repositories/Notification'
 import {NotificationNotifierRepository} from 'db/repositories/NotificationNotifier'
 import {CommentRepository} from 'db/repositories/Comment'
@@ -18,6 +19,7 @@ export const LikeModule = createModule({
     providers: [
         LikeProvider,
         LikeRepository,
+        LikeDataLoader,
         AquascapeProvider,
         AquascapeRepository,
         NotificationProvider,

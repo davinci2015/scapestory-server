@@ -1,9 +1,7 @@
-import * as DataLoader from 'dataloader'
 import {Injectable} from 'graphql-modules'
 
 import {User} from 'db/models/User'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
-import {GraphQLHelper} from 'utils/GraphQLHelper'
 import {UserDetails} from 'interfaces/graphql/types'
 
 export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
@@ -17,15 +15,12 @@ export interface UserRepositoryInterface extends BaseRepositoryInterface<User> {
 
 @Injectable()
 export class UserRepository extends BaseRepository<User> implements UserRepositoryInterface {
-    dataLoader: DataLoader<number, User>
-
     constructor() {
         super(User)
-        this.dataLoader = new DataLoader(this.batchGetUserById)
     }
 
-    async findUserById(id: number): Promise<User | null> {
-        return this.dataLoader.load(id)
+    findUserById(id: number): Promise<User | null> {
+        return this.findOne({where: {id}})
     }
 
     findUserByEmail(email: string): Promise<User | null> {
@@ -58,14 +53,5 @@ export class UserRepository extends BaseRepository<User> implements UserReposito
 
     updateUserDetails(userId: number, userDetails: UserDetails) {
         return this.update(userDetails, {where: {id: userId}, returning: true})
-    }
-
-    private batchGetUserById = async (ids: number[]) => {
-        const users = await this.findAll({where: {id: ids}})
-        return GraphQLHelper.ensureOrder({
-            docs: users,
-            keys: ids,
-            prop: 'id',
-        })
     }
 }

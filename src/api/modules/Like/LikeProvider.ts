@@ -15,7 +15,6 @@ export interface LikeProviderInterface {
     like(entity: LikeEntityType, entityId: number, userId: number): Promise<Like>
     dislike(entity: LikeEntityType, entityId: number, userId: number): Promise<Like>
     removeLikes(data: {entity: LikeEntityType; entityId: number}[]): Promise<number>
-    countLikes(entity: LikeEntityType, entityId: number): Promise<number>
     isLikedBy(userId: number, entity: LikeEntityType, entityId: number): Promise<boolean>
 }
 
@@ -45,10 +44,6 @@ export class LikeProvider implements LikeProviderInterface {
 
     removeLikes(data: {entity: LikeEntityType; entityId: number}[]) {
         return this.likeRepository.removeLikes(data)
-    }
-
-    countLikes(entity: LikeEntityType, entityId) {
-        return this.likeRepository.countLikes(entity, entityId)
     }
 
     isLikedBy(userId: number, entity: LikeEntityType, entityId: number) {

@@ -9,12 +9,13 @@ import {Notification, Aquascape} from 'db/models'
 import logger from 'logger'
 import {CreateNotificationArgs} from 'db/repositories/Notification'
 import {CommentProvider, CommentProviderInterface} from 'api/modules/Comment/CommentProvider'
+import {LikeDataLoaderInterface, LikeDataLoader} from 'db/loaders/Like'
 
 export const resolvers = {
     Aquascape: {
         async likesCount(aquascape: Aquascape, _, context) {
-            const provider: LikeProviderInterface = context.injector.get(LikeProvider)
-            return await provider.countLikes(LikeEntityType.Aquascape, aquascape.id)
+            const loader: LikeDataLoaderInterface = context.injector.get(LikeDataLoader)
+            return await loader.countLikes(LikeEntityType.Aquascape, aquascape.id)
         },
         async likes(aquascape: Aquascape, args, context) {
             const provider: LikeProviderInterface = context.injector.get(LikeProvider)

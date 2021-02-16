@@ -1,17 +1,14 @@
 import {Injectable} from 'graphql-modules'
 import {UserInputError} from 'apollo-server'
-import Bluebird from 'bluebird'
-import * as DataLoader from 'dataloader'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Like} from 'db/models/Like'
 import {LikeEntityType} from 'interfaces/graphql/types'
 
 export interface LikeRepositoryInterface extends BaseRepositoryInterface<Like> {
-    like(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
+    like(entity: LikeEntityType, entityId: number, userId: number): Promise<Like>
     removeLikes(data: {entity: LikeEntityType; entityId: number}[]): Promise<number>
-    dislike(entity: LikeEntityType, entityId: number, userId: number): Bluebird<Like>
-    countLikes(entity: LikeEntityType, entityId: number): Promise<number>
+    dislike(entity: LikeEntityType, entityId: number, userId: number): Promise<Like>
     isLikedBy(userId: number, entity: LikeEntityType, entityId: number): Promise<boolean>
     getLikes(
         entity: LikeEntityType,
@@ -27,12 +24,9 @@ const entityToFieldMapper = {
 }
 
 @Injectable()
-export class LikeRepository extends BaseRepository<Like> {
-    aquascapeLikesLoader: DataLoader<number, number>
-
+export class LikeRepository extends BaseRepository<Like> implements LikeRepositoryInterface {
     constructor() {
         super(Like)
-        this.aquascapeLikesLoader = new DataLoader(this.batchCountAquascapeLikes)
     }
 
     async like(entity: LikeEntityType, entityId: number, userId: number) {
@@ -71,17 +65,6 @@ export class LikeRepository extends BaseRepository<Like> {
         return Boolean(like)
     }
 
-    countLikes(entity: LikeEntityType, entityId: number) {
-        const field = entityToFieldMapper[entity]
-
-        switch (field) {
-            case entityToFieldMapper[LikeEntityType.Aquascape]:
-                return this.aquascapeLikesLoader.load(entityId)
-            default:
-                return 0
-        }
-    }
-
     removeLikes(data: {entity: LikeEntityType; entityId: number}[]) {
         let field
         return this.destroy({
@@ -97,13 +80,5 @@ export class LikeRepository extends BaseRepository<Like> {
     getLikes(entity: LikeEntityType, entityId: number, limit?: number) {
         const field = entityToFieldMapper[entity]
         return this.findAndCountAll({where: {[field]: entityId}, limit})
-    }
-
-    private batchCountAquascapeLikes = async (ids: number[]) => {
-        const likes = await this.findAll({
-            where: {[entityToFieldMapper[LikeEntityType.Aquascape]]: ids},
-        })
-
-        return ids.map(id => likes.filter(like => like.aquascapeId === id).length)
     }
 }

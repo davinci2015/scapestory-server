@@ -11,7 +11,8 @@ import {
     Like,
 } from 'interfaces/graphql/types'
 import {AuthHelper} from 'utils/AuthHelper'
-import {Notification, Follow} from 'db/models'
+import {Notification, Follow, Aquascape} from 'db/models'
+import {UserDataLoader, UserDataLoaderInterface} from 'db/loaders/User'
 
 export const resolvers = {
     Query: {
@@ -52,6 +53,13 @@ export const resolvers = {
         async followed(follow: Follow, args, {injector}) {
             const provider: UsersProviderInterface = injector.get(UsersProvider)
             return await provider.findUserById(follow.followedUserId)
+        },
+    },
+    Aquascape: {
+        async user(aquascape: Aquascape, args, context) {
+            const loader: UserDataLoaderInterface = context.injector.get(UserDataLoader)
+
+            return await loader.findUserById(aquascape.userId)
         },
     },
     Mutation: {
