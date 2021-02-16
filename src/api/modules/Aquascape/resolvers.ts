@@ -1,5 +1,4 @@
 import {GraphQLResolveInfo} from 'graphql'
-import {UsersProviderInterface, UsersProvider} from 'api/modules/User/UsersProvider'
 
 import {Tag} from 'db/models/Tag'
 import {Plant} from 'db/models/Plant'
@@ -16,7 +15,7 @@ import {AquascapeImage} from 'db/models/AquascapeImage'
 import {AquascapeProviderInterface} from './AquascapeProvider'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
 import {FileUpload} from 'graphql-upload'
-import {Comment, User, Aquascape, Like} from 'db/models'
+import {Comment, User, Like} from 'db/models'
 import {AquascapeProvider} from 'api/modules/Aquascape/AquascapeProvider'
 import {
     QueryAquascapesArgs,
