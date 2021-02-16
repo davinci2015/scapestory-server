@@ -2,8 +2,7 @@ import {Inject, Injectable, Scope} from 'graphql-modules'
 import * as DataLoader from 'dataloader'
 
 import {LikeEntityType} from 'interfaces/graphql/types'
-import {LikeRepository} from 'db/repositories/Like'
-import {LikeRepositoryInterface} from '../repositories/Like'
+import {LikeRepository, LikeRepositoryInterface} from 'db/repositories/Like'
 
 export interface LikeDataLoaderInterface {
     countLikes(entity: LikeEntityType, entityId: number): Promise<number>
