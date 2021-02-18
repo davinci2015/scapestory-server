@@ -7,9 +7,11 @@ import {resolvers} from './resolvers'
 import typeDefs from './schema'
 import {AquascapeProvider} from 'api/modules/Aquascape/AquascapeProvider'
 import {NotificationProvider} from 'api/modules/Notification/NotificationProvider'
+import {LikeProvider} from 'api/modules/Like/LikeProvider'
 import {NotificationRepository} from 'db/repositories/Notification'
 import {NotificationNotifierRepository} from 'db/repositories/NotificationNotifier'
 import {AquascapeRepository} from 'db/repositories/Aquascape'
+import {LikeRepository} from 'db/repositories/Like'
 import {authenticate} from 'api/guards'
 
 export const CommentModule = createModule({
@@ -22,6 +24,8 @@ export const CommentModule = createModule({
         NotificationProvider,
         NotificationRepository,
         NotificationNotifierRepository,
+        LikeProvider,
+        LikeRepository,
     ],
     typeDefs,
     resolvers,

@@ -1,12 +1,12 @@
 import {Injectable} from 'graphql-modules'
-import uuid from 'uuid'
+import {v4 as uuidv4} from 'uuid'
 import * as DataLoader from 'dataloader'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Visitor} from 'db/models/Visitor'
 
 export interface VisitorRepositoryInterface extends BaseRepositoryInterface<Visitor> {
-    addVisitor(aquascapeId: number, visitorId?: string): Promise<[Visitor, boolean]>
+    addVisitor(aquascapeId: number, visitorId: string): Promise<[Visitor, boolean]>
     countViews(aquascapeId: number): Promise<number>
 }
 
@@ -21,9 +21,9 @@ export class VisitorRepository
         this.aquascapeVisitLoader = new DataLoader(this.batchCountAquascapeVisits)
     }
 
-    addVisitor(aquascapeId: number, visitorId?: string) {
+    addVisitor(aquascapeId: number, visitorId: string = uuidv4()) {
         return this.findOrCreate({
-            where: {visitorId: visitorId || uuid.v4(), aquascapeId},
+            where: {visitorId, aquascapeId},
         })
     }
 

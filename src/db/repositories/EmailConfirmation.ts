@@ -1,6 +1,6 @@
 import {Injectable} from 'graphql-modules'
 import * as moment from 'moment'
-import uuid from 'uuid'
+import {v4 as uuidv4} from 'uuid'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {EmailConfirmation} from 'db/models/EmailConfirmation'
@@ -28,7 +28,7 @@ export class EmailConfirmationRepository
     createConfirmationKey(email: string) {
         return this.create({
             email,
-            code: uuid.v4(),
+            code: uuidv4(),
             expiresAt: moment().add(3, 'hours'),
         })
     }
