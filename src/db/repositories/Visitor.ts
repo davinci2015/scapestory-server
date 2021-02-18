@@ -6,7 +6,7 @@ import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Visitor} from 'db/models/Visitor'
 
 export interface VisitorRepositoryInterface extends BaseRepositoryInterface<Visitor> {
-    addVisitor(aquascapeId: number, visitorId: string): Promise<[Visitor, boolean]>
+    addVisitor(aquascapeId: number, visitorId?: string): Promise<[Visitor, boolean]>
     countViews(aquascapeId: number): Promise<number>
 }
 
