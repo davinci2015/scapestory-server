@@ -5,7 +5,7 @@ import {Comment} from './Comment'
 import {Follow} from './Follow'
 
 @Table
-export class Notification extends Model<Notification> {
+export class Notification extends Model {
     @ForeignKey(() => User)
     @Column
     creatorId: number

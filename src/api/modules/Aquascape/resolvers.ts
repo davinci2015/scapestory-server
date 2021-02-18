@@ -1,9 +1,5 @@
 import {GraphQLResolveInfo} from 'graphql'
 
-import {authenticate, authorizeAquascapeUpdate} from 'api/guards'
-import {UsersProviderInterface} from 'api/modules/User/UsersProvider'
-import {tokens} from 'di/tokens'
-
 import {Tag} from 'db/models/Tag'
 import {Plant} from 'db/models/Plant'
 import {Hardscape} from 'db/models/Hardscape'
@@ -19,8 +15,8 @@ import {AquascapeImage} from 'db/models/AquascapeImage'
 import {AquascapeProviderInterface} from './AquascapeProvider'
 import {GraphQLHelper} from 'utils/GraphQLHelper'
 import {FileUpload} from 'graphql-upload'
-import {ModuleContext} from '@graphql-modules/core'
-import {Comment, User, Aquascape, Like} from 'db/models'
+import {Comment, User, Like} from 'db/models'
+import {AquascapeProvider} from 'api/modules/Aquascape/AquascapeProvider'
 import {
     QueryAquascapesArgs,
     QueryTrendingAquascapesArgs,
@@ -48,9 +44,7 @@ const getAquascapeJoinFields = (info: GraphQLResolveInfo) =>
 export const resolvers = {
     Query: {
         async aquascapes(root, args: QueryAquascapesArgs, context, info) {
-            const provider: AquascapeProviderInterface = context.injector.get(
-                tokens.AQUASCAPE_PROVIDER
-            )
+            const provider: AquascapeProviderInterface = context.injector.get(AquascapeProvider)
 
             return await provider.getAquascapes(
                 args.pagination,
@@ -60,9 +54,7 @@ export const resolvers = {
             )
         },
         async trendingAquascapes(root, args: QueryTrendingAquascapesArgs, context, info) {
-            const provider: AquascapeProviderInterface = context.injector.get(
-                tokens.AQUASCAPE_PROVIDER
-            )
+            const provider: AquascapeProviderInterface = context.injector.get(AquascapeProvider)
 
             return await provider.getTrendingAquascapes(
                 args.pagination,
@@ -70,32 +62,19 @@ export const resolvers = {
             )
         },
         async featuredAquascape(root, args, context, info) {
-            const provider: AquascapeProviderInterface = context.injector.get(
-                tokens.AQUASCAPE_PROVIDER
-            )
+            const provider: AquascapeProviderInterface = context.injector.get(AquascapeProvider)
 
             return await provider.getFeaturedAquascape(getAquascapeJoinFields(info))
         },
         async aquascape(root, args: QueryAquascapeArgs, context, info) {
-            const provider: AquascapeProviderInterface = context.injector.get(
-                tokens.AQUASCAPE_PROVIDER
-            )
+            const provider: AquascapeProviderInterface = context.injector.get(AquascapeProvider)
 
             return await provider.getAquascapeById(args.id, getAquascapeJoinFields(info))
         },
     },
-    Aquascape: {
-        async user(aquascape: Aquascape, args, context) {
-            const provider: UsersProviderInterface = context.injector.get(tokens.USER_PROVIDER)
-
-            return await provider.findUserById(aquascape.userId)
-        },
-    },
     User: {
         async aquascapes(user: User, args, context, info) {
-            const provider: AquascapeProviderInterface = context.injector.get(
-                tokens.AQUASCAPE_PROVIDER
-            )
+            const provider: AquascapeProviderInterface = context.injector.get(AquascapeProvider)
 
             return await provider.getAquascapes(
                 args.pagination,
@@ -106,36 +85,28 @@ export const resolvers = {
         },
     },
     Comment: {
-        async aquascape(comment: Comment, args, context: ModuleContext) {
-            const provider: AquascapeProviderInterface = context.injector.get(
-                tokens.AQUASCAPE_PROVIDER
-            )
+        async aquascape(comment: Comment, args, context) {
+            const provider: AquascapeProviderInterface = context.injector.get(AquascapeProvider)
 
             return await provider.getAquascapeById(comment.aquascapeId)
         },
     },
     Like: {
-        async aquascape(like: Like, args, context: ModuleContext) {
-            const provider: AquascapeProviderInterface = context.injector.get(
-                tokens.AQUASCAPE_PROVIDER
-            )
+        async aquascape(like: Like, args, context) {
+            const provider: AquascapeProviderInterface = context.injector.get(AquascapeProvider)
 
             return await provider.getAquascapeById(like.aquascapeId)
         },
     },
     Mutation: {
         async createAquascape(root, args, context) {
-            const provider: AquascapeProviderInterface = context.injector.get(
-                tokens.AQUASCAPE_PROVIDER
-            )
+            const provider: AquascapeProviderInterface = context.injector.get(AquascapeProvider)
 
             return await provider.createAquascape(context.currentUserId)
         },
 
         async updateAquascapeTitle(root, args: MutationUpdateAquascapeTitleArgs, context) {
-            const provider: AquascapeProviderInterface = context.injector.get(
-                tokens.AQUASCAPE_PROVIDER
-            )
+            const provider: AquascapeProviderInterface = context.injector.get(AquascapeProvider)
             const maxTitleLength = 40
             const title = args.title.slice(0, maxTitleLength)
 
@@ -149,9 +120,7 @@ export const resolvers = {
             args: {aquascapeId: number; file: Promise<FileUpload>},
             context
         ) {
-            const provider: AquascapeProviderInterface = context.injector.get(
-                tokens.AQUASCAPE_PROVIDER
-            )
+            const provider: AquascapeProviderInterface = context.injector.get(AquascapeProvider)
             const result = await provider.updateAquascapeMainImage(args.aquascapeId, args.file)
 
             return {
@@ -159,18 +128,9 @@ export const resolvers = {
                 mainImageUrl: result.secure_url,
             }
         },
-        async removeAquascape(root, args, context: ModuleContext) {
-            const provider: AquascapeProviderInterface = context.injector.get(
-                tokens.AQUASCAPE_PROVIDER
-            )
+        async removeAquascape(root, args, context) {
+            const provider: AquascapeProviderInterface = context.injector.get(AquascapeProvider)
             return await provider.removeAquascape(args.aquascapeId)
         },
     },
-}
-
-export const resolversComposition = {
-    'Mutation.createAquascape': [authenticate],
-    'Mutation.updateAquascapeTitle': [authenticate, authorizeAquascapeUpdate],
-    'Mutation.updateAquascapeMainImage': [authenticate, authorizeAquascapeUpdate],
-    'Mutation.removeAquascape': [authenticate, authorizeAquascapeUpdate],
 }

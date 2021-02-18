@@ -1,4 +1,3 @@
-import * as moment from 'moment'
 import {compareSync, hashSync} from 'bcrypt'
 import {encode, decode} from 'jwt-simple'
 import environment from 'config/environment'
@@ -24,7 +23,7 @@ export class AuthHelper {
     }
 
     static createJWTToken(payload: {[key: string]: string | number}): string {
-        const load = {...payload, iat: moment().unix()}
+        const load = {...payload, iat: new Date().toISOString()}
         return encode(load, environment.SECURITY_TOKEN_SECRET)
     }
 

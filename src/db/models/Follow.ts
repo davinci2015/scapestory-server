@@ -1,11 +1,4 @@
-import {
-    Table,
-    Column,
-    Model,
-    ForeignKey,
-    BelongsTo,
-    DefaultScope,
-} from 'sequelize-typescript'
+import {Table, Column, Model, ForeignKey, BelongsTo, DefaultScope} from 'sequelize-typescript'
 import {User} from 'db/models/User'
 
 @DefaultScope({
@@ -21,7 +14,7 @@ import {User} from 'db/models/User'
     ],
 })
 @Table
-export class Follow extends Model<Follow> {
+export class Follow extends Model {
     @ForeignKey(() => User)
     @Column
     followedUserId: number

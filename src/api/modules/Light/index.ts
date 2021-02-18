@@ -1,17 +1,14 @@
-import {GraphQLModule} from '@graphql-modules/core'
+import {createModule} from 'graphql-modules'
 
 import {LightRepository} from 'db/repositories/Light'
-import {tokens} from 'di/tokens'
 
-import * as typeDefs from './schema.graphql'
+import typeDefs from './schema'
 import {LightProvider} from './LightProvider'
 import {resolvers} from './resolvers'
 
-export const LightModule = new GraphQLModule({
-    providers: [
-        {provide: tokens.LIGHT_PROVIDER, useClass: LightProvider},
-        {provide: tokens.LIGHT_REPOSITORY, useClass: LightRepository},
-    ],
+export const LightModule = createModule({
+    id: 'LightModule',
+    providers: [LightProvider, LightRepository],
     typeDefs,
     resolvers,
 })

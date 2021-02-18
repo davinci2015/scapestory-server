@@ -1,18 +1,14 @@
-import {GraphQLModule} from '@graphql-modules/core'
-
-import {tokens} from 'di/tokens'
+import {createModule} from 'graphql-modules'
 
 import {AdditiveProvider} from 'api/modules/Additive/AdditiveProvider'
 import {AdditiveRepository} from 'db/repositories/Additive'
 
-import * as typeDefs from './schema.graphql'
+import typeDefs from './schema'
 import {resolvers} from './resolvers'
 
-export const AdditiveModule = new GraphQLModule({
-    providers: [
-        {provide: tokens.ADDITIVE_PROVIDER, useClass: AdditiveProvider},
-        {provide: tokens.ADDITIVE_REPOSITORY, useClass: AdditiveRepository},
-    ],
+export const AdditiveModule = createModule({
+    id: 'AdditiveModule',
+    providers: [AdditiveProvider, AdditiveRepository],
     typeDefs,
-    resolvers
+    resolvers,
 })

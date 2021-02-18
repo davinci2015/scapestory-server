@@ -1,17 +1,17 @@
-import Bluebird from 'bluebird'
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {AquascapeImage} from 'db/models/AquascapeImage'
 
 export interface AquascapeImageRepositoryInterface extends BaseRepositoryInterface<AquascapeImage> {
-    addImage(aquascapeId: number, publicId: string, url: string): Bluebird<AquascapeImage>
+    addImage(aquascapeId: number, publicId: string, url: string): Promise<AquascapeImage>
 
-    removeImage(aquascapeId: number, imageId: number): Bluebird<number>
+    removeImage(aquascapeId: number, imageId: number): Promise<number>
 }
 
 @Injectable()
-export class AquascapeImageRepository extends BaseRepository<AquascapeImage>
+export class AquascapeImageRepository
+    extends BaseRepository<AquascapeImage>
     implements AquascapeImageRepositoryInterface {
     constructor() {
         super(AquascapeImage)

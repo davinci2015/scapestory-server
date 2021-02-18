@@ -1,15 +1,15 @@
-import Bluebird from 'bluebird'
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 
 import {BaseRepository, EquipmentRepositoryInterface} from 'db/repositories/Base'
 import {Substrate} from 'db/models/Substrate'
 
 export interface SubstrateRepositoryInterface extends EquipmentRepositoryInterface<Substrate> {
-    getSubstrates: () => Bluebird<Substrate[]>
+    getSubstrates: () => Promise<Substrate[]>
 }
 
 @Injectable()
-export class SubstrateRepository extends BaseRepository<Substrate>
+export class SubstrateRepository
+    extends BaseRepository<Substrate>
     implements SubstrateRepositoryInterface {
     constructor() {
         super(Substrate)

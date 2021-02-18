@@ -1,27 +1,28 @@
-import {Injectable, Inject} from '@graphql-modules/di'
-import * as Bluebird from 'bluebird'
+import {Injectable, Inject} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-import {LivestockRepositoryInterface} from 'db/repositories/Livestock'
+import {LivestockRepositoryInterface, LivestockRepository} from 'db/repositories/Livestock'
 import {Livestock} from 'db/models/Livestock'
 import {AquascapeLivestock} from 'db/models'
-import {AquascapeLivestockRepositoryInterface} from 'db/repositories/AquascapeLivestock'
+import {
+    AquascapeLivestockRepositoryInterface,
+    AquascapeLivestockRepository,
+} from 'db/repositories/AquascapeLivestock'
 
 export interface LivestockProviderInterface {
-    getLivestock(): Bluebird<Livestock[]>
-    addLivestock(name: string): Bluebird<Livestock>
-    addLivestockForAquascape(livestockId: number, aquascapeId: number): Bluebird<AquascapeLivestock>
-    removeLivestock(id: number): Bluebird<number>
-    removeLivestockForAquascape(livestockId: number, aquascapeId: number): Bluebird<number>
-    findLivestockById(id: number): Bluebird<Livestock | null>
+    getLivestock(): Promise<Livestock[]>
+    addLivestock(name: string): Promise<Livestock>
+    addLivestockForAquascape(livestockId: number, aquascapeId: number): Promise<AquascapeLivestock>
+    removeLivestock(id: number): Promise<number>
+    removeLivestockForAquascape(livestockId: number, aquascapeId: number): Promise<number>
+    findLivestockById(id: number): Promise<Livestock | null>
 }
 
 @Injectable()
 export class LivestockProvider implements LivestockProviderInterface {
     constructor(
-        @Inject(tokens.LIVESTOCK_REPOSITORY)
+        @Inject(LivestockRepository)
         private livestockRepository: LivestockRepositoryInterface,
-        @Inject(tokens.AQUASCAPE_LIVESTOCK_REPOSITORY)
+        @Inject(AquascapeLivestockRepository)
         private aquascapeLivestockRepository: AquascapeLivestockRepositoryInterface
     ) {}
 
@@ -29,19 +30,22 @@ export class LivestockProvider implements LivestockProviderInterface {
         return this.livestockRepository.getLivestock()
     }
 
-    addLivestock(name: string): Bluebird<Livestock> {
+    addLivestock(name: string): Promise<Livestock> {
         return this.livestockRepository.create({name})
     }
 
-    addLivestockForAquascape(livestockId: number, aquascapeId: number): Bluebird<AquascapeLivestock> {
+    addLivestockForAquascape(
+        livestockId: number,
+        aquascapeId: number
+    ): Promise<AquascapeLivestock> {
         return this.aquascapeLivestockRepository.addLivestockForAquascape(livestockId, aquascapeId)
     }
 
-    removeLivestock(id: number): Bluebird<number> {
+    removeLivestock(id: number): Promise<number> {
         return this.livestockRepository.destroy({where: {id}})
     }
 
-    removeLivestockForAquascape(livestockId: number, aquascapeId: number): Bluebird<number> {
+    removeLivestockForAquascape(livestockId: number, aquascapeId: number): Promise<number> {
         return this.aquascapeLivestockRepository.destroy({where: {livestockId, aquascapeId}})
     }
 

@@ -1,8 +1,7 @@
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 import {Includeable, Order, WhereOptions} from 'sequelize/types'
 import {literal} from 'sequelize'
 import {Op} from 'sequelize'
-import Bluebird from 'bluebird'
 
 import {Aquascape} from 'db/models/Aquascape'
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
@@ -17,30 +16,28 @@ export interface AquascapeRepositoryInterface extends BaseRepositoryInterface<Aq
         include?: Includeable[]
     ) => Promise<{rows: Aquascape[]; count: number}>
 
-    getFeaturedAquascape: (include?: Includeable[]) => Bluebird<Aquascape | null>
+    getFeaturedAquascape: (include?: Includeable[]) => Promise<Aquascape | null>
 
-    getTrendingAquascapes: (
-        pagination: Pagination,
-        include?: Includeable[]
-    ) => Bluebird<Aquascape[]>
+    getTrendingAquascapes: (pagination: Pagination, include?: Includeable[]) => Promise<Aquascape[]>
 
-    getAquascapeById: (id: number, include?: Includeable[]) => Bluebird<Aquascape | null>
+    getAquascapeById: (id: number, include?: Includeable[]) => Promise<Aquascape | null>
 
-    getAquascapesById: (ids: number[], include?: Includeable[]) => Bluebird<Aquascape[]>
+    getAquascapesById: (ids: number[], include?: Includeable[]) => Promise<Aquascape[]>
 
-    getAquascapeImages: (aquascapeId: number) => Bluebird<AquascapeImage[]>
+    getAquascapeImages: (aquascapeId: number) => Promise<AquascapeImage[]>
 
-    updateAquascapeTitle: (id: number, title: string) => Bluebird<[number, Aquascape[]]>
+    updateAquascapeTitle: (id: number, title: string) => Promise<[number, Aquascape[]]>
 
     updateAquascapeMainImage: (
         id: number,
         imagePublicId: string,
         imageUrl: string
-    ) => Bluebird<[number, Aquascape[]]>
+    ) => Promise<[number, Aquascape[]]>
 }
 
 @Injectable()
-export class AquascapeRepository extends BaseRepository<Aquascape>
+export class AquascapeRepository
+    extends BaseRepository<Aquascape>
     implements AquascapeRepositoryInterface {
     constructor() {
         super(Aquascape)

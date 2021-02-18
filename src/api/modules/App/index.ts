@@ -1,4 +1,5 @@
-import {GraphQLModule} from '@graphql-modules/core'
+import {Request, Response} from 'express'
+import {createApplication} from 'graphql-modules'
 
 import {AquascapeModule} from 'api/modules/Aquascape'
 import {FollowModule} from 'api/modules/Follow'
@@ -18,9 +19,16 @@ import {BrandModule} from 'api/modules/Brand'
 import {EquipmentModule} from 'api/modules/Equipment'
 import {AquascapeImageModule} from 'api/modules/AquascapeImage'
 import {NotificationModule} from 'api/modules/Notification'
+import {attachCurrentUserId} from 'api/middlewares'
 
-export const AppModule = new GraphQLModule({
-    imports: [
+export interface GlobalContext extends GraphQLModules.ModuleContext {
+    req: Request
+    res: Response
+    currentUserId?: number
+}
+
+export const AppModule = createApplication({
+    modules: [
         CommentModule,
         FollowModule,
         LightModule,
@@ -40,4 +48,11 @@ export const AppModule = new GraphQLModule({
         AquascapeImageModule,
         NotificationModule,
     ],
+    middlewares: {
+        '*': {
+            // TODO: Find a way to extend GraphQLModules GlobalContext
+            // @ts-ignore
+            '*': [attachCurrentUserId],
+        },
+    },
 })

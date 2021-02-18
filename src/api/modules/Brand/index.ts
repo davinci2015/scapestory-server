@@ -1,22 +1,14 @@
-import {GraphQLModule} from '@graphql-modules/core'
+import {createModule} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-
-import * as typeDefs from './schema.graphql'
+import typeDefs from './schema'
 import {resolvers} from './resolvers'
 import {BrandProvider} from 'api/modules/Brand/BrandProvider'
 import {BrandRepository} from 'db/repositories/Brand'
-import {FilterModule} from '../Filter'
-import {LightModule} from '../Light'
-import {SubstrateModule} from '../Substrate'
-import {AdditiveModule} from '../Additive'
+import {BrandDataLoader} from 'db/loaders/Brand'
 
-export const BrandModule = new GraphQLModule({
-    providers: [
-        {provide: tokens.BRAND_PROVIDER, useClass: BrandProvider},
-        {provide: tokens.BRAND_REPOSITORY, useClass: BrandRepository},
-    ],
+export const BrandModule = createModule({
+    id: 'BrandModule',
+    providers: [BrandProvider, BrandRepository, BrandDataLoader],
     typeDefs,
     resolvers,
-    imports: [FilterModule, LightModule, SubstrateModule, AdditiveModule],
 })

@@ -1,27 +1,19 @@
-import {ModuleContext} from '@graphql-modules/core'
-
-import {tokens} from 'di/tokens'
-import {authenticate} from 'api/guards'
 import {NotificationProviderInterface} from './NotificationProvider'
-import {AuthenticationContext} from 'api/context'
 import {MutationReadNotificationsArgs, QueryNotificationsArgs} from 'interfaces/graphql/types'
+import {NotificationProvider} from 'api/modules/Notification/NotificationProvider'
 
 export const resolvers = {
     Query: {
-        notifications(
-            root,
-            args: QueryNotificationsArgs,
-            context: ModuleContext & AuthenticationContext
-        ) {
+        notifications(root, args: QueryNotificationsArgs, context) {
             const provider: NotificationProviderInterface = context.injector.get(
-                tokens.NOTIFICATION_PROVIDER
+                NotificationProvider
             )
 
             return provider.getNotifications(context.currentUserId, args.pagination)
         },
-        unreadNotificationsCount(root, args, context: ModuleContext & AuthenticationContext) {
+        unreadNotificationsCount(root, args, context) {
             const provider: NotificationProviderInterface = context.injector.get(
-                tokens.NOTIFICATION_PROVIDER
+                NotificationProvider
             )
 
             if (!context.currentUserId) {
@@ -34,7 +26,7 @@ export const resolvers = {
     Mutation: {
         async readNotifications(root, args: MutationReadNotificationsArgs, context) {
             const provider: NotificationProviderInterface = context.injector.get(
-                tokens.NOTIFICATION_PROVIDER
+                NotificationProvider
             )
 
             const [affected] = await provider.readNotifications(args.notifierId)
@@ -42,9 +34,4 @@ export const resolvers = {
             return affected
         },
     },
-}
-
-export const resolversComposition = {
-    'Query.notifications': [authenticate],
-    'Mutation.readNotifications': [authenticate],
 }

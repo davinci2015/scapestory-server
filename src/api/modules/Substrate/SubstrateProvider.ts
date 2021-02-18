@@ -1,18 +1,16 @@
-import {Injectable, Inject} from '@graphql-modules/di'
-import * as Bluebird from 'bluebird'
+import {Injectable, Inject} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-import {SubstrateRepositoryInterface} from 'db/repositories/Substrate'
+import {SubstrateRepositoryInterface, SubstrateRepository} from 'db/repositories/Substrate'
 import {Substrate} from 'db/models/Substrate'
 
 export interface SubstrateProviderInterface {
-    getSubstrates: () => Bluebird<Substrate[]>
+    getSubstrates: () => Promise<Substrate[]>
 }
 
 @Injectable()
 export class SubstrateProvider implements SubstrateProviderInterface {
     constructor(
-        @Inject(tokens.SUBSTRATE_REPOSITORY)
+        @Inject(SubstrateRepository)
         private substrateRepository: SubstrateRepositoryInterface
     ) {}
 

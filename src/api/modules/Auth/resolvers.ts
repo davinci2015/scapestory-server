@@ -1,10 +1,4 @@
-import {ModuleContext} from '@graphql-modules/core'
-import {SessionContext} from 'api/context'
-
-import {tokens} from 'di/tokens'
-import {validate} from 'api/guards'
-import {AuthProviderInterface} from 'api/modules/Auth/providers/AuthProvider'
-import {loginValidationSchema, registerValidationSchema} from 'api/modules/Auth/validation'
+import {AuthProviderInterface, AuthProvider} from 'api/modules/Auth/AuthProvider'
 import {
     MutationResendConfirmationMailArgs,
     QueryUserProfileSlugExistsArgs,
@@ -16,52 +10,31 @@ import {
 
 export const resolvers = {
     Query: {
-        async userProfileSlugExists(
-            root,
-            args: QueryUserProfileSlugExistsArgs,
-            {injector}: ModuleContext
-        ) {
-            const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
+        async userProfileSlugExists(root, args: QueryUserProfileSlugExistsArgs, context) {
+            const provider: AuthProviderInterface = context.injector.get(AuthProvider)
             return await provider.userProfileSlugExists(args.slug)
         },
     },
     Mutation: {
-        async login(root, args: MutationLoginArgs, context: ModuleContext) {
-            const provider: AuthProviderInterface = context.injector.get(tokens.AUTH_PROVIDER)
+        async login(root, args: MutationLoginArgs, context) {
+            const provider: AuthProviderInterface = context.injector.get(AuthProvider)
             return await provider.login(args.email, args.password)
         },
-        async register(root, args: MutationRegisterArgs, {injector}: ModuleContext) {
-            const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
+        async register(root, args: MutationRegisterArgs, context) {
+            const provider: AuthProviderInterface = context.injector.get(AuthProvider)
             return await provider.register(args.email, args.password, args.name)
         },
-        async fbRegister(
-            root,
-            args: MutationFbRegisterArgs,
-            {injector, req, res}: ModuleContext & SessionContext
-        ) {
-            const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
+        async fbRegister(root, args: MutationFbRegisterArgs, {injector, req, res}) {
+            const provider: AuthProviderInterface = injector.get(AuthProvider)
             return await provider.facebookRegister(args.token, req, res)
         },
-        async googleRegister(
-            root,
-            args: MutationGoogleRegisterArgs,
-            {injector, req, res}: ModuleContext & SessionContext
-        ) {
-            const provider: AuthProviderInterface = injector.get(tokens.AUTH_PROVIDER)
+        async googleRegister(root, args: MutationGoogleRegisterArgs, {injector, req, res}) {
+            const provider: AuthProviderInterface = injector.get(AuthProvider)
             return await provider.googleRegister(args.token, req, res)
         },
-        async resendConfirmationMail(
-            root,
-            args: MutationResendConfirmationMailArgs,
-            context: ModuleContext
-        ) {
-            const provider: AuthProviderInterface = context.injector.get(tokens.AUTH_PROVIDER)
+        async resendConfirmationMail(root, args: MutationResendConfirmationMailArgs, context) {
+            const provider: AuthProviderInterface = context.injector.get(AuthProvider)
             await provider.resendConfirmationMail(args.email)
         },
     },
-}
-
-export const resolversComposition = {
-    'Mutation.login': [validate(loginValidationSchema)],
-    'Mutation.register': [validate(registerValidationSchema)],
 }

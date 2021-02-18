@@ -16,18 +16,11 @@ module.exports = {
         plugins: [new TsconfigPathsPlugin()],
     },
     module: {
-        rules: [
-            {test: /\.tsx?$/, loader: 'ts-loader'},
-            {test: /\.(graphql)$/, exclude: /node_modules/, loader: 'webpack-graphql-loader'},
-        ],
+        rules: [{test: /\.tsx?$/, loader: 'ts-loader'}],
     },
     node: {
-        console: true,
         __filename: false,
         __dirname: false,
-        fs: 'empty',
-        net: 'empty',
-        tls: 'empty',
     },
     target: 'node',
     externals: [nodeExternals()],

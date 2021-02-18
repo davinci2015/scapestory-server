@@ -1,11 +1,18 @@
 import {UserInputError} from 'apollo-server'
 
-import {tokens} from 'di/tokens'
-import {authenticate, authorizeAquascapeUpdate} from 'api/guards'
 import {Filter, Light, Substrate, Additive} from 'db/models'
-import {EquipmentProviderInterface} from './EquipmentProvider'
+import {EquipmentProviderInterface, EquipmentProvider} from './EquipmentProvider'
 import {MutationAddEquipmentArgs, MutationRemoveEquipmentArgs} from 'interfaces/graphql/types'
+import {FilterRepository} from 'db/repositories/Filter'
+import {LightRepository} from 'db/repositories/Light'
+import {SubstrateRepository} from 'db/repositories/Substrate'
+import {AdditiveRepository} from 'db/repositories/Additive'
+import {AquascapeFilterRepository} from 'db/repositories/AquascapeFilter'
+import {AquascapeLightRepository} from 'db/repositories/AquascapeLight'
+import {AquascapeSubstrateRepository} from 'db/repositories/AquascapeSubstrate'
+import {AquascapeAdditiveRepository} from 'db/repositories/AquascapeAdditive'
 
+// eslint-disable-next-line no-shadow
 enum EquipmentType {
     FILTER = 'FILTER',
     SUBSTRATE = 'SUBSTRATE',
@@ -16,17 +23,17 @@ enum EquipmentType {
 type EquipmentModel = Filter | Light | Substrate | Additive
 
 const equipmentRepoMapping = {
-    [EquipmentType.FILTER]: tokens.FILTER_REPOSITORY,
-    [EquipmentType.LIGHT]: tokens.LIGHT_REPOSITORY,
-    [EquipmentType.SUBSTRATE]: tokens.SUBSTRATE_REPOSITORY,
-    [EquipmentType.ADDITIVES]: tokens.ADDITIVE_REPOSITORY,
+    [EquipmentType.FILTER]: FilterRepository,
+    [EquipmentType.LIGHT]: LightRepository,
+    [EquipmentType.SUBSTRATE]: SubstrateRepository,
+    [EquipmentType.ADDITIVES]: AdditiveRepository,
 }
 
 const equipmentAquascapeRepoMapping = {
-    [EquipmentType.FILTER]: tokens.AQUASCAPE_FILTER_REPOSITORY,
-    [EquipmentType.LIGHT]: tokens.AQUASCAPE_LIGHT_REPOSITORY,
-    [EquipmentType.SUBSTRATE]: tokens.AQUASCAPE_SUBSTRATE_REPOSITORY,
-    [EquipmentType.ADDITIVES]: tokens.AQUASCAPE_ADDITIVES_REPOSITORY,
+    [EquipmentType.FILTER]: AquascapeFilterRepository,
+    [EquipmentType.LIGHT]: AquascapeLightRepository,
+    [EquipmentType.SUBSTRATE]: AquascapeSubstrateRepository,
+    [EquipmentType.ADDITIVES]: AquascapeAdditiveRepository,
 }
 
 const getEquipmentProvider = (
@@ -47,7 +54,7 @@ const getEquipmentProvider = (
     }
 
     const provider: EquipmentProviderInterface<EquipmentModel> = context.injector.get(
-        tokens.EQUIPMENT_PROVIDER
+        EquipmentProvider
     )
 
     provider.setEquipmentRepository(equipmentRepository)
@@ -117,9 +124,4 @@ export const resolvers = {
             return equipment
         },
     },
-}
-
-export const resolversComposition = {
-    'Mutation.addEquipment': [authenticate, authorizeAquascapeUpdate],
-    'Mutation.removeEquipment': [authenticate, authorizeAquascapeUpdate],
 }

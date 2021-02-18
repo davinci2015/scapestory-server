@@ -1,7 +1,7 @@
 import {Table, Column, Model, Default} from 'sequelize-typescript'
 
 @Table
-export class Hardscape extends Model<Hardscape> {
+export class Hardscape extends Model {
     @Default(false)
     @Column
     predefined: boolean

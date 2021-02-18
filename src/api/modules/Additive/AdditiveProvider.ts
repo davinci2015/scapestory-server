@@ -1,22 +1,20 @@
-import {Injectable, Inject} from '@graphql-modules/di'
-import Bluebird from 'bluebird'
+import {Injectable, Inject} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-import {AdditiveRepositoryInterface} from 'db/repositories/Additive'
+import {AdditiveRepositoryInterface, AdditiveRepository} from 'db/repositories/Additive'
 import {Additive} from 'db/models/Additive'
 
 export interface AdditiveProviderInterface {
-    getAdditives: () => Bluebird<Additive[]>
+    getAdditives: () => Promise<Additive[]>
 }
 
 @Injectable()
 export class AdditiveProvider implements AdditiveProviderInterface {
     constructor(
-        @Inject(tokens.ADDITIVE_REPOSITORY)
-        private AdditiveRepository: AdditiveRepositoryInterface
+        @Inject(AdditiveRepository)
+        private additiveRepository: AdditiveRepositoryInterface
     ) {}
 
     getAdditives() {
-        return this.AdditiveRepository.getAdditives()
+        return this.additiveRepository.getAdditives()
     }
 }

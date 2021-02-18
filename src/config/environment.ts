@@ -4,10 +4,7 @@ import logger from 'logger'
 dotenv.config()
 
 interface EnvironmentVariables {
-    DB_HOST: string
-    DB_USER: string
-    DB_PASS: string
-    DB_NAME: string
+    DATABASE_URL: string
     ENVIRONMENT: string
     SECURITY_TOKEN_SECRET: string
     FACEBOOK_CLIENT_ID: string
@@ -23,10 +20,7 @@ interface EnvironmentVariables {
 }
 
 const environment = {
-    DB_HOST: process.env.DB_HOST,
-    DB_USER: process.env.DB_USER,
-    DB_PASS: process.env.DB_PASS,
-    DB_NAME: process.env.DB_NAME,
+    DATABASE_URL: process.env.DATABASE_URL,
     ENVIRONMENT: process.env.ENVIRONMENT,
     SECURITY_TOKEN_SECRET: process.env.SECURITY_TOKEN_SECRET,
     FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID,

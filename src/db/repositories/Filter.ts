@@ -1,11 +1,10 @@
-import Bluebird from 'bluebird'
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 
 import {BaseRepository, EquipmentRepositoryInterface} from 'db/repositories/Base'
 import {Filter} from 'db/models/Filter'
 
 export interface FilterRepositoryInterface extends EquipmentRepositoryInterface<Filter> {
-    getFilters: () => Bluebird<Filter[]>
+    getFilters: () => Promise<Filter[]>
 }
 
 @Injectable()

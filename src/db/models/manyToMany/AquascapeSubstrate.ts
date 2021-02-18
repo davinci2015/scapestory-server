@@ -3,7 +3,7 @@ import {Aquascape} from 'db/models/Aquascape'
 import {Substrate} from 'db/models/Substrate'
 
 @Table
-export class AquascapeSubstrate extends Model<AquascapeSubstrate> {
+export class AquascapeSubstrate extends Model {
     @ForeignKey(() => Aquascape)
     @Column
     aquascapeId: number

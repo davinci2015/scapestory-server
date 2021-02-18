@@ -5,7 +5,7 @@ import {User} from 'db/models/User'
 import {Comment} from 'db/models/Comment'
 
 @Table
-export class Like extends Model<Like> {
+export class Like extends Model {
     @ForeignKey(() => User)
     @Column
     userId: number

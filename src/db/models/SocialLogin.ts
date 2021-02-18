@@ -3,7 +3,7 @@ import {User} from 'db/models/User'
 import {Table, Column, Model, ForeignKey, DataType} from 'sequelize-typescript'
 
 @Table({paranoid: true})
-export class SocialLogin extends Model<SocialLogin> {
+export class SocialLogin extends Model {
     @ForeignKey(() => User)
     @Column
     userId: number

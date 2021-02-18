@@ -1,16 +1,17 @@
-import * as Bluebird from 'bluebird'
-import {Injectable} from '@graphql-modules/di'
+import {Injectable} from 'graphql-modules'
 
 import {BaseRepository, BaseRepositoryInterface} from 'db/repositories/Base'
 import {Livestock} from 'db/models/Livestock'
 
 export interface LivestockRepositoryInterface extends BaseRepositoryInterface<Livestock> {
-    getLivestock: () => Bluebird<Livestock[]>
-    findLivestockById(id: number): Bluebird<Livestock | null>
+    getLivestock: () => Promise<Livestock[]>
+    findLivestockById(id: number): Promise<Livestock | null>
 }
 
 @Injectable()
-export class LivestockRepository extends BaseRepository<Livestock> implements LivestockRepositoryInterface {
+export class LivestockRepository
+    extends BaseRepository<Livestock>
+    implements LivestockRepositoryInterface {
     constructor() {
         super(Livestock)
     }

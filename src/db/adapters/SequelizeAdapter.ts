@@ -1,4 +1,3 @@
-import Bluebird from 'bluebird'
 import {Sequelize} from 'sequelize-typescript'
 import {DatabaseConnectionParams} from 'db/Database'
 import {SyncOptions} from 'sequelize/types'
@@ -34,27 +33,22 @@ import {
     NotificationNotifier,
 } from 'db/models'
 import {Brand} from 'db/models/Brand'
+import {AppHelper} from 'utils/AppHelper'
 
 export interface DatabaseAdapter {
     connect: (params: DatabaseConnectionParams) => void
 
-    testConnection: () => Bluebird<void>
+    testConnection: () => Promise<void>
 
-    sync: (options: SyncOptions) => Bluebird<Sequelize>
+    sync: (options: SyncOptions) => Promise<Sequelize>
 }
 
 export class SequelizeAdapter implements DatabaseAdapter {
     instance: Sequelize
 
     connect(params: DatabaseConnectionParams) {
-        this.instance = new Sequelize({
-            host: params.host,
-            port: params.port,
-            database: params.database,
-            username: params.username,
-            password: params.password,
-            dialect: 'postgres',
-            // Logging: false,
+        this.instance = new Sequelize(params.uri, {
+            dialectOptions: this.getDialectOptions(),
             models: [
                 Additive,
                 Aquascape,
@@ -97,4 +91,14 @@ export class SequelizeAdapter implements DatabaseAdapter {
     sync(options: SyncOptions) {
         return this.instance.sync(options)
     }
+
+    private getDialectOptions = () =>
+        !AppHelper.isDevelopment()
+            ? {
+                  ssl: {
+                      require: true,
+                      rejectUnauthorized: false,
+                  },
+              }
+            : {}
 }

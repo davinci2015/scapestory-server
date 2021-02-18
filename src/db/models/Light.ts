@@ -2,7 +2,7 @@ import {Table, Column, Model, Default, ForeignKey, BelongsTo} from 'sequelize-ty
 import {Brand} from './Brand'
 
 @Table
-export class Light extends Model<Light> {
+export class Light extends Model {
     @Default(false)
     @Column
     predefined: boolean

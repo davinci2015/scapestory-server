@@ -3,7 +3,7 @@ import {User} from './User'
 import {Notification} from './Notification'
 
 @Table
-export class NotificationNotifier extends Model<NotificationNotifier> {
+export class NotificationNotifier extends Model {
     @ForeignKey(() => Notification)
     @Column
     notificationId: number

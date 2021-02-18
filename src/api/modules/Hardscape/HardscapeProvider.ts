@@ -1,27 +1,28 @@
-import {Injectable, Inject} from '@graphql-modules/di'
-import Bluebird from 'bluebird'
+import {Injectable, Inject} from 'graphql-modules'
 
-import {tokens} from 'di/tokens'
-import {HardscapeRepositoryInterface} from 'db/repositories/Hardscape'
+import {HardscapeRepositoryInterface, HardscapeRepository} from 'db/repositories/Hardscape'
 import {Hardscape} from 'db/models/Hardscape'
 import {AquascapeHardscape} from 'db/models'
-import {AquascapeHardscapeRepositoryInterface} from 'db/repositories/AquascapeHardscape'
+import {
+    AquascapeHardscapeRepositoryInterface,
+    AquascapeHardscapeRepository,
+} from 'db/repositories/AquascapeHardscape'
 
 export interface HardscapeProviderInterface {
-    getHardscape: () => Bluebird<Hardscape[]>
-    addHardscape(name: string): Bluebird<Hardscape>
-    addHardscapeForAquascape(hardscapeId: number, aquascapeId: number): Bluebird<AquascapeHardscape>
-    removeHardscape(id: number): Bluebird<number>
-    removeHardscapeForAquascape(hardscapeId: number, aquascapeId: number): Bluebird<number>
-    findHardscapeById(id: number): Bluebird<Hardscape | null>
+    getHardscape: () => Promise<Hardscape[]>
+    addHardscape(name: string): Promise<Hardscape>
+    addHardscapeForAquascape(hardscapeId: number, aquascapeId: number): Promise<AquascapeHardscape>
+    removeHardscape(id: number): Promise<number>
+    removeHardscapeForAquascape(hardscapeId: number, aquascapeId: number): Promise<number>
+    findHardscapeById(id: number): Promise<Hardscape | null>
 }
 
 @Injectable()
 export class HardscapeProvider implements HardscapeProviderInterface {
     constructor(
-        @Inject(tokens.HARDSCAPE_REPOSITORY)
+        @Inject(HardscapeRepository)
         private hardscapeRepository: HardscapeRepositoryInterface,
-        @Inject(tokens.AQUASCAPE_HARDSCAPE_REPOSITORY)
+        @Inject(AquascapeHardscapeRepository)
         private aquascapeHardscapeRepository: AquascapeHardscapeRepositoryInterface
     ) {}
 
@@ -29,23 +30,26 @@ export class HardscapeProvider implements HardscapeProviderInterface {
         return this.hardscapeRepository.getHardscape()
     }
 
-    addHardscape(name: string): Bluebird<Hardscape> {
+    addHardscape(name: string): Promise<Hardscape> {
         return this.hardscapeRepository.create({name})
     }
 
-    addHardscapeForAquascape(hardscapeId: number, aquascapeId: number): Bluebird<AquascapeHardscape> {
+    addHardscapeForAquascape(
+        hardscapeId: number,
+        aquascapeId: number
+    ): Promise<AquascapeHardscape> {
         return this.aquascapeHardscapeRepository.addHardscapeForAquascape(hardscapeId, aquascapeId)
     }
 
-    removeHardscape(id: number): Bluebird<number> {
+    removeHardscape(id: number): Promise<number> {
         return this.hardscapeRepository.destroy({where: {id}})
     }
 
-    removeHardscapeForAquascape(hardscapeId: number, aquascapeId: number): Bluebird<number> {
+    removeHardscapeForAquascape(hardscapeId: number, aquascapeId: number): Promise<number> {
         return this.aquascapeHardscapeRepository.destroy({where: {hardscapeId, aquascapeId}})
     }
 
-    findHardscapeById(id: number): Bluebird<Hardscape | null> {
+    findHardscapeById(id: number): Promise<Hardscape | null> {
         return this.hardscapeRepository.findHardscapeById(id)
     }
 }

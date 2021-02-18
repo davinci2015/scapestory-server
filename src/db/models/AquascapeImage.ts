@@ -4,7 +4,7 @@ import {Comment} from 'db/models/Comment'
 import {Like} from 'db/models/Like'
 
 @Table
-export class AquascapeImage extends Model<AquascapeImage> {
+export class AquascapeImage extends Model {
     @Column
     title: string
 
