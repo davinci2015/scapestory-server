@@ -27,7 +27,7 @@
     "license": "ISC",
     "homepage": "https://bitbucket.org/scapestory/scapestory#readme",
     "engines": {
-        "node": "14.15.x"
+        "node": "13.7.x"
     },
     "resolutions": {
         "fs-capacitor": "^6.2.0",
