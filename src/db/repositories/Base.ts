@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {Model} from 'sequelize-typescript'
-import {NonAbstract} from 'sequelize-typescript/dist/model'
+import {NonAbstract} from 'sequelize-typescript/dist/shared/types'
 import {
     BulkCreateOptions,
     CountOptions,

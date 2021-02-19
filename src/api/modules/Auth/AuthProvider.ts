@@ -4,7 +4,6 @@ import {Injectable, Inject} from 'graphql-modules'
 import {AuthenticationError, UserInputError} from 'apollo-server'
 import {Request, Response} from 'express'
 import slugify from 'slugify'
-import {ClientResponse} from '@sendgrid/client/src/response'
 
 import {User} from 'db/models/User'
 import {UserRepositoryInterface, UserRepository} from 'db/repositories/User'

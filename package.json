@@ -59,6 +59,7 @@
         "webpack-cli": "^4.5.0"
     },
     "dependencies": {
+        "@sendgrid/client": "^7.4.2",
         "@sendgrid/mail": "^7.4.2",
         "@typescript-eslint/parser": "^4.15.0",
         "apollo-server": "^2.21.0",
@@ -74,6 +75,7 @@
         "graphql-tag": "^2.11.0",
         "graphql-upload": "^11.0.0",
         "jwt-simple": "^0.5.6",
+        "moment": "^2.29.1",
         "passport": "^0.4.1",
         "passport-facebook-token": "^4.0.0",
         "passport-google-token": "^0.1.2",
