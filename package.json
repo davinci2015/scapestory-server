@@ -4,7 +4,6 @@
     "description": "",
     "main": "dist/bundle.js",
     "scripts": {
-        "preinstall": "npx npm-force-resolutions",
         "test": "echo \"Error: no test specified\" && exit 1",
         "watch:server": "nodemon \"./dist/bundle.js\" --watch \"./dist\" ",
         "watch:build": "webpack --watch",
@@ -28,10 +27,6 @@
     "homepage": "https://bitbucket.org/scapestory/scapestory#readme",
     "engines": {
         "node": "13.7.x"
-    },
-    "resolutions": {
-        "fs-capacitor": "^6.2.0",
-        "graphql-upload": "^11.0.0"
     },
     "devDependencies": {
         "@graphql-codegen/add": "^2.0.2",
