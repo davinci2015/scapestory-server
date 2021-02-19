@@ -1,13 +1,14 @@
 import {VisitorProviderInterface} from 'api/modules/Visitor/VisitorProvider'
 import headers from 'constants/headers'
+import {VisitorDataLoader, VisitorDataLoaderInterface} from 'db/loaders/Visitor'
 import {Aquascape} from 'db/models/Aquascape'
 import {VisitorProvider} from './VisitorProvider'
 
 export const resolvers = {
     Aquascape: {
         async viewsCount(aquascape: Aquascape, args, context) {
-            const provider: VisitorProviderInterface = context.injector.get(VisitorProvider)
-            return await provider.countViews(aquascape.id)
+            const loader: VisitorDataLoaderInterface = context.injector.get(VisitorDataLoader)
+            return await loader.countViews(aquascape.id)
         },
     },
     Mutation: {
