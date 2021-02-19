@@ -259,6 +259,7 @@ const plants = realPlants.map((name, index) => ({
     luminosity: PlantLuminosity.High,
     growthSpeed: PlantGrowthSpeed.High,
     difficulty: PlantDifficulty.Advanced,
+    infoFulfilled: true,
 }))
 
 let filterIdIncrement = 1
