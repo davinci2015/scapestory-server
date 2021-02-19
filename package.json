@@ -4,6 +4,7 @@
     "description": "",
     "main": "dist/bundle.js",
     "scripts": {
+        "preinstall": "npx npm-force-resolutions",
         "test": "echo \"Error: no test specified\" && exit 1",
         "watch:server": "nodemon \"./dist/bundle.js\" --watch \"./dist\" ",
         "watch:build": "webpack --watch",
@@ -67,7 +68,6 @@
         "dotenv": "^8.2.0",
         "eslint": "^7.20.0",
         "faker": "^5.4.0",
-        "fs-capacitor": "^2.0.4",
         "graphql": "^15.5.0",
         "graphql-fields": "^2.0.3",
         "graphql-modules": "^1.2.1",
