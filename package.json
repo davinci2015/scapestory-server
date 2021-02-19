@@ -27,11 +27,11 @@
     "license": "ISC",
     "homepage": "https://bitbucket.org/scapestory/scapestory#readme",
     "engines": {
-        "node": "14.x"
+        "node": "14.15.x"
     },
     "resolutions": {
-        "**/**/fs-capacitor": "^6.2.0",
-        "**/graphql-upload": "^11.0.0"
+        "fs-capacitor": "^6.2.0",
+        "graphql-upload": "^11.0.0"
     },
     "devDependencies": {
         "@graphql-codegen/add": "^2.0.2",
